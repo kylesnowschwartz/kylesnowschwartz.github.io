@@ -23,6 +23,7 @@ HEADING
   margin: 0;
 }
 
+/* tried giving a backup font i.e. 'Changa One', sans-serif; but the website kept taking the backup font instead for some reason */
 h1 {
   font-family: 'Changa One';
   margin: 15px 0;
