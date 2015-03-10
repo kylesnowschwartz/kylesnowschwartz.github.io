@@ -24,7 +24,7 @@ HEADING
 }
 
 h1 {
-  font-family: 'Changa One', sans-serif;
+  font-family: 'Changa One', cursive;
   margin: 15px 0;
   font-size: 1.75em;
 }
@@ -53,9 +53,6 @@ nav {
 /* logo text*/
 h1, h2 {
   color: #fff;
-  font-family: 'Changa One', sans-serif;
-  margin: 15px 0;
-  font-size: 1.75em
 }
 
 /* links */
