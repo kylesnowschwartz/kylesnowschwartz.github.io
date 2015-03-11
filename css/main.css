@@ -78,9 +78,10 @@ PAGE: PORTFOLIO;
   list-style: none;
 }
 
+/* float styling not working to make 2 columns. stays 1 column. GRRRR */
 #gallery li {
   float: left;
-  width: 45%
+  width: 45%;
   margin: 2.5%;
   background-color: #f5f5f5;
   color: #bdc3c7;
