@@ -16,6 +16,9 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+}
 
 /*******************
 HEADING
@@ -61,6 +64,32 @@ footer {
   text-align: center;
   padding-top: 50px;
   color: #ccc;
+}
+
+
+/*******************
+PAGE: PORTFOLIO;
+*******************/
+
+#gallery {
+  margin 0;
+  padding 0;
+  list-style: none;
+}
+
+#gallery li {
+  float: left;
+  width: 45%
+  margin: 2.5%;
+  background-color: #f5f5f5;
+  color: #bdc3c7;
+}
+
+#gallery li a p{
+  margin: 0;
+  padding: 5%;
+  font-size: 0.75em;
+  color: #bdc3c7;
 }
 
 /*******************
