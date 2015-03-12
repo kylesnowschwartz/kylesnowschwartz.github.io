@@ -154,6 +154,7 @@ PAGE:CONTACT;
   background-repeat: no-repeat;
   background-size: 20px 20px;
   padding: 0 0 0 30px;
+  margin: 0 0 10px;
 }
 
 .contact-info li.phone a {
