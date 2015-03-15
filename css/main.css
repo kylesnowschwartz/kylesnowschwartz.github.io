@@ -110,7 +110,6 @@ PAGE: PORTFOLIO;
   list-style: none;
 }
 
-/* float styling not working to make 2 columns. stays 1 column. fixed :) forgot a semicolon */
 #gallery li {
   float: left;
   width: 45%;
