@@ -38,6 +38,7 @@ h3 {
 
 #overlay img {
   margin-top: 10%;
+  max-width: 60%;
 
 }
 
@@ -226,4 +227,3 @@ nav a, nav a:visited {
 nav a.selected, nav a:hover {
   color: #32673f;
 }
-
