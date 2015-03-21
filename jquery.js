@@ -1,3 +1,47 @@
+//don't like the text links, change to drop down navication
+
+//create a select and append to menu
+var $select = $('<select></select>');
+$('#nested').append($select);
+//cycle over menu links
+$("#nested a").each(function(){
+  var $anchor = $(this);
+//create an option
+  var $option = $("<option></option>");
+
+//selected options depending on current page
+if($anchor.parent().hasClass('selected')) {
+  $option.prop('selected', true);
+}
+//options value is the href of the link
+  $option.val($anchor.attr('href'));
+//options text is the text of link
+  $option.text($anchor.text());
+//append option to select
+  $select.append($option);
+});
+
+//bind change listener to select
+  $select.change(function(){
+    //go to select's location
+      window.location = $select.val();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //problem: the user is redirected to a dead end page with the image
 //solution: create an overlay with the large image - lightbox
 

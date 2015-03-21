@@ -63,6 +63,13 @@ header {
   margin: 0;
 }
 
+select {
+  width: 94%;
+  margin: 11px 0 11px 2%;
+  float: left;
+  text-align: center;
+}
+
 /* tried giving a backup font i.e. 'Changa One', sans-serif; but the website kept taking the backup font instead for some reason. google before tags */
 h1 {
   font-family: 'Changa One';
@@ -102,6 +109,26 @@ nav li {
 nav a {
   font-weight: 800;
   padding: 15px 10px;
+}
+
+//modify css to hide links on small widths and show button and select
+  //also hides select and button on larger width and show's links
+//make sure appropriate option is selected
+
+@media (min-width: 320px) and (max-width: 667px) {
+  #nested ul {
+    display: none;
+  }
+}
+
+@media (min-width: 667px) {
+  #nested select, #nested button {
+    display: none;
+  }
+}
+
+#nested li {
+  display: none;
 }
 
 /*******************
