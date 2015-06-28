@@ -71,62 +71,37 @@ document.addEventListener( 'mousedown', onDocumentMouseDownShift, false );
 document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 window.addEventListener( 'resize', onWindowResize, false );
 
-
-
 function onWindowResize() {
-
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-
   renderer.setSize( window.innerWidth, window.innerHeight );
-
 }
 
 function onDocumentTouchStart( event ) {
-
   event.preventDefault();
-
   event.clientX = event.touches[0].clientX;
   event.clientY = event.touches[0].clientY;
   onDocumentMouseDown( event );
-
 }
 
 function onDocumentMouseDown( event ) {
-
-  // event.preventDefault();
-
   mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
   mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
-
   raycaster.setFromCamera( mouse, camera );
 
   var intersects = raycaster.intersectObjects( [toast] );
-
   if ( intersects.length > 0 ) {
-
   var labelmap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/marmitegasm_label2.jpg');
   var topmap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/cap_red.jpg');
   var bottommap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/bottom.jpg');
 
   var materials = [
-  new THREE.MeshBasicMaterial(
-      {
-        map: labelmap
-      }),
-  new THREE.MeshBasicMaterial(
-      {
-        map: bottommap
-      }),
-  new THREE.MeshBasicMaterial(
-      {
-        map: topmap
-      })
+    new THREE.MeshBasicMaterial( { map: labelmap } ),
+    new THREE.MeshBasicMaterial( { map: bottommap } ),
+    new THREE.MeshBasicMaterial( { map: topmap } )
   ]
 
   var geometry = new THREE.CylinderGeometry(75, 75, 150, 70, 5, false)
-  // var material = new THREE.MeshBasicMaterial( {map: map} );
-
   var marmite = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial( materials ) )
   var cylinderEdges = new THREE.EdgesHelper( marmite, 0xffffff);
 
@@ -157,7 +132,6 @@ function onDocumentMouseDown( event ) {
   };
   marmite.revolutionParams = revolutionParams; // adding the movement to the marmite object
 
-
   marmites.push( marmite ) //push marmite to an array for easy reference in the render function
   scene.add( marmite );
 
@@ -186,7 +160,6 @@ function render() {
       marmites[i].position.y = Math.sin( Date.now() * marmites[i].revolutionParams[1][0] ) * marmites[i].revolutionParams[1][1] + marmites[i].initialPosition[1];
       marmites[i].position.z = Math.sin( Date.now() * marmites[i].revolutionParams[2][0] ) * marmites[i].revolutionParams[2][1] + marmites[i].initialPosition[2];
   }
-
 
   renderer.autoClear = false;
   renderer.clear();
