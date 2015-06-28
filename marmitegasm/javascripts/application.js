@@ -3,6 +3,7 @@ var revolutionParamsArray = []
 
 var scene = new THREE.Scene();
 
+var marmites = []
 
 //the commented code is for toast planet and universe backdrop
 // var light = new THREE.PointLight(0xEEEEEE);
@@ -160,9 +161,6 @@ function onDocumentMouseDown( event ) {
   marmites.push( marmite ) //push marmite to an array for easy reference in the render function
   scene.add( marmite );
 
-
-
-
   }
 
 }
@@ -178,8 +176,6 @@ function onDocumentMouseDownShift( event ){
     scene.remove(marmite);
   };
 }
-
-var marmites = []
 
 function render() {
   requestAnimationFrame( render );
