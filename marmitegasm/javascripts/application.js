@@ -160,7 +160,7 @@ function onDocumentMouseDown( event ) {
   marmites.push( marmite ) //push marmite to an array for easy reference in the render function
   scene.add( marmite );
 
-  var intersects2 = raycaster.intersectObjects( marmites )
+
 
 
   }
@@ -168,6 +168,9 @@ function onDocumentMouseDown( event ) {
 }
 
 function onDocumentMouseDownShift( event ){
+
+  var intersects2 = raycaster.intersectObjects( marmites )
+
     if (event.shiftKey && intersects2.length > 0  ) {
       console.log(event)
     intersected_marmite = intersects2[0].object
