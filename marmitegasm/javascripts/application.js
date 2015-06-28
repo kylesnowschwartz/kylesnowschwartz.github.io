@@ -52,7 +52,7 @@ document.body.appendChild( navjar )
 
 // ---------------------------------------------------------------
 
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.CanvasRenderer();
 renderer.setClearColor( 0xffffff);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
