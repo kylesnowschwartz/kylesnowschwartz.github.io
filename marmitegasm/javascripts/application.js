@@ -166,11 +166,9 @@ function onDocumentMouseDown( event ) {
 }
 
 function onDocumentMouseDownShift( event ){
-
+  event.preventDefault
   var intersects2 = raycaster.intersectObjects( marmites )
-
-    if (event.shiftKey && intersects2.length > 0  ) {
-      console.log(event)
+  if (event.shiftKey && intersects2.length > 0  ) {
     intersected_marmite = intersects2[0].object
     scene.remove(intersected_marmite);
   };
