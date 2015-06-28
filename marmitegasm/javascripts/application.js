@@ -104,9 +104,9 @@ function onDocumentMouseDown( event ) {
 
   if ( intersects.length > 0 ) {
 
-  var labelmap = THREE.ImageUtils.loadTexture('../images/marmitegasm_label2.jpg');
-  var topmap = THREE.ImageUtils.loadTexture('../images/cap_red.jpg');
-  var bottommap = THREE.ImageUtils.loadTexture('../images/bottom.jpg');
+  var labelmap = THREE.ImageUtils.loadTexture('../marmitegasm/images/marmitegasm_label2.jpg');
+  var topmap = THREE.ImageUtils.loadTexture('../marmitegasm/images/cap_red.jpg');
+  var bottommap = THREE.ImageUtils.loadTexture('../marmitegasm/images/bottom.jpg');
 
   var materials = [
   new THREE.MeshBasicMaterial(
@@ -200,6 +200,6 @@ function getRandomNumber(min, max) {
    return Math.random() * (max - min) + min;
 }
 
-var audio = new Audio('../audio/danube.mp3');
+var audio = new Audio('../marmitegasm/audio/danube.mp3');
 audio.play();
 
