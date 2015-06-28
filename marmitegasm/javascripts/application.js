@@ -108,10 +108,6 @@ function onDocumentMouseDown( event ) {
   var topmap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/cap_red.jpg');
   var bottommap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/bottom.jpg');
 
-labelmap.minFilter = THREE.LinearFilter
-topmap.minFilter = THREE.LinearFilter
-bottommap.minFilter = THREE.LinearFilter
-
 
 
   var materials = [
