@@ -52,7 +52,7 @@ document.body.appendChild( navjar )
 
 // ---------------------------------------------------------------
 
-var renderer = new THREE.CanvasRenderer();
+var renderer = new THREE.WebGLRenderer();
 renderer.setClearColor( 0xffffff);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -66,7 +66,7 @@ var toast = new THREE.Mesh(geometry, material )
 scene.add( toast )
 
 document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-// document.addEventListener( 'mousedown', onDocumentMouseDownShift, false );
+document.addEventListener( 'mousedown', onDocumentMouseDownShift, false );
 document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 window.addEventListener( 'resize', onWindowResize, false );
 
@@ -107,8 +107,6 @@ function onDocumentMouseDown( event ) {
   var labelmap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/marmitegasm_label2.jpg');
   var topmap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/cap_red.jpg');
   var bottommap = THREE.ImageUtils.loadTexture('https://kylesnowschwartz.github.io/marmitegasm/images/bottom.jpg');
-
-
 
   var materials = [
   new THREE.MeshBasicMaterial(
@@ -166,9 +164,13 @@ function onDocumentMouseDown( event ) {
 
 
   }
-  if (intersects2.length > 0  ){
-      intersected_marmite = intersects2[0].object
 
+}
+
+function onDocumentMouseDownShift( event ){
+    if (event.shiftKey && intersects2.length > 0  ) {
+      console.log(event)
+    intersected_marmite = intersects2[0].object
     scene.remove(intersected_marmite);
     scene.remove(marmite);
   };
