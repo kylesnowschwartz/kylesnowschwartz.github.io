@@ -165,7 +165,6 @@ function onDocumentMouseDown( event ) {
 
   }
   if (intersects2.length > 0  ){
-  console.log(event)
       intersected_marmite = intersects2[0].object
 
     scene.remove(intersected_marmite);
