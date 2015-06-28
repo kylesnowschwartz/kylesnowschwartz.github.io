@@ -173,7 +173,6 @@ function onDocumentMouseDownShift( event ){
       console.log(event)
     intersected_marmite = intersects2[0].object
     scene.remove(intersected_marmite);
-    scene.remove(marmite);
   };
 }
 
