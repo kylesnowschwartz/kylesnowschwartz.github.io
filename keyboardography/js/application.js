@@ -27,13 +27,28 @@ document.body.appendChild( renderer.domElement );
 // var cube = new THREE.Mesh( geometry, material );
 // var cubeEdges = new THREE.EdgesHelper( cube, 0xffffff);
 
-var row1letters = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"]
-var row2letters = ["a", "s", "d", "f", "g", "h", "j", "k", "l"]
-var row3letters = ["z", "x", "c", "v", "b", "n", "m"]
+
+var $1234 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="]
+var qwerty = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"]
+var asdf = ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"]
+var zxcv = ["z", "x", "c", "v", "b", "n", "m", ",", ".", "/"]
 var keys = {}
 
-for (var i = 0; i < row1letters.length; i++) {
-  var letter = row1letters[i];
+for (var i = 0; i < $1234.length; i++) {
+  var letter = $1234[i];
+  var geometry = new THREE.BoxGeometry( 1, .1, 1 );
+  var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
+  var cube = new THREE.Mesh( geometry, material );
+  var cubeEdges = new THREE.EdgesHelper( cube, 0xffffff);
+  scene.add( cube );
+  scene.add( cubeEdges );
+  cube.position.x = (i + 0.2 * i) -6.2;
+  cube.position.z = -6.0
+  keys[letter] = cube
+}
+
+for (var i = 0; i < qwerty.length; i++) {
+  var letter = qwerty[i];
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
   var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
   var cube = new THREE.Mesh( geometry, material );
@@ -41,12 +56,12 @@ for (var i = 0; i < row1letters.length; i++) {
   scene.add( cube );
   scene.add( cubeEdges );
   cube.position.x = (i + 0.2 * i) -5.6;
-  cube.position.z = -6.5
+  cube.position.z = -4.5
   keys[letter] = cube
 }
 
-for (var i = 0; i < row2letters.length; i++) {
-  var letter = row2letters[i];
+for (var i = 0; i < asdf.length; i++) {
+  var letter = asdf[i];
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
   var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
   var cube = new THREE.Mesh( geometry, material );
@@ -54,12 +69,12 @@ for (var i = 0; i < row2letters.length; i++) {
   scene.add( cube );
   scene.add( cubeEdges );
   cube.position.x = (i + 0.2 * i) -5;
-  cube.position.z = -5
+  cube.position.z = -3
   keys[letter] = cube
 }
 
-for (var i = 0; i < row3letters.length; i++) {
-  var letter = row3letters[i];
+for (var i = 0; i < zxcv.length; i++) {
+  var letter = zxcv[i];
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
   var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
   var cube = new THREE.Mesh( geometry, material );
@@ -67,7 +82,7 @@ for (var i = 0; i < row3letters.length; i++) {
   scene.add( cube );
   scene.add( cubeEdges );
   cube.position.x = (i + 0.2 * i) -4.4;
-  cube.position.z = -3.5
+  cube.position.z = -1.5
   console.log(cube)
   keys[letter] = cube
 }
@@ -77,13 +92,15 @@ $(document).on("keypress", function(e) {
   var cube = keys[letter]
   if (cube) {
     cube.scale.y += 1
+    cube.position.y += 0.05 
   }
 });
 
 
-// camera.position.z = 8;
-// camera.position.y = 6;
-camera.position.set(0,0,10);
+camera.position.z = 4;
+camera.position.y = 2.1;
+camera.position.x = 1;
+// camera.position.set(0,0,10);
 // camera.up = new THREE.Vector3(2,1,20);
 // camera.lookAt(new THREE.Vector3(0,0,0));
 
