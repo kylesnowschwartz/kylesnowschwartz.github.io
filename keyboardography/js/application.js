@@ -34,10 +34,13 @@ var asdf = ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"]
 var zxcv = ["z", "x", "c", "v", "b", "n", "m", ",", ".", "/"]
 var keys = {}
 
+
 for (var i = 0; i < $1234.length; i++) {
   var letter = $1234[i];
+  var letterimage = THREE.ImageUtils.loadTexture('./assets/images/computer_key_' + $1234[i] + '.png');
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
-  var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
+  // var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
+  var material = new THREE.MeshBasicMaterial( {map: letterimage} );
   var cube = new THREE.Mesh( geometry, material );
   var cubeEdges = new THREE.EdgesHelper( cube, 0xffffff);
   scene.add( cube );
@@ -49,8 +52,10 @@ for (var i = 0; i < $1234.length; i++) {
 
 for (var i = 0; i < qwerty.length; i++) {
   var letter = qwerty[i];
+  var letterimage = THREE.ImageUtils.loadTexture('./assets/images/computer_key_' + qwerty[i] + '.png');
+  var material = new THREE.MeshBasicMaterial( {map: letterimage} );
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
-  var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
+  // var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
   var cube = new THREE.Mesh( geometry, material );
   var cubeEdges = new THREE.EdgesHelper( cube, 0xffffff);
   scene.add( cube );
@@ -63,7 +68,9 @@ for (var i = 0; i < qwerty.length; i++) {
 for (var i = 0; i < asdf.length; i++) {
   var letter = asdf[i];
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
-  var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
+  var letterimage = THREE.ImageUtils.loadTexture('./assets/images/computer_key_' + asdf[i] + '.png');
+  var material = new THREE.MeshBasicMaterial( {map: letterimage} );
+  // var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
   var cube = new THREE.Mesh( geometry, material );
   var cubeEdges = new THREE.EdgesHelper( cube, 0xffffff);
   scene.add( cube );
@@ -76,7 +83,9 @@ for (var i = 0; i < asdf.length; i++) {
 for (var i = 0; i < zxcv.length; i++) {
   var letter = zxcv[i];
   var geometry = new THREE.BoxGeometry( 1, .1, 1 );
-  var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
+  var letterimage = THREE.ImageUtils.loadTexture('./assets/images/computer_key_' + zxcv[i] + '.png');
+  var material = new THREE.MeshBasicMaterial( {map: letterimage} );
+  // var material = new THREE.MeshBasicMaterial( {color: 0xd3d3d3} );
   var cube = new THREE.Mesh( geometry, material );
   var cubeEdges = new THREE.EdgesHelper( cube, 0xffffff);
   scene.add( cube );
@@ -98,12 +107,16 @@ $(document).on("keypress", function(e) {
 
 
 camera.position.z = 4;
-camera.position.y = 2.1;
+camera.position.y = 7;
 camera.position.x = 1;
 // camera.position.set(0,0,10);
 // camera.up = new THREE.Vector3(2,1,20);
 // camera.lookAt(new THREE.Vector3(0,0,0));
 
+console.log(camera)
+camera.rotation.x = -1 
+camera.rotation.y = 0.0 
+camera.rotation.z = 0.0 
 
 function render() {
   requestAnimationFrame( render );
