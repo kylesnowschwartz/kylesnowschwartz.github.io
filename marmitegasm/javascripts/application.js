@@ -9,10 +9,10 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
-camera.position.x = 0;
-camera.position.y = 0;
-camera.position.z = 2050;
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 15000);
+camera.position.x = 300;
+camera.position.y = 200;
+camera.position.z = 4000;
 
 const container = document.createElement('div');
 document.body.appendChild(container);
@@ -55,11 +55,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-// The clickable sphere (invisible white background sphere)
-const toastGeometry = new THREE.SphereGeometry(7000, 80, 80);
-const toastMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, side: THREE.DoubleSide });
-const toast = new THREE.Mesh(toastGeometry, toastMaterial);
-scene.add(toast);
+// Spawn distance - how far in front of camera jars appear
+const spawnDistance = 2000;
 
 // 3D grid matrix - evenly spaced black points for depth perception
 const gridSpacing = 500;
@@ -97,50 +94,52 @@ function onDocumentTouchStart(event) {
 }
 
 function onDocumentMouseDown(event) {
-  mouse.x = (event.clientX / renderer.domElement.width) * 2 - 1;
-  mouse.y = -(event.clientY / renderer.domElement.height) * 2 + 1;
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
 
-  const intersects = raycaster.intersectObjects([toast]);
-  if (intersects.length > 0) {
-    // Load textures using modern TextureLoader (relative paths work locally and on GitHub Pages)
-    const labelmap = textureLoader.load('images/marmitegasm_label2.jpg');
-    const topmap = textureLoader.load('images/cap_red.jpg');
-    const bottommap = textureLoader.load('images/bottom.jpg');
+  // Spawn jar at fixed distance along the ray direction from camera
+  const spawnPoint = new THREE.Vector3();
+  raycaster.ray.at(spawnDistance, spawnPoint);
 
-    const labelMaterial = new THREE.MeshBasicMaterial({ map: labelmap });
-    const topMaterial = new THREE.MeshBasicMaterial({ map: topmap });
-    const bottomMaterial = new THREE.MeshBasicMaterial({ map: bottommap });
+  // Load textures using modern TextureLoader (relative paths work locally and on GitHub Pages)
+  const labelmap = textureLoader.load('images/marmitegasm_label2.jpg');
+  const topmap = textureLoader.load('images/cap_red.jpg');
+  const bottommap = textureLoader.load('images/bottom.jpg');
 
-    // CylinderGeometry material groups in modern Three.js: [side, top, bottom]
-    const materials = [labelMaterial, topMaterial, bottomMaterial];
+  const labelMaterial = new THREE.MeshBasicMaterial({ map: labelmap });
+  const topMaterial = new THREE.MeshBasicMaterial({ map: topmap });
+  const bottomMaterial = new THREE.MeshBasicMaterial({ map: bottommap });
 
-    const geometry = new THREE.CylinderGeometry(75, 75, 150, 70, 5, false);
-    const marmite = new THREE.Mesh(geometry, materials);
+  // CylinderGeometry material groups in modern Three.js: [side, top, bottom]
+  const materials = [labelMaterial, topMaterial, bottomMaterial];
 
-    marmite.position.copy(intersects[0].point);
-    marmite.position.z += getRandomNumber(800, 1500);
-    marmite.initialPosition = [marmite.position.x, marmite.position.y, marmite.position.z];
+  const geometry = new THREE.CylinderGeometry(75, 75, 150, 70, 5, false);
+  const marmite = new THREE.Mesh(geometry, materials);
 
-    marmite.scale.set(2, 2, 2);
+  marmite.position.copy(spawnPoint);
+  marmite.initialPosition = [marmite.position.x, marmite.position.y, marmite.position.z];
 
-    // Rotation parameters
-    const rotationParams = [];
-    for (let i = 0; i < 3; i++) {
-      rotationParams.push(getRandomNumber(0.003, 0.0001));
-    }
-    marmite.rotationParams = rotationParams;
+  marmite.scale.set(2, 2, 2);
 
-    // Revolution/oscillation parameters
-    const revolutionParams = [];
-    for (let i = 0; i < 3; i++) {
-      revolutionParams.push([getRandomNumber(0.00009, 0.0003), getRandomNumber(500, 1000)]);
-    }
-    marmite.revolutionParams = revolutionParams;
-
-    marmites.push(marmite);
-    scene.add(marmite);
+  // Rotation parameters
+  const rotationParams = [];
+  for (let i = 0; i < 3; i++) {
+    rotationParams.push(getRandomNumber(0.003, 0.0001));
   }
+  marmite.rotationParams = rotationParams;
+
+  // Revolution/oscillation parameters
+  const revolutionParams = [];
+  for (let i = 0; i < 3; i++) {
+    revolutionParams.push([getRandomNumber(0.00009, 0.0003), getRandomNumber(500, 1000)]);
+  }
+  marmite.revolutionParams = revolutionParams;
+
+  marmite.spawnTime = Date.now();
+
+  marmites.push(marmite);
+  scene.add(marmite);
 }
 
 function onDocumentMouseDownShift(event) {
@@ -160,13 +159,15 @@ function render() {
   requestAnimationFrame(render);
 
   for (let i = 0; i < marmites.length; i++) {
-    marmites[i].rotation.x = Date.now() * marmites[i].rotationParams[0];
-    marmites[i].rotation.y = Date.now() * marmites[i].rotationParams[1];
-    marmites[i].rotation.z = Date.now() * marmites[i].rotationParams[2];
+    const elapsed = Date.now() - marmites[i].spawnTime;
 
-    marmites[i].position.x = Math.sin(Date.now() * marmites[i].revolutionParams[0][0]) * marmites[i].revolutionParams[0][1] + marmites[i].initialPosition[0];
-    marmites[i].position.y = Math.sin(Date.now() * marmites[i].revolutionParams[1][0]) * marmites[i].revolutionParams[1][1] + marmites[i].initialPosition[1];
-    marmites[i].position.z = Math.sin(Date.now() * marmites[i].revolutionParams[2][0]) * marmites[i].revolutionParams[2][1] + marmites[i].initialPosition[2];
+    marmites[i].rotation.x = elapsed * marmites[i].rotationParams[0];
+    marmites[i].rotation.y = elapsed * marmites[i].rotationParams[1];
+    marmites[i].rotation.z = elapsed * marmites[i].rotationParams[2];
+
+    marmites[i].position.x = Math.sin(elapsed * marmites[i].revolutionParams[0][0]) * marmites[i].revolutionParams[0][1] + marmites[i].initialPosition[0];
+    marmites[i].position.y = Math.sin(elapsed * marmites[i].revolutionParams[1][0]) * marmites[i].revolutionParams[1][1] + marmites[i].initialPosition[1];
+    marmites[i].position.z = Math.sin(elapsed * marmites[i].revolutionParams[2][0]) * marmites[i].revolutionParams[2][1] + marmites[i].initialPosition[2];
   }
 
   controls.update();
