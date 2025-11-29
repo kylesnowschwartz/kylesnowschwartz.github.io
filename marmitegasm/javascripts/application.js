@@ -35,6 +35,7 @@ volumeControl.innerHTML = `
       <path class="speaker-body" d="M11 5L6 9H2v6h4l5 4V5z"/>
       <path class="speaker-wave-1" d="M15.5 8.5c1.5 1.5 1.5 5.5 0 7"/>
       <path class="speaker-wave-2" d="M19 5c3 3 3 11 0 14"/>
+      <path class="speaker-mute-x" d="M15 9l6 6M21 9l-6 6" style="display: none;"/>
     </svg>
   </button>
 `;
@@ -56,10 +57,10 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 // Spawn distance - how far in front of camera jars appear
-const spawnDistance = 2000;
+const spawnDistance = 5000;
 
 // 3D grid matrix - evenly spaced black points for depth perception
-const gridSpacing = 500;
+const gridSpacing = 700;
 const gridExtent = 6000; // +/- extent on each axis
 const gridPoints = [];
 for (let x = -gridExtent; x <= gridExtent; x += gridSpacing) {
@@ -178,7 +179,15 @@ render();
 // Audio - note: modern browsers require user interaction before autoplay
 const audio = new Audio('https://kylesnowschwartz.github.io/marmitegasm/audio/danube.mp3');
 audio.loop = true;
-audio.volume = 0.5;
+
+// Load persisted audio preferences
+const storedVolume = localStorage.getItem('marmite-volume');
+const storedMuted = localStorage.getItem('marmite-muted');
+const initialVolume = storedVolume !== null ? parseFloat(storedVolume) : 0.5;
+const initialMuted = storedMuted === 'true';
+
+audio.volume = initialVolume;
+audio.muted = initialMuted;
 
 // Wire up volume controls
 const volumeTrack = document.querySelector('.volume-track');
@@ -186,7 +195,8 @@ const volumeBead = document.querySelector('.volume-bead');
 const muteBtn = document.querySelector('.mute-btn');
 const speakerWave1 = document.querySelector('.speaker-wave-1');
 const speakerWave2 = document.querySelector('.speaker-wave-2');
-let savedVolume = 0.5;
+const speakerMuteX = document.querySelector('.speaker-mute-x');
+let savedVolume = initialVolume;
 let isDragging = false;
 
 function updateBeadPosition(vol) {
@@ -201,12 +211,15 @@ function updateSpeakerIcon(vol, muted) {
   if (muted || vol === 0) {
     speakerWave1.style.display = 'none';
     speakerWave2.style.display = 'none';
+    speakerMuteX.style.display = 'block';
   } else if (vol < 0.5) {
     speakerWave1.style.display = 'block';
     speakerWave2.style.display = 'none';
+    speakerMuteX.style.display = 'none';
   } else {
     speakerWave1.style.display = 'block';
     speakerWave2.style.display = 'block';
+    speakerMuteX.style.display = 'none';
   }
 }
 
@@ -219,10 +232,15 @@ function setVolumeFromY(clientY) {
   savedVolume = vol;
   updateBeadPosition(vol);
   updateSpeakerIcon(vol, false);
+  localStorage.setItem('marmite-volume', vol);
+  localStorage.setItem('marmite-muted', 'false');
 }
 
-// Initialize bead position
-setTimeout(() => updateBeadPosition(0.5), 0);
+// Initialize UI to reflect stored state
+setTimeout(() => {
+  updateBeadPosition(initialVolume);
+  updateSpeakerIcon(initialVolume, initialMuted);
+}, 0);
 
 volumeTrack.addEventListener('mousedown', (e) => {
   e.stopPropagation();
@@ -265,10 +283,12 @@ muteBtn.addEventListener('click', (e) => {
     audio.volume = savedVolume || 0.5;
     updateBeadPosition(audio.volume);
     updateSpeakerIcon(audio.volume, false);
+    localStorage.setItem('marmite-muted', 'false');
   } else {
     savedVolume = audio.volume;
     audio.muted = true;
     updateSpeakerIcon(0, true);
+    localStorage.setItem('marmite-muted', 'true');
   }
 });
 
