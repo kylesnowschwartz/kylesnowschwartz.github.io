@@ -108,6 +108,11 @@ function onDocumentMouseDown(event) {
   const topmap = textureLoader.load('images/cap_red.jpg');
   const bottommap = textureLoader.load('images/bottom.jpg');
 
+  // Mark textures as sRGB to prevent washed-out colors
+  labelmap.colorSpace = THREE.SRGBColorSpace;
+  topmap.colorSpace = THREE.SRGBColorSpace;
+  bottommap.colorSpace = THREE.SRGBColorSpace;
+
   const labelMaterial = new THREE.MeshBasicMaterial({ map: labelmap });
   const topMaterial = new THREE.MeshBasicMaterial({ map: topmap });
   const bottomMaterial = new THREE.MeshBasicMaterial({ map: bottommap });
