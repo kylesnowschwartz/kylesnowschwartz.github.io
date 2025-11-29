@@ -1,22 +1,24 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Marmitegasm</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/application.css">
   </head>
   <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="stylesheets/application.css">
-
-    <script src="javascripts/three.min.js"></script>
-    <script src="javascripts/OrbitControls.js"></script>
-    <script src="javascripts/renderers/Projector.js"></script>
-    <script src="javascripts/renderers/CanvasRenderer.js"></script>
-    <script src="javascripts/application.js"></script>
     <script src="javascripts/nav.js"></script>
-    <div class=""></div>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+    </script>
+
+    <script type="module" src="javascripts/application.js"></script>
   </body>
 </html>
-
-
