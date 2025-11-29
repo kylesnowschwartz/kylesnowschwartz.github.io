@@ -19,9 +19,26 @@ openNav.className = 'open_nav';
 openNav.innerHTML = '<a class="open_nav">team marmite</a>';
 container.appendChild(openNav);
 
+// Volume control - Swiss style: single line, single bead
+const volumeControl = document.createElement('div');
+volumeControl.className = 'volume-control';
+volumeControl.innerHTML = `
+  <div class="volume-track">
+    <div class="volume-bead"></div>
+  </div>
+  <button class="mute-btn" title="Toggle mute">
+    <svg class="speaker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path class="speaker-body" d="M11 5L6 9H2v6h4l5 4V5z"/>
+      <path class="speaker-wave-1" d="M15.5 8.5c1.5 1.5 1.5 5.5 0 7"/>
+      <path class="speaker-wave-2" d="M19 5c3 3 3 11 0 14"/>
+    </svg>
+  </button>
+`;
+container.appendChild(volumeControl);
+
 const navjar = document.createElement('nav');
 navjar.style.textAlign = 'center';
-navjar.innerHTML = '<p><a href="https://github.com/SkwynethPaltrow" target="_blank">will</a></p><p><a href="https://github.com/hoanganhdinhtrinh" target="_blank">hoang</a></p><p><a href="https://github.com/kylesnowschwartz" target="_blank">kyle</a></p><p><a href="https://github.com/teaiheb" target="_blank">te aihe</a></p> <p class="close_nav">(close)</p>';
+navjar.innerHTML = '<p><a href="https://www.linkedin.com/in/sklenars" target="_blank">will</a></p><p><a href="https://github.com/kylesnowschwartz" target="_blank">kyle</a></p><p><a href="https://www.linkedin.com/in/teaihebutler" target="_blank">te aihe</a></p> <p class="close_nav">(close)</p>';
 document.body.appendChild(navjar);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -142,6 +159,104 @@ function getRandomNumber(min, max) {
 
 // Audio - note: modern browsers require user interaction before autoplay
 const audio = new Audio('https://kylesnowschwartz.github.io/marmitegasm/audio/danube.mp3');
+audio.loop = true;
+audio.volume = 0.5;
+
+// Wire up volume controls
+const volumeTrack = document.querySelector('.volume-track');
+const volumeBead = document.querySelector('.volume-bead');
+const muteBtn = document.querySelector('.mute-btn');
+const speakerWave1 = document.querySelector('.speaker-wave-1');
+const speakerWave2 = document.querySelector('.speaker-wave-2');
+let savedVolume = 0.5;
+let isDragging = false;
+
+function updateBeadPosition(vol) {
+  // vol is 0-1, position bead from bottom (0) to top (1)
+  const trackHeight = volumeTrack.offsetHeight;
+  const beadHeight = volumeBead.offsetHeight;
+  const maxY = trackHeight - beadHeight;
+  volumeBead.style.top = (maxY - (vol * maxY)) + 'px';
+}
+
+function updateSpeakerIcon(vol, muted) {
+  if (muted || vol === 0) {
+    speakerWave1.style.display = 'none';
+    speakerWave2.style.display = 'none';
+  } else if (vol < 0.5) {
+    speakerWave1.style.display = 'block';
+    speakerWave2.style.display = 'none';
+  } else {
+    speakerWave1.style.display = 'block';
+    speakerWave2.style.display = 'block';
+  }
+}
+
+function setVolumeFromY(clientY) {
+  const rect = volumeTrack.getBoundingClientRect();
+  const y = clientY - rect.top;
+  const vol = 1 - Math.max(0, Math.min(1, y / rect.height));
+  audio.volume = vol;
+  audio.muted = false;
+  savedVolume = vol;
+  updateBeadPosition(vol);
+  updateSpeakerIcon(vol, false);
+}
+
+// Initialize bead position
+setTimeout(() => updateBeadPosition(0.5), 0);
+
+volumeTrack.addEventListener('mousedown', (e) => {
+  e.stopPropagation();
+  isDragging = true;
+  setVolumeFromY(e.clientY);
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    setVolumeFromY(e.clientY);
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+// Touch support
+volumeTrack.addEventListener('touchstart', (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  isDragging = true;
+  setVolumeFromY(e.touches[0].clientY);
+});
+
+document.addEventListener('touchmove', (e) => {
+  if (isDragging) {
+    setVolumeFromY(e.touches[0].clientY);
+  }
+});
+
+document.addEventListener('touchend', () => {
+  isDragging = false;
+});
+
+muteBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (audio.muted || audio.volume === 0) {
+    audio.muted = false;
+    audio.volume = savedVolume || 0.5;
+    updateBeadPosition(audio.volume);
+    updateSpeakerIcon(audio.volume, false);
+  } else {
+    savedVolume = audio.volume;
+    audio.muted = true;
+    updateSpeakerIcon(0, true);
+  }
+});
+
+muteBtn.addEventListener('mousedown', (e) => e.stopPropagation());
+muteBtn.addEventListener('touchstart', (e) => e.stopPropagation());
+
 document.addEventListener('click', () => {
   audio.play().catch(() => {});
 }, { once: true });
