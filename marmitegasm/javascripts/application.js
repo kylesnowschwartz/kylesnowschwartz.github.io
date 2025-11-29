@@ -5,6 +5,10 @@ const scene = new THREE.Scene();
 const marmites = [];
 const textureLoader = new THREE.TextureLoader();
 
+function getRandomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
 camera.position.x = 0;
 camera.position.y = 0;
@@ -56,6 +60,23 @@ const toastGeometry = new THREE.SphereGeometry(7000, 80, 80);
 const toastMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, side: THREE.DoubleSide });
 const toast = new THREE.Mesh(toastGeometry, toastMaterial);
 scene.add(toast);
+
+// 3D grid matrix - evenly spaced black points for depth perception
+const gridSpacing = 500;
+const gridExtent = 6000; // +/- extent on each axis
+const gridPoints = [];
+for (let x = -gridExtent; x <= gridExtent; x += gridSpacing) {
+  for (let y = -gridExtent; y <= gridExtent; y += gridSpacing) {
+    for (let z = -gridExtent; z <= gridExtent; z += gridSpacing) {
+      gridPoints.push(x, y, z);
+    }
+  }
+}
+const gridGeometry = new THREE.BufferGeometry();
+gridGeometry.setAttribute('position', new THREE.Float32BufferAttribute(gridPoints, 3));
+const gridMaterial = new THREE.PointsMaterial({ color: 0x000000, size: 2, sizeAttenuation: true });
+const grid = new THREE.Points(gridGeometry, gridMaterial);
+scene.add(grid);
 
 document.addEventListener('mousedown', onDocumentMouseDown, false);
 document.addEventListener('mousedown', onDocumentMouseDownShift, false);
@@ -152,10 +173,6 @@ function render() {
   renderer.render(scene, camera);
 }
 render();
-
-function getRandomNumber(min, max) {
-  return Math.random() * (max - min) + min;
-}
 
 // Audio - note: modern browsers require user interaction before autoplay
 const audio = new Audio('https://kylesnowschwartz.github.io/marmitegasm/audio/danube.mp3');
