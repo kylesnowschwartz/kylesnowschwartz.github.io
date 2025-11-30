@@ -9,18 +9,26 @@ Interactive 3D art piece - floating Marmite jars in an infinite space.
 - Vanilla JS, no build step
 - GitHub Pages deployment (push to master = live)
 
+## Local Development
+
+```bash
+# From repo root, run:
+python3 -m http.server 8080
+
+# Then visit: http://localhost:8080/marmitegasm/
+```
+
 ## Architecture
 
 ```
 marmitegasm/
   index.html          # Entry point with importmap for Three.js
   javascripts/
-    application.js    # Main Three.js scene, all logic
-    nav.js            # jQuery nav toggle
+    application.js    # Main Three.js scene, nav, audio - all logic
   stylesheets/
     application.css   # Swiss-style minimal CSS
   images/             # Jar textures (label, cap, bottom)
-  audio/              # Background music (danube.mp3)
+  audio/              # Background music (danube_compressed.mp3)
 ```
 
 ## Key Concepts
