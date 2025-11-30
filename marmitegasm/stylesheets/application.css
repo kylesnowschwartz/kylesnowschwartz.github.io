@@ -99,11 +99,13 @@ p, a {
 	background: none;
 	border: none;
 	cursor: pointer;
-	padding: 4px;
+	padding: 12px;
 	margin-top: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
 }
 
 .speaker-icon {

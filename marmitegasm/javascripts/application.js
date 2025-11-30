@@ -438,9 +438,14 @@ muteBtn.addEventListener('click', (e) => {
 muteBtn.addEventListener('mousedown', (e) => e.stopPropagation());
 muteBtn.addEventListener('touchstart', (e) => e.stopPropagation());
 
-document.addEventListener('click', () => {
+// Start audio on first user interaction (works on both desktop and mobile)
+function startAudio() {
   audio.play().catch(() => {});
-}, { once: true });
+  document.removeEventListener('click', startAudio);
+  document.removeEventListener('touchstart', startAudio);
+}
+document.addEventListener('click', startAudio);
+document.addEventListener('touchstart', startAudio);
 
 // Nav toggle
 document.querySelector('.open_nav').addEventListener('click', () => {
