@@ -40,22 +40,28 @@ openNav.innerHTML = '<a class="open_nav">team marmite</a>';
 container.appendChild(openNav);
 
 // Volume control - Swiss style: single line, single bead
+// iOS Safari doesn't allow programmatic volume/mute control, so hide on iOS
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 const volumeControl = document.createElement('div');
 volumeControl.className = 'volume-control';
-volumeControl.innerHTML = `
-  <div class="volume-track">
-    <div class="volume-bead"></div>
-  </div>
-  <button class="mute-btn" title="Toggle mute">
-    <svg class="speaker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path class="speaker-body" d="M11 5L6 9H2v6h4l5 4V5z"/>
-      <path class="speaker-wave-1" d="M15.5 8.5c1.5 1.5 1.5 5.5 0 7"/>
-      <path class="speaker-wave-2" d="M19 5c3 3 3 11 0 14"/>
-      <path class="speaker-mute-x" d="M15 9l6 6M21 9l-6 6"/>
-    </svg>
-  </button>
-`;
-container.appendChild(volumeControl);
+if (!isIOS) {
+  volumeControl.innerHTML = `
+    <div class="volume-track">
+      <div class="volume-bead"></div>
+    </div>
+    <button class="mute-btn" title="Toggle mute">
+      <svg class="speaker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path class="speaker-body" d="M11 5L6 9H2v6h4l5 4V5z"/>
+        <path class="speaker-wave-1" d="M15.5 8.5c1.5 1.5 1.5 5.5 0 7"/>
+        <path class="speaker-wave-2" d="M19 5c3 3 3 11 0 14"/>
+        <path class="speaker-mute-x" d="M15 9l6 6M21 9l-6 6"/>
+      </svg>
+    </button>
+  `;
+  container.appendChild(volumeControl);
+}
 
 const navjar = document.createElement('nav');
 navjar.innerHTML = '<p><a href="https://www.linkedin.com/in/sklenars" target="_blank">will</a></p><p><a href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103/" target="_blank">kyle</a></p><p><a href="https://www.linkedin.com/in/teaihebutler" target="_blank">te aihe</a></p> <p class="close_nav">(close)</p>';
@@ -114,6 +120,10 @@ function onWindowResize() {
 }
 
 function onDocumentTouchStart(event) {
+  // Start audio before preventDefault - browsers require user gesture for autoplay
+  if (audio.paused) {
+    audio.play().catch(() => {});
+  }
   event.preventDefault();
   lastTouchTime = Date.now();
   mouseDownTime = Date.now();
@@ -331,112 +341,125 @@ const initialMuted = storedMuted === 'true';
 audio.volume = initialVolume;
 audio.muted = initialMuted;
 
-// Wire up volume controls
-const volumeTrack = document.querySelector('.volume-track');
-const volumeBead = document.querySelector('.volume-bead');
-const muteBtn = document.querySelector('.mute-btn');
-const speakerWave1 = document.querySelector('.speaker-wave-1');
-const speakerWave2 = document.querySelector('.speaker-wave-2');
-const speakerMuteX = document.querySelector('.speaker-mute-x');
-let savedVolume = initialVolume;
-let isDragging = false;
+// Wire up volume controls (skip on iOS where they don't work)
+if (!isIOS) {
+  const volumeTrack = document.querySelector('.volume-track');
+  const volumeBead = document.querySelector('.volume-bead');
+  const muteBtn = document.querySelector('.mute-btn');
+  const speakerWave1 = document.querySelector('.speaker-wave-1');
+  const speakerWave2 = document.querySelector('.speaker-wave-2');
+  const speakerMuteX = document.querySelector('.speaker-mute-x');
+  let savedVolume = initialVolume;
+  let isDragging = false;
 
-function updateBeadPosition(vol) {
-  // vol is 0-1, position bead from bottom (0) to top (1)
-  const trackHeight = volumeTrack.offsetHeight;
-  const beadHeight = volumeBead.offsetHeight;
-  const maxY = trackHeight - beadHeight;
-  volumeBead.style.top = (maxY - (vol * maxY)) + 'px';
-}
-
-function updateSpeakerIcon(vol, muted) {
-  if (muted || vol === 0) {
-    speakerWave1.style.display = 'none';
-    speakerWave2.style.display = 'none';
-    speakerMuteX.style.display = 'block';
-  } else if (vol < 0.5) {
-    speakerWave1.style.display = 'block';
-    speakerWave2.style.display = 'none';
-    speakerMuteX.style.display = 'none';
-  } else {
-    speakerWave1.style.display = 'block';
-    speakerWave2.style.display = 'block';
-    speakerMuteX.style.display = 'none';
+  function updateBeadPosition(vol) {
+    // vol is 0-1, position bead from bottom (0) to top (1)
+    const trackHeight = volumeTrack.offsetHeight;
+    const beadHeight = volumeBead.offsetHeight;
+    const maxY = trackHeight - beadHeight;
+    volumeBead.style.top = (maxY - (vol * maxY)) + 'px';
   }
-}
 
-function setVolumeFromY(clientY) {
-  const rect = volumeTrack.getBoundingClientRect();
-  const y = clientY - rect.top;
-  const vol = 1 - Math.max(0, Math.min(1, y / rect.height));
-  audio.volume = vol;
-  audio.muted = false;
-  savedVolume = vol;
-  updateBeadPosition(vol);
-  updateSpeakerIcon(vol, false);
-  localStorage.setItem('marmite-volume', vol);
-  localStorage.setItem('marmite-muted', 'false');
-}
-
-// Initialize UI to reflect stored state
-setTimeout(() => {
-  updateBeadPosition(initialVolume);
-  updateSpeakerIcon(initialVolume, initialMuted);
-}, 0);
-
-volumeTrack.addEventListener('mousedown', (e) => {
-  e.stopPropagation();
-  isDragging = true;
-  setVolumeFromY(e.clientY);
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (isDragging) {
-    setVolumeFromY(e.clientY);
+  function updateSpeakerIcon(vol, muted) {
+    if (muted || vol === 0) {
+      speakerWave1.style.display = 'none';
+      speakerWave2.style.display = 'none';
+      speakerMuteX.style.display = 'block';
+    } else if (vol < 0.5) {
+      speakerWave1.style.display = 'block';
+      speakerWave2.style.display = 'none';
+      speakerMuteX.style.display = 'none';
+    } else {
+      speakerWave1.style.display = 'block';
+      speakerWave2.style.display = 'block';
+      speakerMuteX.style.display = 'none';
+    }
   }
-});
 
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-});
-
-// Touch support for volume slider
-volumeTrack.addEventListener('touchstart', (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-  isDragging = true;
-  setVolumeFromY(e.touches[0].clientY);
-}, { passive: false });
-
-document.addEventListener('touchmove', (e) => {
-  if (isDragging) {
-    e.preventDefault();
-    setVolumeFromY(e.touches[0].clientY);
-  }
-}, { passive: false });
-
-document.addEventListener('touchend', () => {
-  isDragging = false;
-}, { passive: true });
-
-muteBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (audio.muted || audio.volume === 0) {
+  function setVolumeFromY(clientY) {
+    const rect = volumeTrack.getBoundingClientRect();
+    const y = clientY - rect.top;
+    const vol = 1 - Math.max(0, Math.min(1, y / rect.height));
+    audio.volume = vol;
     audio.muted = false;
-    audio.volume = savedVolume || 0.5;
-    updateBeadPosition(audio.volume);
-    updateSpeakerIcon(audio.volume, false);
+    savedVolume = vol;
+    updateBeadPosition(vol);
+    updateSpeakerIcon(vol, false);
+    localStorage.setItem('marmite-volume', vol);
     localStorage.setItem('marmite-muted', 'false');
-  } else {
-    savedVolume = audio.volume;
-    audio.muted = true;
-    updateSpeakerIcon(0, true);
-    localStorage.setItem('marmite-muted', 'true');
   }
-});
 
-muteBtn.addEventListener('mousedown', (e) => e.stopPropagation());
-muteBtn.addEventListener('touchstart', (e) => e.stopPropagation());
+  // Initialize UI to reflect stored state
+  setTimeout(() => {
+    updateBeadPosition(initialVolume);
+    updateSpeakerIcon(initialVolume, initialMuted);
+  }, 0);
+
+  volumeTrack.addEventListener('mousedown', (e) => {
+    e.stopPropagation();
+    isDragging = true;
+    setVolumeFromY(e.clientY);
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      setVolumeFromY(e.clientY);
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  // Touch support for volume slider
+  volumeTrack.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    isDragging = true;
+    setVolumeFromY(e.touches[0].clientY);
+  }, { passive: false });
+
+  document.addEventListener('touchmove', (e) => {
+    if (isDragging) {
+      e.preventDefault();
+      setVolumeFromY(e.touches[0].clientY);
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', () => {
+    isDragging = false;
+  }, { passive: true });
+
+  function toggleMute() {
+    if (audio.muted || audio.volume === 0) {
+      audio.muted = false;
+      audio.volume = savedVolume || 0.5;
+      updateBeadPosition(audio.volume);
+      updateSpeakerIcon(audio.volume, false);
+      localStorage.setItem('marmite-muted', 'false');
+    } else {
+      savedVolume = audio.volume;
+      audio.muted = true;
+      updateSpeakerIcon(0, true);
+      localStorage.setItem('marmite-muted', 'true');
+    }
+  }
+
+  muteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMute();
+  });
+
+  // Touch support - touchend is more reliable than click on mobile
+  muteBtn.addEventListener('touchend', (e) => {
+    e.stopPropagation();
+    e.preventDefault(); // Prevent ghost click
+    toggleMute();
+  });
+
+  muteBtn.addEventListener('mousedown', (e) => e.stopPropagation());
+  muteBtn.addEventListener('touchstart', (e) => e.stopPropagation());
+}
 
 // Start audio on first user interaction (works on both desktop and mobile)
 function startAudio() {
