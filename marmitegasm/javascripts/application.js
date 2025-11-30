@@ -306,7 +306,7 @@ function render() {
 render();
 
 // Audio - note: modern browsers require user interaction before autoplay
-const audio = new Audio('https://kylesnowschwartz.github.io/marmitegasm/audio/danube.mp3');
+const audio = new Audio('audio/danube_compressed.mp3');
 audio.loop = true;
 
 // Load persisted audio preferences
