@@ -26,7 +26,7 @@ python3 -m http.server 3000
 │   ├── snow.txt
 │   └── schwartz.txt
 ├── img/                # Images (legacy, kept for potential reuse)
-├── marmitegasm/        # Standalone project
+├── marmiteroids/       # Standalone project
 ├── SPECIFICATION.md    # Design spec and decisions
 └── CLAUDE.md           # This file
 ```

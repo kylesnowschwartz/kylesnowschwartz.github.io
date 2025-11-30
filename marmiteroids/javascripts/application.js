@@ -12,7 +12,7 @@ function getRandomNumber(min, max) {
 // Shared geometry and materials for all jars (massive memory savings)
 const sharedGeometry = new THREE.CylinderGeometry(75, 75, 150, 70, 5, false);
 
-const labelTexture = textureLoader.load('images/marmitegasm_label2.jpg');
+const labelTexture = textureLoader.load('images/marmiteroids_label2.jpg');
 const topTexture = textureLoader.load('images/cap_red.jpg');
 const bottomTexture = textureLoader.load('images/bottom.jpg');
 labelTexture.colorSpace = THREE.SRGBColorSpace;

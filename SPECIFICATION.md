@@ -121,7 +121,7 @@ Vertical list with terminal aesthetic:
 ```
 PROJECTS
 ─────────
-> marmitegasm
+> marmiteroids
 > project-two
 > project-three
 ```
@@ -154,7 +154,7 @@ Plain HTML + CSS. No frameworks, no bundlers, no npm. This is a personal site, n
 ├── css/
 │   └── style.css       # All styles (replaces old multi-file setup)
 ├── img/                # Keep existing images
-├── marmitegasm/        # Existing project (preserved)
+├── marmiteroids/       # Existing project (preserved)
 ├── CLAUDE.md           # Dev instructions
 ├── SPECIFICATION.md    # This file
 └── README.md           # Existing
@@ -170,7 +170,7 @@ Modern browsers only. No IE11, no ancient Safari. Use CSS Grid, custom propertie
 
 1. **Accent color**: Red, teal, or coral?
 2. **About panel content**: What goes in WHO/WHAT/WHERE?
-3. **Additional projects**: What besides marmitegasm?
+3. **Additional projects**: What besides marmiteroids?
 4. **Social links**: Any? Where to place them?
 5. **Footer**: Needed? Minimal copyright line?
 

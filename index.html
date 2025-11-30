@@ -543,8 +543,8 @@
             <li><a href="https://github.com/kylesnowschwartz/SimpleClaude">SimpleClaude</a></li>
             <li><a href="https://github.com/kylesnowschwartz/claude-bumper-lanes">Claude-Bumper-Lanes</a></li>
             <li><a href="https://github.com/kylesnowschwartz/claude-handoff">Claude-Handoff</a></li>
-            <li><a href="marmitegasm/" class="marmite-link"><span class="caret">></span><canvas id="marmite-jar"
-                  width="50" height="50"></canvas><span class="sr-only">marmitegasm</span></a></li>
+            <li><a href="marmiteroids/" class="marmite-link"><span class="caret">></span><canvas id="marmite-jar"
+                  width="50" height="50"></canvas><span class="sr-only">marmiteroids</span></a></li>
           </ul>
         </details>
       </aside>
@@ -623,14 +623,14 @@
     renderer.setSize(size, size);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Jar geometry - same proportions as marmitegasm
+    // Jar geometry - same proportions as marmiteroids
     const geometry = new THREE.CylinderGeometry(0.75, 0.75, 1.5, 32);
 
-    // Load textures from marmitegasm folder
+    // Load textures from marmiteroids folder
     const textureLoader = new THREE.TextureLoader();
-    const labelTexture = textureLoader.load('marmitegasm/images/marmitegasm_label2.jpg');
-    const topTexture = textureLoader.load('marmitegasm/images/cap_red.jpg');
-    const bottomTexture = textureLoader.load('marmitegasm/images/bottom.jpg');
+    const labelTexture = textureLoader.load('marmiteroids/images/marmiteroids_label2.jpg');
+    const topTexture = textureLoader.load('marmiteroids/images/cap_red.jpg');
+    const bottomTexture = textureLoader.load('marmiteroids/images/bottom.jpg');
     labelTexture.colorSpace = THREE.SRGBColorSpace;
     topTexture.colorSpace = THREE.SRGBColorSpace;
     bottomTexture.colorSpace = THREE.SRGBColorSpace;

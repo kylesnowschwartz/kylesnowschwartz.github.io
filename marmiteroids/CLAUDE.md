@@ -1,4 +1,4 @@
-# Marmitegasm
+# Marmiteroids
 
 Interactive 3D art piece - floating Marmite jars in an infinite space.
 
@@ -15,13 +15,13 @@ Interactive 3D art piece - floating Marmite jars in an infinite space.
 # From repo root, run:
 python3 -m http.server 8080
 
-# Then visit: http://localhost:8080/marmitegasm/
+# Then visit: http://localhost:8080/marmiteroids/
 ```
 
 ## Architecture
 
 ```
-marmitegasm/
+marmiteroids/
   index.html          # Entry point with importmap for Three.js
   javascripts/
     application.js    # Main Three.js scene, nav, audio - all logic
