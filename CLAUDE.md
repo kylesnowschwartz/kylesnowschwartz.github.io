@@ -20,10 +20,12 @@ python3 -m http.server 3000
 
 ```
 /
-├── index.html          # Main site (single page)
-├── css/
-│   └── style.css       # All styles
-├── img/                # Images
+├── index.html          # Main site (single page, styles inline)
+├── ascii/              # ASCII art text files (loaded via JS)
+│   ├── kyle.txt
+│   ├── snow.txt
+│   └── schwartz.txt
+├── img/                # Images (legacy, kept for potential reuse)
 ├── marmitegasm/        # Standalone project
 ├── SPECIFICATION.md    # Design spec and decisions
 └── CLAUDE.md           # This file
@@ -48,32 +50,18 @@ See `SPECIFICATION.md` for full design documentation including:
 
 ## Generating Figlet ASCII Art
 
-If you need to regenerate the ASCII banner:
+ASCII art lives in `/ascii/*.txt` and is loaded via JS at runtime. To regenerate:
 
 ```bash
-# Install figlet (macOS)
-brew install figlet
+# Using rich-pyfiglet (via uvx)
+uvx rich-pyfiglet "KYLE" --font ansi_shadow > ascii/kyle.txt
+uvx rich-pyfiglet "SNOW" --font ansi_shadow > ascii/snow.txt
 
-# Generate options
-figlet -f banner "KYLE"
-figlet -f slant "KYLE"
-figlet -f block "KYLE"
+# Note: SCHWARTZ may need wider terminal or manual cleanup
+COLUMNS=200 uvx rich-pyfiglet "SCHWARTZ" --font ansi_shadow > ascii/schwartz.txt
 
 # List available fonts
-figlet -l
+uvx rich-pyfiglet --list
 ```
 
-Current banner uses "ANSI Shadow" style (manually crafted).
-
-## Legacy Files
-
-The following files are from the old site and can be removed once the redesign is complete:
-
-- `about.html`
-- `contact.html`
-- `css/main.css`
-- `css/normalize.css`
-- `css/responsive.css`
-- `jquery.js`
-
-Keep `marmitegasm/` - it's a standalone project.
+Current banner uses "ANSI Shadow" font with staggered indentation via CSS.
