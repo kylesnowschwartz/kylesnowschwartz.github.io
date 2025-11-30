@@ -9,6 +9,22 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+// Shared geometry and materials for all jars (massive memory savings)
+const sharedGeometry = new THREE.CylinderGeometry(75, 75, 150, 70, 5, false);
+
+const labelTexture = textureLoader.load('images/marmitegasm_label2.jpg');
+const topTexture = textureLoader.load('images/cap_red.jpg');
+const bottomTexture = textureLoader.load('images/bottom.jpg');
+labelTexture.colorSpace = THREE.SRGBColorSpace;
+topTexture.colorSpace = THREE.SRGBColorSpace;
+bottomTexture.colorSpace = THREE.SRGBColorSpace;
+
+const sharedMaterials = [
+  new THREE.MeshBasicMaterial({ map: labelTexture }),
+  new THREE.MeshBasicMaterial({ map: topTexture }),
+  new THREE.MeshBasicMaterial({ map: bottomTexture })
+];
+
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 100000);
 camera.position.x = 300;
 camera.position.y = 200;
@@ -131,25 +147,8 @@ function spawnMarmite(clientX, clientY, isShot) {
   const spawnPoint = new THREE.Vector3();
   raycaster.ray.at(spawnDistance, spawnPoint);
 
-  // Load textures using modern TextureLoader (relative paths work locally and on GitHub Pages)
-  const labelmap = textureLoader.load('images/marmitegasm_label2.jpg');
-  const topmap = textureLoader.load('images/cap_red.jpg');
-  const bottommap = textureLoader.load('images/bottom.jpg');
-
-  // Mark textures as sRGB to prevent washed-out colors
-  labelmap.colorSpace = THREE.SRGBColorSpace;
-  topmap.colorSpace = THREE.SRGBColorSpace;
-  bottommap.colorSpace = THREE.SRGBColorSpace;
-
-  const labelMaterial = new THREE.MeshBasicMaterial({ map: labelmap });
-  const topMaterial = new THREE.MeshBasicMaterial({ map: topmap });
-  const bottomMaterial = new THREE.MeshBasicMaterial({ map: bottommap });
-
-  // CylinderGeometry material groups in modern Three.js: [side, top, bottom]
-  const materials = [labelMaterial, topMaterial, bottomMaterial];
-
-  const geometry = new THREE.CylinderGeometry(75, 75, 150, 70, 5, false);
-  const marmite = new THREE.Mesh(geometry, materials);
+  // Use shared geometry and materials for all jars
+  const marmite = new THREE.Mesh(sharedGeometry, sharedMaterials);
 
   marmite.position.copy(spawnPoint);
   marmite.initialPosition = [marmite.position.x, marmite.position.y, marmite.position.z];
