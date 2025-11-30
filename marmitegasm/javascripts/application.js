@@ -427,3 +427,18 @@ muteBtn.addEventListener('touchstart', (e) => e.stopPropagation());
 document.addEventListener('click', () => {
   audio.play().catch(() => {});
 }, { once: true });
+
+// Nav toggle
+document.querySelector('.open_nav').addEventListener('click', () => {
+  const nav = document.querySelector('nav');
+  nav.style.transition = 'top 0.4s ease';
+  nav.style.top = '0';
+  document.querySelector('.open_nav').style.display = 'none';
+});
+
+document.querySelector('.close_nav').addEventListener('click', () => {
+  const nav = document.querySelector('nav');
+  nav.style.transition = 'top 0.4s ease';
+  nav.style.top = '-240px';
+  document.querySelector('.open_nav').style.display = 'block';
+});
