@@ -182,7 +182,7 @@
       top: 0;
       bottom: 0;
       right: 0;
-      left: max(-100vw, -100px);
+      left: max(-100vw, -20px);
       background: var(--color-surface);
       z-index: -1;
     }
@@ -201,6 +201,15 @@
       height: 1px;
       background: var(--color-border);
       margin-bottom: 1.5rem;
+    }
+
+    /* Projects dropdown - desktop: always open, no toggle visible */
+    .projects-dropdown {
+      display: contents;
+    }
+
+    .projects-toggle {
+      display: none;
     }
 
     .project-list {
@@ -402,14 +411,52 @@
         position: static;
       }
 
-      .project-list {
+      /* Hide desktop sidebar title/divider on mobile */
+      .sidebar-title,
+      .sidebar-divider {
+        display: none;
+      }
+
+      /* Mobile dropdown styling */
+      .projects-dropdown {
+        display: block;
+      }
+
+      .projects-toggle {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem 1.5rem;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        padding: 0.5rem 0;
+        list-style: none;
+      }
+
+      .projects-toggle::-webkit-details-marker {
+        display: none;
+      }
+
+      .projects-toggle .hamburger-icon {
+        color: var(--color-accent);
+        transition: transform 0.2s ease;
+      }
+
+      .projects-dropdown[open] .hamburger-icon {
+        transform: rotate(90deg);
+      }
+
+      .projects-toggle:hover {
+        color: var(--color-text);
+      }
+
+      .project-list {
+        padding: 1rem 0 0 0;
       }
 
       .project-list li {
-        margin-bottom: 0;
+        margin-bottom: 0.5rem;
       }
 
       .content {
@@ -478,13 +525,24 @@
       <aside class="sidebar">
         <h2 class="sidebar-title">Projects</h2>
         <div class="sidebar-divider"></div>
-        <ul class="project-list">
-          <li><a href="https://github.com/kylesnowschwartz/SimpleClaude">SimpleClaude</a></li>
-          <li><a href="https://github.com/kylesnowschwartz/claude-bumper-lanes">Claude-Bumper-Lanes</a></li>
-          <li><a href="https://github.com/kylesnowschwartz/claude-handoff">Claude-Handoff</a></li>
-          <li><a href="marmitegasm/" class="marmite-link"><span class="caret">></span><canvas id="marmite-jar"
-                width="50" height="50"></canvas><span class="sr-only">marmitegasm</span></a></li>
-        </ul>
+        <details class="projects-dropdown" open>
+          <summary class="projects-toggle" aria-label="Toggle projects menu">
+            <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+            <span>Projects</span>
+          </summary>
+          <ul class="project-list">
+            <li><a href="https://github.com/kylesnowschwartz/SimpleClaude">SimpleClaude</a></li>
+            <li><a href="https://github.com/kylesnowschwartz/claude-bumper-lanes">Claude-Bumper-Lanes</a></li>
+            <li><a href="https://github.com/kylesnowschwartz/claude-handoff">Claude-Handoff</a></li>
+            <li><a href="marmitegasm/" class="marmite-link"><span class="caret">></span><canvas id="marmite-jar"
+                  width="50" height="50"></canvas><span class="sr-only">marmitegasm</span></a></li>
+          </ul>
+        </details>
       </aside>
 
       <section class="content">
@@ -492,7 +550,7 @@
           <article class="about-panel">
             <h3 class="panel-header">Who</h3>
             <div class="panel-content">
-              <p>Kyle Snow Schwartz. Software engineer, occasional photographer, serial traveler.</p>
+              <p>Kyle Snow Schwartz. Software engineer, occasional pizzaiolo, shaver of yaks.</p>
               <p>I build things for the web and sometimes wander off to take photos of sheep.</p>
             </div>
           </article>
@@ -503,14 +561,14 @@
               <p>Currently building things at <a href="https://elements.envato.com/">Envato Elements</a>. Previously at
                 <a href="https://www.powershop.co.nz/">Powershop</a>.
               </p>
-              <p>I care about clean code, simple systems, and not overengineering.</p>
+              <p>I care about clean code, humanism, and developer-experience.</p>
             </div>
           </article>
 
           <article class="about-panel">
             <h3 class="panel-header">Where</h3>
             <div class="panel-content">
-              <p>Based in New Zealand. The timezone is brutal but the mountains are worth it.</p>
+              <p>Based in New Zealand since before it was cool.</p>
               <p>Find me on <a href="https://github.com/kylesnowschwartz">GitHub</a> or <a
                   href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">LinkedIn</a>.</p>
             </div>
