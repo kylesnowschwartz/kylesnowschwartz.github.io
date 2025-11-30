@@ -101,28 +101,53 @@
 
     .ascii-banner {
       font-family: var(--font-mono);
-      font-size: clamp(0.4rem, 1.5vw, 0.75rem);
+      font-size: clamp(0.4rem, 1.2vw, 0.7rem);
       line-height: 1.2;
       color: var(--color-text);
       white-space: pre;
       letter-spacing: -0.05em;
       user-select: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 2ch;
     }
 
     .ascii-banner .name {
-      display: block;
+      display: inline-block;
     }
 
-    .ascii-banner .name-kyle {
-      padding-left: 0;
+    /* Staggered tiers when wrapped (narrow screens) */
+    @media (max-width: 1100px) {
+      .ascii-banner {
+        display: block;
+      }
+
+      .ascii-banner .name {
+        display: block;
+      }
+
+      .ascii-banner .name-kyle {
+        padding-left: 0;
+      }
+
+      .ascii-banner .name-snow {
+        padding-left: 8ch;
+      }
+
+      .ascii-banner .name-schwartz {
+        padding-left: 16ch;
+      }
     }
 
-    .ascii-banner .name-snow {
-      padding-left: 1ch;
-    }
+    /* Even narrower - reduce stagger to fit */
+    @media (max-width: 600px) {
+      .ascii-banner .name-snow {
+        padding-left: 4ch;
+      }
 
-    .ascii-banner .name-schwartz {
-      padding-left: 2ch;
+      .ascii-banner .name-schwartz {
+        padding-left: 8ch;
+      }
     }
 
     .tagline {
