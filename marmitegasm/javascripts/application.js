@@ -9,7 +9,7 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 15000);
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 100000);
 camera.position.x = 300;
 camera.position.y = 200;
 camera.position.z = 4000;
@@ -53,15 +53,22 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 container.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.maxDistance = 20000; // Prevent zooming out beyond the point cloud
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 // Spawn distance - how far in front of camera jars appear
 const spawnDistance = 5000;
+const shootSpeed = 50; // Units per frame for shot jars
+const shootHoldTime = 800; // ms to hold for shooting
+
+// Track mouse state for shoot mechanic
+let mouseDownTime = 0;
+let mouseDownEvent = null;
 
 // 3D grid matrix - evenly spaced black points for depth perception
-const gridSpacing = 700;
-const gridExtent = 6000; // +/- extent on each axis
+const gridSpacing = 1400;
+const gridExtent = 30000; // +/- extent on each axis
 const gridPoints = [];
 for (let x = -gridExtent; x <= gridExtent; x += gridSpacing) {
   for (let y = -gridExtent; y <= gridExtent; y += gridSpacing) {
@@ -72,13 +79,15 @@ for (let x = -gridExtent; x <= gridExtent; x += gridSpacing) {
 }
 const gridGeometry = new THREE.BufferGeometry();
 gridGeometry.setAttribute('position', new THREE.Float32BufferAttribute(gridPoints, 3));
-const gridMaterial = new THREE.PointsMaterial({ color: 0x000000, size: 2, sizeAttenuation: true });
+const gridMaterial = new THREE.PointsMaterial({ color: 0x000000, size: 6, sizeAttenuation: true });
 const grid = new THREE.Points(gridGeometry, gridMaterial);
 scene.add(grid);
 
 document.addEventListener('mousedown', onDocumentMouseDown, false);
+document.addEventListener('mouseup', onDocumentMouseUp, false);
 document.addEventListener('mousedown', onDocumentMouseDownShift, false);
 document.addEventListener('touchstart', onDocumentTouchStart, false);
+document.addEventListener('touchend', onDocumentTouchEnd, false);
 window.addEventListener('resize', onWindowResize, false);
 
 function onWindowResize() {
@@ -94,9 +103,28 @@ function onDocumentTouchStart(event) {
   onDocumentMouseDown(event);
 }
 
+function onDocumentTouchEnd(event) {
+  onDocumentMouseUp(event);
+}
+
 function onDocumentMouseDown(event) {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  mouseDownTime = Date.now();
+  mouseDownEvent = { clientX: event.clientX, clientY: event.clientY };
+}
+
+function onDocumentMouseUp(event) {
+  if (!mouseDownEvent) return;
+
+  const holdDuration = Date.now() - mouseDownTime;
+  const isShot = holdDuration >= shootHoldTime;
+
+  spawnMarmite(mouseDownEvent.clientX, mouseDownEvent.clientY, isShot);
+  mouseDownEvent = null;
+}
+
+function spawnMarmite(clientX, clientY, isShot) {
+  mouse.x = (clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
 
   // Spawn jar at fixed distance along the ray direction from camera
@@ -144,6 +172,14 @@ function onDocumentMouseDown(event) {
 
   marmite.spawnTime = Date.now();
 
+  // If shot, give it velocity along the ray direction (away from camera)
+  if (isShot) {
+    const direction = raycaster.ray.direction.clone();
+    marmite.velocity = direction.multiplyScalar(shootSpeed);
+  } else {
+    marmite.velocity = null;
+  }
+
   marmites.push(marmite);
   scene.add(marmite);
 }
@@ -161,19 +197,108 @@ function onDocumentMouseDownShift(event) {
   }
 }
 
+// Jar collision radius (cylinder is 75 radius * 2 scale = 150, use slightly less for visual overlap)
+const jarCollisionRadius = 280;
+
 function render() {
   requestAnimationFrame(render);
 
+  // Update positions first
   for (let i = 0; i < marmites.length; i++) {
-    const elapsed = Date.now() - marmites[i].spawnTime;
+    const marmite = marmites[i];
+    const elapsed = Date.now() - marmite.spawnTime;
 
-    marmites[i].rotation.x = elapsed * marmites[i].rotationParams[0];
-    marmites[i].rotation.y = elapsed * marmites[i].rotationParams[1];
-    marmites[i].rotation.z = elapsed * marmites[i].rotationParams[2];
+    marmite.rotation.x = elapsed * marmite.rotationParams[0];
+    marmite.rotation.y = elapsed * marmite.rotationParams[1];
+    marmite.rotation.z = elapsed * marmite.rotationParams[2];
 
-    marmites[i].position.x = Math.sin(elapsed * marmites[i].revolutionParams[0][0]) * marmites[i].revolutionParams[0][1] + marmites[i].initialPosition[0];
-    marmites[i].position.y = Math.sin(elapsed * marmites[i].revolutionParams[1][0]) * marmites[i].revolutionParams[1][1] + marmites[i].initialPosition[1];
-    marmites[i].position.z = Math.sin(elapsed * marmites[i].revolutionParams[2][0]) * marmites[i].revolutionParams[2][1] + marmites[i].initialPosition[2];
+    // Shot jars fly away, regular jars oscillate
+    if (marmite.velocity) {
+      marmite.initialPosition[0] += marmite.velocity.x;
+      marmite.initialPosition[1] += marmite.velocity.y;
+      marmite.initialPosition[2] += marmite.velocity.z;
+
+      // Bounce off grid boundaries
+      if (marmite.initialPosition[0] > gridExtent || marmite.initialPosition[0] < -gridExtent) {
+        marmite.velocity.x *= -1;
+        marmite.initialPosition[0] = Math.max(-gridExtent, Math.min(gridExtent, marmite.initialPosition[0]));
+      }
+      if (marmite.initialPosition[1] > gridExtent || marmite.initialPosition[1] < -gridExtent) {
+        marmite.velocity.y *= -1;
+        marmite.initialPosition[1] = Math.max(-gridExtent, Math.min(gridExtent, marmite.initialPosition[1]));
+      }
+      if (marmite.initialPosition[2] > gridExtent || marmite.initialPosition[2] < -gridExtent) {
+        marmite.velocity.z *= -1;
+        marmite.initialPosition[2] = Math.max(-gridExtent, Math.min(gridExtent, marmite.initialPosition[2]));
+      }
+    }
+
+    marmite.position.x = Math.sin(elapsed * marmite.revolutionParams[0][0]) * marmite.revolutionParams[0][1] + marmite.initialPosition[0];
+    marmite.position.y = Math.sin(elapsed * marmite.revolutionParams[1][0]) * marmite.revolutionParams[1][1] + marmite.initialPosition[1];
+    marmite.position.z = Math.sin(elapsed * marmite.revolutionParams[2][0]) * marmite.revolutionParams[2][1] + marmite.initialPosition[2];
+  }
+
+  // Check jar-to-jar collisions (only between moving jars)
+  for (let i = 0; i < marmites.length; i++) {
+    for (let j = i + 1; j < marmites.length; j++) {
+      const a = marmites[i];
+      const b = marmites[j];
+
+      // Skip if neither jar is moving
+      if (!a.velocity && !b.velocity) continue;
+
+      const dx = a.position.x - b.position.x;
+      const dy = a.position.y - b.position.y;
+      const dz = a.position.z - b.position.z;
+      const distSq = dx * dx + dy * dy + dz * dz;
+      const minDist = jarCollisionRadius * 2;
+
+      if (distSq < minDist * minDist) {
+        const dist = Math.sqrt(distSq);
+        // Normalize collision axis
+        const nx = dx / dist;
+        const ny = dy / dist;
+        const nz = dz / dist;
+
+        // If one jar is stationary, give it velocity from the collision
+        if (a.velocity && !b.velocity) {
+          // Transfer momentum to stationary jar
+          const speed = Math.sqrt(a.velocity.x ** 2 + a.velocity.y ** 2 + a.velocity.z ** 2);
+          b.velocity = new THREE.Vector3(nx * speed * -0.8, ny * speed * -0.8, nz * speed * -0.8);
+          a.velocity.x *= -0.8;
+          a.velocity.y *= -0.8;
+          a.velocity.z *= -0.8;
+        } else if (!a.velocity && b.velocity) {
+          // Transfer momentum to stationary jar
+          const speed = Math.sqrt(b.velocity.x ** 2 + b.velocity.y ** 2 + b.velocity.z ** 2);
+          a.velocity = new THREE.Vector3(nx * speed * 0.8, ny * speed * 0.8, nz * speed * 0.8);
+          b.velocity.x *= -0.8;
+          b.velocity.y *= -0.8;
+          b.velocity.z *= -0.8;
+        } else {
+          // Both moving - swap velocity components along collision axis
+          const aVelDotN = a.velocity.x * nx + a.velocity.y * ny + a.velocity.z * nz;
+          const bVelDotN = b.velocity.x * nx + b.velocity.y * ny + b.velocity.z * nz;
+
+          a.velocity.x += (bVelDotN - aVelDotN) * nx;
+          a.velocity.y += (bVelDotN - aVelDotN) * ny;
+          a.velocity.z += (bVelDotN - aVelDotN) * nz;
+
+          b.velocity.x += (aVelDotN - bVelDotN) * nx;
+          b.velocity.y += (aVelDotN - bVelDotN) * ny;
+          b.velocity.z += (aVelDotN - bVelDotN) * nz;
+        }
+
+        // Separate jars so they don't stick together
+        const overlap = minDist - dist;
+        a.initialPosition[0] += nx * overlap * 0.5;
+        a.initialPosition[1] += ny * overlap * 0.5;
+        a.initialPosition[2] += nz * overlap * 0.5;
+        b.initialPosition[0] -= nx * overlap * 0.5;
+        b.initialPosition[1] -= ny * overlap * 0.5;
+        b.initialPosition[2] -= nz * overlap * 0.5;
+      }
+    }
   }
 
   controls.update();
