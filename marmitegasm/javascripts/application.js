@@ -98,6 +98,8 @@ const gridMaterial = new THREE.PointsMaterial({ color: 0x000000, size: 6, sizeAt
 const grid = new THREE.Points(gridGeometry, gridMaterial);
 scene.add(grid);
 
+let lastTouchTime = 0;
+
 document.addEventListener('mousedown', onDocumentMouseDown, false);
 document.addEventListener('mouseup', onDocumentMouseUp, false);
 document.addEventListener('mousedown', onDocumentMouseDownShift, false);
@@ -113,21 +115,33 @@ function onWindowResize() {
 
 function onDocumentTouchStart(event) {
   event.preventDefault();
-  event.clientX = event.touches[0].clientX;
-  event.clientY = event.touches[0].clientY;
-  onDocumentMouseDown(event);
+  lastTouchTime = Date.now();
+  mouseDownTime = Date.now();
+  mouseDownEvent = { clientX: event.touches[0].clientX, clientY: event.touches[0].clientY };
 }
 
 function onDocumentTouchEnd(event) {
-  onDocumentMouseUp(event);
+  event.preventDefault();
+  if (!mouseDownEvent) return;
+
+  const holdDuration = Date.now() - mouseDownTime;
+  const isShot = holdDuration >= shootHoldTime;
+
+  spawnMarmite(mouseDownEvent.clientX, mouseDownEvent.clientY, isShot);
+  mouseDownEvent = null;
 }
 
 function onDocumentMouseDown(event) {
+  // Ignore mouse events shortly after touch (prevents double-fire on mobile)
+  if (Date.now() - lastTouchTime < 500) return;
+
   mouseDownTime = Date.now();
   mouseDownEvent = { clientX: event.clientX, clientY: event.clientY };
 }
 
 function onDocumentMouseUp(event) {
+  // Ignore mouse events shortly after touch (prevents double-fire on mobile)
+  if (Date.now() - lastTouchTime < 500) return;
   if (!mouseDownEvent) return;
 
   const holdDuration = Date.now() - mouseDownTime;
@@ -386,23 +400,24 @@ document.addEventListener('mouseup', () => {
   isDragging = false;
 });
 
-// Touch support
+// Touch support for volume slider
 volumeTrack.addEventListener('touchstart', (e) => {
   e.stopPropagation();
   e.preventDefault();
   isDragging = true;
   setVolumeFromY(e.touches[0].clientY);
-});
+}, { passive: false });
 
 document.addEventListener('touchmove', (e) => {
   if (isDragging) {
+    e.preventDefault();
     setVolumeFromY(e.touches[0].clientY);
   }
-});
+}, { passive: false });
 
 document.addEventListener('touchend', () => {
   isDragging = false;
-});
+}, { passive: true });
 
 muteBtn.addEventListener('click', (e) => {
   e.stopPropagation();

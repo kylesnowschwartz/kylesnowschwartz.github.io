@@ -63,11 +63,21 @@ p, a {
 }
 
 .volume-track {
-	width: 1px;
+	width: 44px;
 	height: 80px;
-	background: #000;
 	position: relative;
 	cursor: pointer;
+}
+
+/* Visible 1px line centered in touch target */
+.volume-track::before {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: #000;
 }
 
 .volume-bead {
