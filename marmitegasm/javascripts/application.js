@@ -471,12 +471,24 @@ document.addEventListener('click', startAudio);
 document.addEventListener('touchstart', startAudio);
 
 // Nav toggle
-document.querySelector('.open_nav').addEventListener('click', () => {
+function showNav() {
   document.querySelector('nav').style.top = '0';
   document.querySelector('.open_nav').style.display = 'none';
-});
+}
 
-document.querySelector('.close_nav').addEventListener('click', () => {
+function hideNav() {
   document.querySelector('nav').style.top = '-240px';
   document.querySelector('.open_nav').style.display = 'block';
+}
+
+document.querySelector('.open_nav').addEventListener('click', showNav);
+document.querySelector('.open_nav').addEventListener('touchend', (e) => {
+  e.preventDefault();
+  showNav();
+});
+
+document.querySelector('.close_nav').addEventListener('click', hideNav);
+document.querySelector('.close_nav').addEventListener('touchend', (e) => {
+  e.preventDefault();
+  hideNav();
 });
