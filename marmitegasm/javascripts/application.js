@@ -51,15 +51,14 @@ volumeControl.innerHTML = `
       <path class="speaker-body" d="M11 5L6 9H2v6h4l5 4V5z"/>
       <path class="speaker-wave-1" d="M15.5 8.5c1.5 1.5 1.5 5.5 0 7"/>
       <path class="speaker-wave-2" d="M19 5c3 3 3 11 0 14"/>
-      <path class="speaker-mute-x" d="M15 9l6 6M21 9l-6 6" style="display: none;"/>
+      <path class="speaker-mute-x" d="M15 9l6 6M21 9l-6 6"/>
     </svg>
   </button>
 `;
 container.appendChild(volumeControl);
 
 const navjar = document.createElement('nav');
-navjar.style.textAlign = 'center';
-navjar.innerHTML = '<p><a href="https://www.linkedin.com/in/sklenars" target="_blank">will</a></p><p><a href="https://github.com/kylesnowschwartz" target="_blank">kyle</a></p><p><a href="https://www.linkedin.com/in/teaihebutler" target="_blank">te aihe</a></p> <p class="close_nav">(close)</p>';
+navjar.innerHTML = '<p><a href="https://www.linkedin.com/in/sklenars" target="_blank">will</a></p><p><a href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103/" target="_blank">kyle</a></p><p><a href="https://www.linkedin.com/in/teaihebutler" target="_blank">te aihe</a></p> <p class="close_nav">(close)</p>';
 document.body.appendChild(navjar);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -430,15 +429,11 @@ document.addEventListener('click', () => {
 
 // Nav toggle
 document.querySelector('.open_nav').addEventListener('click', () => {
-  const nav = document.querySelector('nav');
-  nav.style.transition = 'top 0.4s ease';
-  nav.style.top = '0';
+  document.querySelector('nav').style.top = '0';
   document.querySelector('.open_nav').style.display = 'none';
 });
 
 document.querySelector('.close_nav').addEventListener('click', () => {
-  const nav = document.querySelector('nav');
-  nav.style.transition = 'top 0.4s ease';
-  nav.style.top = '-240px';
+  document.querySelector('nav').style.top = '-240px';
   document.querySelector('.open_nav').style.display = 'block';
 });

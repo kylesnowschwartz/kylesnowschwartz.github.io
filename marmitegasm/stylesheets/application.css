@@ -33,19 +33,19 @@ nav {
 	opacity: 0.9;
 	padding-top: 40px;
 	z-index: 5;
+	text-align: center;
+	transition: top 0.4s ease;
 }
 
 .open_nav {
-	margin-left: 5px;
-
-}
-
-.nav_item {
-	margin-top: auto;
+	position: fixed;
+	top: 2px;
+	left: 10px;
+	z-index: 10;
+	cursor: pointer;
 }
 
 p, a {
-	left: 5px;
 	font-family: 'Courier New';
 }
 
@@ -53,8 +53,9 @@ p, a {
 
 .volume-control {
 	position: fixed;
-	top: 30px;
+	top: 50%;
 	left: 12px;
+	transform: translateY(-50%);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -108,4 +109,8 @@ p, a {
 
 .speaker-body {
 	fill: #000 !important;
+}
+
+.speaker-mute-x {
+	display: none;
 }
