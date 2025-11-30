@@ -4,7 +4,7 @@ Interactive 3D art piece - floating Marmite jars in an infinite space.
 
 ## Tech Stack
 
-- **Three.js r170** via ES6 module imports (CDN)
+- **Three.js** via ES6 module imports (CDN)
 - **OrbitControls** for camera manipulation
 - Vanilla JS, no build step
 - GitHub Pages deployment (push to master = live)
