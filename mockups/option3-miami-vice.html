@@ -4,33 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kyle Snow Schwartz</title>
+  <title>Option 3: Miami Vice / Vaporwave Light</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
     rel="stylesheet">
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-    }
-  }
-  </script>
   <style>
     :root {
-      /* Base palette - Light gray + neon */
-      --color-bg: #F0F0F5;
-      --color-surface: #FAFAFA;
-      --color-text: #1A1A2E;
-      --color-text-muted: #4A4A5A;
-      --color-border: #D0D0DA;
+      /* Option 3: Miami Vice / Vaporwave Light */
+      --color-bg: #FFF0F5;
+      --color-bg-alt: #F0FFFF;
+      --color-surface: #FFFFFF;
+      --color-text: #2D2D44;
+      --color-text-muted: #5A5A70;
+      --color-border: #E8D8E8;
 
-      /* Neon accents */
-      --color-accent: #FF204E;
-      --color-accent-hover: #E01A45;
-      --color-accent-secondary: #00FFDE;
-      --color-accent-tertiary: #4300FF;
+      /* 80s pastels + neon */
+      --color-accent: #FF69B4;
+      --color-accent-hover: #FF4DA6;
+      --color-accent-secondary: #00CED1;
+      --color-accent-tertiary: #9370DB;
 
       /* Typography */
       --font-mono: 'Share Tech Mono', monospace;
@@ -52,19 +46,18 @@
 
     html {
       font-size: 16px;
-      scroll-behavior: smooth;
     }
 
     body {
       font-family: var(--font-sans);
-      background: var(--color-bg);
+      background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
       color: var(--color-text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
     }
 
-    /* Subtle scanline texture - very light for that retro hint */
+    /* Subtle scanline texture */
     body::before {
       content: '';
       position: fixed;
@@ -75,8 +68,8 @@
       background: repeating-linear-gradient(0deg,
           transparent,
           transparent 2px,
-          rgba(0, 0, 0, 0.01) 2px,
-          rgba(0, 0, 0, 0.01) 4px);
+          rgba(255, 105, 180, 0.02) 2px,
+          rgba(255, 105, 180, 0.02) 4px);
       pointer-events: none;
       z-index: 1000;
     }
@@ -87,13 +80,16 @@
       padding: 0 var(--gap);
     }
 
-    /* === THEME BANNER === */
-    .theme-banner {
-      height: 4px;
-      background: linear-gradient(90deg, var(--color-accent-tertiary), var(--color-accent));
+    .theme-label {
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-secondary));
+      color: white;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
-    /* === HEADER / BANNER === */
     header {
       padding: 3rem 0 2rem;
       border-bottom: 1px solid var(--color-border);
@@ -106,23 +102,6 @@
       color: var(--color-text);
       white-space: pre;
       letter-spacing: -0.05em;
-      user-select: none;
-    }
-
-    .ascii-banner .name {
-      display: block;
-    }
-
-    .ascii-banner .name-kyle {
-      padding-left: 0;
-    }
-
-    .ascii-banner .name-snow {
-      padding-left: 1ch;
-    }
-
-    .ascii-banner .name-schwartz {
-      padding-left: 2ch;
     }
 
     .tagline {
@@ -137,29 +116,15 @@
       color: var(--color-accent);
     }
 
-    /* === MAIN LAYOUT === */
     main {
       display: grid;
       grid-template-columns: var(--sidebar-width) 1fr;
       min-height: calc(100vh - 200px);
     }
 
-    /* === SIDEBAR / PROJECTS === */
     .sidebar {
       border-right: 1px solid var(--color-border);
       padding: 2rem 1.5rem 2rem 0;
-      position: relative;
-    }
-
-    .sidebar::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: max(-100vw, -100px);
-      background: var(--color-surface);
-      z-index: -1;
     }
 
     .sidebar-title {
@@ -174,7 +139,7 @@
     .sidebar-divider {
       width: 100%;
       height: 1px;
-      background: var(--color-border);
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-secondary));
       margin-bottom: 1.5rem;
     }
 
@@ -213,59 +178,10 @@
       opacity: 1;
     }
 
-    /* Marmite jar icon */
-    .marmite-link {
-      display: block;
-      padding: 0;
-      transition: padding-left 0.2s ease;
-    }
-
-    .marmite-link::before {
-      display: none;
-    }
-
-    .marmite-link:hover {
-      padding-left: 0.5rem;
-    }
-
-    .marmite-link .caret {
-      color: var(--color-accent);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      font-family: var(--font-mono);
-      font-size: 1rem;
-      vertical-align: middle;
-      margin-right: 0.25rem;
-    }
-
-    .marmite-link:hover .caret {
-      opacity: 1;
-    }
-
-    .marmite-link canvas {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    /* Visually hidden but accessible to screen readers */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    /* === CONTENT AREA === */
     .content {
       padding: 2rem 0 2rem 2rem;
     }
 
-    /* === ABOUT PANELS === */
     .about-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -280,8 +196,8 @@
     }
 
     .about-panel:hover {
-      border-color: var(--color-accent-secondary);
-      box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.15);
     }
 
     .panel-header {
@@ -289,7 +205,7 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--color-accent-tertiary);
+      color: var(--color-accent);
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -300,7 +216,7 @@
       content: '';
       width: 24px;
       height: 1px;
-      background: var(--color-accent-tertiary);
+      background: linear-gradient(90deg, var(--color-accent), var(--color-accent-secondary));
     }
 
     .panel-content {
@@ -318,17 +234,43 @@
     }
 
     .panel-content a {
-      color: var(--color-accent);
+      color: var(--color-accent-secondary);
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.2s ease;
     }
 
     .panel-content a:hover {
-      border-bottom-color: var(--color-accent);
+      border-bottom-color: var(--color-accent-secondary);
     }
 
-    /* === FOOTER === */
+    /* Color swatches demo */
+    .swatches {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    .swatch {
+      text-align: center;
+    }
+
+    .swatch-color {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .swatch-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--color-text-muted);
+    }
+
     footer {
       border-top: 1px solid var(--color-border);
       padding: 2rem 0;
@@ -364,7 +306,6 @@
       color: var(--color-accent);
     }
 
-    /* === RESPONSIVE === */
     @media (max-width: 900px) {
       main {
         grid-template-columns: 1fr;
@@ -374,17 +315,6 @@
         border-right: none;
         border-bottom: 1px solid var(--color-border);
         padding: 1.5rem 0;
-        position: static;
-      }
-
-      .project-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem 1.5rem;
-      }
-
-      .project-list li {
-        margin-bottom: 0;
       }
 
       .content {
@@ -395,54 +325,21 @@
         grid-template-columns: 1fr;
       }
     }
-
-    @media (max-width: 600px) {
-      :root {
-        --gap: 1rem;
-      }
-
-      .ascii-banner {
-        font-size: 0.35rem;
-      }
-
-      header {
-        padding: 2rem 0 1.5rem;
-      }
-
-      .footer-content {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-    }
-
-    /* === FOCUS STATES === */
-    a:focus-visible {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 4px;
-    }
-
-    /* === REDUCED MOTION === */
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
   </style>
 </head>
 
 <body>
-  <div class="theme-banner"></div>
+  <div class="theme-label">Option 3: Miami Vice / Vaporwave Light</div>
+
   <header>
     <div class="container">
       <div class="ascii-banner" aria-label="Kyle Snow Schwartz">
-        <span class="name name-kyle" data-src="ascii/kyle.txt"></span>
-        <span class="name name-snow" data-src="ascii/snow.txt"></span>
-        <span class="name name-schwartz" data-src="ascii/schwartz.txt"></span>
+<span class="name name-kyle">██╗  ██╗██╗   ██╗██╗     ███████╗
+██║ ██╔╝╚██╗ ██╔╝██║     ██╔════╝
+█████╔╝  ╚████╔╝ ██║     █████╗
+██╔═██╗   ╚██╔╝  ██║     ██╔══╝
+██║  ██╗   ██║   ███████╗███████╗
+╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝</span>
       </div>
       <p class="tagline"><span>//</span> human. builder. traveler.</p>
     </div>
@@ -454,11 +351,10 @@
         <h2 class="sidebar-title">Projects</h2>
         <div class="sidebar-divider"></div>
         <ul class="project-list">
-          <li><a href="https://github.com/kylesnowschwartz/SimpleClaude">SimpleClaude</a></li>
-          <li><a href="https://github.com/kylesnowschwartz/claude-bumper-lanes">Claude-Bumper-Lanes</a></li>
-          <li><a href="https://github.com/kylesnowschwartz/claude-handoff">Claude-Handoff</a></li>
-          <li><a href="marmitegasm/" class="marmite-link"><span class="caret">></span><canvas id="marmite-jar"
-                width="50" height="50"></canvas><span class="sr-only">marmitegasm</span></a></li>
+          <li><a href="#">SimpleClaude</a></li>
+          <li><a href="#">Claude-Bumper-Lanes</a></li>
+          <li><a href="#">Claude-Handoff</a></li>
+          <li><a href="#">marmitegasm</a></li>
         </ul>
       </aside>
 
@@ -475,9 +371,7 @@
           <article class="about-panel">
             <h3 class="panel-header">What</h3>
             <div class="panel-content">
-              <p>Currently building things at <a href="https://elements.envato.com/">Envato Elements</a>. Previously at
-                <a href="https://www.powershop.co.nz/">Powershop</a>.
-              </p>
+              <p>Currently building things at <a href="#">Envato Elements</a>. Previously at <a href="#">Powershop</a>.</p>
               <p>I care about clean code, simple systems, and not overengineering.</p>
             </div>
           </article>
@@ -486,10 +380,32 @@
             <h3 class="panel-header">Where</h3>
             <div class="panel-content">
               <p>Based in New Zealand. The timezone is brutal but the mountains are worth it.</p>
-              <p>Find me on <a href="https://github.com/kylesnowschwartz">GitHub</a> or <a
-                  href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">LinkedIn</a>.</p>
+              <p>Find me on <a href="#">GitHub</a> or <a href="#">LinkedIn</a>.</p>
             </div>
           </article>
+        </div>
+
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-color" style="background: linear-gradient(135deg, #FFF0F5, #F0FFFF);"></div>
+            <div class="swatch-label">gradient<br>bg</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #2D2D44;"></div>
+            <div class="swatch-label">#2D2D44<br>text</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #FF69B4;"></div>
+            <div class="swatch-label">#FF69B4<br>hot pink</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #00CED1;"></div>
+            <div class="swatch-label">#00CED1<br>turquoise</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #9370DB;"></div>
+            <div class="swatch-label">#9370DB<br>purple</div>
+          </div>
         </div>
       </section>
     </main>
@@ -500,71 +416,12 @@
       <div class="footer-content">
         <p>&copy; 2025 kyle snow schwartz</p>
         <nav class="social-links">
-          <a href="https://github.com/kylesnowschwartz">github</a>
-          <a href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">linkedin</a>
+          <a href="#">github</a>
+          <a href="#">linkedin</a>
         </nav>
       </div>
     </div>
   </footer>
-
-  <script>
-    // Load ASCII art from external files
-    document.querySelectorAll('.ascii-banner [data-src]').forEach(async (el) => {
-      try {
-        const response = await fetch(el.dataset.src);
-        if (response.ok) {
-          el.textContent = await response.text();
-        }
-      } catch (e) {
-        console.warn('Failed to load ASCII art:', el.dataset.src);
-      }
-    });
-  </script>
-
-  <script type="module">
-    // Spinning Marmite jar icon
-    import * as THREE from 'three';
-
-    const canvas = document.getElementById('marmite-jar');
-    const size = 50;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-    camera.position.z = 4;
-
-    const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
-    renderer.setSize(size, size);
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    // Jar geometry - same proportions as marmitegasm
-    const geometry = new THREE.CylinderGeometry(0.75, 0.75, 1.5, 32);
-
-    // Load textures from marmitegasm folder
-    const textureLoader = new THREE.TextureLoader();
-    const labelTexture = textureLoader.load('marmitegasm/images/marmitegasm_label2.jpg');
-    const topTexture = textureLoader.load('marmitegasm/images/cap_red.jpg');
-    const bottomTexture = textureLoader.load('marmitegasm/images/bottom.jpg');
-    labelTexture.colorSpace = THREE.SRGBColorSpace;
-    topTexture.colorSpace = THREE.SRGBColorSpace;
-    bottomTexture.colorSpace = THREE.SRGBColorSpace;
-
-    const materials = [
-      new THREE.MeshBasicMaterial({map: labelTexture}),
-      new THREE.MeshBasicMaterial({map: topTexture}),
-      new THREE.MeshBasicMaterial({map: bottomTexture})
-    ];
-
-    const jar = new THREE.Mesh(geometry, materials);
-    jar.rotation.x = 0.3; // Tilt slightly for better view
-    scene.add(jar);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      jar.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    }
-    animate();
-  </script>
 </body>
 
 </html>

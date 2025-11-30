@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Option 4: Dark Accent Zones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* Option 4: Light base with Dark Accent Zones */
+      --color-bg: #faf9f7;
+      --color-text: #1a1a1a;
+      --color-text-muted: #666666;
+      --color-border: #e0e0e0;
+
+      /* Dark zone colors */
+      --color-dark-bg: #1A1A2E;
+      --color-dark-surface: #16213E;
+      --color-dark-text: #FAFAFA;
+
+      /* Neon accents (shine in dark zones) */
+      --color-accent: #00FFDE;
+      --color-accent-hover: #00E0C4;
+      --color-accent-secondary: #FF3EA5;
+      --color-accent-tertiary: #FFE66D;
+
+      /* Light mode accent (more subdued) */
+      --color-light-accent: #0d9488;
+
+      /* Typography */
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-sans: 'Instrument Sans', sans-serif;
+
+      /* Layout */
+      --sidebar-width: 200px;
+      --container-max: 1200px;
+      --gap: 2rem;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* Subtle scanline texture */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.01) 2px,
+          rgba(0, 0, 0, 0.01) 4px);
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--gap);
+    }
+
+    .theme-label {
+      background: var(--color-dark-bg);
+      color: var(--color-accent);
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    header {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .ascii-banner {
+      font-family: var(--font-mono);
+      font-size: clamp(0.4rem, 1.5vw, 0.75rem);
+      line-height: 1.2;
+      color: var(--color-text);
+      white-space: pre;
+      letter-spacing: -0.05em;
+    }
+
+    .tagline {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      margin-top: 1.5rem;
+      text-transform: lowercase;
+    }
+
+    .tagline span {
+      color: var(--color-light-accent);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: calc(100vh - 200px);
+    }
+
+    /* DARK ZONE: Sidebar */
+    .sidebar {
+      background: var(--color-dark-bg);
+      color: var(--color-dark-text);
+      padding: 2rem 1.5rem;
+      margin-left: calc(-1 * var(--gap));
+    }
+
+    .sidebar-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--color-accent);
+      opacity: 0.3;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-list {
+      list-style: none;
+    }
+
+    .project-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    .project-list a {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      padding: 0.25rem 0;
+      transition: color 0.2s ease, padding-left 0.2s ease;
+    }
+
+    .project-list a::before {
+      content: '>';
+      margin-right: 0.5rem;
+      color: var(--color-accent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .project-list a:hover {
+      color: var(--color-accent);
+      padding-left: 0.5rem;
+    }
+
+    .project-list a:hover::before {
+      opacity: 1;
+    }
+
+    .content {
+      padding: 2rem 0 2rem 2rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap);
+    }
+
+    .about-panel {
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-panel:hover {
+      border-color: var(--color-light-accent);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .panel-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-light-accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-header::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--color-light-accent);
+    }
+
+    .panel-content {
+      font-size: 0.9375rem;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+
+    .panel-content p {
+      margin-bottom: 0.75rem;
+    }
+
+    .panel-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-content a {
+      color: var(--color-light-accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .panel-content a:hover {
+      border-bottom-color: var(--color-light-accent);
+    }
+
+    /* DARK ZONE: Code block demo */
+    .code-demo {
+      background: var(--color-dark-bg);
+      color: var(--color-dark-text);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      border-radius: 4px;
+    }
+
+    .code-demo .comment {
+      color: #6272A4;
+    }
+
+    .code-demo .keyword {
+      color: var(--color-accent);
+    }
+
+    .code-demo .string {
+      color: var(--color-accent-secondary);
+    }
+
+    .code-demo .function {
+      color: var(--color-accent-tertiary);
+    }
+
+    .code-demo .number {
+      color: #BD93F9;
+    }
+
+    /* Color swatches demo */
+    .swatches {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid var(--color-border);
+    }
+
+    .swatch {
+      text-align: center;
+    }
+
+    .swatch-color {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .swatch-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--color-text-muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 2rem 0;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-content p {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--color-light-accent);
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        margin-left: calc(-1 * var(--gap));
+        margin-right: calc(-1 * var(--gap));
+        padding: 1.5rem var(--gap);
+      }
+
+      .content {
+        padding: 2rem 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="theme-label">Option 4: Dark Accent Zones (Neon where it counts)</div>
+
+  <header>
+    <div class="container">
+      <div class="ascii-banner" aria-label="Kyle Snow Schwartz">
+<span class="name name-kyle">██╗  ██╗██╗   ██╗██╗     ███████╗
+██║ ██╔╝╚██╗ ██╔╝██║     ██╔════╝
+█████╔╝  ╚████╔╝ ██║     █████╗
+██╔═██╗   ╚██╔╝  ██║     ██╔══╝
+██║  ██╗   ██║   ███████╗███████╗
+╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝</span>
+      </div>
+      <p class="tagline"><span>//</span> human. builder. traveler.</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <main>
+      <aside class="sidebar">
+        <h2 class="sidebar-title">Projects</h2>
+        <div class="sidebar-divider"></div>
+        <ul class="project-list">
+          <li><a href="#">SimpleClaude</a></li>
+          <li><a href="#">Claude-Bumper-Lanes</a></li>
+          <li><a href="#">Claude-Handoff</a></li>
+          <li><a href="#">marmitegasm</a></li>
+        </ul>
+      </aside>
+
+      <section class="content">
+        <div class="about-grid">
+          <article class="about-panel">
+            <h3 class="panel-header">Who</h3>
+            <div class="panel-content">
+              <p>Kyle Snow Schwartz. Software engineer, occasional photographer, serial traveler.</p>
+              <p>I build things for the web and sometimes wander off to take photos of sheep.</p>
+            </div>
+          </article>
+
+          <article class="about-panel">
+            <h3 class="panel-header">What</h3>
+            <div class="panel-content">
+              <p>Currently building things at <a href="#">Envato Elements</a>. Previously at <a href="#">Powershop</a>.</p>
+              <p>I care about clean code, simple systems, and not overengineering.</p>
+            </div>
+          </article>
+
+          <article class="about-panel">
+            <h3 class="panel-header">Where</h3>
+            <div class="panel-content">
+              <p>Based in New Zealand. The timezone is brutal but the mountains are worth it.</p>
+              <p>Find me on <a href="#">GitHub</a> or <a href="#">LinkedIn</a>.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="code-demo">
+          <span class="comment">// neon shines in the dark zones</span><br>
+          <span class="keyword">const</span> <span class="function">buildSomething</span> = (<span class="string">"cool"</span>) => {<br>
+          &nbsp;&nbsp;<span class="keyword">return</span> { value: <span class="number">42</span>, status: <span class="string">"awesome"</span> };<br>
+          };
+        </div>
+
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch-color" style="background: #faf9f7; border: 1px solid #e0e0e0;"></div>
+            <div class="swatch-label">#faf9f7<br>light bg</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #1A1A2E;"></div>
+            <div class="swatch-label">#1A1A2E<br>dark zone</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #00FFDE;"></div>
+            <div class="swatch-label">#00FFDE<br>neon cyan</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #FF3EA5;"></div>
+            <div class="swatch-label">#FF3EA5<br>neon pink</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #FFE66D;"></div>
+            <div class="swatch-label">#FFE66D<br>neon yellow</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background: #0d9488;"></div>
+            <div class="swatch-label">#0d9488<br>light accent</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2025 kyle snow schwartz</p>
+        <nav class="social-links">
+          <a href="#">github</a>
+          <a href="#">linkedin</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
