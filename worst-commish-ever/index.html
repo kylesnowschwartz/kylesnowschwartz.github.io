@@ -628,47 +628,8 @@
       <div class="section-content">
         <p style="text-align: center; margin-bottom: 20px;">The brave warriors who battle each Sunday</p>
 
-        <div class="teams-grid">
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
-          <div class="team-card">
-            <div class="team-name">Team Name Here</div>
-            <div class="team-owner">Owner: TBD</div>
-            <div class="team-record">2024 Record: 0-0</div>
-          </div>
+        <div class="teams-grid" id="teams-grid">
+          <!-- Populated by JavaScript -->
         </div>
       </div>
     </section>
@@ -689,50 +650,10 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>2024</td>
-              <td>TBD</td>
-              <td>TBD</td>
-              <td>--</td>
-              <td class="trophy">TBD</td>
-            </tr>
-            <tr>
-              <td>2023</td>
-              <td>Champion Name</td>
-              <td>Team Name</td>
-              <td>12-2</td>
-              <td class="trophy">&#127942;</td>
-            </tr>
-            <tr>
-              <td>2022</td>
-              <td>Champion Name</td>
-              <td>Team Name</td>
-              <td>11-3</td>
-              <td class="trophy">&#127942;</td>
-            </tr>
-            <tr>
-              <td>2021</td>
-              <td>Champion Name</td>
-              <td>Team Name</td>
-              <td>10-4</td>
-              <td class="trophy">&#127942;</td>
-            </tr>
-            <tr>
-              <td>2020</td>
-              <td>Champion Name</td>
-              <td>Team Name</td>
-              <td>11-3</td>
-              <td class="trophy">&#127942;</td>
-            </tr>
-            <!-- Add more years as needed -->
+          <tbody id="champions-tbody">
+            <!-- Populated by JavaScript -->
           </tbody>
         </table>
-
-        <div class="under-construction">
-          <div class="construction-gif">&#128679;</div>
-          <p class="construction-text">More championship history coming soon!</p>
-        </div>
       </div>
     </section>
 
@@ -744,33 +665,9 @@
           Where legends go to be forgotten (but we remember everything)
         </p>
 
-        <ul class="shame-list">
-          <li>
-            <span class="shame-year">2023:</span>
-            <strong>Owner Name</strong> -
-            <span class="shame-reason">"Started a player who was on IR for 3 weeks straight"</span>
-          </li>
-          <li>
-            <span class="shame-year">2022:</span>
-            <strong>Owner Name</strong> -
-            <span class="shame-reason">"Traded away the league MVP for a kicker"</span>
-          </li>
-          <li>
-            <span class="shame-year">2021:</span>
-            <strong>Owner Name</strong> -
-            <span class="shame-reason">"Forgot to set lineup during championship week"</span>
-          </li>
-          <li>
-            <span class="shame-year">2020:</span>
-            <strong>Owner Name</strong> -
-            <span class="shame-reason">"Drafted a retired player in the 3rd round"</span>
-          </li>
+        <ul class="shame-list" id="shame-list">
+          <!-- Populated by JavaScript -->
         </ul>
-
-        <div class="under-construction">
-          <div class="construction-gif">&#128683;</div>
-          <p class="construction-text">More shameful moments being excavated from the archives...</p>
-        </div>
       </div>
     </section>
 
@@ -945,6 +842,94 @@
   </div>
 
   <script>
+    // League data - extracted from Yahoo Fantasy API
+    const LEAGUE_DATA = {
+      2006: { champion: "Beantown Ballers", championMgr: "JBex", record: "8-6", lastPlace: "BATMAN", lastPlaceMgr: "Kyle" },
+      2010: { champion: "Captain Arab", championMgr: "Nahush", record: "12-2", lastPlace: "Dallas Cowboys", lastPlaceMgr: "Unknown" },
+      2011: { champion: "The Violets", championMgr: "Ben", record: "9-5", lastPlace: "kittencock", lastPlaceMgr: "THomas" },
+      2012: { champion: "Mohawk National", championMgr: "McLean", record: "9-5", lastPlace: "TheTheobaldWolftones", lastPlaceMgr: "Bryan" },
+      2013: { champion: "Big Bird", championMgr: "Jonathan Young", record: "9-5", lastPlace: "Bronuts", lastPlaceMgr: "THomas" },
+      2014: { champion: "Embrace The Chaos!", championMgr: "Gary", record: "9-5", lastPlace: "Half-Smokes", lastPlaceMgr: "Dave G" },
+      2015: { champion: "Half-Smokes", championMgr: "Dave G", record: "9-5", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
+      2016: { champion: "Koala lambpork", championMgr: "THomas", record: "7-7", lastPlace: "The Violets", lastPlaceMgr: "Ben" },
+      2017: { champion: "Nerd Rage", championMgr: "Kyle", record: "10-4", lastPlace: "Big Bird", lastPlaceMgr: "Jonathan Young" },
+      2018: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "10-4", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
+      2019: { champion: "Ben's Bold Team", championMgr: "Ben", record: "7-7", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
+      2020: { champion: "Big Bird", championMgr: "Jonathan Young", record: "10-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
+      2021: { champion: "Mohawk National", championMgr: "McLean", record: "11-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
+      2022: { champion: "Koala lambpork", championMgr: "THomas", record: "9-6", lastPlace: "F.U.B.A.R.", lastPlaceMgr: "Bryan" },
+      2023: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "9-5", lastPlace: "Mohawk National", lastPlaceMgr: "McLean" },
+      2024: { champion: "Koala lambpork", championMgr: "THomas", record: "14-1", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" }
+    };
+
+    // 2024 team standings
+    const TEAMS_2024 = [
+      { name: "Koala lambpork", manager: "THomas", wins: 14, losses: 1 },
+      { name: "Ben's Bold Team", manager: "Ben", wins: 9, losses: 6 },
+      { name: "Big Bird", manager: "Jonathan Young", wins: 11, losses: 4 },
+      { name: "F.U.B.A.R.", manager: "Bryan", wins: 9, losses: 6 },
+      { name: "THE STEW PORK WETS", manager: "Boost Poppa Charlie", wins: 7, losses: 8 },
+      { name: "Embrace The Chaos!", manager: "Gary", wins: 8, losses: 7 },
+      { name: "The Violets", manager: "Ben", wins: 7, losses: 8 },
+      { name: "Mohawk National", manager: "McLean", wins: 8, losses: 7 },
+      { name: "Half-Smokes", manager: "Dave G", wins: 5, losses: 10 },
+      { name: "Mi Nombre es Peyton", manager: "Aaron", wins: 5, losses: 10 },
+      { name: "TheSkeeterValentines", manager: "JBex", wins: 5, losses: 10 },
+      { name: "Nerd Rage", manager: "Kyle", wins: 2, losses: 13 }
+    ];
+
+    // Populate Dream Teams
+    (function() {
+      const grid = document.getElementById('teams-grid');
+      if (!grid) return;
+
+      grid.innerHTML = TEAMS_2024.map(team => `
+        <div class="team-card">
+          <div class="team-name">${team.name}</div>
+          <div class="team-owner">Owner: ${team.manager}</div>
+          <div class="team-record">2024 Record: ${team.wins}-${team.losses}</div>
+        </div>
+      `).join('');
+    })();
+
+    // Populate Championship table
+    (function() {
+      const tbody = document.getElementById('champions-tbody');
+      if (!tbody) return;
+
+      const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
+      tbody.innerHTML = years.map(year => {
+        const d = LEAGUE_DATA[year];
+        return `
+          <tr>
+            <td>${year}</td>
+            <td>${d.championMgr}</td>
+            <td>${d.champion}</td>
+            <td>${d.record}</td>
+            <td class="trophy">&#127942;</td>
+          </tr>
+        `;
+      }).join('');
+    })();
+
+    // Populate Wall of Shame
+    (function() {
+      const list = document.getElementById('shame-list');
+      if (!list) return;
+
+      const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
+      list.innerHTML = years.map(year => {
+        const d = LEAGUE_DATA[year];
+        return `
+          <li>
+            <span class="shame-year">${year}:</span>
+            <strong>${d.lastPlaceMgr}</strong> -
+            <span class="shame-reason">"${d.lastPlace}"</span>
+          </li>
+        `;
+      }).join('');
+    })();
+
     // Fake hit counter that increments on each visit
     (function() {
       const counter = document.querySelector('.counter-display');
