@@ -8,39 +8,39 @@ const CONTENT = {
   site: {
     title: "WORST COMMISH EVER - Fantasy Football League Est. 2000",
     logoTitle: "WORST COMMISH EVER",
-    tagline: '"Where Championships Are Made and Friendships Go to Die"',
-    established: "Est. 2000 - Celebrating 25 Years of Questionable Decisions",
+    tagline: '"Where championships are made and legends never die"',
+    established: "Est. 2000 - Celebrating 25 Years of Friendship and Enmity",
     visitorPrefix: "You are visitor #"
   },
 
   // === NAVIGATION ===
   nav: [
     { href: "#dream-teams", label: "Dream Teams" },
-    { href: "#championship", label: "Championship Baseball" },
-    { href: "#wall-of-shame", label: "Wall of Shame" },
+    { href: "#fame-shame", label: "Fame & Shame" },
+    { href: "#heroes", label: "Heroes" },
     { href: "#history", label: "League History" },
     { href: "#rules", label: "League Rules" }
   ],
 
   // === MARQUEE ===
-  marquee: "WELCOME TO THE WORST COMMISH EVER FANTASY FOOTBALL LEAGUE! 25 YEARS OF GLORY, HEARTBREAK, AND ABSOLUTELY TERRIBLE TRADES!",
+  marquee: "~~~***  WELCOME TO THE WORST COMMISH EVER FANTASY FOOTBALL LEAGUE!!!  ***~~~ <<<  25 YEARS OF GLORY, HEARTBREAK, AND ABSOLUTELY TERRIBLE TRADES  >>> ~~~***  HEROES GET REMEMBERED BUT LEGENDS NEVER DIE!!!  ***~~~ <<<  YOU'RE KILLIN' ME, SMALLS  >>> ~~~***  SET YOUR LINEUP OR GET PUBLICLY SHAMED!!!  ***~~~",
 
   // === SECTIONS ===
   sections: {
     dreamTeams: {
-      title: "DREAM TEAMS",
-      subtitle: "The brave warriors who battle each Sunday"
+      title: "DREAM TEAMS 2025",
+      subtitle: "Roll the dice and fire your hand symbols brave warriors"
     },
 
-    championship: {
-      title: "CHAMPIONSHIP BASEBALL",
-      subtitle: "The Hall of Champions - Legends of the League",
-      tableHeaders: ["Year", "Champion", "Team Name", "Record", ""]
+    fameShame: {
+      title: "WALL OF FAME & SHAME",
+      subtitle: "Heroes get remembered, but legends never die",
+      tableHeaders: ["Year", "🏆 Champion", "🍌 Last Place"]
     },
 
-    wallOfShame: {
-      title: "WALL OF SHAME",
-      subtitle: "Where legends go to be forgotten (but we remember everything)"
+    heroes: {
+      title: "FORMER AND CURRENT HEROES",
+      subtitle: "The brave souls who have graced our league"
     },
 
     history: {
@@ -49,7 +49,7 @@ const CONTENT = {
       timeline: [
         {
           year: "2000",
-          event: "The league is founded by a group of friends who had no idea what they were getting into. First commissioner elected (or volunteered, nobody remembers)."
+          event: "The league is founded by a group of ass-pants appreciators who had no idea what they were getting into. First commissioner elected (or volunteered, I don't remember)."
         },
         {
           year: "2005",
@@ -57,21 +57,21 @@ const CONTENT = {
         },
         {
           year: "2010",
-          event: 'The "Worst Commish Ever" name is officially adopted after a particularly controversial ruling.',
+          event: 'The "Worst Commish Ever" name is officially adopted to describe what we all knew to be true.',
           milestone: true
         },
         {
-          year: "2015",
-          event: "League goes online. No more spreadsheets and phone calls. Arguments now happen in group chats instead."
+          year: "2013",
+          event: "League goes Global. Highway to the Timezone Dangerzone"
         },
         {
           year: "2020",
-          event: "20 years! The pandemic couldn't stop us. Virtual draft party happens via Zoom.",
+          event: "20 years! The pandemic couldn't stop us. Virtual draft party happens. Gary drinks 3 bourbons before 10pm.",
           milestone: true
         },
         {
           year: "2025",
-          event: "A quarter century of friendship, rivalry, and terrible fantasy advice.",
+          event: "A quarter century of friendship, rivalry, and practically zero trading.",
           milestone: true,
           rainbow: true,
           prefix: "25 YEARS!"
@@ -109,7 +109,7 @@ const CONTENT = {
           description: "Keep it fun, keep it creative, keep it in the group chat. What happens in the league stays in the league."
         }
       ],
-      underConstruction: "Full rulebook being digitized from ancient scrolls..."
+      underConstruction: "Full rulebook being digitized from ancient Hebrew scrolls..."
     }
   },
 
@@ -118,11 +118,11 @@ const CONTENT = {
     badges: [
       "Best viewed in Netscape Navigator 4.0",
       "800x600 resolution",
-      "Made with Notepad"
+      "Made with Notepad+ and a dream",
     ],
     copyright: "2000-2025 WORST COMMISH EVER Fantasy Football League",
     copyrightNote: "All rights reserved. No fantasy points were harmed in the making of this website.",
-    contactEmail: "commissioner@example.com",
-    contactText: "Contact the Commissioner (if you dare)"
+    contactEmail: "commissioner@worst-commish-ever.com",
+    contactText: "Contact the Commissioner (this doesn't actually do anything)"
   }
 };

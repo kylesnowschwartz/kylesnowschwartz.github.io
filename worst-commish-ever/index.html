@@ -156,15 +156,20 @@
       overflow: hidden;
     }
 
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+
     .marquee-content {
-      display: inline-block;
-      animation: marquee 20s linear infinite;
       white-space: nowrap;
+      padding-right: 4rem; /* gap between copies */
     }
 
     @keyframes marquee {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* === SECTIONS === */
@@ -222,72 +227,117 @@
       margin-top: 5px;
     }
 
-    /* === CHAMPIONSHIP BASEBALL (Hall of Fame) === */
-    .champions-table {
+    /* === WALL OF FAME & SHAME === */
+    .fame-shame-section {
+      border-color: var(--gold);
+    }
+
+    .fame-shame-section .section-title {
+      color: var(--gold);
+      text-shadow: 2px 2px 0 #8B4513;
+      border-bottom-color: var(--gold);
+    }
+
+    .fame-shame-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.875rem;
     }
 
-    .champions-table th {
-      background: linear-gradient(180deg, var(--gold) 0%, #b8860b 100%);
-      color: var(--bg-black);
+    .fame-shame-table th {
+      background: linear-gradient(180deg, #333 0%, #111 100%);
+      color: var(--silver);
       padding: 10px;
       text-align: left;
-      border: 2px solid var(--gold);
+      border: 2px solid #444;
+      font-size: 1rem;
     }
 
-    .champions-table td {
+    .fame-shame-table td {
       padding: 8px 10px;
       border: 1px solid #444;
+    }
+
+    .fame-shame-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .fame-shame-table tr:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .fame-shame-table .year-col {
+      color: var(--silver);
+      font-family: 'Courier New', monospace;
+    }
+
+    .fame-shame-table .fame-col {
       color: var(--text-yellow);
     }
 
-    .champions-table tr:nth-child(even) {
-      background: rgba(255, 215, 0, 0.1);
-    }
-
-    .champions-table tr:hover {
-      background: rgba(255, 215, 0, 0.2);
-    }
-
-    .trophy {
-      font-size: 1.5rem;
-    }
-
-    /* === WALL OF SHAME === */
-    .shame-section {
-      border-color: var(--text-red);
-    }
-
-    .shame-section .section-title {
-      color: var(--text-red);
-      text-shadow: 2px 2px 0 #660000;
-      border-bottom-color: var(--text-red);
-    }
-
-    .shame-list {
-      list-style: none;
-    }
-
-    .shame-list li {
-      padding: 10px;
-      border-bottom: 1px dashed #660000;
+    .fame-shame-table .shame-col {
       color: var(--text-red);
     }
 
-    .shame-list li:last-child {
-      border-bottom: none;
+    /* === HEROES === */
+    .heroes-section {
+      border-color: var(--text-lime);
     }
 
-    .shame-year {
+    .heroes-section .section-title {
+      color: var(--text-lime);
+      text-shadow: 2px 2px 0 #006600;
+      border-bottom-color: var(--text-lime);
+    }
+
+    .heroes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, #1a2e1a 0%, #0a150a 100%);
+      border: 2px solid var(--text-lime);
+      padding: 15px;
+    }
+
+    .hero-card.retired {
+      opacity: 0.6;
+      border-style: dashed;
+    }
+
+    .hero-name {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 1.1rem;
+      color: var(--text-lime);
+      margin-bottom: 5px;
+    }
+
+    .hero-years {
+      font-size: 0.75rem;
       color: var(--silver);
-      font-size: 0.875rem;
+      margin-bottom: 8px;
     }
 
-    .shame-reason {
-      font-size: 0.875rem;
-      color: var(--link-salmon);
+    .hero-teams {
+      font-size: 0.8rem;
+      color: var(--text-cyan);
+      line-height: 1.4;
+    }
+
+    .hero-teams span {
+      display: inline-block;
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 6px;
+      margin: 2px;
+      border-radius: 3px;
+    }
+
+    .hero-status {
+      font-size: 0.7rem;
+      color: var(--text-magenta);
+      margin-top: 8px;
       font-style: italic;
     }
 
@@ -514,7 +564,10 @@
 
     <!-- MARQUEE ANNOUNCEMENT -->
     <div class="announcement-bar">
-      <span class="marquee-content" id="marquee-content"></span>
+      <div class="marquee-track" id="marquee-track">
+        <span class="marquee-content"></span>
+        <span class="marquee-content"></span>
+      </div>
     </div>
 
     <!-- DREAM TEAMS -->
@@ -526,24 +579,24 @@
       </div>
     </section>
 
-    <!-- CHAMPIONSHIP BASEBALL (Hall of Fame) -->
-    <section id="championship" class="content-section">
-      <h2 class="section-title" id="championship-title"></h2>
+    <!-- WALL OF FAME & SHAME -->
+    <section id="fame-shame" class="content-section fame-shame-section">
+      <h2 class="section-title" id="fame-shame-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px;" id="championship-subtitle"></p>
-        <table class="champions-table">
-          <thead id="champions-thead"></thead>
-          <tbody id="champions-tbody"></tbody>
+        <p style="text-align: center; margin-bottom: 20px;" id="fame-shame-subtitle"></p>
+        <table class="fame-shame-table">
+          <thead id="fame-shame-thead"></thead>
+          <tbody id="fame-shame-tbody"></tbody>
         </table>
       </div>
     </section>
 
-    <!-- WALL OF SHAME -->
-    <section id="wall-of-shame" class="content-section shame-section">
-      <h2 class="section-title" id="wall-of-shame-title"></h2>
+    <!-- HEROES -->
+    <section id="heroes" class="content-section heroes-section">
+      <h2 class="section-title" id="heroes-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px; color: var(--link-salmon);" id="wall-of-shame-subtitle"></p>
-        <ul class="shame-list" id="shame-list"></ul>
+        <p style="text-align: center; margin-bottom: 20px;" id="heroes-subtitle"></p>
+        <div class="heroes-grid" id="heroes-grid"></div>
       </div>
     </section>
 
@@ -612,8 +665,10 @@
       `<li><a href="${item.href}">${item.label}</a></li>`
     ).join(''));
 
-    // Marquee
-    setText('marquee-content', CONTENT.marquee);
+    // Marquee (duplicate for seamless loop)
+    document.querySelectorAll('.marquee-content').forEach(el => {
+      el.textContent = CONTENT.marquee;
+    });
 
     // Dream Teams section
     setText('dream-teams-title', CONTENT.sections.dreamTeams.title);
@@ -626,43 +681,43 @@
       </div>
     `).join(''));
 
-    // Championship section
-    setText('championship-title', CONTENT.sections.championship.title);
-    setText('championship-subtitle', CONTENT.sections.championship.subtitle);
-    setHTML('champions-thead', `<tr>${CONTENT.sections.championship.tableHeaders.map(h =>
+    // Fame & Shame section
+    setText('fame-shame-title', CONTENT.sections.fameShame.title);
+    setText('fame-shame-subtitle', CONTENT.sections.fameShame.subtitle);
+    setHTML('fame-shame-thead', `<tr>${CONTENT.sections.fameShame.tableHeaders.map(h =>
       `<th>${h}</th>`
     ).join('')}</tr>`);
 
     const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
-    setHTML('champions-tbody', years.map(year => {
+    setHTML('fame-shame-tbody', years.map(year => {
       const d = LEAGUE_DATA[year];
-      const rowClass = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
-      const trophy = d.missing ? '?' : '&#127942;';
+      const rowStyle = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
       return `
-        <tr ${rowClass}>
-          <td>${year}</td>
-          <td>${d.championMgr}</td>
-          <td>${d.champion}</td>
-          <td>${d.record}</td>
-          <td class="trophy">${trophy}</td>
+        <tr ${rowStyle}>
+          <td class="year-col">${year}</td>
+          <td class="fame-col">${d.champion}</td>
+          <td class="shame-col">${d.lastPlace}</td>
         </tr>
       `;
     }).join(''));
 
-    // Wall of Shame section
-    setText('wall-of-shame-title', CONTENT.sections.wallOfShame.title);
-    setText('wall-of-shame-subtitle', CONTENT.sections.wallOfShame.subtitle);
-    setHTML('shame-list', years.map(year => {
-      const d = LEAGUE_DATA[year];
-      const style = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
-      return `
-        <li ${style}>
-          <span class="shame-year">${year}:</span>
-          <strong>${d.lastPlaceMgr}</strong> -
-          <span class="shame-reason">"${d.lastPlace}"</span>
-        </li>
-      `;
-    }).join(''));
+    // Heroes section
+    setText('heroes-title', CONTENT.sections.heroes.title);
+    setText('heroes-subtitle', CONTENT.sections.heroes.subtitle);
+    setHTML('heroes-grid', Object.entries(HEROES)
+      .sort((a, b) => b[1].seasons - a[1].seasons) // Sort by seasons played
+      .map(([name, data]) => {
+        const retiredClass = data.retired ? 'retired' : '';
+        const status = data.retired ? '<div class="hero-status">~ Gone but not forgotten ~</div>' : '';
+        return `
+          <div class="hero-card ${retiredClass}">
+            <div class="hero-name">${name}</div>
+            <div class="hero-years">${data.years} (${data.seasons} seasons)</div>
+            <div class="hero-teams">${data.teamNames.map(t => `<span>${t}</span>`).join('')}</div>
+            ${status}
+          </div>
+        `;
+      }).join(''));
 
     // History section
     setText('history-title', CONTENT.sections.history.title);

@@ -60,3 +60,74 @@ const TEAMS = [
   { name: "TheSkeeterValentines", manager: "JBex", wins: 6, losses: 9 },
   { name: "The Violets", manager: "Ben", wins: 3, losses: 12 }
 ];
+
+// Manager history - aggregated from all seasons
+const HEROES = {
+  "Aaron": {
+    years: "2012-2025",
+    teamNames: ["Mi Nombre es Peyton"],
+    seasons: 14
+  },
+  "BC": {
+    years: "2006-2010",
+    teamNames: ["MekonRiverCatfish", "How Ya Like Me Now?"],
+    seasons: 2,
+    retired: true
+  },
+  "Ben": {
+    years: "2006-2025",
+    teamNames: ["Team Weak", "The Violets", "Ben's Bold Team"],
+    seasons: 17
+  },
+  "Boost Poppa Charlie": {
+    years: "2006-2025",
+    teamNames: ["Countdown to Thunder", "Official Worst Team", "Gary For Congress", "Dakota Vengeance", "BIZARRO GARY", "OPTIMAL GARY", "MEGADONG", "THE STEW PORK WETS", "SCHNEEBO'S CTE DREAMERZ"],
+    seasons: 17
+  },
+  "Bryan": {
+    years: "2011-2025",
+    teamNames: ["Justinisaweenus!", "TheTheobaldWolftones", "ThePeytonManningShow", "TheAndyDaltonShow", "F.U.B.A.R."],
+    seasons: 15
+  },
+  "Dave G": {
+    years: "2010-2025",
+    teamNames: ["More Hopenchange", "Charles Bronson", "Half-Smokes"],
+    seasons: 16
+  },
+  "Gary": {
+    years: "2010-2025",
+    teamNames: ["Mean Green Machine", "Embrace The Chaos!"],
+    seasons: 16
+  },
+  "JBex": {
+    years: "2006-2025",
+    teamNames: ["Beantown Ballers", "TheSkeeterValentines", "ImpeachTheCommish", "DefiancePhiladelphia"],
+    seasons: 17
+  },
+  "Jonathan Young": {
+    years: "2010-2025",
+    teamNames: ["Big Bird", "Horny for Hanie"],
+    seasons: 16
+  },
+  "Kyle": {
+    years: "2006-2025",
+    teamNames: ["BATMAN", "Zerg Domination", "meatsausagesurprise!", "Nerd Rage"],
+    seasons: 17
+  },
+  "McLean": {
+    years: "2006-2025",
+    teamNames: ["Mohawk National"],
+    seasons: 17
+  },
+  "Nahush": {
+    years: "2006-2018",
+    teamNames: ["Captain Arab"],
+    seasons: 10,
+    retired: true
+  },
+  "THomas": {
+    years: "2006-2025",
+    teamNames: ["Hoohah Dogtime", "Shazizmo CougarAlly", "kittencock", "Cheesepleasers", "Bronuts", "Winos", "Koala lambpork"],
+    seasons: 17
+  }
+};
