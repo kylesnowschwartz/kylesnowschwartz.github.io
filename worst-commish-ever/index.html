@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORST COMMISH EVER - Fantasy Football League Est. 2000</title>
+  <style>
+    /* === GEOCITIES AESTHETIC WITH MODERN CSS === */
+
+    /* Color palette - straight from 1996 */
+    :root {
+      --bg-black: #000000;
+      --text-red: #ff0000;
+      --text-yellow: #ffff00;
+      --text-lime: #00ff00;
+      --text-cyan: #00ffff;
+      --text-magenta: #ff00ff;
+      --link-salmon: #ff4c4c;
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --bronze: #cd7f32;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 100px 100px, 50px 50px, 150px 150px;
+      background-position: 0 0, 25px 25px, 75px 50px;
+      color: var(--text-red);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 16px;
+      line-height: 1.4;
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--link-salmon);
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: var(--link-salmon);
+    }
+
+    a:hover {
+      color: var(--text-yellow);
+    }
+
+    /* === LAYOUT - Tables vibes via CSS === */
+    .page-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* === HEADER === */
+    .site-header {
+      text-align: center;
+      padding: 20px 0 40px;
+    }
+
+    .logo-title {
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      font-size: clamp(2rem, 8vw, 4rem);
+      color: var(--text-yellow);
+      text-shadow:
+        3px 3px 0 var(--text-red),
+        6px 6px 0 #660000;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text-lime);
+      font-style: italic;
+    }
+
+    .established {
+      font-size: 0.875rem;
+      color: var(--text-cyan);
+      margin-top: 10px;
+    }
+
+    /* Hit counter */
+    .hit-counter {
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: var(--text-yellow);
+    }
+
+    .counter-display {
+      display: inline-block;
+      background: #111;
+      border: 2px inset #444;
+      padding: 4px 12px;
+      font-family: 'Courier New', monospace;
+      color: var(--text-lime);
+      letter-spacing: 0.2em;
+    }
+
+    /* === NAVIGATION === */
+    .nav-section {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 2px solid var(--text-magenta);
+      border-bottom: 2px solid var(--text-magenta);
+      margin-bottom: 30px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 20px;
+    }
+
+    .nav-list a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: linear-gradient(180deg, #444 0%, #222 100%);
+      border: 2px outset #666;
+      color: var(--text-yellow);
+      text-decoration: none;
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+    }
+
+    .nav-list a:hover {
+      background: linear-gradient(180deg, #555 0%, #333 100%);
+      border-style: inset;
+      color: var(--text-cyan);
+    }
+
+    /* === MARQUEE === */
+    .announcement-bar {
+      background: var(--text-red);
+      color: var(--text-yellow);
+      padding: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* === SECTIONS === */
+    .content-section {
+      background: rgba(0, 0, 0, 0.7);
+      border: 3px ridge var(--text-magenta);
+      margin-bottom: 30px;
+      padding: 20px;
+    }
+
+    .section-title {
+      font-family: 'Impact', 'Arial Black', sans-serif;
+      font-size: 1.75rem;
+      color: var(--text-cyan);
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 0 #006666;
+      border-bottom: 2px dashed var(--text-cyan);
+      padding-bottom: 10px;
+    }
+
+    .section-content {
+      color: var(--text-yellow);
+    }
+
+    /* === DREAM TEAMS === */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .team-card {
+      background: linear-gradient(180deg, #1a1a2e 0%, #0a0a15 100%);
+      border: 2px solid var(--text-magenta);
+      padding: 15px;
+      text-align: center;
+    }
+
+    .team-name {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 1rem;
+      color: var(--text-lime);
+      margin-bottom: 5px;
+    }
+
+    .team-owner {
+      font-size: 0.875rem;
+      color: var(--text-cyan);
+    }
+
+    .team-record {
+      font-size: 0.75rem;
+      color: var(--silver);
+      margin-top: 5px;
+    }
+
+    /* === CHAMPIONSHIP BASEBALL (Hall of Fame) === */
+    .champions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .champions-table th {
+      background: linear-gradient(180deg, var(--gold) 0%, #b8860b 100%);
+      color: var(--bg-black);
+      padding: 10px;
+      text-align: left;
+      border: 2px solid var(--gold);
+    }
+
+    .champions-table td {
+      padding: 8px 10px;
+      border: 1px solid #444;
+      color: var(--text-yellow);
+    }
+
+    .champions-table tr:nth-child(even) {
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    .champions-table tr:hover {
+      background: rgba(255, 215, 0, 0.2);
+    }
+
+    .trophy {
+      font-size: 1.5rem;
+    }
+
+    /* === WALL OF SHAME === */
+    .shame-section {
+      border-color: var(--text-red);
+    }
+
+    .shame-section .section-title {
+      color: var(--text-red);
+      text-shadow: 2px 2px 0 #660000;
+      border-bottom-color: var(--text-red);
+    }
+
+    .shame-list {
+      list-style: none;
+    }
+
+    .shame-list li {
+      padding: 10px;
+      border-bottom: 1px dashed #660000;
+      color: var(--text-red);
+    }
+
+    .shame-list li:last-child {
+      border-bottom: none;
+    }
+
+    .shame-year {
+      color: var(--silver);
+      font-size: 0.875rem;
+    }
+
+    .shame-reason {
+      font-size: 0.875rem;
+      color: var(--link-salmon);
+      font-style: italic;
+    }
+
+    /* === LEAGUE HISTORY === */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--text-magenta);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+      padding-left: 20px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background: var(--text-cyan);
+      border-radius: 50%;
+      border: 2px solid var(--text-magenta);
+    }
+
+    .timeline-year {
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      color: var(--text-lime);
+      font-weight: bold;
+    }
+
+    .timeline-event {
+      color: var(--text-yellow);
+      font-size: 0.9375rem;
+      margin-top: 5px;
+    }
+
+    /* === LEAGUE RULES === */
+    .rules-list {
+      list-style: none;
+      counter-reset: rule-counter;
+    }
+
+    .rules-list li {
+      counter-increment: rule-counter;
+      margin-bottom: 15px;
+      padding-left: 40px;
+      position: relative;
+      color: var(--text-yellow);
+    }
+
+    .rules-list li::before {
+      content: counter(rule-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--text-magenta);
+      color: var(--bg-black);
+      font-weight: bold;
+      text-align: center;
+      line-height: 28px;
+      font-size: 0.875rem;
+    }
+
+    .rule-title {
+      font-weight: bold;
+      color: var(--text-cyan);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* === GUESTBOOK === */
+    .guestbook-section {
+      border-color: var(--text-lime);
+    }
+
+    .guestbook-section .section-title {
+      color: var(--text-lime);
+      text-shadow: 2px 2px 0 #006600;
+      border-bottom-color: var(--text-lime);
+    }
+
+    .guestbook-form {
+      display: grid;
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .form-group label {
+      display: block;
+      color: var(--text-cyan);
+      margin-bottom: 5px;
+      font-size: 0.875rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      background: #111;
+      border: 2px inset #444;
+      color: var(--text-lime);
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: linear-gradient(180deg, #444 0%, #222 100%);
+      border: 3px outset #666;
+      color: var(--text-yellow);
+      padding: 10px 30px;
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(180deg, #555 0%, #333 100%);
+    }
+
+    .submit-btn:active {
+      border-style: inset;
+    }
+
+    .guestbook-entries {
+      margin-top: 30px;
+      border-top: 2px dashed var(--text-lime);
+      padding-top: 20px;
+    }
+
+    .guestbook-entry {
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #003300;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.875rem;
+    }
+
+    .entry-name {
+      color: var(--text-cyan);
+      font-weight: bold;
+    }
+
+    .entry-date {
+      color: var(--silver);
+    }
+
+    .entry-message {
+      color: var(--text-yellow);
+    }
+
+    /* === UNDER CONSTRUCTION === */
+    .under-construction {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-yellow);
+    }
+
+    .construction-gif {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .construction-text {
+      font-family: 'Comic Sans MS', 'Arial', sans-serif;
+      font-size: 1.25rem;
+      color: var(--text-yellow);
+    }
+
+    /* === FOOTER === */
+    .site-footer {
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 2px solid var(--text-magenta);
+      margin-top: 30px;
+    }
+
+    .footer-badges {
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #111;
+      border: 2px outset #444;
+      padding: 5px 10px;
+      margin: 5px;
+      font-size: 0.75rem;
+      color: var(--silver);
+    }
+
+    .copyright {
+      font-size: 0.75rem;
+      color: var(--text-yellow);
+    }
+
+    .email-link {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.875rem;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 600px) {
+      .page-wrapper {
+        padding: 10px;
+      }
+
+      .content-section {
+        padding: 15px;
+      }
+
+      .nav-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .teams-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .champions-table {
+        font-size: 0.75rem;
+      }
+
+      .champions-table th,
+      .champions-table td {
+        padding: 6px;
+      }
+    }
+
+    /* === SPECIAL EFFECTS === */
+    .rainbow-text {
+      background: linear-gradient(90deg,
+        var(--text-red),
+        var(--text-yellow),
+        var(--text-lime),
+        var(--text-cyan),
+        var(--text-magenta)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow-shift 3s linear infinite;
+      background-size: 200% auto;
+    }
+
+    @keyframes rainbow-shift {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Starfield fallback if image doesn't load */
+    @supports not (background-image: url('images/stars.gif')) {
+      body {
+        background: radial-gradient(white 1px, transparent 1px),
+                    radial-gradient(white 1px, transparent 1px);
+        background-size: 50px 50px;
+        background-position: 0 0, 25px 25px;
+        background-color: var(--bg-black);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <h1 class="logo-title">WORST COMMISH EVER</h1>
+      <p class="tagline">"Where Championships Are Made and Friendships Go to Die"</p>
+      <p class="established">Est. 2000 - Celebrating 25 Years of Questionable Decisions</p>
+
+      <div class="hit-counter">
+        You are visitor #<span class="counter-display">000047</span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-section">
+      <ul class="nav-list">
+        <li><a href="#dream-teams">Dream Teams</a></li>
+        <li><a href="#championship">Championship Baseball</a></li>
+        <li><a href="#wall-of-shame">Wall of Shame</a></li>
+        <li><a href="#history">League History</a></li>
+        <li><a href="#rules">League Rules</a></li>
+        <li><a href="#guestbook">Guestbook</a></li>
+      </ul>
+    </nav>
+
+    <!-- MARQUEE ANNOUNCEMENT -->
+    <div class="announcement-bar">
+      <span class="marquee-content">
+        WELCOME TO THE WORST COMMISH EVER FANTASY FOOTBALL LEAGUE!
+        25 YEARS OF GLORY, HEARTBREAK, AND ABSOLUTELY TERRIBLE TRADES!
+        SIGN THE GUESTBOOK BELOW!
+      </span>
+    </div>
+
+    <!-- DREAM TEAMS -->
+    <section id="dream-teams" class="content-section">
+      <h2 class="section-title">DREAM TEAMS</h2>
+      <div class="section-content">
+        <p style="text-align: center; margin-bottom: 20px;">The brave warriors who battle each Sunday</p>
+
+        <div class="teams-grid">
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Team Name Here</div>
+            <div class="team-owner">Owner: TBD</div>
+            <div class="team-record">2024 Record: 0-0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAMPIONSHIP BASEBALL (Hall of Fame) -->
+    <section id="championship" class="content-section">
+      <h2 class="section-title">CHAMPIONSHIP BASEBALL</h2>
+      <div class="section-content">
+        <p style="text-align: center; margin-bottom: 20px;">The Hall of Champions - Legends of the League</p>
+
+        <table class="champions-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Champion</th>
+              <th>Team Name</th>
+              <th>Record</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024</td>
+              <td>TBD</td>
+              <td>TBD</td>
+              <td>--</td>
+              <td class="trophy">TBD</td>
+            </tr>
+            <tr>
+              <td>2023</td>
+              <td>Champion Name</td>
+              <td>Team Name</td>
+              <td>12-2</td>
+              <td class="trophy">&#127942;</td>
+            </tr>
+            <tr>
+              <td>2022</td>
+              <td>Champion Name</td>
+              <td>Team Name</td>
+              <td>11-3</td>
+              <td class="trophy">&#127942;</td>
+            </tr>
+            <tr>
+              <td>2021</td>
+              <td>Champion Name</td>
+              <td>Team Name</td>
+              <td>10-4</td>
+              <td class="trophy">&#127942;</td>
+            </tr>
+            <tr>
+              <td>2020</td>
+              <td>Champion Name</td>
+              <td>Team Name</td>
+              <td>11-3</td>
+              <td class="trophy">&#127942;</td>
+            </tr>
+            <!-- Add more years as needed -->
+          </tbody>
+        </table>
+
+        <div class="under-construction">
+          <div class="construction-gif">&#128679;</div>
+          <p class="construction-text">More championship history coming soon!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WALL OF SHAME -->
+    <section id="wall-of-shame" class="content-section shame-section">
+      <h2 class="section-title">WALL OF SHAME</h2>
+      <div class="section-content">
+        <p style="text-align: center; margin-bottom: 20px; color: var(--link-salmon);">
+          Where legends go to be forgotten (but we remember everything)
+        </p>
+
+        <ul class="shame-list">
+          <li>
+            <span class="shame-year">2023:</span>
+            <strong>Owner Name</strong> -
+            <span class="shame-reason">"Started a player who was on IR for 3 weeks straight"</span>
+          </li>
+          <li>
+            <span class="shame-year">2022:</span>
+            <strong>Owner Name</strong> -
+            <span class="shame-reason">"Traded away the league MVP for a kicker"</span>
+          </li>
+          <li>
+            <span class="shame-year">2021:</span>
+            <strong>Owner Name</strong> -
+            <span class="shame-reason">"Forgot to set lineup during championship week"</span>
+          </li>
+          <li>
+            <span class="shame-year">2020:</span>
+            <strong>Owner Name</strong> -
+            <span class="shame-reason">"Drafted a retired player in the 3rd round"</span>
+          </li>
+        </ul>
+
+        <div class="under-construction">
+          <div class="construction-gif">&#128683;</div>
+          <p class="construction-text">More shameful moments being excavated from the archives...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEAGUE HISTORY -->
+    <section id="history" class="content-section">
+      <h2 class="section-title">LEAGUE HISTORY</h2>
+      <div class="section-content">
+        <p style="text-align: center; margin-bottom: 20px;">25 Years of Fantasy Football Excellence (and Chaos)</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2000</div>
+            <div class="timeline-event">
+              The league is founded by a group of friends who had no idea what they were getting into.
+              First commissioner elected (or volunteered, nobody remembers).
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2005</div>
+            <div class="timeline-event">
+              League survives its first major controversy. Details redacted to protect the guilty.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2010</div>
+            <div class="timeline-event">
+              10 year anniversary. The "Worst Commish Ever" name is officially adopted after
+              a particularly controversial ruling.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2015</div>
+            <div class="timeline-event">
+              League goes online. No more spreadsheets and phone calls.
+              Arguments now happen in group chats instead.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-event">
+              20 years! The pandemic couldn't stop us. Virtual draft party happens via Zoom.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025</div>
+            <div class="timeline-event">
+              <span class="rainbow-text">25 YEARS!</span> A quarter century of friendship, rivalry,
+              and terrible fantasy advice.
+            </div>
+          </div>
+        </div>
+
+        <div class="under-construction">
+          <div class="construction-gif">&#128218;</div>
+          <p class="construction-text">League historians are compiling more stories...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEAGUE RULES -->
+    <section id="rules" class="content-section">
+      <h2 class="section-title">LEAGUE RULES</h2>
+      <div class="section-content">
+        <p style="text-align: center; margin-bottom: 20px;">The Sacred Laws of the League</p>
+
+        <ol class="rules-list">
+          <li>
+            <span class="rule-title">Pay Your Dues</span>
+            League fees must be paid before the draft. No pay, no play. The commissioner
+            will hunt you down.
+          </li>
+          <li>
+            <span class="rule-title">Set Your Lineup</span>
+            There is no excuse for an empty roster spot. If you can't be bothered,
+            you will be publicly shamed.
+          </li>
+          <li>
+            <span class="rule-title">No Collusion</span>
+            Trades must be fair. If two teams are caught conspiring, both will face
+            consequences determined by league vote.
+          </li>
+          <li>
+            <span class="rule-title">Trade Deadline</span>
+            All trades must be completed by Week 10. No exceptions, no matter how
+            much you beg.
+          </li>
+          <li>
+            <span class="rule-title">Respect the Commish</span>
+            Even when they're the worst. Especially when they're the worst.
+          </li>
+          <li>
+            <span class="rule-title">Trash Talk Encouraged</span>
+            Keep it fun, keep it creative, keep it in the group chat.
+            What happens in the league stays in the league.
+          </li>
+        </ol>
+
+        <div class="under-construction">
+          <div class="construction-gif">&#128220;</div>
+          <p class="construction-text">Full rulebook being digitized from ancient scrolls...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GUESTBOOK -->
+    <section id="guestbook" class="content-section guestbook-section">
+      <h2 class="section-title">GUESTBOOK</h2>
+      <div class="section-content">
+        <p style="text-align: center; margin-bottom: 20px;">Sign our guestbook! Leave your mark on league history!</p>
+
+        <form class="guestbook-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="guest-name">Your Name:</label>
+            <input type="text" id="guest-name" name="name" placeholder="Enter your name">
+          </div>
+          <div class="form-group">
+            <label for="guest-email">Email (optional):</label>
+            <input type="email" id="guest-email" name="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label for="guest-message">Your Message:</label>
+            <textarea id="guest-message" name="message" placeholder="Leave your message here..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Sign Guestbook</button>
+        </form>
+
+        <div class="guestbook-entries">
+          <h3 style="color: var(--text-lime); margin-bottom: 15px; text-align: center;">Recent Entries</h3>
+
+          <div class="guestbook-entry">
+            <div class="entry-header">
+              <span class="entry-name">The Commissioner</span>
+              <span class="entry-date">January 1, 2025</span>
+            </div>
+            <div class="entry-message">
+              Welcome to the new website! After 25 years, we finally have an online home.
+              Here's to another 25 years of terrible decisions!
+            </div>
+          </div>
+
+          <div class="guestbook-entry">
+            <div class="entry-header">
+              <span class="entry-name">Anonymous</span>
+              <span class="entry-date">January 1, 2025</span>
+            </div>
+            <div class="entry-message">
+              This website looks like it's from 1999. Perfect.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-badges">
+        <span class="badge">Best viewed in Netscape Navigator 4.0</span>
+        <span class="badge">800x600 resolution</span>
+        <span class="badge">Made with Notepad</span>
+      </div>
+
+      <p class="copyright">
+        &copy; 2000-2025 WORST COMMISH EVER Fantasy Football League<br>
+        All rights reserved. No fantasy points were harmed in the making of this website.
+      </p>
+
+      <a href="mailto:commissioner@example.com" class="email-link">
+        Contact the Commissioner (if you dare)
+      </a>
+    </footer>
+
+  </div>
+
+  <script>
+    // Fake hit counter that increments on each visit
+    (function() {
+      const counter = document.querySelector('.counter-display');
+      if (counter) {
+        let visits = parseInt(localStorage.getItem('wce_visits') || '46', 10);
+        visits++;
+        localStorage.setItem('wce_visits', visits.toString());
+        counter.textContent = visits.toString().padStart(6, '0');
+      }
+    })();
+  </script>
+
+</body>
+</html>
