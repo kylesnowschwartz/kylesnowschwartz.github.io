@@ -1,1 +1,4 @@
 .playwright-mcp
+.envrc
+.yahoo_auth/
+.env

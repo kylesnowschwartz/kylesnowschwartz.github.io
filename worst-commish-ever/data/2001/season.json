@@ -1,0 +1,106 @@
+{
+  "year": 2001,
+  "game_id": 57,
+  "league_id": "116317",
+  "success": true,
+  "league_name": "Yahoo Public 116317",
+  "num_teams": 10,
+  "standings": [
+    {
+      "team_id": "8",
+      "team_name": "THE ANIMALS",
+      "rank": 1,
+      "wins": 9,
+      "losses": 3,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "5",
+      "team_name": "penguynns",
+      "rank": 2,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "1",
+      "team_name": "jd's team",
+      "rank": 3,
+      "wins": 10,
+      "losses": 4,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "3",
+      "team_name": "Bombs away",
+      "rank": 4,
+      "wins": 8,
+      "losses": 6,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "4",
+      "team_name": "d's broncos",
+      "rank": 5,
+      "wins": 7,
+      "losses": 7,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "9",
+      "team_name": "Hammers",
+      "rank": 6,
+      "wins": 7,
+      "losses": 7,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "7",
+      "team_name": "LoveSucks!",
+      "rank": 7,
+      "wins": 5,
+      "losses": 7,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "2",
+      "team_name": "livin' on the water",
+      "rank": 8,
+      "wins": 5,
+      "losses": 9,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "10",
+      "team_name": "49ers",
+      "rank": 9,
+      "wins": 4,
+      "losses": 9,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "6",
+      "team_name": "tads killers",
+      "rank": 10,
+      "wins": 3,
+      "losses": 10,
+      "manager": "--hidden--"
+    }
+  ],
+  "champion": {
+    "team_id": "8",
+    "team_name": "THE ANIMALS",
+    "rank": 1,
+    "wins": 9,
+    "losses": 3,
+    "manager": "--hidden--"
+  },
+  "last_place": {
+    "team_id": "6",
+    "team_name": "tads killers",
+    "rank": 10,
+    "wins": 3,
+    "losses": 10,
+    "manager": "--hidden--"
+  }
+}

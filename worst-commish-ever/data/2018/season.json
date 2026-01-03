@@ -1,0 +1,90 @@
+{
+  "year": 2018,
+  "game_id": 380,
+  "league_id": "116317",
+  "success": true,
+  "league_name": "X98 DYNASTY III",
+  "num_teams": 8,
+  "standings": [
+    {
+      "team_id": "2",
+      "team_name": "3EyedRaven",
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "1",
+      "team_name": "Steelers",
+      "rank": 2,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "8",
+      "team_name": "redsnapper",
+      "rank": 3,
+      "wins": 10,
+      "losses": 4,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "4",
+      "team_name": "D+",
+      "rank": 4,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "3",
+      "team_name": "BLACKED",
+      "rank": 5,
+      "wins": 4,
+      "losses": 10,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "5",
+      "team_name": "Dayton's Team",
+      "rank": 6,
+      "wins": 5,
+      "losses": 9,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "7",
+      "team_name": "SHUDAxCUDAxWUDA",
+      "rank": 7,
+      "wins": 6,
+      "losses": 8,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "6",
+      "team_name": "scuz's scrubs",
+      "rank": 8,
+      "wins": 4,
+      "losses": 10,
+      "manager": "--hidden--"
+    }
+  ],
+  "champion": {
+    "team_id": "2",
+    "team_name": "3EyedRaven",
+    "rank": 1,
+    "wins": 9,
+    "losses": 5,
+    "manager": "--hidden--"
+  },
+  "last_place": {
+    "team_id": "6",
+    "team_name": "scuz's scrubs",
+    "rank": 8,
+    "wins": 4,
+    "losses": 10,
+    "manager": "--hidden--"
+  }
+}

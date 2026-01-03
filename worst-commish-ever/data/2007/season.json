@@ -1,0 +1,106 @@
+{
+  "year": 2007,
+  "game_id": 175,
+  "league_id": "116317",
+  "success": true,
+  "league_name": "Yahoo Public 116317",
+  "num_teams": 10,
+  "standings": [
+    {
+      "team_id": "7",
+      "team_name": "nicks's",
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "5",
+      "team_name": "pinkyandthebrain",
+      "rank": 2,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "2",
+      "team_name": "Boston Bombers",
+      "rank": 3,
+      "wins": 9,
+      "losses": 5,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "3",
+      "team_name": "Peanut Gang",
+      "rank": 4,
+      "wins": 11,
+      "losses": 3,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "10",
+      "team_name": "Pumpernickle pickle",
+      "rank": 5,
+      "wins": 4,
+      "losses": 10,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "1",
+      "team_name": "Pink and the Stink",
+      "rank": 6,
+      "wins": 7,
+      "losses": 7,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "9",
+      "team_name": "the Kings",
+      "rank": 7,
+      "wins": 8,
+      "losses": 6,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "8",
+      "team_name": "POBG IV",
+      "rank": 8,
+      "wins": 8,
+      "losses": 6,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "6",
+      "team_name": "Fig Bucker",
+      "rank": 9,
+      "wins": 4,
+      "losses": 10,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "4",
+      "team_name": "Patriots in 07",
+      "rank": 10,
+      "wins": 1,
+      "losses": 13,
+      "manager": "--hidden--"
+    }
+  ],
+  "champion": {
+    "team_id": "7",
+    "team_name": "nicks's",
+    "rank": 1,
+    "wins": 9,
+    "losses": 5,
+    "manager": "--hidden--"
+  },
+  "last_place": {
+    "team_id": "4",
+    "team_name": "Patriots in 07",
+    "rank": 10,
+    "wins": 1,
+    "losses": 13,
+    "manager": "--hidden--"
+  }
+}
