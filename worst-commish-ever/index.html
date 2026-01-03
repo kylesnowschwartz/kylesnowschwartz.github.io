@@ -726,23 +726,25 @@
       2021: { champion: "Mohawk National", championMgr: "McLean", record: "11-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
       2022: { champion: "Koala lambpork", championMgr: "THomas", record: "9-6", lastPlace: "F.U.B.A.R.", lastPlaceMgr: "Bryan" },
       2023: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "9-5", lastPlace: "Mohawk National", lastPlaceMgr: "McLean" },
-      2024: { champion: "Koala lambpork", championMgr: "THomas", record: "14-1", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" }
+      2024: { champion: "Koala lambpork", championMgr: "THomas", record: "14-1", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
+      2025: { champion: "Koala lambpork", championMgr: "THomas", record: "8-7", lastPlace: "The Violets", lastPlaceMgr: "Ben" }
     };
 
-    // 2024 team standings
-    const TEAMS_2024 = [
-      { name: "Koala lambpork", manager: "THomas", wins: 14, losses: 1 },
-      { name: "Ben's Bold Team", manager: "Ben", wins: 9, losses: 6 },
-      { name: "Big Bird", manager: "Jonathan Young", wins: 11, losses: 4 },
+    // 2025 team standings
+    const CURRENT_YEAR = 2025;
+    const TEAMS = [
+      { name: "Koala lambpork", manager: "THomas", wins: 8, losses: 7 },
+      { name: "Nerd Rage", manager: "Kyle", wins: 9, losses: 6 },
+      { name: "Mi Nombre es Peyton", manager: "Aaron", wins: 10, losses: 5 },
       { name: "F.U.B.A.R.", manager: "Bryan", wins: 9, losses: 6 },
-      { name: "THE STEW PORK WETS", manager: "Boost Poppa Charlie", wins: 7, losses: 8 },
-      { name: "Embrace The Chaos!", manager: "Gary", wins: 8, losses: 7 },
-      { name: "The Violets", manager: "Ben", wins: 7, losses: 8 },
       { name: "Mohawk National", manager: "McLean", wins: 8, losses: 7 },
-      { name: "Half-Smokes", manager: "Dave G", wins: 5, losses: 10 },
-      { name: "Mi Nombre es Peyton", manager: "Aaron", wins: 5, losses: 10 },
-      { name: "TheSkeeterValentines", manager: "JBex", wins: 5, losses: 10 },
-      { name: "Nerd Rage", manager: "Kyle", wins: 2, losses: 13 }
+      { name: "Big Bird", manager: "Jonathan Young", wins: 7, losses: 8 },
+      { name: "Embrace The Chaos!", manager: "Gary", wins: 8, losses: 7 },
+      { name: "Ben's Bold Team", manager: "Ben", wins: 8, losses: 7 },
+      { name: "Half-Smokes", manager: "Dave G", wins: 7, losses: 8 },
+      { name: "SCHNEEBO'S CTE DREAMERZ", manager: "Boost Poppa Charlie", wins: 7, losses: 8 },
+      { name: "TheSkeeterValentines", manager: "JBex", wins: 6, losses: 9 },
+      { name: "The Violets", manager: "Ben", wins: 3, losses: 12 }
     ];
 
     // Populate Dream Teams
@@ -750,11 +752,11 @@
       const grid = document.getElementById('teams-grid');
       if (!grid) return;
 
-      grid.innerHTML = TEAMS_2024.map(team => `
+      grid.innerHTML = TEAMS.map(team => `
         <div class="team-card">
           <div class="team-name">${team.name}</div>
           <div class="team-owner">Owner: ${team.manager}</div>
-          <div class="team-record">2024 Record: ${team.wins}-${team.losses}</div>
+          <div class="team-record">${CURRENT_YEAR} Record: ${team.wins}-${team.losses}</div>
         </div>
       `).join('');
     })();

@@ -45,6 +45,7 @@ LEAGUES = {
     2022: (414, "640845"),    # WorstCommishEver
     2023: (423, "444015"),    # WorstCommishEver
     2024: (449, "500141"),    # WorstCommishEver
+    2025: (461, "664021"),    # WorstCommishEver
 }
 
 
