@@ -374,100 +374,6 @@
       margin-bottom: 5px;
     }
 
-    /* === GUESTBOOK === */
-    .guestbook-section {
-      border-color: var(--text-lime);
-    }
-
-    .guestbook-section .section-title {
-      color: var(--text-lime);
-      text-shadow: 2px 2px 0 #006600;
-      border-bottom-color: var(--text-lime);
-    }
-
-    .guestbook-form {
-      display: grid;
-      gap: 15px;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .form-group label {
-      display: block;
-      color: var(--text-cyan);
-      margin-bottom: 5px;
-      font-size: 0.875rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 8px;
-      background: #111;
-      border: 2px inset #444;
-      color: var(--text-lime);
-      font-family: 'Courier New', monospace;
-      font-size: 0.875rem;
-    }
-
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .submit-btn {
-      background: linear-gradient(180deg, #444 0%, #222 100%);
-      border: 3px outset #666;
-      color: var(--text-yellow);
-      padding: 10px 30px;
-      font-family: 'Arial', sans-serif;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-
-    .submit-btn:hover {
-      background: linear-gradient(180deg, #555 0%, #333 100%);
-    }
-
-    .submit-btn:active {
-      border-style: inset;
-    }
-
-    .guestbook-entries {
-      margin-top: 30px;
-      border-top: 2px dashed var(--text-lime);
-      padding-top: 20px;
-    }
-
-    .guestbook-entry {
-      background: rgba(0, 255, 0, 0.05);
-      border: 1px solid #003300;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .entry-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 0.875rem;
-    }
-
-    .entry-name {
-      color: var(--text-cyan);
-      font-weight: bold;
-    }
-
-    .entry-date {
-      color: var(--silver);
-    }
-
-    .entry-message {
-      color: var(--text-yellow);
-    }
-
     /* === UNDER CONSTRUCTION === */
     .under-construction {
       text-align: center;
@@ -609,7 +515,6 @@
         <li><a href="#wall-of-shame">Wall of Shame</a></li>
         <li><a href="#history">League History</a></li>
         <li><a href="#rules">League Rules</a></li>
-        <li><a href="#guestbook">Guestbook</a></li>
       </ul>
     </nav>
 
@@ -772,55 +677,6 @@
       </div>
     </section>
 
-    <!-- GUESTBOOK -->
-    <section id="guestbook" class="content-section guestbook-section">
-      <h2 class="section-title">GUESTBOOK</h2>
-      <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px;">Sign our guestbook! Leave your mark on league history!</p>
-
-        <form class="guestbook-form" onsubmit="return false;">
-          <div class="form-group">
-            <label for="guest-name">Your Name:</label>
-            <input type="text" id="guest-name" name="name" placeholder="Enter your name">
-          </div>
-          <div class="form-group">
-            <label for="guest-email">Email (optional):</label>
-            <input type="email" id="guest-email" name="email" placeholder="your@email.com">
-          </div>
-          <div class="form-group">
-            <label for="guest-message">Your Message:</label>
-            <textarea id="guest-message" name="message" placeholder="Leave your message here..."></textarea>
-          </div>
-          <button type="submit" class="submit-btn">Sign Guestbook</button>
-        </form>
-
-        <div class="guestbook-entries">
-          <h3 style="color: var(--text-lime); margin-bottom: 15px; text-align: center;">Recent Entries</h3>
-
-          <div class="guestbook-entry">
-            <div class="entry-header">
-              <span class="entry-name">The Commissioner</span>
-              <span class="entry-date">January 1, 2025</span>
-            </div>
-            <div class="entry-message">
-              Welcome to the new website! After 25 years, we finally have an online home.
-              Here's to another 25 years of terrible decisions!
-            </div>
-          </div>
-
-          <div class="guestbook-entry">
-            <div class="entry-header">
-              <span class="entry-name">Anonymous</span>
-              <span class="entry-date">January 1, 2025</span>
-            </div>
-            <div class="entry-message">
-              This website looks like it's from 1999. Perfect.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- FOOTER -->
     <footer class="site-footer">
       <div class="footer-badges">
@@ -844,17 +700,19 @@
   <script>
     // League data - extracted from Yahoo Fantasy API
     // Years marked missing: need someone with API access to those years to run extract.py
+    const MISSING = "--";
+    const MISSING_YEAR = { champion: MISSING, championMgr: MISSING, record: MISSING, lastPlace: MISSING, lastPlaceMgr: MISSING, missing: true };
     const LEAGUE_DATA = {
-      2000: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2001: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2002: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2003: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2004: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2005: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2000: MISSING_YEAR,
+      2001: MISSING_YEAR,
+      2002: MISSING_YEAR,
+      2003: MISSING_YEAR,
+      2004: MISSING_YEAR,
+      2005: MISSING_YEAR,
       2006: { champion: "Beantown Ballers", championMgr: "JBex", record: "8-6", lastPlace: "BATMAN", lastPlaceMgr: "Kyle" },
-      2007: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2008: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
-      2009: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2007: MISSING_YEAR,
+      2008: MISSING_YEAR,
+      2009: MISSING_YEAR,
       2010: { champion: "Captain Arab", championMgr: "Nahush", record: "12-2", lastPlace: "Dallas Cowboys", lastPlaceMgr: "Unknown" },
       2011: { champion: "The Violets", championMgr: "Ben", record: "9-5", lastPlace: "kittencock", lastPlaceMgr: "THomas" },
       2012: { champion: "Mohawk National", championMgr: "McLean", record: "9-5", lastPlace: "TheTheobaldWolftones", lastPlaceMgr: "Bryan" },
