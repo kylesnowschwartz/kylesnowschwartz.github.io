@@ -843,8 +843,18 @@
 
   <script>
     // League data - extracted from Yahoo Fantasy API
+    // Years marked missing: need someone with API access to those years to run extract.py
     const LEAGUE_DATA = {
+      2000: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2001: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2002: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2003: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2004: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2005: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
       2006: { champion: "Beantown Ballers", championMgr: "JBex", record: "8-6", lastPlace: "BATMAN", lastPlaceMgr: "Kyle" },
+      2007: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2008: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
+      2009: { champion: "???", championMgr: "???", record: "?-?", lastPlace: "???", lastPlaceMgr: "???", missing: true },
       2010: { champion: "Captain Arab", championMgr: "Nahush", record: "12-2", lastPlace: "Dallas Cowboys", lastPlaceMgr: "Unknown" },
       2011: { champion: "The Violets", championMgr: "Ben", record: "9-5", lastPlace: "kittencock", lastPlaceMgr: "THomas" },
       2012: { champion: "Mohawk National", championMgr: "McLean", record: "9-5", lastPlace: "TheTheobaldWolftones", lastPlaceMgr: "Bryan" },
@@ -900,13 +910,15 @@
       const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
       tbody.innerHTML = years.map(year => {
         const d = LEAGUE_DATA[year];
+        const rowClass = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
+        const trophy = d.missing ? '?' : '&#127942;';
         return `
-          <tr>
+          <tr ${rowClass}>
             <td>${year}</td>
             <td>${d.championMgr}</td>
             <td>${d.champion}</td>
             <td>${d.record}</td>
-            <td class="trophy">&#127942;</td>
+            <td class="trophy">${trophy}</td>
           </tr>
         `;
       }).join('');
@@ -920,8 +932,9 @@
       const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
       list.innerHTML = years.map(year => {
         const d = LEAGUE_DATA[year];
+        const style = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
         return `
-          <li>
+          <li ${style}>
             <span class="shame-year">${year}:</span>
             <strong>${d.lastPlaceMgr}</strong> -
             <span class="shame-reason">"${d.lastPlace}"</span>
