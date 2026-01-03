@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WORST COMMISH EVER - Fantasy Football League Est. 2000</title>
+  <title>WORST COMMISH EVER</title>
   <style>
     /* === GEOCITIES AESTHETIC WITH MODERN CSS === */
 
@@ -498,311 +498,214 @@
 
     <!-- HEADER -->
     <header class="site-header">
-      <h1 class="logo-title">WORST COMMISH EVER</h1>
-      <p class="tagline">"Where Championships Are Made and Friendships Go to Die"</p>
-      <p class="established">Est. 2000 - Celebrating 25 Years of Questionable Decisions</p>
+      <h1 class="logo-title" id="logo-title"></h1>
+      <p class="tagline" id="tagline"></p>
+      <p class="established" id="established"></p>
 
       <div class="hit-counter">
-        You are visitor #<span class="counter-display">000047</span>
+        <span id="visitor-prefix"></span><span class="counter-display">000047</span>
       </div>
     </header>
 
     <!-- NAVIGATION -->
     <nav class="nav-section">
-      <ul class="nav-list">
-        <li><a href="#dream-teams">Dream Teams</a></li>
-        <li><a href="#championship">Championship Baseball</a></li>
-        <li><a href="#wall-of-shame">Wall of Shame</a></li>
-        <li><a href="#history">League History</a></li>
-        <li><a href="#rules">League Rules</a></li>
-      </ul>
+      <ul class="nav-list" id="nav-list"></ul>
     </nav>
 
     <!-- MARQUEE ANNOUNCEMENT -->
     <div class="announcement-bar">
-      <span class="marquee-content">
-        WELCOME TO THE WORST COMMISH EVER FANTASY FOOTBALL LEAGUE!
-        25 YEARS OF GLORY, HEARTBREAK, AND ABSOLUTELY TERRIBLE TRADES!
-      </span>
+      <span class="marquee-content" id="marquee-content"></span>
     </div>
 
     <!-- DREAM TEAMS -->
     <section id="dream-teams" class="content-section">
-      <h2 class="section-title">DREAM TEAMS</h2>
+      <h2 class="section-title" id="dream-teams-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px;">The brave warriors who battle each Sunday</p>
-
-        <div class="teams-grid" id="teams-grid">
-          <!-- Populated by JavaScript -->
-        </div>
+        <p style="text-align: center; margin-bottom: 20px;" id="dream-teams-subtitle"></p>
+        <div class="teams-grid" id="teams-grid"></div>
       </div>
     </section>
 
     <!-- CHAMPIONSHIP BASEBALL (Hall of Fame) -->
     <section id="championship" class="content-section">
-      <h2 class="section-title">CHAMPIONSHIP BASEBALL</h2>
+      <h2 class="section-title" id="championship-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px;">The Hall of Champions - Legends of the League</p>
-
+        <p style="text-align: center; margin-bottom: 20px;" id="championship-subtitle"></p>
         <table class="champions-table">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Champion</th>
-              <th>Team Name</th>
-              <th>Record</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="champions-tbody">
-            <!-- Populated by JavaScript -->
-          </tbody>
+          <thead id="champions-thead"></thead>
+          <tbody id="champions-tbody"></tbody>
         </table>
       </div>
     </section>
 
     <!-- WALL OF SHAME -->
     <section id="wall-of-shame" class="content-section shame-section">
-      <h2 class="section-title">WALL OF SHAME</h2>
+      <h2 class="section-title" id="wall-of-shame-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px; color: var(--link-salmon);">
-          Where legends go to be forgotten (but we remember everything)
-        </p>
-
-        <ul class="shame-list" id="shame-list">
-          <!-- Populated by JavaScript -->
-        </ul>
+        <p style="text-align: center; margin-bottom: 20px; color: var(--link-salmon);" id="wall-of-shame-subtitle"></p>
+        <ul class="shame-list" id="shame-list"></ul>
       </div>
     </section>
 
     <!-- LEAGUE HISTORY -->
     <section id="history" class="content-section">
-      <h2 class="section-title">LEAGUE HISTORY</h2>
+      <h2 class="section-title" id="history-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px;">25 Years of Fantasy Football Excellence (and Chaos)</p>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-year">2000</div>
-            <div class="timeline-event">
-              The league is founded by a group of friends who had no idea what they were getting into.
-              First commissioner elected (or volunteered, nobody remembers).
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2005</div>
-            <div class="timeline-event">
-              League survives its first major controversy. Details redacted to protect the guilty.
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2010</div>
-            <div class="timeline-event">
-              10 year anniversary. The "Worst Commish Ever" name is officially adopted after
-              a particularly controversial ruling.
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2015</div>
-            <div class="timeline-event">
-              League goes online. No more spreadsheets and phone calls.
-              Arguments now happen in group chats instead.
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2020</div>
-            <div class="timeline-event">
-              20 years! The pandemic couldn't stop us. Virtual draft party happens via Zoom.
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2025</div>
-            <div class="timeline-event">
-              <span class="rainbow-text">25 YEARS!</span> A quarter century of friendship, rivalry,
-              and terrible fantasy advice.
-            </div>
-          </div>
-        </div>
-
+        <p style="text-align: center; margin-bottom: 20px;" id="history-subtitle"></p>
+        <div class="timeline" id="timeline"></div>
         <div class="under-construction">
           <div class="construction-gif">&#128218;</div>
-          <p class="construction-text">League historians are compiling more stories...</p>
+          <p class="construction-text" id="history-under-construction"></p>
         </div>
       </div>
     </section>
 
     <!-- LEAGUE RULES -->
     <section id="rules" class="content-section">
-      <h2 class="section-title">LEAGUE RULES</h2>
+      <h2 class="section-title" id="rules-title"></h2>
       <div class="section-content">
-        <p style="text-align: center; margin-bottom: 20px;">The Sacred Laws of the League</p>
-
-        <ol class="rules-list">
-          <li>
-            <span class="rule-title">Pay Your Dues</span>
-            League fees must be paid before the draft. No pay, no play. The commissioner
-            will hunt you down.
-          </li>
-          <li>
-            <span class="rule-title">Set Your Lineup</span>
-            There is no excuse for an empty roster spot. If you can't be bothered,
-            you will be publicly shamed.
-          </li>
-          <li>
-            <span class="rule-title">No Collusion</span>
-            Trades must be fair. If two teams are caught conspiring, both will face
-            consequences determined by league vote.
-          </li>
-          <li>
-            <span class="rule-title">Trade Deadline</span>
-            All trades must be completed by Week 10. No exceptions, no matter how
-            much you beg.
-          </li>
-          <li>
-            <span class="rule-title">Respect the Commish</span>
-            Even when they're the worst. Especially when they're the worst.
-          </li>
-          <li>
-            <span class="rule-title">Trash Talk Encouraged</span>
-            Keep it fun, keep it creative, keep it in the group chat.
-            What happens in the league stays in the league.
-          </li>
-        </ol>
-
+        <p style="text-align: center; margin-bottom: 20px;" id="rules-subtitle"></p>
+        <ol class="rules-list" id="rules-list"></ol>
         <div class="under-construction">
           <div class="construction-gif">&#128220;</div>
-          <p class="construction-text">Full rulebook being digitized from ancient scrolls...</p>
+          <p class="construction-text" id="rules-under-construction"></p>
         </div>
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="site-footer">
-      <div class="footer-badges">
-        <span class="badge">Best viewed in Netscape Navigator 4.0</span>
-        <span class="badge">800x600 resolution</span>
-        <span class="badge">Made with Notepad</span>
-      </div>
-
-      <p class="copyright">
-        &copy; 2000-2025 WORST COMMISH EVER Fantasy Football League<br>
-        All rights reserved. No fantasy points were harmed in the making of this website.
-      </p>
-
-      <a href="mailto:commissioner@example.com" class="email-link">
-        Contact the Commissioner (if you dare)
-      </a>
+      <div class="footer-badges" id="footer-badges"></div>
+      <p class="copyright" id="footer-copyright"></p>
+      <a href="" class="email-link" id="footer-contact"></a>
     </footer>
 
   </div>
 
+  <!-- Content CMS -->
+  <script src="content.js"></script>
+  <script src="data.js"></script>
   <script>
-    // League data - extracted from Yahoo Fantasy API
-    // Years marked missing: need someone with API access to those years to run extract.py
-    const MISSING = "--";
-    const MISSING_YEAR = { champion: MISSING, championMgr: MISSING, record: MISSING, lastPlace: MISSING, lastPlaceMgr: MISSING, missing: true };
-    const LEAGUE_DATA = {
-      2000: MISSING_YEAR,
-      2001: MISSING_YEAR,
-      2002: MISSING_YEAR,
-      2003: MISSING_YEAR,
-      2004: MISSING_YEAR,
-      2005: MISSING_YEAR,
-      2006: { champion: "Beantown Ballers", championMgr: "JBex", record: "8-6", lastPlace: "BATMAN", lastPlaceMgr: "Kyle" },
-      2007: MISSING_YEAR,
-      2008: MISSING_YEAR,
-      2009: MISSING_YEAR,
-      2010: { champion: "Captain Arab", championMgr: "Nahush", record: "12-2", lastPlace: "Dallas Cowboys", lastPlaceMgr: "Unknown" },
-      2011: { champion: "The Violets", championMgr: "Ben", record: "9-5", lastPlace: "kittencock", lastPlaceMgr: "THomas" },
-      2012: { champion: "Mohawk National", championMgr: "McLean", record: "9-5", lastPlace: "TheTheobaldWolftones", lastPlaceMgr: "Bryan" },
-      2013: { champion: "Big Bird", championMgr: "Jonathan Young", record: "9-5", lastPlace: "Bronuts", lastPlaceMgr: "THomas" },
-      2014: { champion: "Embrace The Chaos!", championMgr: "Gary", record: "9-5", lastPlace: "Half-Smokes", lastPlaceMgr: "Dave G" },
-      2015: { champion: "Half-Smokes", championMgr: "Dave G", record: "9-5", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
-      2016: { champion: "Koala lambpork", championMgr: "THomas", record: "7-7", lastPlace: "The Violets", lastPlaceMgr: "Ben" },
-      2017: { champion: "Nerd Rage", championMgr: "Kyle", record: "10-4", lastPlace: "Big Bird", lastPlaceMgr: "Jonathan Young" },
-      2018: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "10-4", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
-      2019: { champion: "Ben's Bold Team", championMgr: "Ben", record: "7-7", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
-      2020: { champion: "Big Bird", championMgr: "Jonathan Young", record: "10-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
-      2021: { champion: "Mohawk National", championMgr: "McLean", record: "11-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
-      2022: { champion: "Koala lambpork", championMgr: "THomas", record: "9-6", lastPlace: "F.U.B.A.R.", lastPlaceMgr: "Bryan" },
-      2023: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "9-5", lastPlace: "Mohawk National", lastPlaceMgr: "McLean" },
-      2024: { champion: "Koala lambpork", championMgr: "THomas", record: "14-1", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
-      2025: { champion: "Koala lambpork", championMgr: "THomas", record: "8-7", lastPlace: "The Violets", lastPlaceMgr: "Ben" }
+    // === RENDER SITE FROM CONTENT ===
+
+    // Helper to set text content by ID
+    const setText = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
     };
 
-    // 2025 team standings
-    const CURRENT_YEAR = 2025;
-    const TEAMS = [
-      { name: "Koala lambpork", manager: "THomas", wins: 8, losses: 7 },
-      { name: "Nerd Rage", manager: "Kyle", wins: 9, losses: 6 },
-      { name: "Mi Nombre es Peyton", manager: "Aaron", wins: 10, losses: 5 },
-      { name: "F.U.B.A.R.", manager: "Bryan", wins: 9, losses: 6 },
-      { name: "Mohawk National", manager: "McLean", wins: 8, losses: 7 },
-      { name: "Big Bird", manager: "Jonathan Young", wins: 7, losses: 8 },
-      { name: "Embrace The Chaos!", manager: "Gary", wins: 8, losses: 7 },
-      { name: "Ben's Bold Team", manager: "Ben", wins: 8, losses: 7 },
-      { name: "Half-Smokes", manager: "Dave G", wins: 7, losses: 8 },
-      { name: "SCHNEEBO'S CTE DREAMERZ", manager: "Boost Poppa Charlie", wins: 7, losses: 8 },
-      { name: "TheSkeeterValentines", manager: "JBex", wins: 6, losses: 9 },
-      { name: "The Violets", manager: "Ben", wins: 3, losses: 12 }
-    ];
+    // Helper to set innerHTML by ID
+    const setHTML = (id, html) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = html;
+    };
 
-    // Populate Dream Teams
-    (function() {
-      const grid = document.getElementById('teams-grid');
-      if (!grid) return;
+    // Site header
+    document.title = CONTENT.site.title;
+    setText('logo-title', CONTENT.site.logoTitle);
+    setText('tagline', CONTENT.site.tagline);
+    setText('established', CONTENT.site.established);
+    setText('visitor-prefix', CONTENT.site.visitorPrefix);
 
-      grid.innerHTML = TEAMS.map(team => `
-        <div class="team-card">
-          <div class="team-name">${team.name}</div>
-          <div class="team-owner">Owner: ${team.manager}</div>
-          <div class="team-record">${CURRENT_YEAR} Record: ${team.wins}-${team.losses}</div>
+    // Navigation
+    setHTML('nav-list', CONTENT.nav.map(item =>
+      `<li><a href="${item.href}">${item.label}</a></li>`
+    ).join(''));
+
+    // Marquee
+    setText('marquee-content', CONTENT.marquee);
+
+    // Dream Teams section
+    setText('dream-teams-title', CONTENT.sections.dreamTeams.title);
+    setText('dream-teams-subtitle', CONTENT.sections.dreamTeams.subtitle);
+    setHTML('teams-grid', TEAMS.map(team => `
+      <div class="team-card">
+        <div class="team-name">${team.name}</div>
+        <div class="team-owner">Owner: ${team.manager}</div>
+        <div class="team-record">${CURRENT_YEAR} Record: ${team.wins}-${team.losses}</div>
+      </div>
+    `).join(''));
+
+    // Championship section
+    setText('championship-title', CONTENT.sections.championship.title);
+    setText('championship-subtitle', CONTENT.sections.championship.subtitle);
+    setHTML('champions-thead', `<tr>${CONTENT.sections.championship.tableHeaders.map(h =>
+      `<th>${h}</th>`
+    ).join('')}</tr>`);
+
+    const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
+    setHTML('champions-tbody', years.map(year => {
+      const d = LEAGUE_DATA[year];
+      const rowClass = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
+      const trophy = d.missing ? '?' : '&#127942;';
+      return `
+        <tr ${rowClass}>
+          <td>${year}</td>
+          <td>${d.championMgr}</td>
+          <td>${d.champion}</td>
+          <td>${d.record}</td>
+          <td class="trophy">${trophy}</td>
+        </tr>
+      `;
+    }).join(''));
+
+    // Wall of Shame section
+    setText('wall-of-shame-title', CONTENT.sections.wallOfShame.title);
+    setText('wall-of-shame-subtitle', CONTENT.sections.wallOfShame.subtitle);
+    setHTML('shame-list', years.map(year => {
+      const d = LEAGUE_DATA[year];
+      const style = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
+      return `
+        <li ${style}>
+          <span class="shame-year">${year}:</span>
+          <strong>${d.lastPlaceMgr}</strong> -
+          <span class="shame-reason">"${d.lastPlace}"</span>
+        </li>
+      `;
+    }).join(''));
+
+    // History section
+    setText('history-title', CONTENT.sections.history.title);
+    setText('history-subtitle', CONTENT.sections.history.subtitle);
+    setText('history-under-construction', CONTENT.sections.history.underConstruction);
+    setHTML('timeline', CONTENT.sections.history.timeline.map(item => {
+      let eventHTML = item.event;
+      if (item.rainbow && item.prefix) {
+        eventHTML = `<span class="rainbow-text">${item.prefix}</span> ${item.event}`;
+      }
+      return `
+        <div class="timeline-item">
+          <div class="timeline-year">${item.year}</div>
+          <div class="timeline-event">${eventHTML}</div>
         </div>
-      `).join('');
-    })();
+      `;
+    }).join(''));
 
-    // Populate Championship table
-    (function() {
-      const tbody = document.getElementById('champions-tbody');
-      if (!tbody) return;
+    // Rules section
+    setText('rules-title', CONTENT.sections.rules.title);
+    setText('rules-subtitle', CONTENT.sections.rules.subtitle);
+    setText('rules-under-construction', CONTENT.sections.rules.underConstruction);
+    setHTML('rules-list', CONTENT.sections.rules.rules.map(rule => `
+      <li>
+        <span class="rule-title">${rule.title}</span>
+        ${rule.description}
+      </li>
+    `).join(''));
 
-      const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
-      tbody.innerHTML = years.map(year => {
-        const d = LEAGUE_DATA[year];
-        const rowClass = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
-        const trophy = d.missing ? '?' : '&#127942;';
-        return `
-          <tr ${rowClass}>
-            <td>${year}</td>
-            <td>${d.championMgr}</td>
-            <td>${d.champion}</td>
-            <td>${d.record}</td>
-            <td class="trophy">${trophy}</td>
-          </tr>
-        `;
-      }).join('');
-    })();
+    // Footer
+    setHTML('footer-badges', CONTENT.footer.badges.map(badge =>
+      `<span class="badge">${badge}</span>`
+    ).join(''));
+    setHTML('footer-copyright',
+      `&copy; ${CONTENT.footer.copyright}<br>${CONTENT.footer.copyrightNote}`
+    );
+    const contactLink = document.getElementById('footer-contact');
+    if (contactLink) {
+      contactLink.href = `mailto:${CONTENT.footer.contactEmail}`;
+      contactLink.textContent = CONTENT.footer.contactText;
+    }
 
-    // Populate Wall of Shame
-    (function() {
-      const list = document.getElementById('shame-list');
-      if (!list) return;
-
-      const years = Object.keys(LEAGUE_DATA).map(Number).sort((a, b) => b - a);
-      list.innerHTML = years.map(year => {
-        const d = LEAGUE_DATA[year];
-        const style = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
-        return `
-          <li ${style}>
-            <span class="shame-year">${year}:</span>
-            <strong>${d.lastPlaceMgr}</strong> -
-            <span class="shame-reason">"${d.lastPlace}"</span>
-          </li>
-        `;
-      }).join('');
-    })();
-
-    // Fake hit counter that increments on each visit
+    // Fake hit counter
     (function() {
       const counter = document.querySelector('.counter-display');
       if (counter) {
