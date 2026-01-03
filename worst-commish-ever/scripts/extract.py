@@ -25,17 +25,26 @@ PROJECT_DIR = SCRIPT_DIR.parent
 DATA_DIR = PROJECT_DIR / "data"
 
 # League info
-LEAGUE_ID = "116317"
 GAME_CODE = "nfl"
 
-# Game IDs by year (from API - not sequential!)
-GAME_IDS = {
-    1999: 50, 2000: 53, 2001: 57, 2002: 49, 2003: 79,
-    2004: 101, 2005: 124, 2006: 153, 2007: 175, 2008: 199,
-    2009: 222, 2010: 242, 2011: 257, 2012: 273, 2013: 314,
-    2014: 331, 2015: 348, 2016: 359, 2017: 371, 2018: 380,
-    2019: 390, 2020: 399, 2021: 406, 2022: 414, 2023: 423,
-    2024: 449, 2025: 461,
+# Your leagues by year: (game_id, league_id)
+LEAGUES = {
+    2006: (153, "122917"),    # Championship Baseball
+    2010: (242, "172584"),    # Trending Ben's Sloppy Vajayj
+    2011: (257, "310665"),    # 250 Kicken Chickers
+    2012: (273, "116317"),    # Action Jackson's Revenge
+    2013: (314, "468061"),    # Football!Goodbye Productivity!
+    2014: (331, "395447"),    # WorstCommishEver
+    2015: (348, "395219"),    # WorstCommishEver
+    2016: (359, "598359"),    # WorstCommishEver
+    2017: (371, "317448"),    # WorstCommishEver
+    2018: (380, "325854"),    # WorstCommishEver
+    2019: (390, "320916"),    # WorstCommishEver
+    2020: (399, "729517"),    # WorstCommishEver
+    2021: (406, "794998"),    # WorstCommishEver
+    2022: (414, "640845"),    # WorstCommishEver
+    2023: (423, "444015"),    # WorstCommishEver
+    2024: (449, "500141"),    # WorstCommishEver
 }
 
 
@@ -56,17 +65,19 @@ def obj_to_dict(obj):
 
 
 def extract_year(year: int, verbose: bool = False) -> dict:
-    game_id = GAME_IDS.get(year)
-    if not game_id:
-        print(f"  Unknown year: {year}")
-        return {"year": year, "success": False, "error": "Unknown game_id"}
+    league_info = LEAGUES.get(year)
+    if not league_info:
+        print(f"  No league data for {year}")
+        return {"year": year, "success": False, "error": "No league configured"}
+
+    game_id, league_id = league_info
 
     print(f"\n{'='*50}")
-    print(f"{year} (game_id: {game_id})")
+    print(f"{year} (game_id: {game_id}, league: {league_id})")
     print('='*50)
 
     query = YahooFantasySportsQuery(
-        league_id=LEAGUE_ID,
+        league_id=league_id,
         game_code=GAME_CODE,
         game_id=game_id,
         yahoo_consumer_key=os.environ.get("YAHOO_CONSUMER_KEY"),
@@ -75,7 +86,7 @@ def extract_year(year: int, verbose: bool = False) -> dict:
         save_token_data_to_env_file=True,
     )
 
-    result = {"year": year, "game_id": game_id, "league_id": LEAGUE_ID, "success": False}
+    result = {"year": year, "game_id": game_id, "league_id": league_id, "success": False}
 
     try:
         # League info
@@ -146,7 +157,7 @@ def main():
         print("Error: source .envrc first")
         return
 
-    years = list(GAME_IDS.keys()) if args.all else args.years
+    years = list(LEAGUES.keys()) if args.all else args.years
     if not years:
         parser.print_help()
         return

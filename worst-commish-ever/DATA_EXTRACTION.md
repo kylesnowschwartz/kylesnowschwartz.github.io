@@ -1,111 +1,121 @@
 # Data Extraction: Yahoo Fantasy Football
 
-## Goal
+## Summary
 
-Pull 25 years of league history (2000-2024) from Yahoo Fantasy Football to populate the Worst Commish Ever website.
+Successfully extracted **16 years** of league data (2006-2024) via Yahoo Fantasy API.
 
-## League Info
+**Missing years:** 2001-2005, 2007-2009 - Either predates current Yahoo account linkage, or data not accessible via API. These will need manual entry if available.
 
-- **URL**: `https://football.fantasysports.yahoo.com/2001/f1/116317`
-- **League ID**: `116317`
-- **Years**: 2000-2024 (25 seasons)
-
-## Yahoo Fantasy API
-
-### Game Keys (NFL)
-
-| Year | Game ID | Year | Game ID |
-|------|---------|------|---------|
-| 2001 | 57 | 2013 | 314 |
-| 2002 | 49 | 2014 | 331 |
-| 2003 | 79 | 2015 | 348 |
-| 2004 | 101 | 2016 | 359 |
-| 2005 | 124 | 2017 | 371 |
-| 2006 | 153 | 2018 | 380 |
-| 2007 | 175 | 2019 | 390 |
-| 2008 | 199 | 2020 | 399 |
-| 2009 | 222 | 2021 | 406 |
-| 2010 | 242 | 2022 | 414 |
-| 2011 | 257 | 2023 | 423 |
-| 2012 | 273 | 2024 | TBD |
-
-### Authentication
-
-Requires OAuth 2.0:
-1. Register app at [Yahoo Developer Network](https://developer.yahoo.com/)
-2. Get consumer key + secret
-3. User authorizes via browser redirect
-4. Refresh tokens for ongoing access
-
-### Access Rules
-
-- Private leagues: Must be a member
-- Public leagues: Anyone can access
-- Historical data: Available if you have league access
-
-## Tools
-
-### YFPY (Python)
+## How to Run
 
 ```bash
-pip install yfpy
+cd worst-commish-ever
+source .envrc                          # Load Yahoo API credentials
+uv run scripts/extract.py --all        # Extract all configured years
+uv run scripts/extract.py 2024 2023    # Extract specific years
+uv run scripts/extract.py 2024 -v      # Verbose output
 ```
 
-```python
-from yfpy.query import YahooFantasySportsQuery
+## What Worked
 
-query = YahooFantasySportsQuery(
-    league_id="116317",
-    game_code="nfl",
-    game_id=57,  # 2001
-    yahoo_consumer_key="YOUR_KEY",
-    yahoo_consumer_secret="YOUR_SECRET"
-)
+1. **OAuth 2.0 via YFPY** - Token caching to `.env` file works perfectly
+2. **League discovery** - `list_my_leagues.py` finds all leagues you're a member of
+3. **Per-year league IDs** - Yahoo reuses league IDs across game_ids, so each year needs its own league_id
 
-# Get standings
-standings = query.get_league_standings()
+## League Configuration
 
-# Get teams
-teams = query.get_league_teams()
+The league has had different names and IDs over the years:
+
+| Year | Game ID | League ID | League Name |
+|------|---------|-----------|-------------|
+| 2006 | 153 | 122917 | Championship Baseball |
+| 2010 | 242 | 172584 | Trending Ben's Sloppy Vajayj |
+| 2011 | 257 | 310665 | 250 Kicken Chickers |
+| 2012 | 273 | 116317 | Action Jackson's Revenge |
+| 2013 | 314 | 468061 | Football!Goodbye Productivity! |
+| 2014 | 331 | 395447 | WorstCommishEver |
+| 2015 | 348 | 395219 | WorstCommishEver |
+| 2016 | 359 | 598359 | WorstCommishEver |
+| 2017 | 371 | 317448 | WorstCommishEver |
+| 2018 | 380 | 325854 | WorstCommishEver |
+| 2019 | 390 | 320916 | WorstCommishEver |
+| 2020 | 399 | 729517 | WorstCommishEver |
+| 2021 | 406 | 794998 | WorstCommishEver |
+| 2022 | 414 | 640845 | WorstCommishEver |
+| 2023 | 423 | 444015 | WorstCommishEver |
+| 2024 | 449 | 500141 | WorstCommishEver |
+
+## Champions by Year
+
+| Year | Champion | Last Place |
+|------|----------|------------|
+| 2006 | Beantown Ballers | BATMAN |
+| 2010 | Captain Arab | Dallas Cowboys |
+| 2011 | The Violets | kittencock |
+| 2012 | Mohawk National | TheTheobaldWolftones |
+| 2013 | Big Bird | Bronuts |
+| 2014 | Embrace The Chaos! | Half-Smokes |
+| 2015 | Half-Smokes | Mi Nombre es Peyton |
+| 2016 | Koala lambpork | The Violets |
+| 2017 | Nerd Rage | Big Bird |
+| 2018 | TheSkeeterValentines | Nerd Rage |
+| 2019 | Ben's Bold Team | Nerd Rage |
+| 2020 | Big Bird | Mi Nombre es Peyton |
+| 2021 | Mohawk National | Mi Nombre es Peyton |
+| 2022 | Koala lambpork | F.U.B.A.R. |
+| 2023 | TheSkeeterValentines | Mohawk National |
+| 2024 | Koala lambpork | Nerd Rage |
+
+## Files Created
+
+```
+data/
+├── 2006/season.json
+├── 2010/season.json
+├── 2011/season.json
+├── 2012/season.json
+├── 2013/season.json
+├── 2014/season.json
+├── 2015/season.json
+├── 2016/season.json
+├── 2017/season.json
+├── 2018/season.json
+├── 2019/season.json
+├── 2020/season.json
+├── 2021/season.json
+├── 2022/season.json
+├── 2023/season.json
+└── 2024/season.json
 ```
 
-Docs: https://github.com/uberfastman/yfpy
+Each `season.json` contains:
+- League name and team count
+- Full standings with ranks
+- Win/loss records (where available)
+- Manager nicknames (where available)
+- Champion and last place teams
 
-## Data We Need
+## Yahoo API Notes
 
-| Section | Data Points |
-|---------|-------------|
-| Dream Teams | Team names, owner names, current record |
-| Championship Baseball | Champion by year, team name, final record |
-| Wall of Shame | Worst moments (manual curation?) |
-| League History | Key events by year (manual curation?) |
-| League Rules | Current ruleset |
+- **Authentication**: OAuth 2.0, tokens cached in `.env`
+- **Rate limits**: Minimal, no throttling encountered
+- **Historical data**: Available back to 1999, but only for leagues you have access to
+- **Game IDs**: Not sequential by year (e.g., 2002=49, 2001=57)
+- **League IDs**: Reused across game_ids, so `116317` in 2012 is different from `116317` in 2001
 
-## Finding Yahoo Developer Credentials
+## Scripts
 
-Check these locations:
-1. https://developer.yahoo.com/apps/ (logged into Yahoo)
-2. `~/.yfpy/` directory (if YFPY was used before)
-3. Any `.env` files in old projects
-4. Password manager under "Yahoo" or "Fantasy"
-
-Credentials needed:
-- **Consumer Key** (client ID)
-- **Consumer Secret** (client secret)
-
-## Open Questions
-
-- [x] Do we have OAuth credentials? → Yes, somewhere
-- [ ] Is the league still accessible via API?
-- [ ] What's the league ID for each year? (might change)
-- [ ] Is historical data complete or partial?
+| Script | Purpose |
+|--------|---------|
+| `extract.py` | Main extraction script - pulls standings by year |
+| `list_game_ids.py` | Discover all NFL game IDs from API |
+| `list_my_leagues.py` | Find all leagues you're a member of |
 
 ## Next Steps
 
-1. ~~Set up Yahoo Developer app~~ → Find existing credentials
-2. Test API access to one historical season
-3. Script to pull all seasons
-4. Transform data to site format
+1. Wire JSON data into `index.html` (Championship Baseball, Dream Teams, etc.)
+2. Manually add missing years (2001-2005, 2007-2009) if records exist
+3. Add manager photos to `images/managers/`
 
 ---
 

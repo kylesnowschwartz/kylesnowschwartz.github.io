@@ -1,0 +1,106 @@
+{
+  "year": 2006,
+  "game_id": 153,
+  "league_id": "122917",
+  "success": true,
+  "league_name": "Championship Baseball",
+  "num_teams": 10,
+  "standings": [
+    {
+      "team_id": "9",
+      "team_name": "Beantown Ballers",
+      "rank": 1,
+      "wins": 8,
+      "losses": 6,
+      "manager": "JBex"
+    },
+    {
+      "team_id": "3",
+      "team_name": "Team Weak",
+      "rank": 2,
+      "wins": 8,
+      "losses": 6,
+      "manager": "Ben"
+    },
+    {
+      "team_id": "1",
+      "team_name": "MekonRiverCatfish",
+      "rank": 3,
+      "wins": 10,
+      "losses": 4,
+      "manager": "BC"
+    },
+    {
+      "team_id": "2",
+      "team_name": "Mohawk National",
+      "rank": 4,
+      "wins": 9,
+      "losses": 5,
+      "manager": "McLean"
+    },
+    {
+      "team_id": "4",
+      "team_name": "Shenanigan Squad",
+      "rank": 5,
+      "wins": 7,
+      "losses": 7,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "7",
+      "team_name": "Countdown to Thunder",
+      "rank": 6,
+      "wins": 7,
+      "losses": 7,
+      "manager": "Boost Poppa Charlie"
+    },
+    {
+      "team_id": "6",
+      "team_name": "Dakota Love",
+      "rank": 7,
+      "wins": 6,
+      "losses": 8,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "8",
+      "team_name": "Captain Arab",
+      "rank": 8,
+      "wins": 7,
+      "losses": 7,
+      "manager": "Nahush"
+    },
+    {
+      "team_id": "5",
+      "team_name": "Hoohah Dogtime",
+      "rank": 9,
+      "wins": 5,
+      "losses": 9,
+      "manager": "THomas"
+    },
+    {
+      "team_id": "10",
+      "team_name": "BATMAN",
+      "rank": 10,
+      "wins": 3,
+      "losses": 11,
+      "manager": "Kyle"
+    }
+  ],
+  "champion": {
+    "team_id": "9",
+    "team_name": "Beantown Ballers",
+    "rank": 1,
+    "wins": 8,
+    "losses": 6,
+    "manager": "JBex"
+  },
+  "last_place": {
+    "team_id": "10",
+    "team_name": "BATMAN",
+    "rank": 10,
+    "wins": 3,
+    "losses": 11,
+    "manager": "Kyle"
+  }
+}

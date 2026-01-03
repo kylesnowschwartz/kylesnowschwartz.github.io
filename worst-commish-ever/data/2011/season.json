@@ -1,0 +1,122 @@
+{
+  "year": 2011,
+  "game_id": 257,
+  "league_id": "310665",
+  "success": true,
+  "league_name": "250 Kicken Chickers",
+  "num_teams": 12,
+  "standings": [
+    {
+      "team_id": "4",
+      "team_name": "The Violets",
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "manager": "Ben"
+    },
+    {
+      "team_id": "10",
+      "team_name": "Horny for Hanie",
+      "rank": 2,
+      "wins": 12,
+      "losses": 2,
+      "manager": "Jonathan Young"
+    },
+    {
+      "team_id": "1",
+      "team_name": "Justinisaweenus!",
+      "rank": 3,
+      "wins": 11,
+      "losses": 3,
+      "manager": "Bryan"
+    },
+    {
+      "team_id": "2",
+      "team_name": "Captain Arab",
+      "rank": 4,
+      "wins": 9,
+      "losses": 5,
+      "manager": "Nahush"
+    },
+    {
+      "team_id": "7",
+      "team_name": "MeanGreenMachine",
+      "rank": 5,
+      "wins": 8,
+      "losses": 6,
+      "manager": "Gary"
+    },
+    {
+      "team_id": "3",
+      "team_name": "Mohawk National",
+      "rank": 6,
+      "wins": 8,
+      "losses": 6,
+      "manager": "McLean"
+    },
+    {
+      "team_id": "6",
+      "team_name": "Charles Bronson",
+      "rank": 7,
+      "wins": 5,
+      "losses": 9,
+      "manager": "Dave G"
+    },
+    {
+      "team_id": "5",
+      "team_name": "Gary For Congress",
+      "rank": 8,
+      "wins": 5,
+      "losses": 9,
+      "manager": "Boost Poppa Charlie"
+    },
+    {
+      "team_id": "12",
+      "team_name": "The Browns",
+      "rank": 9,
+      "wins": 5,
+      "losses": 9,
+      "manager": "--hidden--"
+    },
+    {
+      "team_id": "8",
+      "team_name": "meatsausagesurprise!",
+      "rank": 10,
+      "wins": 5,
+      "losses": 9,
+      "manager": "Kyle"
+    },
+    {
+      "team_id": "9",
+      "team_name": "TheSkeeterValentines",
+      "rank": 11,
+      "wins": 4,
+      "losses": 10,
+      "manager": "JBex"
+    },
+    {
+      "team_id": "11",
+      "team_name": "kittencock",
+      "rank": 12,
+      "wins": 3,
+      "losses": 11,
+      "manager": "THomas"
+    }
+  ],
+  "champion": {
+    "team_id": "4",
+    "team_name": "The Violets",
+    "rank": 1,
+    "wins": 9,
+    "losses": 5,
+    "manager": "Ben"
+  },
+  "last_place": {
+    "team_id": "11",
+    "team_name": "kittencock",
+    "rank": 12,
+    "wins": 3,
+    "losses": 11,
+    "manager": "THomas"
+  }
+}

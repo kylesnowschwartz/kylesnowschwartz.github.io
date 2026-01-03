@@ -1,0 +1,122 @@
+{
+  "year": 2015,
+  "game_id": 348,
+  "league_id": "395219",
+  "success": true,
+  "league_name": "WorstCommishEver",
+  "num_teams": 12,
+  "standings": [
+    {
+      "team_id": "3",
+      "team_name": "Half-Smokes",
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "manager": "Dave G"
+    },
+    {
+      "team_id": "6",
+      "team_name": "Nerd Rage",
+      "rank": 2,
+      "wins": 10,
+      "losses": 4,
+      "manager": "Kyle"
+    },
+    {
+      "team_id": "4",
+      "team_name": "DefiancePhiladelphia",
+      "rank": 3,
+      "wins": 12,
+      "losses": 2,
+      "manager": "JBex"
+    },
+    {
+      "team_id": "5",
+      "team_name": "Embrace The Chaos!",
+      "rank": 4,
+      "wins": 10,
+      "losses": 4,
+      "manager": "Gary"
+    },
+    {
+      "team_id": "7",
+      "team_name": "The Violets",
+      "rank": 5,
+      "wins": 8,
+      "losses": 6,
+      "manager": "Ben"
+    },
+    {
+      "team_id": "12",
+      "team_name": "Big Bird",
+      "rank": 6,
+      "wins": 6,
+      "losses": 8,
+      "manager": "Jonathan Young"
+    },
+    {
+      "team_id": "8",
+      "team_name": "Dakota Vengeance",
+      "rank": 7,
+      "wins": 8,
+      "losses": 6,
+      "manager": "Boost Poppa Charlie"
+    },
+    {
+      "team_id": "2",
+      "team_name": "Koala lambpork",
+      "rank": 8,
+      "wins": 7,
+      "losses": 7,
+      "manager": "THomas"
+    },
+    {
+      "team_id": "9",
+      "team_name": "Mohawk National",
+      "rank": 9,
+      "wins": 6,
+      "losses": 8,
+      "manager": "McLean"
+    },
+    {
+      "team_id": "1",
+      "team_name": "TheAndyDaltonShow",
+      "rank": 10,
+      "wins": 3,
+      "losses": 11,
+      "manager": "Bryan"
+    },
+    {
+      "team_id": "10",
+      "team_name": "Captain Arab",
+      "rank": 11,
+      "wins": 3,
+      "losses": 11,
+      "manager": "Nahush"
+    },
+    {
+      "team_id": "11",
+      "team_name": "Mi Nombre es Peyton",
+      "rank": 12,
+      "wins": 2,
+      "losses": 12,
+      "manager": "Aaron"
+    }
+  ],
+  "champion": {
+    "team_id": "3",
+    "team_name": "Half-Smokes",
+    "rank": 1,
+    "wins": 9,
+    "losses": 5,
+    "manager": "Dave G"
+  },
+  "last_place": {
+    "team_id": "11",
+    "team_name": "Mi Nombre es Peyton",
+    "rank": 12,
+    "wins": 2,
+    "losses": 12,
+    "manager": "Aaron"
+  }
+}
