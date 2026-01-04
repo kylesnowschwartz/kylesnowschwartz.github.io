@@ -68,12 +68,6 @@ const HEROES = {
     teamNames: ["Mi Nombre es Peyton"],
     seasons: 14
   },
-  "BC": {
-    years: "2006-2010",
-    teamNames: ["MekonRiverCatfish", "How Ya Like Me Now?"],
-    seasons: 2,
-    retired: true
-  },
   "Ben": {
     years: "2006-2025",
     teamNames: ["Team Weak", "The Violets", "Ben's Bold Team"],
@@ -84,10 +78,11 @@ const HEROES = {
     teamNames: ["Countdown to Thunder", "Official Worst Team", "Gary For Congress", "Dakota Vengeance", "BIZARRO GARY", "OPTIMAL GARY", "MEGADONG", "THE STEW PORK WETS", "SCHNEEBO'S CTE DREAMERZ"],
     seasons: 17
   },
-  "Bryan": {
-    years: "2011-2025",
-    teamNames: ["Justinisaweenus!", "TheTheobaldWolftones", "ThePeytonManningShow", "TheAndyDaltonShow", "F.U.B.A.R."],
-    seasons: 15
+  "Conway": {
+    apiNames: ["BC", "Bryan"],  // Maps to these names in raw API data
+    years: "2006-2025",
+    teamNames: ["MekonRiverCatfish", "How Ya Like Me Now?", "Justinisaweenus!", "TheTheobaldWolftones", "ThePeytonManningShow", "TheAndyDaltonShow", "F.U.B.A.R."],
+    seasons: 17
   },
   "Dave G": {
     years: "2010-2025",
@@ -131,3 +126,14 @@ const HEROES = {
     seasons: 17
   }
 };
+
+/**
+ * Display name mapping - transforms API names to display names
+ * Use displayName() helper in rendering code
+ */
+const MANAGER_DISPLAY_NAMES = {
+  'BC': 'Conway',
+  'Bryan': 'Conway'
+};
+
+const displayName = (apiName) => MANAGER_DISPLAY_NAMES[apiName] || apiName;

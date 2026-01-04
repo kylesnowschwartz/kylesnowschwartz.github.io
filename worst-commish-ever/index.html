@@ -799,7 +799,7 @@
     setHTML('teams-grid', TEAMS.map(team => `
       <div class="team-card">
         <div class="team-name">${team.name}</div>
-        <div class="team-owner">Owner: ${team.manager}</div>
+        <div class="team-owner">Owner: ${displayName(team.manager)}</div>
         <div class="team-record">${CURRENT_YEAR} Record: ${team.wins}-${team.losses}</div>
       </div>
     `).join(''));

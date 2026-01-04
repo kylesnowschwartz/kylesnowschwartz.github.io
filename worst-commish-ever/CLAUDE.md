@@ -13,3 +13,5 @@ const HERO_POPUPS = {
 };
 
 ---
+
+Ensure you maintain the MANAGER_DISPLAY_NAMES pattern in @data.js which maps API data to display data.
