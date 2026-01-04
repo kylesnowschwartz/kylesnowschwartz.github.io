@@ -509,6 +509,126 @@
       }
     }
 
+    /* === 90s POPUP MODAL === */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-overlay.active {
+      display: flex;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .popup-window {
+      background: linear-gradient(180deg, #c0c0c0 0%, #808080 100%);
+      border: 4px outset #c0c0c0;
+      box-shadow:
+        inset 2px 2px 0 #fff,
+        inset -2px -2px 0 #404040,
+        8px 8px 0 rgba(0, 0, 0, 0.5);
+      max-width: 90vw;
+      max-height: 90vh;
+      animation: dropIn 0.3s linear;
+    }
+
+    @keyframes dropIn {
+      0% {
+        transform: translateY(-100vh);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .popup-titlebar {
+      background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+    }
+
+    .popup-title {
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      font-size: 0.875rem;
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    .popup-close {
+      background: linear-gradient(180deg, #c0c0c0 0%, #808080 100%);
+      border: 2px outset #c0c0c0;
+      color: #000;
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      font-size: 0.75rem;
+      width: 20px;
+      height: 20px;
+      line-height: 14px;
+      text-align: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .popup-close:hover {
+      background: linear-gradient(180deg, #d0d0d0 0%, #909090 100%);
+    }
+
+    .popup-close:active {
+      border-style: inset;
+    }
+
+    .popup-content {
+      padding: 8px;
+      background: #000;
+      border: 2px inset #808080;
+      margin: 8px;
+    }
+
+    .popup-content img {
+      display: block;
+      max-width: min(80vw, 600px);
+      max-height: 70vh;
+      width: auto;
+      height: auto;
+      image-rendering: auto;
+    }
+
+    @media (max-width: 600px) {
+      .popup-content img {
+        max-width: 85vw;
+        max-height: 60vh;
+      }
+    }
+
+    /* Clickable hero name */
+    .hero-name.clickable {
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-style: dashed;
+    }
+
+    .hero-name.clickable:hover {
+      color: var(--text-yellow);
+      text-shadow: 0 0 8px var(--text-lime);
+    }
+
     /* === SPECIAL EFFECTS === */
     .rainbow-text {
       background: linear-gradient(90deg,
@@ -635,6 +755,9 @@
 
   </div>
 
+  <!-- Reusable popup container (content injected by JS) -->
+  <div class="popup-overlay" id="popup-overlay"></div>
+
   <!-- Content CMS -->
   <script src="content.js"></script>
   <script src="data.js"></script>
@@ -702,6 +825,11 @@
     }).join(''));
 
     // Heroes section
+    // Popup config: hero name -> { src, title }
+    const HERO_POPUPS = {
+      'Gary': { src: 'images/Gary-Claude-Van-Damme.jpg', title: 'gary.jpg' }
+    };
+
     setText('heroes-title', CONTENT.sections.heroes.title);
     setText('heroes-subtitle', CONTENT.sections.heroes.subtitle);
     setHTML('heroes-grid', Object.entries(HEROES)
@@ -709,9 +837,13 @@
       .map(([name, data]) => {
         const retiredClass = data.retired ? 'retired' : '';
         const status = data.retired ? '<div class="hero-status">~ Gone but not forgotten ~</div>' : '';
+        const popup = HERO_POPUPS[name];
+        const popupAttrs = popup
+          ? `class="hero-name clickable" data-popup-src="${popup.src}" data-popup-title="${popup.title}"`
+          : 'class="hero-name"';
         return `
           <div class="hero-card ${retiredClass}">
-            <div class="hero-name">${name}</div>
+            <div ${popupAttrs}>${name}</div>
             <div class="hero-years">${data.years} (${data.seasons} seasons)</div>
             <div class="hero-teams">${data.teamNames.map(t => `<span>${t}</span>`).join('')}</div>
             ${status}
@@ -769,6 +901,52 @@
         localStorage.setItem('wce_visits', visits.toString());
         counter.textContent = visits.toString().padStart(6, '0');
       }
+    })();
+
+    // Generic image popup system
+    // Usage: Add data-popup-src="path/to/image.jpg" data-popup-title="Title" to any element
+    (function() {
+      const overlay = document.getElementById('popup-overlay');
+
+      function openPopup(src, title) {
+        overlay.innerHTML = `
+          <div class="popup-window">
+            <div class="popup-titlebar">
+              <span class="popup-title">${title} - Windows Picture Viewer</span>
+              <button class="popup-close" title="Close">X</button>
+            </div>
+            <div class="popup-content">
+              <img src="${src}" alt="${title}">
+            </div>
+          </div>
+        `;
+        overlay.classList.add('active');
+      }
+
+      function closePopup() {
+        overlay.classList.remove('active');
+      }
+
+      // Delegate click on any element with data-popup-src
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-popup-src]');
+        if (trigger) {
+          openPopup(trigger.dataset.popupSrc, trigger.dataset.popupTitle || 'Image');
+        }
+      });
+
+      // Close handlers (delegated since content is dynamic)
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.matches('.popup-close')) {
+          closePopup();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+          closePopup();
+        }
+      });
     })();
   </script>
 
