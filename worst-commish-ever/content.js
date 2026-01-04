@@ -6,10 +6,10 @@
 const CONTENT = {
   // === SITE METADATA ===
   site: {
-    title: "WORST COMMISH EVER - Fantasy Football League Est. 2000",
+    title: "WORST COMMISH EVER - Fantasy Football League Est. 2005",
     logoTitle: "WORST COMMISH EVER",
     tagline: '"Where championships are made and legends never die"',
-    established: "Est. 2000 - Celebrating 25 Years of Friendship and Enmity",
+    established: "Est. 2005 - Celebrating 20 Years of Friendship and Enmity",
     visitorPrefix: "You are visitor #"
   },
 
@@ -23,7 +23,7 @@ const CONTENT = {
   ],
 
   // === MARQUEE ===
-  marquee: "~~~***  WELCOME TO THE WORST COMMISH EVER FANTASY FOOTBALL LEAGUE!!!  ***~~~ <<<  25 YEARS OF GLORY, HEARTBREAK, AND ABSOLUTELY TERRIBLE TRADES  >>> ~~~***  HEROES GET REMEMBERED BUT LEGENDS NEVER DIE!!!  ***~~~ <<<  YOU'RE KILLIN' ME, SMALLS  >>> ~~~***  SET YOUR LINEUP OR GET PUBLICLY SHAMED!!!  ***~~~",
+  marquee: "~~~***  WELCOME TO THE WORST COMMISH EVER FANTASY FOOTBALL LEAGUE!!!  ***~~~ <<<  20 YEARS OF GLORY, HEARTBREAK, AND ABSOLUTELY TERRIBLE TRADES  >>> ~~~***  HEROES GET REMEMBERED BUT LEGENDS NEVER DIE!!!  ***~~~ <<<  YOU'RE KILLIN' ME, SMALLS  >>> ~~~***  SET YOUR LINEUP OR GET PUBLICLY SHAMED!!!  ***~~~",
 
   // === SECTIONS ===
   sections: {
@@ -45,15 +45,11 @@ const CONTENT = {
 
     history: {
       title: "LEAGUE HISTORY",
-      subtitle: "25 Years of Fantasy Football Excellence (and Chaos)",
+      subtitle: "20 Years of Fantasy Football Excellence (and Chaos)",
       timeline: [
         {
-          year: "2000",
-          event: "The league is founded by a group of ass-pants appreciators who had no idea what they were getting into. First commissioner elected (or volunteered, I don't remember)."
-        },
-        {
           year: "2005",
-          event: "League survives its first major controversy. Details redacted to protect the guilty."
+          event: "The league is founded by a group of ass-pants appreciators who had no idea what they were getting into. First commissioner elected (or volunteered, I don't remember)."
         },
         {
           year: "2010",
@@ -66,15 +62,15 @@ const CONTENT = {
         },
         {
           year: "2020",
-          event: "20 years! The pandemic couldn't stop us. Virtual draft party happens. Gary drinks 3 bourbons before 10pm.",
+          event: "15 years! The pandemic couldn't stop us. Virtual draft party happens. Gary drinks 3 bourbons before 10pm.",
           milestone: true
         },
         {
           year: "2025",
-          event: "A quarter century of friendship, rivalry, and practically zero trading.",
+          event: "Two decades of friendship, rivalry, and practically zero trading.",
           milestone: true,
           rainbow: true,
-          prefix: "25 YEARS!"
+          prefix: "20 YEARS!"
         }
       ],
       underConstruction: "League historians are compiling more stories..."
@@ -120,7 +116,7 @@ const CONTENT = {
       "800x600 resolution",
       "Made with Notepad+ and a dream",
     ],
-    copyright: "2000-2025 WORST COMMISH EVER Fantasy Football League",
+    copyright: "2005-2025 WORST COMMISH EVER Fantasy Football League",
     copyrightNote: "All rights reserved. No fantasy points were harmed in the making of this website.",
     contactEmail: "commissioner@worst-commish-ever.com",
     contactText: "Contact the Commissioner (this doesn't actually do anything)"

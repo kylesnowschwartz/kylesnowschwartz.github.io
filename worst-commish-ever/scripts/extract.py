@@ -7,10 +7,10 @@
 Extract Yahoo Fantasy Football league data.
 
 Usage:
-    uv run scripts/extract.py 2001              # Single year
-    uv run scripts/extract.py 2001 2002 2003    # Multiple years
-    uv run scripts/extract.py --all             # All years (2001-2024)
-    uv run scripts/extract.py 2001 --verbose    # Show full API response
+    uv run scripts/extract.py 2005              # Single year
+    uv run scripts/extract.py 2005 2006 2007    # Multiple years
+    uv run scripts/extract.py --all             # All years (2005-2025)
+    uv run scripts/extract.py 2005 --verbose    # Show full API response
 """
 
 import argparse

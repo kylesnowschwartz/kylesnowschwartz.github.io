@@ -8,15 +8,15 @@ Each year directory contains JSON files with league data extracted from Yahoo Fa
 data/
 ├── README.md
 ├── _schema.json          # Data schema reference
-├── 2000/
+├── 2005/
 │   ├── season.json       # Season metadata
 │   ├── teams.json        # All teams + owners
 │   ├── standings.json    # Final standings
 │   ├── playoffs.json     # Playoff bracket + results
 │   └── matchups.json     # Week-by-week scores (optional)
-├── 2001/
+├── 2006/
 │   └── ...
-└── 2024/
+└── 2025/
     └── ...
 ```
 
@@ -25,8 +25,8 @@ data/
 ### season.json
 ```json
 {
-  "year": 2001,
-  "game_id": 57,
+  "year": 2005,
+  "game_id": 124,
   "league_id": "116317",
   "league_name": "Worst Commish Ever",
   "num_teams": 10,

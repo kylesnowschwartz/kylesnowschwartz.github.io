@@ -16,11 +16,6 @@ const MISSING_YEAR = {
 };
 
 const LEAGUE_DATA = {
-  2000: MISSING_YEAR,
-  2001: MISSING_YEAR,
-  2002: MISSING_YEAR,
-  2003: MISSING_YEAR,
-  2004: MISSING_YEAR,
   2005: MISSING_YEAR,
   2006: { champion: "Beantown Ballers", championMgr: "JBex", record: "8-6", lastPlace: "BATMAN", lastPlaceMgr: "Kyle" },
   2007: MISSING_YEAR,

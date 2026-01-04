@@ -1,6 +1,6 @@
 # Contributing League Data
 
-We're missing data for some years (2007-2009 and possibly pre-2006). If you were in the league during those years, you can help!
+We're missing data for some years (2005, 2007-2009). If you were in the league during those years, you can help!
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ git push
 ## What the Script Does
 
 1. Opens browser for Yahoo login (first time only)
-2. Scans all years (2001-2025) for leagues you're a member of
+2. Scans all years (2005-2025) for leagues you're a member of
 3. Extracts data for any years we don't already have
 4. Saves to `data/YEAR/season.json`
 

@@ -4,7 +4,7 @@
 
 Successfully extracted **16 years** of league data (2006-2024) via Yahoo Fantasy API.
 
-**Missing years:** 2001-2005, 2007-2009 - Either predates current Yahoo account linkage, or data not accessible via API. These will need manual entry if available.
+**Missing years:** 2005, 2007-2009 - Either predates current Yahoo account linkage, or data not accessible via API. These will need manual entry if available.
 
 ## How to Run
 
@@ -100,8 +100,8 @@ Each `season.json` contains:
 - **Authentication**: OAuth 2.0, tokens cached in `.env`
 - **Rate limits**: Minimal, no throttling encountered
 - **Historical data**: Available back to 1999, but only for leagues you have access to
-- **Game IDs**: Not sequential by year (e.g., 2002=49, 2001=57)
-- **League IDs**: Reused across game_ids, so `116317` in 2012 is different from `116317` in 2001
+- **Game IDs**: Not sequential by year (e.g., 2005=124, 2006=153)
+- **League IDs**: Reused across game_ids, so `116317` in 2012 is different from `116317` in 2006
 
 ## Scripts
 
@@ -114,7 +114,7 @@ Each `season.json` contains:
 ## Next Steps
 
 1. Wire JSON data into `index.html` (Championship Baseball, Dream Teams, etc.)
-2. Manually add missing years (2001-2005, 2007-2009) if records exist
+2. Manually add missing years (2005, 2007-2009) if records exist
 3. Add manager photos to `images/managers/`
 
 ---
