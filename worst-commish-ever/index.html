@@ -279,6 +279,13 @@
       color: var(--text-red);
     }
 
+    /* Record badge styling */
+    .record-badge {
+      font-size: 0.85em;
+      color: var(--silver);
+      opacity: 0.8;
+    }
+
     /* === HEROES === */
     .heroes-section {
       border-color: var(--text-lime);
@@ -815,11 +822,22 @@
     setHTML('fame-shame-tbody', years.map(year => {
       const d = LEAGUE_DATA[year];
       const rowStyle = d.missing ? 'style="opacity: 0.4; font-style: italic;"' : '';
+
+      // Format champion display: "Team Name (record)"
+      const champDisplay = d.missing
+        ? d.champion
+        : `${d.champion} <span class="record-badge">(${d.record})</span>`;
+
+      // Format last place display: "Team Name (record)" if lastPlaceRecord exists
+      const lastPlaceDisplay = d.missing || !d.lastPlaceRecord
+        ? d.lastPlace
+        : `${d.lastPlace} <span class="record-badge">(${d.lastPlaceRecord})</span>`;
+
       return `
         <tr ${rowStyle}>
           <td class="year-col">${year}</td>
-          <td class="fame-col">${d.champion}</td>
-          <td class="shame-col">${d.lastPlace}</td>
+          <td class="fame-col">${champDisplay}</td>
+          <td class="shame-col">${lastPlaceDisplay}</td>
         </tr>
       `;
     }).join(''));

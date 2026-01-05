@@ -12,7 +12,8 @@
       "rank": 1,
       "wins": 10,
       "losses": 4,
-      "manager": "JBex"
+      "manager": "JBex",
+      "playoff_seed": 1
     },
     {
       "team_id": "7",
@@ -100,7 +101,8 @@
       "rank": 12,
       "wins": 2,
       "losses": 12,
-      "manager": "Kyle"
+      "manager": "Kyle",
+      "playoff_seed": 12
     }
   ],
   "champion": {
@@ -109,7 +111,8 @@
     "rank": 1,
     "wins": 10,
     "losses": 4,
-    "manager": "JBex"
+    "manager": "JBex",
+    "playoff_seed": 1
   },
   "last_place": {
     "team_id": "11",
@@ -117,6 +120,7 @@
     "rank": 12,
     "wins": 2,
     "losses": 12,
-    "manager": "Kyle"
+    "manager": "Kyle",
+    "playoff_seed": 12
   }
 }

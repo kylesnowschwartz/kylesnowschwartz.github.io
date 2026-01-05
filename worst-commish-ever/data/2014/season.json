@@ -12,7 +12,8 @@
       "rank": 1,
       "wins": 9,
       "losses": 5,
-      "manager": "Gary"
+      "manager": "Gary",
+      "playoff_seed": 1
     },
     {
       "team_id": "5",
@@ -100,7 +101,8 @@
       "rank": 12,
       "wins": 5,
       "losses": 9,
-      "manager": "Dave G"
+      "manager": "Dave G",
+      "playoff_seed": 12
     }
   ],
   "champion": {
@@ -109,7 +111,8 @@
     "rank": 1,
     "wins": 9,
     "losses": 5,
-    "manager": "Gary"
+    "manager": "Gary",
+    "playoff_seed": 1
   },
   "last_place": {
     "team_id": "4",
@@ -117,6 +120,7 @@
     "rank": 12,
     "wins": 5,
     "losses": 9,
-    "manager": "Dave G"
+    "manager": "Dave G",
+    "playoff_seed": 12
   }
 }

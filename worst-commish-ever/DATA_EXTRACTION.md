@@ -90,10 +90,12 @@ data/
 
 Each `season.json` contains:
 - League name and team count
-- Full standings with ranks
-- Win/loss records (where available)
-- Manager nicknames (where available)
-- Champion and last place teams
+- Full standings with ranks (rank = playoff seed/final placement)
+- Win/loss records
+- Manager nicknames
+- Champion and last place teams with playoff seeds
+
+**Important:** The `rank` field represents playoff seeding/final placement, not regular season standing. This is why a 9-5 team can be rank 1 (champion) while a 12-2 team is rank 4 (lost in playoffs). See 2023 data for an example.
 
 ## Yahoo API Notes
 
@@ -108,14 +110,36 @@ Each `season.json` contains:
 | Script | Purpose |
 |--------|---------|
 | `extract.py` | Main extraction script - pulls standings by year |
+| `build_data_js.py` | Generate data.js from season.json files |
 | `list_game_ids.py` | Discover all NFL game IDs from API |
 | `list_my_leagues.py` | Find all leagues you're a member of |
 
+## Build Process
+
+After extracting data from Yahoo API, regenerate the JavaScript file:
+
+```bash
+# Step 1: Extract data from Yahoo API
+uv run scripts/extract.py --all
+
+# Step 2: Generate data.js from JSON files
+uv run scripts/build_data_js.py
+
+# Step 3: Verify changes
+git diff data.js
+
+# Step 4: Commit both together
+git add data/*/season.json data.js
+git commit -m "feat: update league data"
+```
+
+**Important:** `data.js` is now auto-generated. Do not edit it manually. Changes to league data should be made by re-running the extraction and build scripts.
+
 ## Next Steps
 
-1. Wire JSON data into `index.html` (Championship Baseball, Dream Teams, etc.)
-2. Manually add missing years (2005, 2007-2009) if records exist
-3. Add manager photos to `images/managers/`
+1. Manually add missing years (2005, 2007-2009) if records exist
+2. Add manager photos to `images/managers/`
+3. Consider adding playoff bracket visualization
 
 ---
 

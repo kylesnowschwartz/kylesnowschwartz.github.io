@@ -121,6 +121,12 @@ def extract_year(year: int, verbose: bool = False) -> dict:
         result["champion"] = result["standings"][0] if result["standings"] else None
         result["last_place"] = result["standings"][-1] if result["standings"] else None
 
+        # Add playoff_seed field (rank represents playoff position, not regular season standing)
+        if result["champion"]:
+            result["champion"]["playoff_seed"] = result["champion"].get("rank")
+        if result["last_place"]:
+            result["last_place"]["playoff_seed"] = result["last_place"].get("rank")
+
         print(f"  Champion: {result['champion']['team_name']}" if result['champion'] else "  No champion data")
         print(f"  Last: {result['last_place']['team_name']}" if result['last_place'] else "")
 
