@@ -1,0 +1,122 @@
+{
+  "year": 2013,
+  "game_id": 314,
+  "league_id": "468061",
+  "success": true,
+  "league_name": "Football!Goodbye Productivity!",
+  "num_teams": 12,
+  "standings": [
+    {
+      "team_id": "11",
+      "team_name": "Big Bird",
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "manager": "Jonathan Young"
+    },
+    {
+      "team_id": "6",
+      "team_name": "DefiancePhiladelphia",
+      "rank": 2,
+      "wins": 9,
+      "losses": 5,
+      "manager": "JBex"
+    },
+    {
+      "team_id": "1",
+      "team_name": "ThePeytonManningShow",
+      "rank": 3,
+      "wins": 11,
+      "losses": 3,
+      "manager": "Bryan"
+    },
+    {
+      "team_id": "12",
+      "team_name": "The Violets",
+      "rank": 4,
+      "wins": 11,
+      "losses": 3,
+      "manager": "Ben"
+    },
+    {
+      "team_id": "8",
+      "team_name": "Mi Nombre es Peyton",
+      "rank": 5,
+      "wins": 8,
+      "losses": 6,
+      "manager": "Aaron"
+    },
+    {
+      "team_id": "9",
+      "team_name": "Mohawk National",
+      "rank": 6,
+      "wins": 5,
+      "losses": 9,
+      "manager": "McLean"
+    },
+    {
+      "team_id": "2",
+      "team_name": "Dakota Vengeance",
+      "rank": 7,
+      "wins": 8,
+      "losses": 6,
+      "manager": "Boost Poppa Charlie"
+    },
+    {
+      "team_id": "7",
+      "team_name": "Nerd Rage",
+      "rank": 8,
+      "wins": 6,
+      "losses": 8,
+      "manager": "Kyle"
+    },
+    {
+      "team_id": "5",
+      "team_name": "Embrace The Chaos!",
+      "rank": 9,
+      "wins": 5,
+      "losses": 9,
+      "manager": "Gary"
+    },
+    {
+      "team_id": "10",
+      "team_name": "Captain Arab",
+      "rank": 10,
+      "wins": 5,
+      "losses": 9,
+      "manager": "Nahush"
+    },
+    {
+      "team_id": "4",
+      "team_name": "Half-Smokes",
+      "rank": 11,
+      "wins": 5,
+      "losses": 9,
+      "manager": "Dave G"
+    },
+    {
+      "team_id": "3",
+      "team_name": "Bronuts",
+      "rank": 12,
+      "wins": 2,
+      "losses": 12,
+      "manager": "THomas"
+    }
+  ],
+  "champion": {
+    "team_id": "11",
+    "team_name": "Big Bird",
+    "rank": 1,
+    "wins": 9,
+    "losses": 5,
+    "manager": "Jonathan Young"
+  },
+  "last_place": {
+    "team_id": "3",
+    "team_name": "Bronuts",
+    "rank": 12,
+    "wins": 2,
+    "losses": 12,
+    "manager": "THomas"
+  }
+}

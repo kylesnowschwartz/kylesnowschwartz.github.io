@@ -1,0 +1,122 @@
+{
+  "year": 2023,
+  "game_id": 423,
+  "league_id": "444015",
+  "success": true,
+  "league_name": "WorstCommishEver",
+  "num_teams": 12,
+  "standings": [
+    {
+      "team_id": "4",
+      "team_name": "TheSkeeterValentines",
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "manager": "JBex"
+    },
+    {
+      "team_id": "11",
+      "team_name": "The Violets",
+      "rank": 2,
+      "wins": 10,
+      "losses": 5,
+      "manager": "Ben"
+    },
+    {
+      "team_id": "7",
+      "team_name": "Koala lambpork",
+      "rank": 3,
+      "wins": 11,
+      "losses": 4,
+      "manager": "THomas"
+    },
+    {
+      "team_id": "1",
+      "team_name": "F.U.B.A.R.",
+      "rank": 4,
+      "wins": 12,
+      "losses": 3,
+      "manager": "Bryan"
+    },
+    {
+      "team_id": "8",
+      "team_name": "Mi Nombre es Peyton",
+      "rank": 5,
+      "wins": 7,
+      "losses": 8,
+      "manager": "Aaron"
+    },
+    {
+      "team_id": "12",
+      "team_name": "Ben's Bold Team",
+      "rank": 6,
+      "wins": 6,
+      "losses": 9,
+      "manager": "Ben"
+    },
+    {
+      "team_id": "2",
+      "team_name": "Big Bird",
+      "rank": 7,
+      "wins": 7,
+      "losses": 7,
+      "manager": "Jonathan Young"
+    },
+    {
+      "team_id": "5",
+      "team_name": "Embrace The Chaos!",
+      "rank": 8,
+      "wins": 7,
+      "losses": 8,
+      "manager": "Gary"
+    },
+    {
+      "team_id": "3",
+      "team_name": "MEGADONG",
+      "rank": 9,
+      "wins": 6,
+      "losses": 9,
+      "manager": "Boost Poppa Charlie"
+    },
+    {
+      "team_id": "6",
+      "team_name": "Half-Smokes",
+      "rank": 10,
+      "wins": 5,
+      "losses": 10,
+      "manager": "Dave G"
+    },
+    {
+      "team_id": "10",
+      "team_name": "Nerd Rage",
+      "rank": 11,
+      "wins": 5,
+      "losses": 10,
+      "manager": "Kyle"
+    },
+    {
+      "team_id": "9",
+      "team_name": "Mohawk National",
+      "rank": 12,
+      "wins": 4,
+      "losses": 11,
+      "manager": "McLean"
+    }
+  ],
+  "champion": {
+    "team_id": "4",
+    "team_name": "TheSkeeterValentines",
+    "rank": 1,
+    "wins": 9,
+    "losses": 5,
+    "manager": "JBex"
+  },
+  "last_place": {
+    "team_id": "9",
+    "team_name": "Mohawk National",
+    "rank": 12,
+    "wins": 4,
+    "losses": 11,
+    "manager": "McLean"
+  }
+}
