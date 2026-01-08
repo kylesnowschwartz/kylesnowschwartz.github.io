@@ -1,0 +1,46 @@
+---
+/**
+ * UnderConstruction.astro - Classic "under construction" notice
+ *
+ * Patterns demonstrated:
+ * - Slots for flexible content projection
+ * - Props for customization (emoji)
+ */
+
+interface Props {
+  emoji?: string;
+}
+
+const { emoji = '🚧' } = Astro.props;
+---
+
+<div class="under-construction">
+  <div class="construction-gif">{emoji}</div>
+  <p class="construction-text"><slot /></p>
+</div>
+
+<style>
+  @import '../../styles/wce-theme.css';
+
+  .under-construction {
+    text-align: center;
+    padding: var(--wce-space-2xl) var(--wce-space-lg);
+    color: var(--wce-text-yellow);
+  }
+
+  .construction-gif {
+    font-size: 3rem;
+    margin-bottom: var(--wce-space-sm);
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .construction-text {
+    font-family: var(--wce-font-fun);
+    font-size: 1.25rem;
+    color: var(--wce-text-yellow);
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+/**
+ * Section.astro - Reusable section wrapper for WCE pages
+ *
+ * Patterns demonstrated:
+ * - TypeScript Props interface
+ * - Variant props for style variants
+ * - Conditional CSS classes with class:list
+ * - Default slot for main content
+ */
+
+interface Props {
+  id: string;
+  title: string;
+  subtitle?: string;
+  variant?: 'default' | 'gold' | 'lime';
+}
+
+const { id, title, subtitle, variant = 'default' } = Astro.props;
+---
+
+<section id={id} class:list={['content-section', `variant-${variant}`]}>
+  <h2 class="section-title">{title}</h2>
+  <div class="section-content">
+    {subtitle && <p class="section-subtitle">{subtitle}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  /* Import theme variables */
+  @import '../../styles/wce-theme.css';
+
+  .content-section {
+    background: var(--wce-section-bg);
+    border: var(--wce-border-thick) ridge var(--wce-text-magenta);
+    margin-bottom: var(--wce-space-xl);
+    padding: var(--wce-space-lg);
+  }
+
+  .section-title {
+    font-family: var(--wce-font-display);
+    font-size: 1.75rem;
+    color: var(--wce-text-cyan);
+    text-align: center;
+    margin-bottom: var(--wce-space-lg);
+    text-shadow: 2px 2px 0 var(--wce-shadow-cyan);
+    border-bottom: 2px dashed var(--wce-text-cyan);
+    padding-bottom: var(--wce-space-sm);
+  }
+
+  .section-content {
+    color: var(--wce-text-yellow);
+  }
+
+  .section-subtitle {
+    text-align: center;
+    margin-bottom: var(--wce-space-lg);
+  }
+
+  /* === VARIANT: GOLD (Fame & Shame) === */
+  .variant-gold {
+    border-color: var(--wce-gold);
+  }
+
+  .variant-gold .section-title {
+    color: var(--wce-gold);
+    text-shadow: 2px 2px 0 var(--wce-shadow-gold);
+    border-bottom-color: var(--wce-gold);
+  }
+
+  /* === VARIANT: LIME (Heroes) === */
+  .variant-lime {
+    border-color: var(--wce-text-lime);
+  }
+
+  .variant-lime .section-title {
+    color: var(--wce-text-lime);
+    text-shadow: 2px 2px 0 var(--wce-shadow-lime);
+    border-bottom-color: var(--wce-text-lime);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 600px) {
+    .content-section {
+      padding: var(--wce-space-md);
+    }
+  }
+</style>

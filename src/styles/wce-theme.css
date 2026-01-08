@@ -1,0 +1,82 @@
+/**
+ * WCE Theme - GeoCities Color Palette circa 1996
+ *
+ * Extract from worst-commish-ever for reuse across components.
+ * These variables are consumed by:
+ *   - src/pages/worst-commish-ever/index.astro
+ *   - src/components/wce/*.astro
+ */
+
+:root {
+  /* === PRIMARY PALETTE === */
+  /* Pure web-safe colors from the 216-color palette */
+  --wce-bg-black: #000000;
+  --wce-text-red: #ff0000;
+  --wce-text-yellow: #ffff00;
+  --wce-text-lime: #00ff00;
+  --wce-text-cyan: #00ffff;
+  --wce-text-magenta: #ff00ff;
+
+  /* === ACCENT COLORS === */
+  --wce-link-salmon: #ff4c4c;
+  --wce-gold: #ffd700;
+  --wce-silver: #c0c0c0;
+  --wce-bronze: #cd7f32;
+
+  /* === TEXT SHADOWS === */
+  /* Dark variants for that classic beveled text look */
+  --wce-shadow-red: #660000;
+  --wce-shadow-cyan: #006666;
+  --wce-shadow-lime: #006600;
+  --wce-shadow-gold: #8B4513;
+
+  /* === GRAYSCALE RAMP === */
+  /* For backgrounds, borders, and UI chrome */
+  --wce-gray-900: #111111;
+  --wce-gray-800: #222222;
+  --wce-gray-700: #333333;
+  --wce-gray-600: #404040;
+  --wce-gray-500: #444444;
+  --wce-gray-400: #555555;
+  --wce-gray-300: #666666;
+  --wce-gray-200: #808080;
+  --wce-gray-100: #c0c0c0;
+  --wce-gray-50: #d0d0d0;
+
+  /* === WINDOWS 95 UI === */
+  /* For popup windows and classic UI elements */
+  --wce-win95-titlebar-dark: #000080;
+  --wce-win95-titlebar-light: #1084d0;
+  --wce-win95-button-face: #c0c0c0;
+  --wce-win95-button-highlight: #ffffff;
+  --wce-win95-button-shadow: #808080;
+  --wce-win95-button-dark-shadow: #404040;
+
+  /* === SECTION VARIANTS === */
+  /* Pre-composed backgrounds for different section types */
+  --wce-section-bg: rgba(0, 0, 0, 0.7);
+  --wce-section-bg-hover: rgba(255, 255, 255, 0.05);
+  --wce-section-bg-active: rgba(255, 255, 255, 0.1);
+
+  /* === TYPOGRAPHY === */
+  --wce-font-display: 'Impact', 'Arial Black', sans-serif;
+  --wce-font-body: 'Times New Roman', Times, serif;
+  --wce-font-ui: 'Arial', sans-serif;
+  --wce-font-mono: 'Courier New', monospace;
+  --wce-font-fun: 'Comic Sans MS', 'Arial', sans-serif;
+
+  /* === SPACING === */
+  /* Consistent spacing scale */
+  --wce-space-xs: 5px;
+  --wce-space-sm: 10px;
+  --wce-space-md: 15px;
+  --wce-space-lg: 20px;
+  --wce-space-xl: 30px;
+  --wce-space-2xl: 40px;
+
+  /* === BORDERS === */
+  /* Classic 90s border styles */
+  --wce-border-width: 2px;
+  --wce-border-thick: 3px;
+  --wce-border-win95: 4px;
+}

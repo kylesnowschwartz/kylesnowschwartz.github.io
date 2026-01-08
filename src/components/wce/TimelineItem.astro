@@ -1,0 +1,89 @@
+---
+/**
+ * TimelineItem.astro - Single event in the league history timeline
+ *
+ * Patterns demonstrated:
+ * - TypeScript Props with optional fields
+ * - Astro fragments (<Fragment>) for conditional content grouping
+ * - Rainbow text effect for milestone events
+ */
+
+interface Props {
+  year: string;
+  event: string;
+  rainbow?: boolean;
+  prefix?: string;
+}
+
+const { year, event, rainbow = false, prefix } = Astro.props;
+---
+
+<div class="timeline-item">
+  <div class="timeline-year">{year}</div>
+  <div class="timeline-event">
+    {rainbow && prefix ? (
+      <Fragment>
+        <span class="rainbow-text">{prefix}</span> {event}
+      </Fragment>
+    ) : (
+      event
+    )}
+  </div>
+</div>
+
+<style>
+  @import '../../styles/wce-theme.css';
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: var(--wce-space-lg);
+    padding-left: var(--wce-space-lg);
+  }
+
+  /* Timeline bullet */
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--wce-text-cyan);
+    border-radius: 50%;
+    border: var(--wce-border-width) solid var(--wce-text-magenta);
+  }
+
+  .timeline-year {
+    font-family: var(--wce-font-mono);
+    font-size: 1rem;
+    color: var(--wce-text-lime);
+    font-weight: bold;
+  }
+
+  .timeline-event {
+    color: var(--wce-text-yellow);
+    font-size: 0.9375rem;
+    margin-top: var(--wce-space-xs);
+  }
+
+  /* Rainbow text effect for milestone anniversaries */
+  .rainbow-text {
+    background: linear-gradient(90deg,
+      var(--wce-text-red),
+      var(--wce-text-yellow),
+      var(--wce-text-lime),
+      var(--wce-text-cyan),
+      var(--wce-text-magenta)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow-shift 3s linear infinite;
+    background-size: 200% auto;
+  }
+
+  @keyframes rainbow-shift {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+</style>

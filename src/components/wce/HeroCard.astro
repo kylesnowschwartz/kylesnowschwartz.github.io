@@ -1,0 +1,107 @@
+---
+/**
+ * HeroCard.astro - Display a league hero with their history
+ *
+ * Patterns demonstrated:
+ * - TypeScript Props with optional fields
+ * - Conditional CSS classes with class:list
+ * - Conditional rendering with ternary and &&
+ * - Data attributes for client-side JS interaction
+ * - Iterating over arrays in template
+ */
+
+interface Props {
+  name: string;
+  years: string;
+  seasons: number;
+  teamNames: string[];
+  retired?: boolean;
+  popup?: { src: string; title: string };
+}
+
+const { name, years, seasons, teamNames, retired = false, popup } = Astro.props;
+---
+
+<div class:list={['hero-card', { retired }]}>
+  {popup ? (
+    <div
+      class="hero-name clickable"
+      data-popup-src={popup.src}
+      data-popup-title={popup.title}
+    >
+      {name}
+    </div>
+  ) : (
+    <div class="hero-name">{name}</div>
+  )}
+
+  <div class="hero-years">{years} ({seasons} seasons)</div>
+
+  <div class="hero-teams">
+    {teamNames.map(t => <span>{t}</span>)}
+  </div>
+
+  {retired && (
+    <div class="hero-status">~ Gone but not forgotten ~</div>
+  )}
+</div>
+
+<style>
+  @import '../../styles/wce-theme.css';
+
+  .hero-card {
+    background: linear-gradient(180deg, #1a2e1a 0%, #0a150a 100%);
+    border: var(--wce-border-width) solid var(--wce-text-lime);
+    padding: var(--wce-space-md);
+  }
+
+  .hero-card.retired {
+    opacity: 0.6;
+    border-style: dashed;
+  }
+
+  .hero-name {
+    font-family: var(--wce-font-display);
+    font-size: 1.1rem;
+    color: var(--wce-text-lime);
+    margin-bottom: var(--wce-space-xs);
+  }
+
+  .hero-name.clickable {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+  }
+
+  .hero-name.clickable:hover {
+    color: var(--wce-text-yellow);
+    text-shadow: 0 0 8px var(--wce-text-lime);
+  }
+
+  .hero-years {
+    font-size: 0.75rem;
+    color: var(--wce-silver);
+    margin-bottom: 8px;
+  }
+
+  .hero-teams {
+    font-size: 0.8rem;
+    color: var(--wce-text-cyan);
+    line-height: 1.4;
+  }
+
+  .hero-teams span {
+    display: inline-block;
+    background: rgba(0, 255, 255, 0.1);
+    padding: 2px 6px;
+    margin: 2px;
+    border-radius: 3px;
+  }
+
+  .hero-status {
+    font-size: 0.7rem;
+    color: var(--wce-text-magenta);
+    margin-top: 8px;
+    font-style: italic;
+  }
+</style>
