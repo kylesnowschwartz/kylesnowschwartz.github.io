@@ -1,4 +1,16 @@
-.playwright-mcp
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro cache
+.astro/
+
+# Environment and secrets
+.env
 .envrc
 .yahoo_auth/
-.env
+
+# Tools
+.playwright-mcp
