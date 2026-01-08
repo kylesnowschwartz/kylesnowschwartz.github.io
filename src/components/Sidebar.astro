@@ -1,0 +1,217 @@
+---
+// Sidebar component with projects navigation
+interface Project {
+  name: string;
+  href: string;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<aside class="sidebar">
+  <div class="sidebar-box">
+    <h2 class="sidebar-title">Projects</h2>
+    <details class="projects-dropdown" open>
+      <summary class="projects-toggle" aria-label="Toggle projects menu">
+        <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <span>Projects</span>
+      </summary>
+      <ul class="project-list">
+        {projects.map((project) => (
+          <li>
+            {project.name === 'marmiteroids' ? (
+              <a href={project.href} class="marmite-link">
+                <span class="caret">{'>'}</span>
+                <canvas id="marmite-jar" width="50" height="50"></canvas>
+                <span class="sr-only">marmiteroids</span>
+              </a>
+            ) : (
+              <a href={project.href}>{project.name}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
+  </div>
+</aside>
+
+<style>
+  .sidebar {
+    padding: 2rem 1rem 2rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-box {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+  }
+
+  .sidebar-box:hover {
+    border-color: var(--color-accent-secondary);
+    box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Desktop: dropdown contents visible, no toggle */
+  .projects-dropdown {
+    display: contents;
+  }
+
+  .projects-toggle {
+    display: none;
+  }
+
+  .project-list {
+    list-style: none;
+  }
+
+  .project-list li {
+    margin-bottom: 0.75rem;
+  }
+
+  .project-list a {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 0;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .project-list a::before {
+    content: '>';
+    margin-right: 0.5rem;
+    color: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .project-list a:hover {
+    color: var(--color-text);
+    padding-left: 0.5rem;
+  }
+
+  .project-list a:hover::before {
+    opacity: 1;
+  }
+
+  /* Marmite jar link */
+  .marmite-link {
+    display: block;
+    padding: 0;
+    transition: padding-left 0.2s ease;
+  }
+
+  .marmite-link::before {
+    display: none;
+  }
+
+  .marmite-link:hover {
+    padding-left: 0.5rem;
+  }
+
+  .marmite-link .caret {
+    color: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+  }
+
+  .marmite-link:hover .caret {
+    opacity: 1;
+  }
+
+  .marmite-link canvas {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 900px) {
+    .sidebar {
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-box {
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    .sidebar-box:hover {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .sidebar-title {
+      display: none;
+    }
+
+    .projects-dropdown {
+      display: block;
+    }
+
+    .projects-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      padding: 0.5rem 0;
+      list-style: none;
+    }
+
+    .projects-toggle::-webkit-details-marker {
+      display: none;
+    }
+
+    .projects-toggle .hamburger-icon {
+      color: var(--color-accent);
+      transition: transform 0.2s ease;
+    }
+
+    .projects-dropdown[open] .hamburger-icon {
+      transform: rotate(90deg);
+    }
+
+    .projects-toggle:hover {
+      color: var(--color-text);
+    }
+
+    .project-list {
+      padding: 1rem 0 0 0;
+    }
+
+    .project-list li {
+      margin-bottom: 0.5rem;
+    }
+  }
+</style>

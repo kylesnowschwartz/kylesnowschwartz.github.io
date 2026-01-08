@@ -1,0 +1,72 @@
+---
+// Footer component
+interface SocialLink {
+  name: string;
+  href: string;
+}
+
+interface Props {
+  year?: number;
+  socialLinks: SocialLink[];
+}
+
+const { year = new Date().getFullYear(), socialLinks } = Astro.props;
+---
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <p>&copy; {year} kyle snow schwartz</p>
+      <nav class="social-links">
+        {socialLinks.map((link) => (
+          <a href={link.href}>{link.name}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--color-border);
+    padding: 2rem 0;
+    margin-top: 4rem;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-content p {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .social-links a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .social-links a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 600px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  }
+</style>

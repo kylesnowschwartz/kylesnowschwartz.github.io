@@ -1,0 +1,115 @@
+---
+// Header component with ASCII banner and tagline
+interface Props {
+  tagline?: string;
+}
+
+const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
+---
+
+<div class="theme-banner"></div>
+<header>
+  <div class="container">
+    <div class="ascii-banner" aria-label="Kyle Snow Schwartz">
+      <span class="name name-kyle" data-src="/ascii/kyle.txt"></span>
+      <span class="name name-snow" data-src="/ascii/snow.txt"></span>
+      <span class="name name-schwartz" data-src="/ascii/schwartz.txt"></span>
+    </div>
+    <p class="tagline"><span>{tagline}</span></p>
+  </div>
+</header>
+
+<script>
+  // Load ASCII art from external files
+  document.querySelectorAll('.ascii-banner [data-src]').forEach(async (el) => {
+    try {
+      const response = await fetch((el as HTMLElement).dataset.src!);
+      if (response.ok) {
+        el.textContent = await response.text();
+      }
+    } catch (e) {
+      console.warn('Failed to load ASCII art:', (el as HTMLElement).dataset.src);
+    }
+  });
+</script>
+
+<style>
+  .theme-banner {
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-accent-tertiary), var(--color-accent));
+  }
+
+  header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .ascii-banner {
+    font-family: var(--font-mono);
+    font-size: clamp(0.4rem, 1.2vw, 0.7rem);
+    line-height: 1.2;
+    color: var(--color-text);
+    white-space: pre;
+    letter-spacing: -0.05em;
+    user-select: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2ch;
+  }
+
+  .ascii-banner .name {
+    display: inline-block;
+  }
+
+  /* Staggered tiers when wrapped */
+  @media (max-width: 1100px) {
+    .ascii-banner {
+      display: block;
+    }
+
+    .ascii-banner .name {
+      display: block;
+    }
+
+    .ascii-banner .name-kyle {
+      padding-left: 0;
+    }
+
+    .ascii-banner .name-snow {
+      padding-left: 8ch;
+    }
+
+    .ascii-banner .name-schwartz {
+      padding-left: 16ch;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .ascii-banner {
+      font-size: 0.35rem;
+    }
+
+    .ascii-banner .name-snow {
+      padding-left: 4ch;
+    }
+
+    .ascii-banner .name-schwartz {
+      padding-left: 8ch;
+    }
+
+    header {
+      padding: 2rem 0 1.5rem;
+    }
+  }
+
+  .tagline {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: 1.5rem;
+  }
+
+  .tagline span {
+    color: var(--color-accent);
+  }
+</style>

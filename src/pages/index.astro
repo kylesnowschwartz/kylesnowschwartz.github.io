@@ -1,0 +1,197 @@
+---
+// Main site homepage
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import AboutPanel from '../components/AboutPanel.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import Footer from '../components/Footer.astro';
+
+const projects = [
+  { name: 'SimpleClaude', href: 'https://github.com/kylesnowschwartz/SimpleClaude' },
+  { name: 'Claude-Bumper-Lanes', href: 'https://github.com/kylesnowschwartz/claude-bumper-lanes' },
+  { name: 'Claude-Handoff', href: 'https://github.com/kylesnowschwartz/claude-handoff' },
+  { name: 'marmiteroids', href: '/marmiteroids/' },
+];
+
+const skills = [
+  {
+    title: 'Languages & Frameworks & Infra',
+    items: ['Ruby-on-Rails', 'JavaScript', 'AWS', 'Cloudflare', 'Jenkins', 'CLI Tooling'],
+  },
+  {
+    title: 'AI & Automation',
+    items: ['LLM Tooling', 'Prompt Engineering', 'Claude Code', 'AI Enablement'],
+  },
+  {
+    title: 'Ways of Working',
+    items: ['Technical Leadership', 'Remote-First', 'TDD', 'DevX'],
+  },
+];
+
+const values = [
+  {
+    title: 'Communication',
+    items: ['Written Clarity', 'Async-First', 'Direct Feedback'],
+  },
+  {
+    title: 'Craft',
+    items: ['Clean Code', 'Continuous Improvement', 'Simplicity'],
+  },
+  {
+    title: 'Culture',
+    items: ['Autonomy', 'Accountability', 'Humanism'],
+  },
+  {
+    title: 'Growth',
+    items: ['Mentoring', 'Learning in Public', 'Curiosity'],
+  },
+];
+
+const socialLinks = [
+  { name: 'github', href: 'https://github.com/kylesnowschwartz' },
+  { name: 'linkedin', href: 'https://www.linkedin.com/in/kyle-snow-schwartz-432697103' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyle Snow Schwartz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <Header />
+
+  <div class="container">
+    <main>
+      <Sidebar projects={projects} />
+
+      <section class="content">
+        <div class="about-grid">
+          <AboutPanel title="Who">
+            <p>Kyle Snow Schwartz.</p>
+            <p>Software engineer, occasional pizzaiolo, shaver of yaks.</p>
+            <p>I build things for the web and sometimes wander off to take photos of sheep.</p>
+          </AboutPanel>
+
+          <AboutPanel title="What">
+            <p>Currently building things at <a href="https://elements.envato.com/">Envato Elements</a>. Previously at
+              <a href="https://www.powershop.co.nz/">Powershop</a>.
+            </p>
+            <p>I care about clean code, humanism, and developer-experience.</p>
+          </AboutPanel>
+
+          <AboutPanel title="Where">
+            <p>Based in New Zealand since before it was cool.</p>
+            <p>Find me on <a href="https://github.com/kylesnowschwartz">GitHub</a> or <a
+                href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">LinkedIn</a>.</p>
+          </AboutPanel>
+        </div>
+
+        <SkillsSection header="What I know" categories={skills} variant="skills" />
+        <SkillsSection header="What I believe" categories={values} variant="values" />
+      </section>
+    </main>
+  </div>
+
+  <Footer socialLinks={socialLinks} />
+
+  <!-- Spinning Marmite jar icon in sidebar -->
+  <script type="module">
+    import * as THREE from 'three';
+
+    const canvas = document.getElementById('marmite-jar');
+    if (canvas) {
+      const size = 50;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+      camera.position.z = 4;
+
+      const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
+      renderer.setSize(size, size);
+      renderer.setPixelRatio(window.devicePixelRatio);
+
+      // Jar geometry - same proportions as marmiteroids
+      const geometry = new THREE.CylinderGeometry(0.75, 0.75, 1.5, 32);
+
+      // Load textures from marmiteroids folder
+      const textureLoader = new THREE.TextureLoader();
+      const labelTexture = textureLoader.load('/marmiteroids/images/marmiteroids_label2.jpg');
+      const topTexture = textureLoader.load('/marmiteroids/images/cap_red.jpg');
+      const bottomTexture = textureLoader.load('/marmiteroids/images/bottom.jpg');
+      labelTexture.colorSpace = THREE.SRGBColorSpace;
+      topTexture.colorSpace = THREE.SRGBColorSpace;
+      bottomTexture.colorSpace = THREE.SRGBColorSpace;
+
+      const materials = [
+        new THREE.MeshBasicMaterial({map: labelTexture}),
+        new THREE.MeshBasicMaterial({map: topTexture}),
+        new THREE.MeshBasicMaterial({map: bottomTexture})
+      ];
+
+      const jar = new THREE.Mesh(geometry, materials);
+      jar.rotation.x = 0.3; // Tilt slightly for better view
+      scene.add(jar);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        jar.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+  </script>
+</body>
+
+</html>
+
+<style>
+  /* Main layout grid */
+  main {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    min-height: calc(100vh - 200px);
+  }
+
+  .content {
+    padding: 2rem 0 2rem 2rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    main {
+      grid-template-columns: 1fr;
+    }
+
+    .content {
+      padding: 2rem 0;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
