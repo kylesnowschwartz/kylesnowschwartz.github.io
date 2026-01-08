@@ -1,0 +1,91 @@
+---
+/**
+ * FameShameTable.astro - Champions and last place table
+ *
+ * Patterns demonstrated:
+ * - Complex props with imported types
+ * - Iterating over data in tables
+ * - Conditional row styling
+ */
+
+import type { SeasonData } from '../../data/wce-data.ts';
+
+interface Props {
+  years: number[];
+  data: Record<number, SeasonData>;
+}
+
+const { years, data } = Astro.props;
+---
+
+<table class="fame-shame-table">
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Champion</th>
+      <th>Last Place</th>
+    </tr>
+  </thead>
+  <tbody>
+    {years.map(year => {
+      const d = data[year];
+      return (
+        <tr class:list={[{ 'missing-year': d.missing }]}>
+          <td class="year-col">{year}</td>
+          <td class="fame-col">{d.champion}</td>
+          <td class="shame-col">{d.lastPlace}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+
+<style>
+  @import '../../styles/wce-theme.css';
+
+  .fame-shame-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .fame-shame-table th {
+    background: linear-gradient(180deg, var(--wce-gray-700) 0%, var(--wce-gray-900) 100%);
+    color: var(--wce-silver);
+    padding: var(--wce-space-sm);
+    text-align: left;
+    border: var(--wce-border-width) solid var(--wce-gray-500);
+    font-size: 1rem;
+  }
+
+  .fame-shame-table td {
+    padding: 8px var(--wce-space-sm);
+    border: 1px solid var(--wce-gray-500);
+  }
+
+  .fame-shame-table tr:nth-child(even) {
+    background: var(--wce-section-bg-hover);
+  }
+
+  .fame-shame-table tr:hover {
+    background: var(--wce-section-bg-active);
+  }
+
+  .fame-shame-table tr.missing-year {
+    opacity: 0.4;
+    font-style: italic;
+  }
+
+  .year-col {
+    color: var(--wce-silver);
+    font-family: var(--wce-font-mono);
+  }
+
+  .fame-col {
+    color: var(--wce-text-yellow);
+  }
+
+  .shame-col {
+    color: var(--wce-text-red);
+  }
+</style>

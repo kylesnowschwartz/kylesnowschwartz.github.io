@@ -1,18 +1,29 @@
 ---
-// Worst Commish Ever - GeoCities-style fantasy football league site
-// Refactored to use Astro's static rendering
+/**
+ * Worst Commish Ever - GeoCities-style fantasy football league site
+ * Refactored to use Astro component patterns
+ */
 
+// Content and data
 import { CONTENT } from '../../data/wce-content.ts';
 import {
   LEAGUE_DATA,
   TEAMS,
   CURRENT_YEAR,
-  HEROES,
   HERO_POPUPS,
   displayName,
   getLeagueYears,
   getHeroesSorted
 } from '../../data/wce-data.ts';
+
+// Components
+import Navigation from '../../components/wce/Navigation.astro';
+import Section from '../../components/wce/Section.astro';
+import TeamCard from '../../components/wce/TeamCard.astro';
+import FameShameTable from '../../components/wce/FameShameTable.astro';
+import HeroCard from '../../components/wce/HeroCard.astro';
+import TimelineItem from '../../components/wce/TimelineItem.astro';
+import UnderConstruction from '../../components/wce/UnderConstruction.astro';
 
 // Pre-compute data at build time
 const leagueYears = getLeagueYears();
@@ -35,22 +46,15 @@ const sortedHeroes = getHeroesSorted();
       <h1 class="logo-title">{CONTENT.site.logoTitle}</h1>
       <p class="tagline">{CONTENT.site.tagline}</p>
       <p class="established">{CONTENT.site.established}</p>
-
       <div class="hit-counter">
         <span>{CONTENT.site.visitorPrefix}</span><span class="counter-display">000047</span>
       </div>
     </header>
 
     <!-- NAVIGATION -->
-    <nav class="nav-section">
-      <ul class="nav-list">
-        {CONTENT.nav.map(item => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-    </nav>
+    <Navigation items={CONTENT.nav} />
 
-    <!-- MARQUEE ANNOUNCEMENT -->
+    <!-- MARQUEE -->
     <div class="announcement-bar">
       <div class="marquee-track">
         <span class="marquee-content">{CONTENT.marquee}</span>
@@ -59,133 +63,72 @@ const sortedHeroes = getHeroesSorted();
     </div>
 
     <!-- DREAM TEAMS -->
-    <section id="dream-teams" class="content-section">
-      <h2 class="section-title">{CONTENT.sections.dreamTeams.title}</h2>
-      <div class="section-content">
-        <p class="section-subtitle">{CONTENT.sections.dreamTeams.subtitle}</p>
-        <div class="teams-grid">
-          {TEAMS.map(team => (
-            <div class="team-card">
-              <div class="team-name">{team.name}</div>
-              <div class="team-owner">Owner: {displayName(team.manager)}</div>
-              <div class="team-record">{CURRENT_YEAR} Record: {team.wins}-{team.losses}</div>
-            </div>
-          ))}
-        </div>
+    <Section id="dream-teams" title={CONTENT.sections.dreamTeams.title} subtitle={CONTENT.sections.dreamTeams.subtitle}>
+      <div class="teams-grid">
+        {TEAMS.map(team => (
+          <TeamCard
+            name={team.name}
+            manager={displayName(team.manager)}
+            wins={team.wins}
+            losses={team.losses}
+            year={CURRENT_YEAR}
+          />
+        ))}
       </div>
-    </section>
+    </Section>
 
     <!-- WALL OF FAME & SHAME -->
-    <section id="fame-shame" class="content-section fame-shame-section">
-      <h2 class="section-title">{CONTENT.sections.fameShame.title}</h2>
-      <div class="section-content">
-        <p class="section-subtitle">{CONTENT.sections.fameShame.subtitle}</p>
-        <table class="fame-shame-table">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Champion</th>
-              <th>Last Place</th>
-            </tr>
-          </thead>
-          <tbody>
-            {leagueYears.map(year => {
-              const d = LEAGUE_DATA[year];
-              return (
-                <tr class={d.missing ? 'missing-year' : ''}>
-                  <td class="year-col">{year}</td>
-                  <td class="fame-col">{d.champion}</td>
-                  <td class="shame-col">{d.lastPlace}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <Section id="fame-shame" title={CONTENT.sections.fameShame.title} subtitle={CONTENT.sections.fameShame.subtitle} variant="gold">
+      <FameShameTable years={leagueYears} data={LEAGUE_DATA} />
+    </Section>
 
     <!-- HEROES -->
-    <section id="heroes" class="content-section heroes-section">
-      <h2 class="section-title">{CONTENT.sections.heroes.title}</h2>
-      <div class="section-content">
-        <p class="section-subtitle">{CONTENT.sections.heroes.subtitle}</p>
-        <div class="heroes-grid">
-          {sortedHeroes.map(([name, data]) => {
-            const popup = HERO_POPUPS[name];
-            return (
-              <div class={`hero-card ${data.retired ? 'retired' : ''}`}>
-                {popup ? (
-                  <div
-                    class="hero-name clickable"
-                    data-popup-src={popup.src}
-                    data-popup-title={popup.title}
-                  >
-                    {name}
-                  </div>
-                ) : (
-                  <div class="hero-name">{name}</div>
-                )}
-                <div class="hero-years">{data.years} ({data.seasons} seasons)</div>
-                <div class="hero-teams">
-                  {data.teamNames.map(t => (
-                    <span>{t}</span>
-                  ))}
-                </div>
-                {data.retired && (
-                  <div class="hero-status">~ Gone but not forgotten ~</div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+    <Section id="heroes" title={CONTENT.sections.heroes.title} subtitle={CONTENT.sections.heroes.subtitle} variant="lime">
+      <div class="heroes-grid">
+        {sortedHeroes.map(([name, data]) => (
+          <HeroCard
+            name={name}
+            years={data.years}
+            seasons={data.seasons}
+            teamNames={data.teamNames}
+            retired={data.retired}
+            popup={HERO_POPUPS[name]}
+          />
+        ))}
       </div>
-    </section>
+    </Section>
 
     <!-- LEAGUE HISTORY -->
-    <section id="history" class="content-section">
-      <h2 class="section-title">{CONTENT.sections.history.title}</h2>
-      <div class="section-content">
-        <p class="section-subtitle">{CONTENT.sections.history.subtitle}</p>
-        <div class="timeline">
-          {CONTENT.sections.history.timeline.map(item => (
-            <div class="timeline-item">
-              <div class="timeline-year">{item.year}</div>
-              <div class="timeline-event">
-                {item.rainbow && item.prefix ? (
-                  <><span class="rainbow-text">{item.prefix}</span> {item.event}</>
-                ) : (
-                  item.event
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div class="under-construction">
-          <div class="construction-gif">&#128218;</div>
-          <p class="construction-text">{CONTENT.sections.history.underConstruction}</p>
-        </div>
+    <Section id="history" title={CONTENT.sections.history.title} subtitle={CONTENT.sections.history.subtitle}>
+      <div class="timeline">
+        {CONTENT.sections.history.timeline.map(item => (
+          <TimelineItem
+            year={item.year}
+            event={item.event}
+            rainbow={item.rainbow}
+            prefix={item.prefix}
+          />
+        ))}
       </div>
-    </section>
+      <UnderConstruction emoji="📚">
+        {CONTENT.sections.history.underConstruction}
+      </UnderConstruction>
+    </Section>
 
     <!-- LEAGUE RULES -->
-    <section id="rules" class="content-section">
-      <h2 class="section-title">{CONTENT.sections.rules.title}</h2>
-      <div class="section-content">
-        <p class="section-subtitle">{CONTENT.sections.rules.subtitle}</p>
-        <ol class="rules-list">
-          {CONTENT.sections.rules.rules.map(rule => (
-            <li>
-              <span class="rule-title">{rule.title}</span>
-              {rule.description}
-            </li>
-          ))}
-        </ol>
-        <div class="under-construction">
-          <div class="construction-gif">&#128220;</div>
-          <p class="construction-text">{CONTENT.sections.rules.underConstruction}</p>
-        </div>
-      </div>
-    </section>
+    <Section id="rules" title={CONTENT.sections.rules.title} subtitle={CONTENT.sections.rules.subtitle}>
+      <ol class="rules-list">
+        {CONTENT.sections.rules.rules.map(rule => (
+          <li>
+            <span class="rule-title">{rule.title}</span>
+            {rule.description}
+          </li>
+        ))}
+      </ol>
+      <UnderConstruction emoji="📜">
+        {CONTENT.sections.rules.underConstruction}
+      </UnderConstruction>
+    </Section>
 
     <!-- FOOTER -->
     <footer class="site-footer">
@@ -205,12 +148,12 @@ const sortedHeroes = getHeroesSorted();
 
   </div>
 
-  <!-- Reusable popup container (content injected by JS) -->
+  <!-- Popup container (content injected by JS) -->
   <div class="popup-overlay" id="popup-overlay"></div>
 
-  <!-- Client-side only: Hit counter and popup system -->
+  <!-- Client-side: Hit counter and popup system -->
   <script>
-    // Fake hit counter (client-side only - uses localStorage)
+    // Hit counter (localStorage)
     const counter = document.querySelector('.counter-display');
     if (counter) {
       let visits = parseInt(localStorage.getItem('wce_visits') || '46', 10);
@@ -219,7 +162,7 @@ const sortedHeroes = getHeroesSorted();
       counter.textContent = visits.toString().padStart(6, '0');
     }
 
-    // Generic image popup system
+    // Popup system
     const overlay = document.getElementById('popup-overlay');
 
     function openPopup(src: string, title: string) {
@@ -242,7 +185,6 @@ const sortedHeroes = getHeroesSorted();
       overlay?.classList.remove('active');
     }
 
-    // Delegate click on any element with data-popup-src
     document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const trigger = target.closest('[data-popup-src]') as HTMLElement;
@@ -254,7 +196,6 @@ const sortedHeroes = getHeroesSorted();
       }
     });
 
-    // Close handlers
     overlay?.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       if (e.target === overlay || target.matches('.popup-close')) {
@@ -272,21 +213,8 @@ const sortedHeroes = getHeroesSorted();
 </html>
 
 <style>
-  /* === GEOCITIES AESTHETIC WITH MODERN CSS === */
-
-  /* Color palette - straight from 1996 */
-  :root {
-    --bg-black: #000000;
-    --text-red: #ff0000;
-    --text-yellow: #ffff00;
-    --text-lime: #00ff00;
-    --text-cyan: #00ffff;
-    --text-magenta: #ff00ff;
-    --link-salmon: #ff4c4c;
-    --gold: #ffd700;
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
-  }
+  /* Page-level styles - components handle their own styling */
+  @import '../../styles/wce-theme.css';
 
   * {
     margin: 0;
@@ -295,131 +223,83 @@ const sortedHeroes = getHeroesSorted();
   }
 
   body {
-    background-color: var(--bg-black);
+    background-color: var(--wce-bg-black);
     background-image:
       radial-gradient(white 1px, transparent 1px),
       radial-gradient(white 1px, transparent 1px),
       radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
     background-size: 100px 100px, 50px 50px, 150px 150px;
     background-position: 0 0, 25px 25px, 75px 50px;
-    color: var(--text-red);
-    font-family: 'Times New Roman', Times, serif;
+    color: var(--wce-text-red);
+    font-family: var(--wce-font-body);
     font-size: 16px;
     line-height: 1.4;
     min-height: 100vh;
   }
 
   a {
-    color: var(--link-salmon);
+    color: var(--wce-link-salmon);
     text-decoration: underline;
   }
+  a:visited { color: var(--wce-link-salmon); }
+  a:hover { color: var(--wce-text-yellow); }
 
-  a:visited {
-    color: var(--link-salmon);
-  }
-
-  a:hover {
-    color: var(--text-yellow);
-  }
-
-  /* === LAYOUT - Tables vibes via CSS === */
   .page-wrapper {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--wce-space-lg);
   }
 
   /* === HEADER === */
   .site-header {
     text-align: center;
-    padding: 20px 0 40px;
+    padding: var(--wce-space-lg) 0 var(--wce-space-2xl);
   }
 
   .logo-title {
-    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-family: var(--wce-font-display);
     font-size: clamp(2rem, 8vw, 4rem);
-    color: var(--text-yellow);
-    text-shadow:
-      3px 3px 0 var(--text-red),
-      6px 6px 0 #660000;
+    color: var(--wce-text-yellow);
+    text-shadow: 3px 3px 0 var(--wce-text-red), 6px 6px 0 var(--wce-shadow-red);
     letter-spacing: 0.05em;
-    margin-bottom: 10px;
+    margin-bottom: var(--wce-space-sm);
   }
 
   .tagline {
     font-size: 1.25rem;
-    color: var(--text-lime);
+    color: var(--wce-text-lime);
     font-style: italic;
   }
 
   .established {
     font-size: 0.875rem;
-    color: var(--text-cyan);
-    margin-top: 10px;
+    color: var(--wce-text-cyan);
+    margin-top: var(--wce-space-sm);
   }
 
-  /* Hit counter */
   .hit-counter {
-    margin-top: 20px;
-    font-family: 'Courier New', monospace;
+    margin-top: var(--wce-space-lg);
+    font-family: var(--wce-font-mono);
     font-size: 0.875rem;
-    color: var(--text-yellow);
+    color: var(--wce-text-yellow);
   }
 
   .counter-display {
     display: inline-block;
-    background: #111;
-    border: 2px inset #444;
+    background: var(--wce-gray-900);
+    border: 2px inset var(--wce-gray-500);
     padding: 4px 12px;
-    font-family: 'Courier New', monospace;
-    color: var(--text-lime);
+    color: var(--wce-text-lime);
     letter-spacing: 0.2em;
-  }
-
-  /* === NAVIGATION === */
-  .nav-section {
-    text-align: center;
-    padding: 20px 0;
-    border-top: 2px solid var(--text-magenta);
-    border-bottom: 2px solid var(--text-magenta);
-    margin-bottom: 30px;
-  }
-
-  .nav-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 20px;
-  }
-
-  .nav-list a {
-    display: inline-block;
-    padding: 8px 16px;
-    background: linear-gradient(180deg, #444 0%, #222 100%);
-    border: 2px outset #666;
-    color: var(--text-yellow);
-    text-decoration: none;
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-  }
-
-  .nav-list a:hover {
-    background: linear-gradient(180deg, #555 0%, #333 100%);
-    border-style: inset;
-    color: var(--text-cyan);
   }
 
   /* === MARQUEE === */
   .announcement-bar {
-    background: var(--text-red);
-    color: var(--text-yellow);
+    background: var(--wce-text-red);
+    color: var(--wce-text-yellow);
     padding: 8px;
     font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 30px;
+    margin-bottom: var(--wce-space-xl);
     overflow: hidden;
   }
 
@@ -439,233 +319,36 @@ const sortedHeroes = getHeroesSorted();
     100% { transform: translateX(-50%); }
   }
 
-  /* === SECTIONS === */
-  .content-section {
-    background: rgba(0, 0, 0, 0.7);
-    border: 3px ridge var(--text-magenta);
-    margin-bottom: 30px;
-    padding: 20px;
-  }
-
-  .section-title {
-    font-family: 'Impact', 'Arial Black', sans-serif;
-    font-size: 1.75rem;
-    color: var(--text-cyan);
-    text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0 #006666;
-    border-bottom: 2px dashed var(--text-cyan);
-    padding-bottom: 10px;
-  }
-
-  .section-content {
-    color: var(--text-yellow);
-  }
-
-  .section-subtitle {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  /* === DREAM TEAMS === */
+  /* === GRID LAYOUTS === */
   .teams-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-  }
-
-  .team-card {
-    background: linear-gradient(180deg, #1a1a2e 0%, #0a0a15 100%);
-    border: 2px solid var(--text-magenta);
-    padding: 15px;
-    text-align: center;
-  }
-
-  .team-name {
-    font-family: 'Arial Black', sans-serif;
-    font-size: 1rem;
-    color: var(--text-lime);
-    margin-bottom: 5px;
-  }
-
-  .team-owner {
-    font-size: 0.875rem;
-    color: var(--text-cyan);
-  }
-
-  .team-record {
-    font-size: 0.75rem;
-    color: var(--silver);
-    margin-top: 5px;
-  }
-
-  /* === WALL OF FAME & SHAME === */
-  .fame-shame-section {
-    border-color: var(--gold);
-  }
-
-  .fame-shame-section .section-title {
-    color: var(--gold);
-    text-shadow: 2px 2px 0 #8B4513;
-    border-bottom-color: var(--gold);
-  }
-
-  .fame-shame-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-  }
-
-  .fame-shame-table th {
-    background: linear-gradient(180deg, #333 0%, #111 100%);
-    color: var(--silver);
-    padding: 10px;
-    text-align: left;
-    border: 2px solid #444;
-    font-size: 1rem;
-  }
-
-  .fame-shame-table td {
-    padding: 8px 10px;
-    border: 1px solid #444;
-  }
-
-  .fame-shame-table tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .fame-shame-table tr:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .fame-shame-table tr.missing-year {
-    opacity: 0.4;
-    font-style: italic;
-  }
-
-  .fame-shame-table .year-col {
-    color: var(--silver);
-    font-family: 'Courier New', monospace;
-  }
-
-  .fame-shame-table .fame-col {
-    color: var(--text-yellow);
-  }
-
-  .fame-shame-table .shame-col {
-    color: var(--text-red);
-  }
-
-  /* === HEROES === */
-  .heroes-section {
-    border-color: var(--text-lime);
-  }
-
-  .heroes-section .section-title {
-    color: var(--text-lime);
-    text-shadow: 2px 2px 0 #006600;
-    border-bottom-color: var(--text-lime);
+    gap: var(--wce-space-md);
   }
 
   .heroes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
+    gap: var(--wce-space-md);
   }
 
-  .hero-card {
-    background: linear-gradient(180deg, #1a2e1a 0%, #0a150a 100%);
-    border: 2px solid var(--text-lime);
-    padding: 15px;
-  }
-
-  .hero-card.retired {
-    opacity: 0.6;
-    border-style: dashed;
-  }
-
-  .hero-name {
-    font-family: 'Arial Black', sans-serif;
-    font-size: 1.1rem;
-    color: var(--text-lime);
-    margin-bottom: 5px;
-  }
-
-  .hero-years {
-    font-size: 0.75rem;
-    color: var(--silver);
-    margin-bottom: 8px;
-  }
-
-  .hero-teams {
-    font-size: 0.8rem;
-    color: var(--text-cyan);
-    line-height: 1.4;
-  }
-
-  .hero-teams span {
-    display: inline-block;
-    background: rgba(0, 255, 255, 0.1);
-    padding: 2px 6px;
-    margin: 2px;
-    border-radius: 3px;
-  }
-
-  .hero-status {
-    font-size: 0.7rem;
-    color: var(--text-magenta);
-    margin-top: 8px;
-    font-style: italic;
-  }
-
-  /* === LEAGUE HISTORY === */
+  /* === TIMELINE === */
   .timeline {
     position: relative;
-    padding-left: 30px;
+    padding-left: var(--wce-space-xl);
   }
 
   .timeline::before {
     content: '';
     position: absolute;
-    left: 10px;
+    left: var(--wce-space-sm);
     top: 0;
     bottom: 0;
     width: 2px;
-    background: var(--text-magenta);
+    background: var(--wce-text-magenta);
   }
 
-  .timeline-item {
-    position: relative;
-    margin-bottom: 20px;
-    padding-left: 20px;
-  }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -24px;
-    top: 5px;
-    width: 12px;
-    height: 12px;
-    background: var(--text-cyan);
-    border-radius: 50%;
-    border: 2px solid var(--text-magenta);
-  }
-
-  .timeline-year {
-    font-family: 'Courier New', monospace;
-    font-size: 1rem;
-    color: var(--text-lime);
-    font-weight: bold;
-  }
-
-  .timeline-event {
-    color: var(--text-yellow);
-    font-size: 0.9375rem;
-    margin-top: 5px;
-  }
-
-  /* === LEAGUE RULES === */
+  /* === RULES LIST === */
   .rules-list {
     list-style: none;
     counter-reset: rule-counter;
@@ -673,10 +356,10 @@ const sortedHeroes = getHeroesSorted();
 
   .rules-list li {
     counter-increment: rule-counter;
-    margin-bottom: 15px;
-    padding-left: 40px;
+    margin-bottom: var(--wce-space-md);
+    padding-left: var(--wce-space-2xl);
     position: relative;
-    color: var(--text-yellow);
+    color: var(--wce-text-yellow);
   }
 
   .rules-list li::before {
@@ -686,8 +369,8 @@ const sortedHeroes = getHeroesSorted();
     top: 0;
     width: 28px;
     height: 28px;
-    background: var(--text-magenta);
-    color: var(--bg-black);
+    background: var(--wce-text-magenta);
+    color: var(--wce-bg-black);
     font-weight: bold;
     text-align: center;
     line-height: 28px;
@@ -696,104 +379,47 @@ const sortedHeroes = getHeroesSorted();
 
   .rule-title {
     font-weight: bold;
-    color: var(--text-cyan);
+    color: var(--wce-text-cyan);
     display: block;
-    margin-bottom: 5px;
-  }
-
-  /* === UNDER CONSTRUCTION === */
-  .under-construction {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-yellow);
-  }
-
-  .construction-gif {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    animation: blink 1s step-end infinite;
-  }
-
-  @keyframes blink {
-    50% { opacity: 0; }
-  }
-
-  .construction-text {
-    font-family: 'Comic Sans MS', 'Arial', sans-serif;
-    font-size: 1.25rem;
-    color: var(--text-yellow);
+    margin-bottom: var(--wce-space-xs);
   }
 
   /* === FOOTER === */
   .site-footer {
     text-align: center;
-    padding: 30px 20px;
-    border-top: 2px solid var(--text-magenta);
-    margin-top: 30px;
+    padding: var(--wce-space-xl) var(--wce-space-lg);
+    border-top: var(--wce-border-width) solid var(--wce-text-magenta);
+    margin-top: var(--wce-space-xl);
   }
 
-  .footer-badges {
-    margin-bottom: 20px;
-  }
+  .footer-badges { margin-bottom: var(--wce-space-lg); }
 
   .badge {
     display: inline-block;
-    background: #111;
-    border: 2px outset #444;
-    padding: 5px 10px;
-    margin: 5px;
+    background: var(--wce-gray-900);
+    border: 2px outset var(--wce-gray-500);
+    padding: var(--wce-space-xs) var(--wce-space-sm);
+    margin: var(--wce-space-xs);
     font-size: 0.75rem;
-    color: var(--silver);
+    color: var(--wce-silver);
   }
 
   .copyright {
     font-size: 0.75rem;
-    color: var(--text-yellow);
+    color: var(--wce-text-yellow);
   }
 
   .email-link {
     display: block;
-    margin-top: 10px;
+    margin-top: var(--wce-space-sm);
     font-size: 0.875rem;
   }
 
-  /* === RESPONSIVE === */
-  @media (max-width: 600px) {
-    .page-wrapper {
-      padding: 10px;
-    }
-
-    .content-section {
-      padding: 15px;
-    }
-
-    .nav-list {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .teams-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .champions-table {
-      font-size: 0.75rem;
-    }
-
-    .champions-table th,
-    .champions-table td {
-      padding: 6px;
-    }
-  }
-
-  /* === 90s POPUP MODAL === */
+  /* === POPUP === */
   .popup-overlay {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(0, 0, 0, 0.8);
     z-index: 9999;
     justify-content: center;
@@ -810,59 +436,21 @@ const sortedHeroes = getHeroesSorted();
     to { opacity: 1; }
   }
 
-  /* Clickable hero name */
-  .hero-name.clickable {
-    cursor: pointer;
-    text-decoration: underline;
-    text-decoration-style: dashed;
-  }
-
-  .hero-name.clickable:hover {
-    color: var(--text-yellow);
-    text-shadow: 0 0 8px var(--text-lime);
-  }
-
-  /* === SPECIAL EFFECTS === */
-  .rainbow-text {
-    background: linear-gradient(90deg,
-      var(--text-red),
-      var(--text-yellow),
-      var(--text-lime),
-      var(--text-cyan),
-      var(--text-magenta)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbow-shift 3s linear infinite;
-    background-size: 200% auto;
-  }
-
-  @keyframes rainbow-shift {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
-  }
-
-  /* Starfield fallback if image doesn't load */
-  @supports not (background-image: url('/worst-commish-ever/images/stars.gif')) {
-    body {
-      background: radial-gradient(white 1px, transparent 1px),
-                  radial-gradient(white 1px, transparent 1px);
-      background-size: 50px 50px;
-      background-position: 0 0, 25px 25px;
-      background-color: var(--bg-black);
-    }
+  /* === RESPONSIVE === */
+  @media (max-width: 600px) {
+    .page-wrapper { padding: var(--wce-space-sm); }
+    .teams-grid { grid-template-columns: 1fr; }
   }
 </style>
 
 <style is:global>
-  /* Global styles for dynamically created popup content */
+  /* Global: dynamically created popup content */
   .popup-window {
-    background: linear-gradient(180deg, #c0c0c0 0%, #808080 100%);
-    border: 4px outset #c0c0c0;
+    background: linear-gradient(180deg, var(--wce-win95-button-face) 0%, var(--wce-win95-button-shadow) 100%);
+    border: var(--wce-border-win95) outset var(--wce-win95-button-face);
     box-shadow:
-      inset 2px 2px 0 #fff,
-      inset -2px -2px 0 #404040,
+      inset 2px 2px 0 var(--wce-win95-button-highlight),
+      inset -2px -2px 0 var(--wce-win95-button-dark-shadow),
       8px 8px 0 rgba(0, 0, 0, 0.5);
     max-width: 90vw;
     max-height: 90vh;
@@ -870,36 +458,31 @@ const sortedHeroes = getHeroesSorted();
   }
 
   @keyframes dropIn {
-    0% {
-      transform: translateY(-100vh);
-    }
-    100% {
-      transform: translateY(0);
-    }
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(0); }
   }
 
   .popup-titlebar {
-    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    background: linear-gradient(90deg, var(--wce-win95-titlebar-dark) 0%, var(--wce-win95-titlebar-light) 100%);
     padding: 4px 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: default;
   }
 
   .popup-title {
     color: #fff;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--wce-font-ui);
     font-weight: bold;
     font-size: 0.875rem;
     text-shadow: 1px 1px 0 #000;
   }
 
   .popup-close {
-    background: linear-gradient(180deg, #c0c0c0 0%, #808080 100%);
-    border: 2px outset #c0c0c0;
+    background: linear-gradient(180deg, var(--wce-win95-button-face) 0%, var(--wce-win95-button-shadow) 100%);
+    border: 2px outset var(--wce-win95-button-face);
     color: #000;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--wce-font-ui);
     font-weight: bold;
     font-size: 0.75rem;
     width: 20px;
@@ -911,7 +494,7 @@ const sortedHeroes = getHeroesSorted();
   }
 
   .popup-close:hover {
-    background: linear-gradient(180deg, #d0d0d0 0%, #909090 100%);
+    background: linear-gradient(180deg, var(--wce-gray-50) 0%, var(--wce-gray-200) 100%);
   }
 
   .popup-close:active {
@@ -921,7 +504,7 @@ const sortedHeroes = getHeroesSorted();
   .popup-content {
     padding: 8px;
     background: #000;
-    border: 2px inset #808080;
+    border: 2px inset var(--wce-win95-button-shadow);
     margin: 8px;
   }
 
@@ -931,7 +514,6 @@ const sortedHeroes = getHeroesSorted();
     max-height: 70vh;
     width: auto;
     height: auto;
-    image-rendering: auto;
   }
 
   @media (max-width: 600px) {

@@ -1,0 +1,75 @@
+---
+/**
+ * Navigation.astro - GeoCities-style navigation bar
+ *
+ * Patterns demonstrated:
+ * - Array props with typed items
+ * - Iterating to generate links
+ * - 90s button styling
+ */
+
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  items: NavItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="nav-section">
+  <ul class="nav-list">
+    {items.map(item => (
+      <li><a href={item.href}>{item.label}</a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  @import '../../styles/wce-theme.css';
+
+  .nav-section {
+    text-align: center;
+    padding: var(--wce-space-lg) 0;
+    border-top: var(--wce-border-width) solid var(--wce-text-magenta);
+    border-bottom: var(--wce-border-width) solid var(--wce-text-magenta);
+    margin-bottom: var(--wce-space-xl);
+  }
+
+  .nav-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--wce-space-sm) var(--wce-space-lg);
+  }
+
+  .nav-list a {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(180deg, var(--wce-gray-500) 0%, var(--wce-gray-800) 100%);
+    border: var(--wce-border-width) outset var(--wce-gray-300);
+    color: var(--wce-text-yellow);
+    text-decoration: none;
+    font-family: var(--wce-font-ui);
+    font-weight: bold;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+  }
+
+  .nav-list a:hover {
+    background: linear-gradient(180deg, var(--wce-gray-400) 0%, var(--wce-gray-700) 100%);
+    border-style: inset;
+    color: var(--wce-text-cyan);
+  }
+
+  @media (max-width: 600px) {
+    .nav-list {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
