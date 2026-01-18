@@ -14,4 +14,4 @@ const HERO_POPUPS = {
 
 ---
 
-Ensure you maintain the MANAGER_DISPLAY_NAMES pattern in @data.js which maps API data to display data.
+Ensure you maintain the MANAGER_DISPLAY_NAMES pattern in src/data/wce-data.ts which maps API data to display data.

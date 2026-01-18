@@ -1,6 +1,6 @@
 /**
  * League Data - Extracted from Yahoo Fantasy API
- * Run scripts/extract.py to update this data
+ * Run .github/scripts/wce/extract.py to update this data
  *
  * Years marked missing: need someone with API access to those years to run extract.py
  */

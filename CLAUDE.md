@@ -6,10 +6,30 @@ Multi-project repo: personal site, playgrounds, and experiments.
 
 | Path | Description |
 |------|-------------|
-| `/index.html` | Personal site (retro-futuristic, Scandi-minimalism) |
-| `/marmiteroids/` | Asteroids game clone |
-| `/bumper-lanes/` | Bumper lanes landing page |
-| `/fantasy-league/` | GeoCities-style fantasy football site (WIP) |
+| `/src/pages/index.astro` | Personal site (retro-futuristic, Scandi-minimalism) |
+| `/src/pages/marmiteroids/` | Marmiteroids - Interactive 3D art piece |
+| `/src/pages/bumper-lanes/` | Bumper lanes landing page |
+| `/src/pages/worst-commish-ever/` | GeoCities-style fantasy football site |
+
+## Marmiteroids Architecture
+
+Interactive 3D art piece - floating Marmite jars in infinite space using Three.js.
+
+### Key Concepts
+
+- **Scene**: White background, black 3D point grid (60k cube, spacing=1400) for depth
+- **Jar Spawning**: Click spawns at fixed distance (5000); hold 800ms+ to shoot with velocity
+- **Physics**: Boundary bounce (grid +-30000), jar-to-jar elastic collision
+- **Performance**: Shared geometry/materials; handles 3000+ jars; O(n^2) collision is bottleneck
+
+### Interactions
+
+| Action | Result |
+|--------|--------|
+| Click | Spawn stationary jar |
+| Hold 800ms + release | Shoot jar into space |
+| Shift + click jar | Delete jar |
+| Scroll/drag | OrbitControls camera |
 
 ## Development Notes
 
