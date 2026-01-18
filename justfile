@@ -42,3 +42,17 @@ rebuild:
     rm -rf node_modules package-lock.json
     npm install
     npm run build
+
+# Smoke test: build, preview, and curl all routes
+smoke:
+    #!/usr/bin/env bash
+    npm run build
+    npm run preview &
+    trap 'pkill -f "astro preview" 2>/dev/null' EXIT
+    sleep 2
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/ && echo " /"
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/marmiteroids/ && echo " /marmiteroids/"
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/bumper-lanes/ && echo " /bumper-lanes/"
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/worst-commish-ever/ && echo " /worst-commish-ever/"
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/marmiteroids/javascripts/application.js && echo " /marmiteroids/javascripts/application.js"
+    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/worst-commish-ever/images/stars.gif && echo " /worst-commish-ever/images/stars.gif"
