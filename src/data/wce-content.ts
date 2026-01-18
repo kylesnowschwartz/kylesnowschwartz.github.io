@@ -54,7 +54,7 @@ export const CONTENT = {
     fameShame: {
       title: "WALL OF FAME & SHAME",
       subtitle: "Heroes get remembered, but legends never die",
-      tableHeaders: ["Year", "Champion", "Last Place"] as const
+      tableHeaders: ["Year", "🏆 Champion", "🍌 Last Place"] as const
     },
 
     heroes: {

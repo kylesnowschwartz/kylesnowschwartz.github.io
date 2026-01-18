@@ -13,17 +13,16 @@ import type { SeasonData } from '../../data/wce-data.ts';
 interface Props {
   years: number[];
   data: Record<number, SeasonData>;
+  headers?: readonly [string, string, string];
 }
 
-const { years, data } = Astro.props;
+const { years, data, headers = ["Year", "🏆 Champion", "🍌 Last Place"] } = Astro.props;
 ---
 
 <table class="fame-shame-table">
   <thead>
     <tr>
-      <th>Year</th>
-      <th>Champion</th>
-      <th>Last Place</th>
+      {headers.map(h => <th>{h}</th>)}
     </tr>
   </thead>
   <tbody>
