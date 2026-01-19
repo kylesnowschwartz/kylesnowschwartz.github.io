@@ -19,33 +19,70 @@ Full Stack Software Engineer with 8+ years' experience delivering and maintainin
 
 ## Career Summary
 
-| Role | Period |
-| :--- | ---: |
-| Senior Engineer (fully remote) – Envato, NZ | Apr 2021 – Present |
-| Senior Developer (fully remote) – Flux Federation / Powershop, NZ | Oct 2015 – Mar 2021 |
-| Team Lead (fully remote) – Flux Federation / Powershop, NZ | Sep 2019 – Aug 2020 |
-| Prior roles include teaching English in Vietnam, and earlier hospitality experience in New York City, including senior positions at the Michelin-starred Dovetail Restaurant in NYC, and Grandaisy Artisan Bakery. | |
+<div class="career-entry">
+  <span class="role"><strong>Senior Engineer</strong> (fully remote) – Envato, NZ</span>
+  <span class="date">Apr 2021 – Present</span>
+</div>
+
+<div class="career-entry">
+  <span class="role"><strong>Senior Developer</strong> (fully remote) – Flux Federation / Powershop, NZ</span>
+  <span class="date">Oct 2015 – Mar 2021</span>
+</div>
+
+<div class="career-entry">
+  <span class="role"><strong>Team Lead</strong> (fully remote) – Flux Federation / Powershop, NZ</span>
+  <span class="date">Sep 2019 – Aug 2020</span>
+</div>
+
+<p class="career-note">Prior roles include teaching English in Vietnam, and earlier hospitality experience in New York City, including senior positions at the Michelin-starred Dovetail Restaurant in NYC, and Grandaisy Artisan Bakery.</p>
 
 ## Areas of Interest & Expertise
 
-| Engineering & Technology | Ways of Working |
-| :--- | :--- |
-| AI-Enabled Developer Experience | Async Collaboration & Written Communication |
-| Ruby-on-Rails / JavaScript / React / Python | Self-Management & Autonomy in Fully Remote Teams |
-| CLI Tooling / TUI Design | Technical Leadership & Mentoring |
-| API Design & Integration | Cross-Functional Teamwork |
-| CI/CD (Buildkite, Jenkins, Samson, GitLab, GitHub) | Continuous Improvement |
-| Cloud Infrastructure (AWS, Cloudflare, Terraform) | Agile / Lean Practices & Process Improvement |
-| Security, Resilience & Performance Optimisation | Stakeholder Engagement |
-| System Refactoring & Test-Driven Development | Customer & User Focused |
+<div class="skills-grid">
+  <div class="skills-column">
+    <h5>Engineering & Technology</h5>
+    <ul>
+      <li>AI-Enabled Developer Experience</li>
+      <li>Ruby-on-Rails / JavaScript / React / Python</li>
+      <li>CLI Tooling / TUI Design</li>
+      <li>API Design & Integration</li>
+      <li>CI/CD (Buildkite, Jenkins, Samson, GitLab, GitHub)</li>
+      <li>Cloud Infrastructure (AWS, Cloudflare, Terraform)</li>
+      <li>Security, Resilience & Performance Optimisation</li>
+      <li>System Refactoring & Test-Driven Development</li>
+    </ul>
+  </div>
+  <div class="skills-column">
+    <h5>Ways of Working</h5>
+    <ul>
+      <li>Async Collaboration & Written Communication</li>
+      <li>Self-Management & Autonomy in Fully Remote Teams</li>
+      <li>Technical Leadership & Mentoring</li>
+      <li>Cross-Functional Teamwork</li>
+      <li>Continuous Improvement</li>
+      <li>Agile / Lean Practices & Process Improvement</li>
+      <li>Stakeholder Engagement</li>
+      <li>Customer & User Focused</li>
+    </ul>
+  </div>
+</div>
 
 ## Qualifications
 
-| Qualification | Year |
-| :--- | ---: |
-| Full Stack Ruby-on-Rails Development – Enspiral Dev Academy, Wellington, NZ | 2015 |
-| Bachelor of Arts (Economics) – Bard College, New York, USA | 2009 |
-| Mental Health First Aid Responder – CoLiberate, Wellington, NZ | Current |
+<div class="qualification-entry">
+  <span class="qual">Full Stack Ruby-on-Rails Development – Enspiral Dev Academy, Wellington, NZ</span>
+  <span class="year">2015</span>
+</div>
+
+<div class="qualification-entry">
+  <span class="qual">Bachelor of Arts (Economics) – Bard College, New York, USA</span>
+  <span class="year">2009</span>
+</div>
+
+<div class="qualification-entry">
+  <span class="qual">Mental Health First Aid Responder – CoLiberate, Wellington, NZ</span>
+  <span class="year">Current</span>
+</div>
 
 ## Selected Roles & Capabilities
 

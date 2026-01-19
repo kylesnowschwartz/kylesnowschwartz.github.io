@@ -1,18 +1,31 @@
 ---
 // ViewModeToggle - switches between Markdown source, HTML render, and PDF export
+// Also includes zoom control for screen preview
 ---
 
-<nav class="view-mode-toggle" aria-label="View mode">
-  <button type="button" data-mode="markdown" aria-pressed="false">
-    Markdown
-  </button>
-  <button type="button" data-mode="html" aria-pressed="true">
-    HTML
-  </button>
-  <button type="button" data-mode="pdf">
-    PDF
-  </button>
-</nav>
+<div class="cv-controls print-hidden">
+  <nav class="view-mode-toggle" aria-label="View mode">
+    <button type="button" data-mode="markdown" aria-pressed="false">
+      Markdown
+    </button>
+    <button type="button" data-mode="html" aria-pressed="true">
+      HTML
+    </button>
+    <button type="button" data-mode="pdf">
+      PDF
+    </button>
+  </nav>
+
+  <div class="zoom-control" aria-label="Zoom level">
+    <label for="zoom-select">Zoom:</label>
+    <select id="zoom-select">
+      <option value="75">75%</option>
+      <option value="100">100%</option>
+      <option value="125" selected>125%</option>
+      <option value="150">150%</option>
+    </select>
+  </div>
+</div>
 
 <script is:inline>
   (function() {
@@ -20,12 +33,14 @@
     const page = document.querySelector('.cv-page');
     const htmlView = document.querySelector('.view-html');
     const mdView = document.querySelector('.view-markdown');
+    const zoomSelect = document.getElementById('zoom-select');
 
     if (!toggle || !page) return;
 
     // Set initial state
     page.setAttribute('data-view-mode', 'html');
 
+    // View mode toggle
     toggle.addEventListener('click', (e) => {
       const btn = e.target.closest('button');
       if (!btn) return;
@@ -54,18 +69,31 @@
         mdView.hidden = mode !== 'markdown';
       }
     });
+
+    // Zoom control
+    if (zoomSelect) {
+      zoomSelect.addEventListener('change', (e) => {
+        page.setAttribute('data-zoom', e.target.value);
+      });
+    }
   })();
 </script>
 
 <style>
-  .view-mode-toggle {
+  .cv-controls {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 1.5rem;
     margin-bottom: 1.5rem;
     padding: 0.75rem;
     background: var(--cv-bg-muted, #f8fafc);
     border-radius: 6px;
+  }
+
+  .view-mode-toggle {
+    display: flex;
+    gap: 0.5rem;
   }
 
   button {
@@ -101,17 +129,42 @@
     color: white;
   }
 
-  /* Hide in print */
-  @media print {
-    .view-mode-toggle {
-      display: none !important;
-    }
+  .zoom-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--cv-text-muted, #475569);
   }
 
-  /* Mobile */
-  @media (max-width: 600px) {
-    .view-mode-toggle {
+  .zoom-control label {
+    font-weight: 500;
+  }
+
+  .zoom-control select {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--cv-border, #e2e8f0);
+    border-radius: 4px;
+    background: var(--cv-bg, white);
+    color: var(--cv-text, #0f172a);
+    cursor: pointer;
+  }
+
+  .zoom-control select:hover {
+    border-color: var(--cv-accent, #2563eb);
+  }
+
+  /* Mobile - hide zoom control, stack controls */
+  @media (max-width: 900px) {
+    .cv-controls {
+      flex-direction: column;
+      gap: 0.75rem;
       padding: 0.5rem;
+    }
+
+    .zoom-control {
+      display: none;
     }
 
     button {

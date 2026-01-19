@@ -1,12 +1,12 @@
 /*
  * CV Page Styles
- * Color palette based on Tailwind slate/blue - easy to customize
+ * Color palette based on Tailwind slate/blue - matching Google Docs reference
+ * Print-first design with screen preview support
  */
 
 :root {
-  /* Header */
+  /* Header (used for name color) */
   --cv-header-bg: #1e293b;      /* slate-800 */
-  --cv-header-text: #ffffff;
 
   /* Accent colors */
   --cv-accent: #2563eb;         /* blue-600 */
@@ -25,134 +25,218 @@
 
 /* Page container */
 .cv-page {
-  max-width: 850px;
   margin: 0 auto;
   padding: 0;
   background: var(--cv-bg);
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Readable base font - matches Google Docs */
+  font-size: 10pt;
+  line-height: 1.4;
 }
 
 .cv-document {
+  /* A4 paper: 8.27" = 794px at 96dpi (210mm) */
+  width: 794px;
   background: var(--cv-bg);
-  padding: 2.5rem;
+  /* Match Google Docs margins */
+  padding: 48pt 56pt;
+  margin: 0 auto;
+  transform-origin: top center;
 }
 
+/* Zoom levels for screen preview */
+.cv-page[data-zoom="75"] .cv-document { transform: scale(0.75); }
+.cv-page[data-zoom="100"] .cv-document { transform: scale(1); }
+.cv-page[data-zoom="125"] .cv-document { transform: scale(1.25); }
+.cv-page[data-zoom="150"] .cv-document { transform: scale(1.5); }
+
 /* Section headers - blue with underline accent */
-.cv-content :global(h2) {
+.cv-content h2 {
   color: var(--cv-accent);
-  font-size: 1.2rem;
+  font-size: 14pt;
   font-weight: 600;
-  margin-top: 1.75rem;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.375rem;
+  margin-top: 18pt;
+  margin-bottom: 10pt;
+  padding-bottom: 3pt;
   border-bottom: 2px solid var(--cv-accent);
   letter-spacing: -0.01em;
 }
 
-.cv-content :global(h2:first-child) {
+.cv-content h2:first-child {
   margin-top: 0;
 }
 
-/* Subsection headers */
-.cv-content :global(h3) {
+/* Subsection headers (role titles) */
+.cv-content h3 {
   color: var(--cv-text);
-  font-size: 1.05rem;
+  font-size: 12pt;
   font-weight: 600;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
+  margin-top: 14pt;
+  margin-bottom: 6pt;
 }
 
-.cv-content :global(h4) {
-  color: var(--cv-text-muted);
-  font-size: 0.95rem;
+/* Sub-subsection headers (categories like "AI Engineering & Developer Experience") */
+.cv-content h4 {
+  color: var(--cv-text);
+  font-size: 10pt;
   font-weight: 600;
-  margin-top: 0.875rem;
-  margin-bottom: 0.25rem;
+  margin-top: 10pt;
+  margin-bottom: 4pt;
 }
 
 /* Body text */
-.cv-content :global(p) {
+.cv-content p {
   color: var(--cv-text);
-  margin-bottom: 0.625rem;
-  line-height: 1.55;
-  font-size: 0.9375rem;
+  margin-bottom: 8pt;
+  line-height: 1.4;
+  font-size: 10pt;
 }
 
-/* Lists */
-.cv-content :global(ul) {
-  margin-bottom: 0.875rem;
-  padding-left: 1.25rem;
+/* Lists - with proper hanging indent */
+.cv-content ul {
+  margin-top: 4pt;
+  margin-bottom: 8pt;
+  padding-left: 16pt;
+  list-style-position: outside;
 }
 
-.cv-content :global(li) {
+.cv-content li {
   color: var(--cv-text);
-  margin-bottom: 0.375rem;
-  line-height: 1.5;
-  font-size: 0.9375rem;
+  margin-bottom: 6pt;
+  line-height: 1.4;
+  font-size: 10pt;
 }
 
 /* Bold text */
-.cv-content :global(strong) {
+.cv-content strong {
   font-weight: 600;
   color: var(--cv-text);
 }
 
-/* Tables - Career Summary, Skills, Qualifications */
-.cv-content :global(table) {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.25rem;
-  font-size: 0.9rem;
+/* ===================
+   CAREER ENTRY LAYOUT
+   Role/date pairs as flex rows
+   =================== */
+.cv-content .career-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4pt;
+  gap: 12pt;
 }
 
-.cv-content :global(thead) {
-  display: none; /* Hide table headers for cleaner look */
+.cv-content .career-entry .role {
+  flex: 1;
 }
 
-.cv-content :global(th),
-.cv-content :global(td) {
-  padding: 0.5rem 0.5rem 0.5rem 0;
-  text-align: left;
-  vertical-align: top;
-  border-bottom: 1px solid var(--cv-border);
+.cv-content .career-entry .role strong {
+  font-weight: 600;
+}
+
+.cv-content .career-entry .date {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--cv-text);
+  text-align: right;
+}
+
+/* Career note (prior roles paragraph) */
+.cv-content .career-note {
+  margin-top: 8pt;
+  font-style: normal;
+}
+
+/* ===================
+   TWO-COLUMN SKILLS
+   =================== */
+.cv-content .skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16pt 32pt;
+  margin-bottom: 8pt;
+}
+
+.cv-content .skills-column h5 {
+  font-size: 10pt;
+  font-weight: 600;
+  text-decoration: underline;
+  margin-bottom: 6pt;
   color: var(--cv-text);
 }
 
-/* Right-align date/year columns */
-.cv-content :global(td:last-child) {
+.cv-content .skills-column ul {
+  margin: 0;
+  padding-left: 16pt;
+}
+
+.cv-content .skills-column li {
+  margin-bottom: 4pt;
+}
+
+/* ===================
+   QUALIFICATIONS
+   =================== */
+.cv-content .qualification-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4pt;
+  gap: 12pt;
+}
+
+.cv-content .qualification-entry .qual {
+  flex: 1;
+}
+
+.cv-content .qualification-entry .year {
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Legacy table styles (fallback) */
+.cv-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8pt;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+
+.cv-content thead {
+  display: none;
+}
+
+.cv-content th,
+.cv-content td {
+  padding: 4pt 8pt 4pt 0;
+  text-align: left;
+  vertical-align: top;
+  color: var(--cv-text);
+}
+
+.cv-content td:last-child {
   text-align: right;
   white-space: nowrap;
-  color: var(--cv-text-muted);
   padding-right: 0;
 }
 
-/* Two-column skills table */
-.cv-content :global(table:has(th:nth-child(2))) {
-  /* Skills matrix with two columns */
-}
-
-.cv-content :global(table) :global(th) {
-  font-weight: 600;
-  color: var(--cv-text);
-  border-bottom: 1px solid var(--cv-border);
-  padding-bottom: 0.5rem;
-}
-
 /* Links */
-.cv-content :global(a) {
+.cv-content a {
   color: var(--cv-accent);
   text-decoration: none;
 }
 
-.cv-content :global(a:hover) {
+.cv-content a:hover {
   text-decoration: underline;
 }
 
 /* Footer */
 .cv-footer {
   text-align: center;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  font-size: 0.8rem;
+  margin-top: 16pt;
+  padding-top: 8pt;
+  font-size: 8pt;
   color: var(--cv-text-light);
   border-top: 1px solid var(--cv-border);
 }
@@ -162,8 +246,10 @@
    =================== */
 @media print {
   @page {
-    margin: 0.5in 0.6in;
-    size: letter;
+    /* A4 with minimal margins for maximum content width
+       Poppins font is wider than Google Docs default, so we need more horizontal space */
+    size: A4;
+    margin: 0.4in 0.5in;
   }
 
   :root {
@@ -173,71 +259,141 @@
     --cv-text-muted: #333333;
   }
 
-  body {
+  html, body {
     background: white !important;
-    font-size: 10pt;
-    line-height: 1.4;
+    margin: 0;
+    padding: 0;
   }
 
   /* Hide non-print elements */
   .view-mode-toggle,
-  .cv-footer {
+  .zoom-control,
+  .cv-controls,
+  .cv-footer,
+  .view-markdown,
+  .print-hidden {
     display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
   }
 
   .cv-page {
-    max-width: none;
     padding: 0;
+    background: white;
+    font-size: 10pt;
+    line-height: 1.3;  /* Tighter than screen (1.4) to match Google Docs */
   }
 
   .cv-document {
+    /* Reset transform and width for print */
+    transform: none !important;
+    width: 100% !important;
     padding: 0;
+    margin: 0;
     box-shadow: none;
+    border-radius: 0;
   }
 
-  /* Typography scaling */
-  .cv-content :global(h2) {
-    font-size: 12pt;
+  /* ===================
+     TIGHTER PRINT SPACING
+     Match Google Docs density for 2-page CV
+     =================== */
+
+  .cv-content h2 {
     margin-top: 12pt;
     margin-bottom: 6pt;
-    page-break-after: avoid;
+    padding-bottom: 2pt;
   }
 
-  .cv-content :global(h3) {
-    font-size: 11pt;
+  .cv-content h2:first-child {
+    margin-top: 0;
+  }
+
+  .cv-content h3 {
+    margin-top: 10pt;
+    margin-bottom: 4pt;
+  }
+
+  .cv-content h4 {
     margin-top: 8pt;
+    margin-bottom: 3pt;
+  }
+
+  .cv-content p {
+    margin-bottom: 4pt;
+    line-height: 1.3;
+  }
+
+  .cv-content ul {
+    margin-top: 2pt;
+    margin-bottom: 4pt;
+  }
+
+  .cv-content li {
+    margin-bottom: 3pt;
+    line-height: 1.3;
+  }
+
+  .cv-content .career-entry,
+  .cv-content .qualification-entry {
+    margin-bottom: 2pt;
+  }
+
+  .cv-content .career-note {
+    margin-top: 4pt;
+  }
+
+  /* ===================
+     PAGE BREAK CONTROL
+     Use modern break-* properties (with page-break-* fallbacks)
+     =================== */
+
+  /* Headers must stay with following content */
+  .cv-content h2,
+  .cv-content h3,
+  .cv-content h4,
+  .cv-content h5 {
     page-break-after: avoid;
-  }
-
-  .cv-content :global(h4) {
-    font-size: 10pt;
-    page-break-after: avoid;
-  }
-
-  .cv-content :global(p),
-  .cv-content :global(li) {
-    font-size: 10pt;
-    line-height: 1.35;
-  }
-
-  .cv-content :global(table) {
-    font-size: 9pt;
-  }
-
-  /* Prevent awkward breaks */
-  .cv-content :global(h2),
-  .cv-content :global(h3),
-  .cv-content :global(h4) {
-    page-break-after: avoid;
-  }
-
-  .cv-content :global(li),
-  .cv-content :global(tr) {
+    break-after: avoid;
     page-break-inside: avoid;
+    break-inside: avoid;
   }
 
-  /* Orphans and widows */
-  .cv-content :global(p) {
+  /* Keep these elements from splitting across pages */
+  .cv-content li,
+  .cv-content tr,
+  .cv-content p,
+  .cv-content .career-entry,
+  .cv-content .qualification-entry {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Skills grid - allow breaking between columns, but keep each column together */
+  .cv-content .skills-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4pt 16pt;  /* Minimal gap for maximum column width */
+    /* Don't use break-inside: avoid here - causes huge gaps */
+  }
+
+  .cv-content .skills-column h5 {
+    margin-bottom: 4pt;
+  }
+
+  .cv-content .skills-column li {
+    margin-bottom: 2pt;
+  }
+
+  .cv-content .skills-column {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Orphans and widows - keep at least 3 lines together */
+  .cv-content p {
     orphans: 3;
     widows: 3;
   }
@@ -250,24 +406,78 @@
 }
 
 /* ===================
+   SCREEN ENHANCEMENTS
+   Subtle visual polish for on-screen viewing
+   =================== */
+@media screen {
+  .cv-page {
+    background: var(--cv-bg-muted);
+    padding: 2rem 0;
+  }
+
+  .cv-document {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+                0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-radius: 4px;
+  }
+}
+
+/* ===================
+   PRINT UTILITIES
+   Tailwind-style utility classes for print/screen variants.
+   Pattern: screen-* for screen-only, print-* for print-only.
+   =================== */
+
+/* Visibility utilities */
+.print-hidden { }
+@media print { .print-hidden { display: none !important; } }
+
+.screen-hidden { display: none; }
+@media print { .screen-hidden { display: block; } }
+
+/* Spacing utilities */
+.print-p-0 { }
+@media print { .print-p-0 { padding: 0 !important; } }
+
+.print-m-0 { }
+@media print { .print-m-0 { margin: 0 !important; } }
+
+.print-mb-0 { }
+@media print { .print-mb-0 { margin-bottom: 0 !important; } }
+
+/* Typography utilities */
+.print-text-sm { }
+@media print { .print-text-sm { font-size: 9pt !important; } }
+
+/* Layout utilities */
+.print-break-inside-avoid { }
+@media print { .print-break-inside-avoid { break-inside: avoid; } }
+
+.print-break-before-page { }
+@media print { .print-break-before-page { break-before: page; } }
+
+.print-break-after-avoid { }
+@media print { .print-break-after-avoid { break-after: avoid; } }
+
+/* Visual utilities */
+.print-shadow-none { }
+@media print { .print-shadow-none { box-shadow: none !important; } }
+
+.print-bg-transparent { }
+@media print { .print-bg-transparent { background: transparent !important; } }
+
+/* ===================
    MOBILE RESPONSIVE
    =================== */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .cv-document {
-    padding: 1.5rem;
+    /* On mobile, allow full width and reset transforms */
+    width: 100%;
+    transform: none !important;
+    padding: 24pt 20pt;
   }
 
-  .cv-content :global(table) {
-    font-size: 0.8rem;
-  }
-
-  .cv-content :global(th),
-  .cv-content :global(td) {
-    padding: 0.35rem 0.25rem 0.35rem 0;
-  }
-
-  /* Stack table cells on very small screens if needed */
-  .cv-content :global(h2) {
-    font-size: 1.1rem;
+  .cv-content .skills-grid {
+    grid-template-columns: 1fr;
   }
 }

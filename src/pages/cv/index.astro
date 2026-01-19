@@ -27,11 +27,11 @@ const rawSource = cv.body;
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
     rel="stylesheet">
 </head>
 
-<body class="cv-page" data-view-mode="html">
+<body class="cv-page" data-view-mode="html" data-zoom="125">
   <ViewModeToggle />
 
   <article class="cv-document">
@@ -47,11 +47,11 @@ const rawSource = cv.body;
     <div class="view-markdown" hidden>
       <MarkdownViewer source={rawSource} />
     </div>
-  </article>
 
-  <footer class="cv-footer">
-    <p>Last updated: {cv.data.updated}</p>
-  </footer>
+    <footer class="cv-footer print-hidden">
+      <p>Last updated: {cv.data.updated}</p>
+    </footer>
+  </article>
 </body>
 </html>
 
