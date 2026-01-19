@@ -4,7 +4,7 @@ Print-first HTML/CSS pipeline that renders Markdown content to match Google Docs
 
 ## Architecture
 
-**Colocated feature folder** - everything for `/cv/` lives in one place:
+**Feature folder** - CV-specific code lives together, styles follow Astro convention:
 
 ```
 src/pages/cv/
@@ -12,7 +12,6 @@ src/pages/cv/
 ├── _data.ts              # Structured data (career, skills, qualifications)
 ├── _profile.md           # Profile prose (pure markdown)
 ├── _roles.md             # Selected roles prose (pure markdown)
-├── _cv.css               # Print-first styles
 ├── _components/          # CV-specific components
 │   ├── CVHeader.astro
 │   ├── CareerSummary.astro
@@ -21,6 +20,9 @@ src/pages/cv/
 │   ├── ViewModeToggle.astro
 │   └── MarkdownViewer.astro
 └── CLAUDE.md             # This file
+
+src/styles/
+└── cv.css                # Print-first styles (Astro convention)
 ```
 
 Files prefixed with `_` are excluded from Astro's routing.
