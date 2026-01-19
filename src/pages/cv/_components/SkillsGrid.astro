@@ -1,0 +1,32 @@
+---
+/**
+ * SkillsGrid - Renders skills in a two-column grid from structured data
+ * Replaces HTML divs that were embedded in markdown
+ */
+interface SkillCategory {
+  heading: string;
+  skills: string[];
+}
+
+interface Props {
+  categories: SkillCategory[];
+}
+
+const { categories } = Astro.props;
+---
+
+<section class="skills-section">
+  <h2>Areas of Interest & Expertise</h2>
+  <div class="skills-grid">
+    {categories.map((category) => (
+      <div class="skills-column">
+        <h5>{category.heading}</h5>
+        <ul>
+          {category.skills.map((skill) => (
+            <li>{skill}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

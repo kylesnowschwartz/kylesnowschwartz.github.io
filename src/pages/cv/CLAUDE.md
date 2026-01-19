@@ -4,19 +4,31 @@ Print-first HTML/CSS pipeline that renders Markdown content to match Google Docs
 
 ## Architecture
 
+**Colocated feature folder** - everything for `/cv/` lives in one place:
+
 ```
-src/
-├── content/cv/
-│   └── kyle-snow-schwartz.md    # Content source (Markdown + HTML)
-├── components/cv/
-│   ├── CVHeader.astro           # Header with scoped styles
-│   ├── ViewModeToggle.astro     # Mode switcher (HTML/Markdown/PDF)
-│   └── MarkdownViewer.astro     # Raw source display
-├── pages/cv/
-│   └── index.astro              # Page shell, imports cv.css
-└── styles/
-    └── cv.css                   # Global print-first styles
+src/pages/cv/
+├── index.astro           # Page entry point
+├── _data.ts              # Structured data (career, skills, qualifications)
+├── _profile.md           # Profile prose (pure markdown)
+├── _roles.md             # Selected roles prose (pure markdown)
+├── _cv.css               # Print-first styles
+├── _components/          # CV-specific components
+│   ├── CVHeader.astro
+│   ├── CareerSummary.astro
+│   ├── SkillsGrid.astro
+│   ├── Qualifications.astro
+│   ├── ViewModeToggle.astro
+│   └── MarkdownViewer.astro
+└── CLAUDE.md             # This file
 ```
+
+Files prefixed with `_` are excluded from Astro's routing.
+
+### Content Separation
+
+- **Structured data** (`_data.ts`): Career entries, skills, qualifications - rendered by components
+- **Prose** (`_profile.md`, `_roles.md`): Pure markdown, no HTML - rendered by Astro's markdown pipeline
 
 ## Gotchas
 
@@ -42,39 +54,26 @@ If CSS changes don't appear, restart the dev server:
 pkill -f "astro dev" && npm run dev
 ```
 
-### Tables vs Flexbox for Date Alignment
+### Adding New Career Entries / Skills / Qualifications
 
-Tables with `width: 100%` fight you on column widths. Use flexbox instead:
+Edit `_data.ts` - the TypeScript types will guide you:
 
-```html
-<!-- In Markdown content -->
-<div class="career-entry">
-  <span class="role"><strong>Title</strong> – Company</span>
-  <span class="date">Apr 2021 – Present</span>
-</div>
+```typescript
+// In _data.ts
+career: [
+  {
+    role: "New Role",
+    company: "Company Name",
+    location: "NZ",
+    type: "fully remote",  // optional
+    startDate: "Jan 2025",
+    endDate: "Present",    // optional, omit for current role
+  },
+  // ...
+]
 ```
 
-```css
-.career-entry {
-  display: flex;
-  justify-content: space-between;
-}
-.career-entry .date {
-  flex-shrink: 0;      /* Won't compress */
-  white-space: nowrap; /* Won't wrap */
-}
-```
-
-### Two-Column Layouts
-
-Use CSS Grid, not tables:
-```css
-.skills-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16pt 32pt;
-}
-```
+Components in `_components/` render this data with proper flexbox/grid layouts.
 
 ## Typography
 

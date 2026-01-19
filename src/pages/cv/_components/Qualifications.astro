@@ -1,0 +1,35 @@
+---
+/**
+ * Qualifications - Renders qualifications from structured frontmatter data
+ * Replaces HTML divs that were embedded in markdown
+ */
+interface Qualification {
+  credential: string;
+  institution: string;
+  location?: string;
+  year: string;
+}
+
+interface Props {
+  entries: Qualification[];
+}
+
+const { entries } = Astro.props;
+
+// Format: "Full Stack Ruby-on-Rails Development – Enspiral Dev Academy, Wellington, NZ"
+function formatQualification(entry: Qualification): string {
+  const parts = [entry.credential, '–', entry.institution];
+  if (entry.location) parts.push(`, ${entry.location}`);
+  return parts.join(' ').replace(' , ', ', ');
+}
+---
+
+<section class="qualifications-section">
+  <h2>Qualifications</h2>
+  {entries.map((entry) => (
+    <div class="qualification-entry">
+      <span class="qual">{entry.credential} – {entry.institution}{entry.location && `, ${entry.location}`}</span>
+      <span class="year">{entry.year}</span>
+    </div>
+  ))}
+</section>
