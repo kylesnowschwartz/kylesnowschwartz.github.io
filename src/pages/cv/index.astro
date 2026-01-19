@@ -1,0 +1,226 @@
+---
+import { getEntry } from 'astro:content';
+import CVHeader from '../../components/cv/CVHeader.astro';
+import '../../styles/global.css';
+
+const cv = await getEntry('cv', 'kyle-snow-schwartz');
+if (!cv) {
+  throw new Error('CV content not found');
+}
+
+const { Content } = await cv.render();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{cv.data.name} - CV</title>
+  <meta name="description" content={`${cv.data.title} - ${cv.data.tagline || ''}`}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="cv-page">
+  <article class="cv-document">
+    <CVHeader {...cv.data} />
+
+    <div class="cv-content">
+      <Content />
+    </div>
+  </article>
+
+  <footer class="cv-footer">
+    <p>Last updated: {cv.data.updated}</p>
+  </footer>
+</body>
+</html>
+
+<style>
+  /* Page layout */
+  .cv-page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .cv-document {
+    background: var(--color-surface, white);
+    padding: 2.5rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Content styling for rendered Markdown */
+  .cv-content :global(h2) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border, #eee);
+    letter-spacing: -0.01em;
+  }
+
+  .cv-content :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .cv-content :global(h3) {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cv-content :global(h4) {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-text-muted, #555);
+  }
+
+  .cv-content :global(p) {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .cv-content :global(ul) {
+    margin-bottom: 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .cv-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  /* Tables for career timeline and skills */
+  .cv-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .cv-content :global(th),
+  .cv-content :global(td) {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border, #eee);
+  }
+
+  .cv-content :global(th) {
+    font-weight: 600;
+    background: var(--color-bg, #f9f9f9);
+  }
+
+  /* Right-align date columns */
+  .cv-content :global(td:last-child),
+  .cv-content :global(th:last-child) {
+    text-align: right;
+  }
+
+  /* Bold text */
+  .cv-content :global(strong) {
+    font-weight: 600;
+  }
+
+  /* Footer */
+  .cv-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #888);
+  }
+
+  /* Print styles */
+  @media print {
+    body {
+      background: white;
+    }
+
+    .cv-page {
+      max-width: none;
+      padding: 0;
+    }
+
+    .cv-document {
+      box-shadow: none;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .cv-content :global(h2) {
+      font-size: 12pt;
+      margin-top: 14pt;
+      margin-bottom: 6pt;
+      page-break-after: avoid;
+    }
+
+    .cv-content :global(h3) {
+      font-size: 11pt;
+      margin-top: 10pt;
+      page-break-after: avoid;
+    }
+
+    .cv-content :global(h4) {
+      font-size: 10pt;
+      page-break-after: avoid;
+    }
+
+    .cv-content :global(p),
+    .cv-content :global(li) {
+      font-size: 10pt;
+      line-height: 1.4;
+    }
+
+    .cv-content :global(table) {
+      font-size: 9pt;
+    }
+
+    .cv-content :global(ul) {
+      padding-left: 1rem;
+    }
+
+    /* Prevent awkward page breaks */
+    .cv-content :global(h3),
+    .cv-content :global(h4) {
+      page-break-after: avoid;
+    }
+
+    .cv-content :global(li) {
+      page-break-inside: avoid;
+    }
+
+    .cv-footer {
+      display: none;
+    }
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 600px) {
+    .cv-page {
+      padding: 1rem;
+    }
+
+    .cv-document {
+      padding: 1.5rem;
+    }
+
+    .cv-content :global(table) {
+      font-size: 0.8rem;
+    }
+
+    .cv-content :global(th),
+    .cv-content :global(td) {
+      padding: 0.35rem 0.5rem;
+    }
+  }
+</style>

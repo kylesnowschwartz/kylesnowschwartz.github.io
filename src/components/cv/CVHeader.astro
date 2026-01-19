@@ -1,0 +1,120 @@
+---
+interface Props {
+  name: string;
+  title: string;
+  tagline?: string;
+  location: string;
+  phone?: string;
+  email: string;
+  github?: string;
+  linkedin?: string;
+}
+
+const { name, title, tagline, location, phone, email, github, linkedin } = Astro.props;
+---
+
+<header class="cv-header">
+  <h1>{name}</h1>
+  <p class="title">{title}</p>
+  {tagline && <p class="tagline">{tagline}</p>}
+
+  <div class="contact">
+    <span class="location">{location}</span>
+    {phone && <span class="phone">{phone}</span>}
+    <a href={`mailto:${email}`} class="email">{email}</a>
+    {github && (
+      <a href={`https://github.com/${github}`} class="github">
+        github.com/{github}
+      </a>
+    )}
+    {linkedin && (
+      <a href={linkedin.startsWith('http') ? linkedin : `https://linkedin.com/in/${linkedin}`} class="linkedin">
+        LinkedIn
+      </a>
+    )}
+  </div>
+</header>
+
+<style>
+  .cv-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border, #ddd);
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    color: var(--color-text-muted, #666);
+    margin-bottom: 0.25rem;
+  }
+
+  .tagline {
+    font-size: 0.95rem;
+    color: var(--color-text-muted, #666);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .contact a {
+    color: var(--color-text, inherit);
+    text-decoration: none;
+  }
+
+  .contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* Print styles */
+  @media print {
+    .cv-header {
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 18pt;
+    }
+
+    .title {
+      font-size: 11pt;
+    }
+
+    .tagline {
+      font-size: 10pt;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact {
+      font-size: 9pt;
+      gap: 0.25rem 1rem;
+    }
+
+    .contact a {
+      color: inherit;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .contact {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>
