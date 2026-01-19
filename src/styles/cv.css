@@ -1,0 +1,273 @@
+/*
+ * CV Page Styles
+ * Color palette based on Tailwind slate/blue - easy to customize
+ */
+
+:root {
+  /* Header */
+  --cv-header-bg: #1e293b;      /* slate-800 */
+  --cv-header-text: #ffffff;
+
+  /* Accent colors */
+  --cv-accent: #2563eb;         /* blue-600 */
+  --cv-accent-light: #3b82f6;   /* blue-500 */
+
+  /* Text */
+  --cv-text: #0f172a;           /* slate-900 */
+  --cv-text-muted: #475569;     /* slate-600 */
+  --cv-text-light: #64748b;     /* slate-500 */
+
+  /* Borders & backgrounds */
+  --cv-border: #e2e8f0;         /* slate-200 */
+  --cv-bg: #ffffff;
+  --cv-bg-muted: #f8fafc;       /* slate-50 */
+}
+
+/* Page container */
+.cv-page {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0;
+  background: var(--cv-bg);
+}
+
+.cv-document {
+  background: var(--cv-bg);
+  padding: 2.5rem;
+}
+
+/* Section headers - blue with underline accent */
+.cv-content :global(h2) {
+  color: var(--cv-accent);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 2px solid var(--cv-accent);
+  letter-spacing: -0.01em;
+}
+
+.cv-content :global(h2:first-child) {
+  margin-top: 0;
+}
+
+/* Subsection headers */
+.cv-content :global(h3) {
+  color: var(--cv-text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.cv-content :global(h4) {
+  color: var(--cv-text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Body text */
+.cv-content :global(p) {
+  color: var(--cv-text);
+  margin-bottom: 0.625rem;
+  line-height: 1.55;
+  font-size: 0.9375rem;
+}
+
+/* Lists */
+.cv-content :global(ul) {
+  margin-bottom: 0.875rem;
+  padding-left: 1.25rem;
+}
+
+.cv-content :global(li) {
+  color: var(--cv-text);
+  margin-bottom: 0.375rem;
+  line-height: 1.5;
+  font-size: 0.9375rem;
+}
+
+/* Bold text */
+.cv-content :global(strong) {
+  font-weight: 600;
+  color: var(--cv-text);
+}
+
+/* Tables - Career Summary, Skills, Qualifications */
+.cv-content :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.cv-content :global(thead) {
+  display: none; /* Hide table headers for cleaner look */
+}
+
+.cv-content :global(th),
+.cv-content :global(td) {
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--cv-border);
+  color: var(--cv-text);
+}
+
+/* Right-align date/year columns */
+.cv-content :global(td:last-child) {
+  text-align: right;
+  white-space: nowrap;
+  color: var(--cv-text-muted);
+  padding-right: 0;
+}
+
+/* Two-column skills table */
+.cv-content :global(table:has(th:nth-child(2))) {
+  /* Skills matrix with two columns */
+}
+
+.cv-content :global(table) :global(th) {
+  font-weight: 600;
+  color: var(--cv-text);
+  border-bottom: 1px solid var(--cv-border);
+  padding-bottom: 0.5rem;
+}
+
+/* Links */
+.cv-content :global(a) {
+  color: var(--cv-accent);
+  text-decoration: none;
+}
+
+.cv-content :global(a:hover) {
+  text-decoration: underline;
+}
+
+/* Footer */
+.cv-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--cv-text-light);
+  border-top: 1px solid var(--cv-border);
+}
+
+/* ===================
+   PRINT STYLES
+   =================== */
+@media print {
+  @page {
+    margin: 0.5in 0.6in;
+    size: letter;
+  }
+
+  :root {
+    /* Ensure colors work in print */
+    --cv-accent: #2563eb;
+    --cv-text: #000000;
+    --cv-text-muted: #333333;
+  }
+
+  body {
+    background: white !important;
+    font-size: 10pt;
+    line-height: 1.4;
+  }
+
+  /* Hide non-print elements */
+  .view-mode-toggle,
+  .cv-footer {
+    display: none !important;
+  }
+
+  .cv-page {
+    max-width: none;
+    padding: 0;
+  }
+
+  .cv-document {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  /* Typography scaling */
+  .cv-content :global(h2) {
+    font-size: 12pt;
+    margin-top: 12pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+  }
+
+  .cv-content :global(h3) {
+    font-size: 11pt;
+    margin-top: 8pt;
+    page-break-after: avoid;
+  }
+
+  .cv-content :global(h4) {
+    font-size: 10pt;
+    page-break-after: avoid;
+  }
+
+  .cv-content :global(p),
+  .cv-content :global(li) {
+    font-size: 10pt;
+    line-height: 1.35;
+  }
+
+  .cv-content :global(table) {
+    font-size: 9pt;
+  }
+
+  /* Prevent awkward breaks */
+  .cv-content :global(h2),
+  .cv-content :global(h3),
+  .cv-content :global(h4) {
+    page-break-after: avoid;
+  }
+
+  .cv-content :global(li),
+  .cv-content :global(tr) {
+    page-break-inside: avoid;
+  }
+
+  /* Orphans and widows */
+  .cv-content :global(p) {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Force background colors to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ===================
+   MOBILE RESPONSIVE
+   =================== */
+@media (max-width: 600px) {
+  .cv-document {
+    padding: 1.5rem;
+  }
+
+  .cv-content :global(table) {
+    font-size: 0.8rem;
+  }
+
+  .cv-content :global(th),
+  .cv-content :global(td) {
+    padding: 0.35rem 0.25rem 0.35rem 0;
+  }
+
+  /* Stack table cells on very small screens if needed */
+  .cv-content :global(h2) {
+    font-size: 1.1rem;
+  }
+}

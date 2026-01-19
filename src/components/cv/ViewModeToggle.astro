@@ -1,0 +1,122 @@
+---
+// ViewModeToggle - switches between Markdown source, HTML render, and PDF export
+---
+
+<nav class="view-mode-toggle" aria-label="View mode">
+  <button type="button" data-mode="markdown" aria-pressed="false">
+    Markdown
+  </button>
+  <button type="button" data-mode="html" aria-pressed="true">
+    HTML
+  </button>
+  <button type="button" data-mode="pdf">
+    PDF
+  </button>
+</nav>
+
+<script is:inline>
+  (function() {
+    const toggle = document.querySelector('.view-mode-toggle');
+    const page = document.querySelector('.cv-page');
+    const htmlView = document.querySelector('.view-html');
+    const mdView = document.querySelector('.view-markdown');
+
+    if (!toggle || !page) return;
+
+    // Set initial state
+    page.setAttribute('data-view-mode', 'html');
+
+    toggle.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const mode = btn.dataset.mode;
+
+      // PDF mode - trigger print dialog
+      if (mode === 'pdf') {
+        window.print();
+        return;
+      }
+
+      // Update page state
+      page.setAttribute('data-view-mode', mode);
+
+      // Update aria-pressed states
+      toggle.querySelectorAll('button[data-mode]').forEach(b => {
+        if (b.dataset.mode !== 'pdf') {
+          b.setAttribute('aria-pressed', b.dataset.mode === mode ? 'true' : 'false');
+        }
+      });
+
+      // Toggle view visibility
+      if (htmlView && mdView) {
+        htmlView.hidden = mode !== 'html';
+        mdView.hidden = mode !== 'markdown';
+      }
+    });
+  })();
+</script>
+
+<style>
+  .view-mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    background: var(--cv-bg-muted, #f8fafc);
+    border-radius: 6px;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid var(--cv-border, #e2e8f0);
+    border-radius: 4px;
+    background: var(--cv-bg, white);
+    color: var(--cv-text-muted, #475569);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  button:hover {
+    border-color: var(--cv-accent, #2563eb);
+    color: var(--cv-accent, #2563eb);
+  }
+
+  button[aria-pressed="true"] {
+    background: var(--cv-accent, #2563eb);
+    border-color: var(--cv-accent, #2563eb);
+    color: white;
+  }
+
+  button[data-mode="pdf"] {
+    background: var(--cv-bg, white);
+  }
+
+  button[data-mode="pdf"]:hover {
+    background: var(--cv-accent, #2563eb);
+    border-color: var(--cv-accent, #2563eb);
+    color: white;
+  }
+
+  /* Hide in print */
+  @media print {
+    .view-mode-toggle {
+      display: none !important;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .view-mode-toggle {
+      padding: 0.5rem;
+    }
+
+    button {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>

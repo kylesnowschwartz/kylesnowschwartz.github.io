@@ -11,110 +11,138 @@ interface Props {
 }
 
 const { name, title, tagline, location, phone, email, github, linkedin } = Astro.props;
+
+// Build contact items for pipe-separated display
+const contactItems = [
+  location,
+  phone,
+  email,
+].filter(Boolean);
 ---
 
 <header class="cv-header">
-  <h1>{name}</h1>
-  <p class="title">{title}</p>
-  {tagline && <p class="tagline">{tagline}</p>}
-
-  <div class="contact">
-    <span class="location">{location}</span>
-    {phone && <span class="phone">{phone}</span>}
-    <a href={`mailto:${email}`} class="email">{email}</a>
-    {github && (
-      <a href={`https://github.com/${github}`} class="github">
-        github.com/{github}
-      </a>
-    )}
-    {linkedin && (
-      <a href={linkedin.startsWith('http') ? linkedin : `https://linkedin.com/in/${linkedin}`} class="linkedin">
-        LinkedIn
-      </a>
-    )}
+  <div class="cv-header-content">
+    <h1>{name}</h1>
+    <p class="contact-line">
+      {contactItems.map((item, i) => (
+        <>
+          {i > 0 && <span class="separator">|</span>}
+          {item === email ? (
+            <a href={`mailto:${email}`}>{email}</a>
+          ) : (
+            <span>{item}</span>
+          )}
+        </>
+      ))}
+    </p>
+    <p class="title-line">
+      <strong>{title}</strong>
+      {tagline && <> | {tagline}</>}
+    </p>
   </div>
 </header>
 
 <style>
   .cv-header {
+    background-color: var(--cv-header-bg, #1e293b);
+    color: var(--cv-header-text, #ffffff);
+    padding: 1.5rem 2rem;
+    margin: -2.5rem -2.5rem 2rem -2.5rem; /* Break out of parent padding */
     text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border, #ddd);
+  }
+
+  .cv-header-content {
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   h1 {
     font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 0.25rem;
-    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
   }
 
-  .title {
-    font-size: 1.1rem;
-    color: var(--color-text-muted, #666);
-    margin-bottom: 0.25rem;
-  }
-
-  .tagline {
-    font-size: 0.95rem;
-    color: var(--color-text-muted, #666);
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-
-  .contact {
+  .contact-line {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5rem 1.5rem;
-    font-size: 0.9rem;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .contact a {
-    color: var(--color-text, inherit);
+  .contact-line a {
+    color: inherit;
     text-decoration: none;
   }
 
-  .contact a:hover {
+  .contact-line a:hover {
     text-decoration: underline;
+  }
+
+  .separator {
+    opacity: 0.6;
+  }
+
+  .title-line {
+    font-size: 0.95rem;
+    opacity: 0.95;
+  }
+
+  .title-line strong {
+    font-weight: 600;
   }
 
   /* Print styles */
   @media print {
     .cv-header {
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
+      background-color: var(--cv-header-bg, #1e293b) !important;
+      color: var(--cv-header-text, #ffffff) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      padding: 1rem 1.5rem;
+      margin: 0 0 1rem 0;
     }
 
     h1 {
       font-size: 18pt;
+      margin-bottom: 4pt;
     }
 
-    .title {
-      font-size: 11pt;
-    }
-
-    .tagline {
-      font-size: 10pt;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact {
+    .contact-line {
       font-size: 9pt;
-      gap: 0.25rem 1rem;
+      margin-bottom: 4pt;
     }
 
-    .contact a {
-      color: inherit;
+    .title-line {
+      font-size: 10pt;
     }
   }
 
   /* Mobile */
   @media (max-width: 600px) {
-    .contact {
+    .cv-header {
+      padding: 1.25rem 1rem;
+      margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .contact-line {
       flex-direction: column;
       gap: 0.25rem;
+    }
+
+    .separator {
+      display: none;
+    }
+
+    .title-line {
+      font-size: 0.85rem;
     }
   }
 </style>
