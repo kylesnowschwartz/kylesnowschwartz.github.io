@@ -1,47 +1,9 @@
-## Selected Roles & Capabilities
+## Experience
 
-### Senior Engineer | Envato
+### Senior Engineer | Envato (2021–Present)
 
-Envato is a global digital goods and services platform supporting millions of users and creators. Joined to modernise and maintain a 15-year-old, revenue-critical marketplace platform, ensuring uptime, security, and long-term resilience while driving new ways of working through AI-enabled developer practices.
+Joined at the peak of the 'Covid-bump' to inject life into a 15-year-old Rails marketplace serving millions of users. The work that drew me in was modernization—taking a codebase from Rails 4.x through 7.x while keeping revenue flowing to enable the development of our subscription-based platform. Since May 2025, the work that consumed me was AI enablement. As an AI Community Champion, I spend 15% of my time running Claude-Code workshops, building shared tooling, and helping engineers adopt a fundamentally different way of working. I've enabled 40+ engineers to use AI-assisted development. As a result, our 12-month handover of the platform to a contracting team was completed in less than 8 months. It's the most meaningful work I've done.
 
-#### AI Engineering & Developer Experience
+### Senior Developer → Team Lead | Flux Federation (2015–2021)
 
-- Lead AI enablement across engineering as an Envato AI Community Champion, dedicating 15% of work time to advancing AI use in development. Design and facilitate workshops on Claude-Code (Anthropic), build shared tooling and prompt libraries, and embed AI into daily workflows to reduce repetitive development work and enhance developer experience.
-
-- Partner across design, IT, and product teams to embed AI tools safely and cost-effectively, supporting capability uplift, documentation, and collaboration across functions.
-
-#### Platform Stability & Compliance
-
-- Deliver full-stack engineering across backend (Ruby-on-Rails), frontend (JavaScript/React), and infrastructure layers within a Buildkite CI/CD environment.
-
-- Led incremental Rails upgrades from 4.x through 7.x across a mature, revenue-critical marketplace platform.
-
-- Accountable for security, GDPR compliance, zero-downtime delivery, and structured handover to an offshore team.
-
-#### Cross-Functional Leadership & Collaboration
-
-- Facilitate technical retros, async discussions, and engineering forums to drive continuous improvement and learning.
-
-- Mentored engineers, fostering shared ownership, effective written communication, and a culture of continuous learning across distributed teams.
-
-### Senior Developer & Team Lead | Flux Federation / Powershop
-
-Flux Federation powers digital energy retailers across Australasia. Held progressive roles from Software Developer to Team Lead for a cross-functional delivery team of six engineers and two test analysts, before choosing to return to hands-on engineering to focus on technical depth and delivery.
-
-#### Full Stack Engineering & Product Delivery
-
-- Delivered core billing, roles and permissions, and content management systems. Worked across backend (Ruby, MySQL/MariaDB) and frontend (JavaScript/React, HTML/CSS), with full CI/CD exposure via Jenkins and GitLab.
-
-- Implemented large-scale refactors and technical debt reduction initiatives to improve maintainability and performance, supporting reliable, customer-facing energy platforms.
-
-#### Technical Leadership & Team Development
-
-- Line-managed and mentored developers and test analysts, facilitating agile ceremonies, sprint planning, and cross-functional alignment across engineering and product teams.
-
-- Supported recruitment, onboarding, and capability growth, running technical interviews and peer learning sessions to build a collaborative and resilient team culture.
-
-#### Continuous Improvement & Process Enablement
-
-- Advocated for developer experience improvements, streamlining build pipelines, enhancing test coverage, and embedding automation practices to improve delivery efficiency.
-
-- Partnered with product owners and business stakeholders to translate requirements into practical, scalable engineering solutions, ensuring quality and momentum through each release cycle.
+Built white-labelable software for energy retailers, progressing from developer to leading a cross-functional team of eight. I built billing systems, permissions frameworks, and content management—the unsexy infrastructure that makes platforms work reliably. When Covid hit I managed the transition from a fully in-office to remote team. Then I made a deliberate choice: I stepped back from management to return to hands-on engineering. The craft of managing pixels was more enjoyable than the craft of managing people.

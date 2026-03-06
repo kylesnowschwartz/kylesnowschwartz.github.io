@@ -28,6 +28,7 @@ import '../../styles/cv.css';
 
 // Import prose markdown sections (colocated)
 import { Content as ProfileContent } from './_profile.md';
+import { Content as ProjectsContent } from './_projects.md';
 import { Content as RolesContent } from './_roles.md';
 
 // Load structured data
@@ -35,10 +36,11 @@ import { cv } from './_data';
 
 // Read raw markdown for source view
 import profileRaw from './_profile.md?raw';
+import projectsRaw from './_projects.md?raw';
 import rolesRaw from './_roles.md?raw';
 
 // Combine raw sources for markdown viewer
-const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${rolesRaw}`;
+const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${projectsRaw}\n\n${rolesRaw}`;
 ---
 
 <!DOCTYPE html>
@@ -65,6 +67,9 @@ const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${rolesRaw}`;
       <div class="cv-content">
         <!-- Profile (prose) -->
         <ProfileContent />
+
+        <!-- Projects (prose) -->
+        <ProjectsContent />
 
         <!-- Career Summary (structured) -->
         {cv.career && (
