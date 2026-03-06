@@ -43,8 +43,7 @@ const langBadges: Record<string, string> = {
             <li>
               {project.name === 'marmiteroids' ? (
                 <a href={project.href} class="marmite-link">
-                  <span class="caret">{'>'}</span>
-                  <canvas id="marmite-jar" width="50" height="50"></canvas>
+                  <canvas id="marmite-jar" width="150" height="150"></canvas>
                   <span class="sr-only">marmiteroids</span>
                   {project.desc && <span class="project-desc">{project.desc}</span>}
                 </a>
@@ -190,23 +189,15 @@ const langBadges: Record<string, string> = {
     padding-left: 0.5rem;
   }
 
-  .marmite-link .caret {
-    color: var(--color-accent);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    vertical-align: middle;
-    margin-right: 0.25rem;
-  }
-
-  .marmite-link:hover .caret {
-    opacity: 1;
-  }
-
   .marmite-link canvas {
     display: inline-block;
     vertical-align: middle;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .marmite-link:hover canvas {
+    border-bottom-color: var(--color-accent);
   }
 
   /* Mobile responsive */

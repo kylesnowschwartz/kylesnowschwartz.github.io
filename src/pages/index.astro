@@ -121,11 +121,11 @@ const socialLinks = [
 
     const canvas = document.getElementById('marmite-jar');
     if (canvas) {
-      const size = 50;
+      const size = 150;
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-      camera.position.z = 4;
+      camera.position.z = 9;
 
       const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
       renderer.setSize(size, size);
@@ -149,13 +149,58 @@ const socialLinks = [
         new THREE.MeshBasicMaterial({map: bottomTexture})
       ];
 
-      const jar = new THREE.Mesh(geometry, materials);
-      jar.rotation.x = 0.3; // Tilt slightly for better view
-      scene.add(jar);
+      // Spawn 3 jars, spaced side by side with independent chaotic motion
+      const jars = [];
+      const jarScale = 0.85;
+      const xPositions = [-2, 0, 2];
+      for (let i = 0; i < 3; i++) {
+        const jar = new THREE.Mesh(geometry, materials);
+        jar.scale.set(jarScale, jarScale, jarScale);
+        scene.add(jar);
+
+        jars.push({
+          mesh: jar,
+          baseX: xPositions[i],
+          rotationSpeeds: [
+            0.0001 + Math.random() * 0.0029,
+            0.0001 + Math.random() * 0.0029,
+            0.0001 + Math.random() * 0.0029,
+          ],
+          wobble: [
+            [0.0001 + Math.random() * 0.0002, 0.2 + Math.random() * 0.4],
+            [0.0001 + Math.random() * 0.0002, 0.2 + Math.random() * 0.4],
+            [0.0001 + Math.random() * 0.0002, 0.2 + Math.random() * 0.3],
+          ],
+          scalePulse: {
+            freq: 0.0005 + Math.random() * 0.001,
+            amount: 0.03 + Math.random() * 0.07,
+          },
+          // Stagger spawn times so jars start at different phases
+          timeOffset: Math.random() * 10000,
+        });
+      }
+
+      const startTime = Date.now();
 
       function animate() {
         requestAnimationFrame(animate);
-        jar.rotation.y += 0.01;
+        const now = Date.now();
+
+        for (const j of jars) {
+          const elapsed = now - startTime + j.timeOffset;
+
+          j.mesh.rotation.x = elapsed * j.rotationSpeeds[0];
+          j.mesh.rotation.y = elapsed * j.rotationSpeeds[1];
+          j.mesh.rotation.z = elapsed * j.rotationSpeeds[2];
+
+          j.mesh.position.x = j.baseX + Math.sin(elapsed * j.wobble[0][0]) * j.wobble[0][1];
+          j.mesh.position.y = Math.sin(elapsed * j.wobble[1][0]) * j.wobble[1][1];
+          j.mesh.position.z = Math.sin(elapsed * j.wobble[2][0]) * j.wobble[2][1];
+
+          const s = jarScale + Math.sin(elapsed * j.scalePulse.freq) * j.scalePulse.amount;
+          j.mesh.scale.set(s, s, s);
+        }
+
         renderer.render(scene, camera);
       }
       animate();
