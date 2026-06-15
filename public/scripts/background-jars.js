@@ -74,10 +74,13 @@ function init() {
   computeBounds();
 
   // -- Click handler --
-  const CONTENT_SELECTORS = 'header, .container, footer, a, button, details, summary, nav';
+  // Spawn a jar anywhere EXCEPT on genuinely interactive controls. We only
+  // guard things a click is meant to *operate* (links, buttons, form fields) --
+  // not structural containers, so clicks on text/empty content still spawn.
+  const INTERACTIVE_SELECTORS = 'a, button, summary, label, input, select, textarea, [role="button"], [role="link"]';
 
   document.addEventListener('click', (e) => {
-    if (e.target.closest(CONTENT_SELECTORS)) return;
+    if (e.target.closest(INTERACTIVE_SELECTORS)) return;
 
     const worldPos = screenToWorld(e.clientX, e.clientY);
     spawnJar(worldPos.x, worldPos.y);
