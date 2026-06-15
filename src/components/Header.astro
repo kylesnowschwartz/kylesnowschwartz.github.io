@@ -10,10 +10,14 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
 <div class="theme-banner"></div>
 <header>
   <div class="container">
-    <div class="ascii-banner" aria-label="Kyle Snow Schwartz">
-      <span class="name name-kyle" data-src="/ascii/kyle.txt"></span>
-      <span class="name name-snow" data-src="/ascii/snow.txt"></span>
-      <span class="name name-schwartz" data-src="/ascii/schwartz.txt"></span>
+    <!-- PRIMARY BREAK: the identity wordmark goes full-bleed past the
+         container's right edge while staying pinned left to grid line 1. -->
+    <div class="ascii-bleed">
+      <div class="ascii-banner" aria-label="Kyle Snow Schwartz">
+        <span class="name name-kyle" data-src="/ascii/kyle.txt"></span>
+        <span class="name name-snow" data-src="/ascii/snow.txt"></span>
+        <span class="name name-schwartz" data-src="/ascii/schwartz.txt"></span>
+      </div>
     </div>
     <p class="tagline"><span>{tagline}</span></p>
   </div>
@@ -40,47 +44,80 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
   }
 
   header {
-    padding: 3rem 0 2rem;
+    padding: var(--s6) 0 var(--s5);
     border-bottom: 1px solid var(--color-border);
+    overflow: visible; /* allow the wordmark to bleed past the header box */
+  }
+
+  /* The bleed wrapper: left edge sits at the container's content edge
+     (grid line 1); the right edge is released to run to the viewport edge.
+     width = half the viewport + half the container - the container gutter. */
+  .ascii-bleed {
+    position: relative;
+    width: calc(50vw + var(--container-max) / 2 - var(--gap));
+    max-width: 100vw;
+  }
+
+  /* A thin accent edge marks the boundary the wordmark crossed, so the
+     break reads as authored rather than as an overflow accident. */
+  .ascii-bleed::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: var(--s2);
+    height: 78%;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      var(--color-accent) 40%,
+      var(--color-accent-tertiary) 60%,
+      transparent
+    );
+    opacity: 0.55;
+    pointer-events: none;
   }
 
   .ascii-banner {
     font-family: var(--font-mono);
-    font-size: clamp(0.4rem, 1.2vw, 0.7rem);
+    font-size: clamp(0.4rem, 1.45vw, 0.82rem);
     line-height: 1.2;
     color: var(--color-text);
     white-space: pre;
     letter-spacing: -0.05em;
     user-select: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 2ch;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
+  /* Stair-step stack: each tier indents further, so the longest line
+     (SCHWARTZ) reaches furthest right and is the part that breaks the grid. */
   .ascii-banner .name {
-    display: inline-block;
+    display: block;
   }
 
-  /* Staggered tiers when wrapped */
-  @media (max-width: 1100px) {
-    .ascii-banner {
-      display: block;
+  .ascii-banner .name-snow {
+    padding-left: 8ch;
+  }
+
+  .ascii-banner .name-schwartz {
+    padding-left: 16ch;
+  }
+
+  header:hover .ascii-banner {
+    transform: translateX(var(--s2));
+  }
+
+  /* Below the grid breakpoint there is no grid to break: the wordmark
+     returns fully inside the container and the accent edge retires. */
+  @media (max-width: 900px) {
+    .ascii-bleed {
+      width: 100%;
+      max-width: 100%;
     }
 
-    .ascii-banner .name {
-      display: block;
-    }
-
-    .ascii-banner .name-kyle {
-      padding-left: 0;
-    }
-
-    .ascii-banner .name-snow {
-      padding-left: 8ch;
-    }
-
-    .ascii-banner .name-schwartz {
-      padding-left: 16ch;
+    .ascii-bleed::after {
+      display: none;
     }
   }
 
@@ -98,7 +135,7 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
     }
 
     header {
-      padding: 2rem 0 1.5rem;
+      padding: var(--s5) 0 var(--s4);
     }
   }
 
@@ -106,7 +143,7 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
     font-family: var(--font-mono);
     font-size: 0.875rem;
     color: var(--color-text-muted);
-    margin-top: 1.5rem;
+    margin-top: var(--s4);
   }
 
   .tagline span {

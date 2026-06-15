@@ -63,6 +63,26 @@ Base palette uses warm stone tones (defined in `src/styles/global.css` `:root`).
 - **Opacity as the tuning knob**: Bake contrast into tiles, control intensity via CSS opacity
 - Stagehand's identity comes from `border-dashed` everywhere -- ours comes from the warm texture system
 
+## Layout System: Making & Breaking the Grid (φ)
+
+The personal-site homepage layout is governed by one principle, chosen after exploring four golden-ratio compositional systems (dynamic symmetry, manuscript canon, Swiss modular grid, and this one): **establish a rigorous φ grid as the law of the page, then break it exactly once for the single most important element.** A break only reads as deliberate when everything around it is disciplined; this is the antidote to the earlier "accidentally placed" problem, where negative-margin nudging made blocks feel arbitrary. The reference is Timothy Samara, _Making and Breaking the Grid_.
+
+### Rules (in priority order)
+
+1. **One grid, shared lines.** A single 13-column grid (`repeat(13, 1fr)`, 13 is Fibonacci so column ratios land on φ). One gutter everywhere: `--col-gap: var(--s3)` (21px). The dominant fold is **column 8 of 13** (`8/13 ≈ 0.615 ≈ 1/φ`); blocks share alignment lines 1 · 6 · 8(φ-fold) · 14. Never nudge with negative margins — place by `grid-column` span only.
+2. **Hierarchy drives span.** Higher-priority content gets a wider span / earlier reading position. Order: Identity (loudest) → Narrative (Who/What) → Proof (Projects/What I know) → Supporting (What I believe/Where/contact).
+3. **One authored break.** The tier-1 identity (ASCII wordmark) is the _only_ element permitted to violate the grid — it goes full-bleed past the container's right edge while its left edge stays pinned to grid line 1, so it is anchored to the system even as it overruns it. The break crosses the same `1/φ` fold the body obeys. A thin accent edge marks the boundary it crossed, making the violation legible rather than accidental.
+4. **Breaks need a grid to break.** Below ~900px every block collapses to a single column and the break retracts (wordmark returns inside the container). No grid → no break.
+5. **Spacing is the φ/Fibonacci scale only.** `--s0..--s7` = 5,8,13,21,34,55,89,144. Row gap `--s5`, section rhythm `--s6`/`--s7`.
+
+### Reference implementation
+
+`.agent-history/redesign-D-broken-grid.html` is the approved mockup and the source of truth for the grid spec, placements, and the `.ascii-bleed` break. All brand tokens, fonts, texture, neon hover accents, gradient bar, ASCII banner, and the joke tagline (see below) are reused verbatim — the layout system never changes the identity kit.
+
+### Deferred idea: Marmiteroids "canvas" / playground
+
+A dedicated Marmite canvas cell (`#marmite-jar`) is **not** yet decided. The jar identity is already carried by the background click-to-spawn shooter (`/scripts/background-jars.js`) and the spinning sidebar jar. Kyle likes the idea of a "canvas"/playground panel but it is unformed — revisit _after_ the layout refactor lands, as an enhancement, not part of the initial layout work.
+
 ## Development Notes
 
 - **Mobile-first responsive** - Test at 320px, 768px, 1200px+

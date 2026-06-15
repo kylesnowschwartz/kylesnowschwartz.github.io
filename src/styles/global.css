@@ -21,6 +21,14 @@
   --sidebar-width: 220px;
   --container-max: 1200px;
   --gap: 2rem;
+
+  /* φ / Fibonacci spacing scale — drives the "making & breaking the grid"
+     layout (see CLAUDE.md → Layout System). 13-col grid folds on Fibonacci
+     ratios (5:8, 8:5, 5:3 ≈ φ). */
+  --phi: 1.618;
+  --s0: 5px;  --s1: 8px;  --s2: 13px; --s3: 21px;
+  --s4: 34px; --s5: 55px; --s6: 89px; --s7: 144px;
+  --col-gap: var(--s3); /* 21px — single consistent gutter everywhere */
 }
 
 /* === RESET === */
@@ -43,7 +51,10 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  min-height: 100dvh;
+  /* the full-bleed wordmark break overruns the viewport's right edge;
+     clip it here so it never produces a horizontal scrollbar. */
+  overflow-x: hidden;
 }
 
 /* Diagonal line texture - warm woven/chassis texture (behind content) */
@@ -60,6 +71,13 @@ body::before {
   opacity: 0.1;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Homepage carries the new asymmetric .bg-layers (which provide the diagonal
+   "weave" locally), so the full-page diagonal tile is dialed back there to
+   keep the background clean. Other pages keep the default 0.1. */
+body.home::before {
+  opacity: 0.035;
 }
 
 /* Phosphor grain texture - warm noise overlay (behind content) */
@@ -79,8 +97,10 @@ body::after {
 }
 
 /* === CONTENT STACKING === */
-/* Lift all page content above the body texture pseudo-elements */
-body > * {
+/* Lift all page content above the body texture pseudo-elements.
+   .bg-layers (the homepage's asymmetric background composition) is the one
+   exception — it sits at z-index 0 with the textures, behind content. */
+body > *:not(.bg-layers) {
   position: relative;
   z-index: 1;
 }

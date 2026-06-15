@@ -78,38 +78,44 @@ const socialLinks = [
   </script>
 </head>
 
-<body>
+<body class="home">
+  <!-- Asymmetric background composition (behind content, z-index 0):
+       a tilted "sheet", a masked diagonal weave corner, a diagonal accent
+       rule, and an oversized faint glyph. Reads as bespoke and designed. -->
+  <div class="bg-layers" aria-hidden="true">
+    <div class="sheet"></div>
+    <div class="weave-corner"></div>
+    <div class="accent-rule"></div>
+    <div class="glyph">&gt;_</div>
+  </div>
+
   <Header />
 
   <div class="container">
-    <main>
-      <Sidebar projects={projects} />
+    <main class="page-grid">
+      <Sidebar projects={projects} class="g-sidebar" />
 
-      <section class="content">
-        <div class="about-grid">
-          <AboutPanel title="Who">
-            <p>Kyle Snow Schwartz.</p>
-            <p>Software engineer, occasional pizzaiolo, shaver of yaks.</p>
-            <p>I build things for the web and sometimes wander off to take photos of sheep.</p>
-          </AboutPanel>
+      <AboutPanel title="Who" class="g-who who">
+        <p>Kyle Snow Schwartz.</p>
+        <p>Software engineer, occasional pizzaiolo, shaver of yaks.</p>
+        <p>I build things for the web and sometimes wander off to take photos of sheep.</p>
+      </AboutPanel>
 
-          <AboutPanel title="What">
-            <p>Currently building things at <a href="https://elements.envato.com/">Envato Elements</a>. Previously at
-              <a href="https://www.powershop.co.nz/">Powershop</a>.
-            </p>
-            <p>I care about clean code, humanism, and developer-experience.</p>
-          </AboutPanel>
+      <AboutPanel title="What" class="g-what">
+        <p>Currently building things at <a href="https://elements.envato.com/">Envato Elements</a>. Previously at
+          <a href="https://www.powershop.co.nz/">Powershop</a>.
+        </p>
+        <p>I care about clean code, humanism, and developer-experience.</p>
+      </AboutPanel>
 
-          <AboutPanel title="Where">
-            <p>Based in New Zealand since before it was cool.</p>
-            <p>Find me on <a href="https://github.com/kylesnowschwartz">GitHub</a> or <a
-                href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">LinkedIn</a>.</p>
-          </AboutPanel>
-        </div>
+      <AboutPanel title="Where" class="g-where">
+        <p>Based in New Zealand since before it was cool.</p>
+        <p>Find me on <a href="https://github.com/kylesnowschwartz">GitHub</a> or <a
+            href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">LinkedIn</a>.</p>
+      </AboutPanel>
 
-        <SkillsSection header="What I know" categories={skills} variant="skills" />
-        <SkillsSection header="What I believe" categories={values} variant="values" />
-      </section>
+      <SkillsSection header="What I know" categories={skills} variant="skills" class="g-know" />
+      <SkillsSection header="What I believe" categories={values} variant="values" class="g-believe" />
     </main>
   </div>
 
@@ -214,35 +220,116 @@ const socialLinks = [
 </html>
 
 <style>
-  /* Main layout grid */
-  main {
+  /* === THE PAGE GRID — "making & breaking the grid" (see CLAUDE.md) ===
+     One shared 13-column grid. Every block is placed by column span and
+     shares alignment lines; folds land on Fibonacci ratios (≈ φ):
+       line 6  → sidebar : content = 5 : 8
+       line 11 → what : where      = 5 : 3
+       line 9  → know : believe    = 8 : 5
+     No negative-margin nudges. The only break is the header wordmark. */
+  .page-grid {
     display: grid;
-    grid-template-columns: var(--sidebar-width) 1fr;
-    min-height: calc(100vh - 200px);
+    grid-template-columns: repeat(13, 1fr);
+    column-gap: var(--col-gap);
+    row-gap: var(--s5);
+    margin-top: var(--s6);
+    margin-bottom: var(--s7);
+    min-height: calc(100dvh - 240px);
+    align-content: start;
   }
 
-  .content {
-    padding: 2rem 0 2rem 2rem;
+  /* Placement lives here; component styling stays in each component.
+     g-* classes ride on the child component roots, so target them global. */
+  .page-grid > :global(.g-sidebar) { grid-column: 1 / 6;  grid-row: 1 / 3; }
+  .page-grid > :global(.g-who)     { grid-column: 6 / 14; grid-row: 1 / 2; }
+  .page-grid > :global(.g-what)    { grid-column: 6 / 11; grid-row: 2 / 3; }
+  .page-grid > :global(.g-where)   { grid-column: 11 / 14; grid-row: 2 / 3; }
+  .page-grid > :global(.g-know)    { grid-column: 1 / 9;  grid-row: 3 / 4; }
+  .page-grid > :global(.g-believe) { grid-column: 9 / 14; grid-row: 3 / 4; }
+
+  /* === ASYMMETRIC BACKGROUND COMPOSITION (z-index 0, behind content) === */
+  .bg-layers {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
   }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--gap);
+  /* tilted "sheet" anchored near the content's right alignment region */
+  .bg-layers .sheet {
+    position: absolute;
+    top: -14%;
+    left: 66%;
+    right: -16%;
+    height: 132%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    transform: rotate(-4deg);
+    background-image: repeating-linear-gradient(45deg, rgba(60, 40, 20, 0.1) 0 1px, transparent 1px 5px);
+    box-shadow: -30px 40px 80px rgba(60, 40, 20, 0.05);
   }
 
-  /* Responsive */
+  /* masked diagonal weave in the top-left corner */
+  .bg-layers .weave-corner {
+    position: absolute;
+    top: -10%;
+    left: -8%;
+    width: 46.2%;
+    height: 61.8%;
+    background-image: repeating-linear-gradient(45deg, rgba(60, 40, 20, 0.13) 0 1px, transparent 1px 5px);
+    -webkit-mask-image: radial-gradient(ellipse at top left, #000 10%, transparent 70%);
+    mask-image: radial-gradient(ellipse at top left, #000 10%, transparent 70%);
+  }
+
+  /* diagonal accent rule — the bleed's energy is aligned to this angle */
+  .bg-layers .accent-rule {
+    position: absolute;
+    left: -10%;
+    top: 61.8%;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent-tertiary) 30%, var(--color-accent) 90%, transparent);
+    transform: rotate(-8deg);
+    opacity: 0.5;
+  }
+
+  /* oversized faint terminal glyph, bottom-left */
+  .bg-layers .glyph {
+    position: absolute;
+    left: -3vw;
+    bottom: -10vh;
+    font-family: var(--font-mono);
+    font-size: 44vh;
+    line-height: 1;
+    color: var(--color-text);
+    opacity: 0.025;
+    user-select: none;
+  }
+
+  /* === RESPONSIVE — below the breakpoint every block returns to one
+     deliberate column; with no grid, there is nothing to break. === */
   @media (max-width: 900px) {
-    main {
+    .page-grid {
       grid-template-columns: 1fr;
+      row-gap: var(--s5);
+      margin-top: var(--s5);
+      min-height: 0;
     }
 
-    .content {
-      padding: 2rem 0;
+    .page-grid > :global(.g-sidebar),
+    .page-grid > :global(.g-who),
+    .page-grid > :global(.g-what),
+    .page-grid > :global(.g-where),
+    .page-grid > :global(.g-know),
+    .page-grid > :global(.g-believe) {
+      grid-column: 1 / -1;
+      grid-row: auto;
     }
 
-    .about-grid {
-      grid-template-columns: 1fr;
+    .bg-layers .sheet {
+      left: 55%;
+      right: -40%;
     }
   }
 </style>

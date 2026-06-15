@@ -9,12 +9,13 @@ interface Props {
   header: string;
   categories: SkillCategory[];
   variant?: 'skills' | 'values';
+  class?: string;
 }
 
-const { header, categories, variant = 'skills' } = Astro.props;
+const { header, categories, variant = 'skills', class: className } = Astro.props;
 ---
 
-<section class:list={['skills-section', { 'values-section': variant === 'values' }]}>
+<section class:list={['skills-section', { 'values-section': variant === 'values' }, className]}>
   <h3 class:list={['skills-header', { 'values-header': variant === 'values' }]}>{header}</h3>
   <div class="skills-grid">
     {categories.map((category) => (
@@ -32,11 +33,12 @@ const { header, categories, variant = 'skills' } = Astro.props;
 
 <style>
   .skills-section {
-    margin-top: var(--gap);
+    /* spacing is governed by the page grid's row-gap, not a component margin */
     padding: 2rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* fill the grid cell so row neighbours align at the top */
   }
 
   .skills-section:hover {
