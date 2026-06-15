@@ -50,7 +50,7 @@ Two layers on `body` pseudo-elements, behind content (`z-index: 0`):
 | `body::before` | `/textures/diagonal-tile.webp` tiling at 68px | Diagonal line texture (chassis weave) |
 | `body::after` | `/textures/noise-tile.webp` tiling at 97px | Phosphor grain noise |
 
-Content surfaces sit above via `body > * { position: relative; z-index: 1 }`.
+Content surfaces sit above via `body > *:not(.bg-layers) { position: relative; z-index: 1 }` -- the homepage's `.bg-layers` composition is the one exception, staying at `z-index: 0` with the textures. The homepage also dials `body::before` down to 0.035 (via a `body.home` rule) because its `.bg-layers` carry the diagonal weave locally; other pages keep 0.1. Note: only `index.astro` imports `global.css`, so these layers/textures are homepage-only.
 
 ### Direction (in progress)
 
@@ -69,7 +69,7 @@ The personal-site homepage layout is governed by one principle, chosen after exp
 
 ### Rules (in priority order)
 
-1. **One grid, shared lines.** A single 13-column grid (`repeat(13, 1fr)`, 13 is Fibonacci so column ratios land on φ). One gutter everywhere: `--col-gap: var(--s3)` (21px). The dominant fold is **column 8 of 13** (`8/13 ≈ 0.615 ≈ 1/φ`); blocks share alignment lines 1 · 6 · 8(φ-fold) · 14. Never nudge with negative margins — place by `grid-column` span only.
+1. **One grid, shared lines.** A single 13-column grid (`repeat(13, 1fr)`, 13 is Fibonacci so column ratios land on φ). One gutter everywhere: `--col-gap: var(--s3)` (21px). Folds land on Fibonacci splits (each ≈ φ): **line 6** (sidebar : content = 5 : 8), **line 11** (what : where = 5 : 3), **line 9** (know : believe = 8 : 5); blocks also share the container edges (lines 1 and 14). Never nudge with negative margins — place by `grid-column` span only.
 2. **Hierarchy drives span.** Higher-priority content gets a wider span / earlier reading position. Order: Identity (loudest) → Narrative (Who/What) → Proof (Projects/What I know) → Supporting (What I believe/Where/contact).
 3. **One authored break.** The tier-1 identity (ASCII wordmark) is the _only_ element permitted to violate the grid — it goes full-bleed past the container's right edge while its left edge stays pinned to grid line 1, so it is anchored to the system even as it overruns it. The break crosses the same `1/φ` fold the body obeys. A thin accent edge marks the boundary it crossed, making the violation legible rather than accidental.
 4. **Breaks need a grid to break.** Below ~900px every block collapses to a single column and the break retracts (wordmark returns inside the container). No grid → no break.

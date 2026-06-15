@@ -54,8 +54,15 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
      width = half the viewport + half the container - the container gutter. */
   .ascii-bleed {
     position: relative;
-    width: calc(50vw + var(--container-max) / 2 - var(--gap));
-    max-width: 100vw;
+    /* Land the right edge exactly at the viewport. The bleed formula is
+       derived for the centered-container range (≥ ~1200px); below that the
+       container is full-width, so cap at the viewport minus the left gutter
+       to keep the right edge (and its accent marker) on-screen rather than
+       overflowing by one gutter-width into body's overflow-x clip. */
+    width: min(
+      calc(100vw - var(--gap)),
+      calc(50vw + var(--container-max) / 2 - var(--gap))
+    );
   }
 
   /* A thin accent edge marks the boundary the wordmark crossed, so the

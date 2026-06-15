@@ -258,6 +258,13 @@ const langBadges: Record<string, string> = {
       color: var(--color-text);
     }
 
+    /* The toggle is a focusable <summary>; the global focus ring only
+       targets anchors, so give it the same visible keyboard outline. */
+    .projects-toggle:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 4px;
+    }
+
     .project-list {
       padding: 1rem 0 0 0;
     }
