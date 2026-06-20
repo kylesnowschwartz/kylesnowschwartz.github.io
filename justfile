@@ -52,7 +52,6 @@ smoke:
     sleep 2
     curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/ && echo " /"
     curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/marmiteroids/ && echo " /marmiteroids/"
-    curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/bumper-lanes/ && echo " /bumper-lanes/"
     curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/worst-commish-ever/ && echo " /worst-commish-ever/"
     curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/marmiteroids/javascripts/application.js && echo " /marmiteroids/javascripts/application.js"
     curl -s -o /dev/null -w "%{http_code}" http://localhost:4321/worst-commish-ever/images/stars.gif && echo " /worst-commish-ever/images/stars.gif"

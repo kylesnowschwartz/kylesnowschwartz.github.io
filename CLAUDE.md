@@ -8,7 +8,6 @@ Multi-project repo: personal site, playgrounds, and experiments.
 |------|-------------|
 | `/src/pages/index.astro` | Personal site (warm CRT / vacuum tube aesthetic) |
 | `/src/pages/marmiteroids/` | Marmiteroids - Interactive 3D art piece |
-| `/src/pages/bumper-lanes/` | Bumper lanes landing page |
 | `/src/pages/worst-commish-ever/` | GeoCities-style fantasy football site |
 
 ## Marmiteroids Architecture
