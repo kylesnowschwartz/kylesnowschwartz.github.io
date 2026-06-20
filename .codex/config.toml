@@ -1,0 +1,7 @@
+# Codex CLI project config.
+# Astro Docs MCP server — serves current Astro documentation to the agent so it
+# verifies APIs against live docs rather than stale training data.
+# Codex speaks stdio MCP, so we bridge to the remote HTTP server via mcp-remote.
+[mcp_servers.astro-docs]
+command = "npx"
+args = ["-y", "mcp-remote", "https://mcp.docs.astro.build/mcp"]
