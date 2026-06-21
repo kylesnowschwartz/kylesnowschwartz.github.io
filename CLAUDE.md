@@ -9,7 +9,7 @@ Multi-project repo: personal site, playgrounds, and experiments.
 | `/src/pages/index.astro` | Personal site (warm CRT / vacuum tube aesthetic) |
 | `/src/pages/marmiteroids/` | Marmiteroids - Interactive 3D art piece |
 | `/src/pages/worst-commish-ever/` | GeoCities-style fantasy football site |
-| `/src/pages/reading-list/` + `scripts/shelf/` | Reading list ("mental library") + `shelf` recommender engine |
+| `/src/pages/reading-list/` | Reading list ("mental library"); data synced from the external `shelf` repo |
 
 ## Marmiteroids Architecture
 
@@ -110,47 +110,22 @@ Design spec extracted from Space Jam 1996: .agent-history/reverse-prompt-spaceja
 
 ---
 
-## Reading List & `shelf` Recommender
+## Reading List (data synced from the external `shelf` repo)
 
-`/reading-list` is a filterable map of books Kyle has read. `src/data/books.json` is the
-source of truth (each book has a slug `id`); an Astro content collection + Zod schema in
-`src/content.config.ts` validates it at build (git-as-DB — a bad genre fails `astro sync`).
+`/reading-list` is a filterable map of books Kyle has read. This repo renders it from two
+**committed copies** owned by the external `shelf` engine:
+- `src/data/books.json` — the read shelf. An Astro content collection + Zod schema in
+  `src/content.config.ts` validates it at build (git-as-DB — a bad genre fails `astro sync`).
+- `src/lib/recommend.ts` — the pure ranking model (shared with the page's client-side filters).
 
-`shelf` is the **deterministic recommendation engine** that ranks unread candidates against
-that shelf. It is keyless, runs locally (Open Library + local MiniLM embeddings), and is
-`--json`-primary — it never parses or writes prose. An agent maps natural language to flags,
-runs the engine, and explains the picks. **Canonical usage: `scripts/shelf/AGENTS.md`.**
+**Both are derived, not authored here.** The `shelf` repo (`../shelf`, separate git repo) is
+the source of truth and the only writer. After Kyle changes the shelf, `shelf export` writes
+byte-identical copies into this repo's `src/data/` and `src/lib/`; committing them deploys the
+update. **Never hand-edit these two files** — the next `shelf export` overwrites them.
 
-```bash
-# Manage the shelf (books.json)
-npm run shelf -- add "<title>" "<author>"   # one-shot add: resolves ISBN/year/cover, dedup-guards
-npm run shelf -- enrich                      # backfill missing ISBN/year/cover (idempotent)
-
-# Pipeline — run after adding books or on a fresh clone; artifacts are git-ignored in .cache/
-npm run shelf -- fetch     # → .cache/candidates.json      (Open Library; ~90s)
-npm run shelf -- embed     # → .cache/embeddings/          (local MiniLM)
-npm run shelf -- build     # → .cache/recommendations.json
-
-# The product
-npm run shelf -- next --mood comforting --max-pages 350 --json
-npm run shelf -- next --like the-blade-itself,dune --count 8 --json
-npm run shelf -- profile --json   # taste profile / calibration target (auditing aid)
-```
-
-`next` flags: `--like <ids>` (ad-hoc seed; calibration off) · `--mood dark|comforting` ·
-`--novelty familiar|adventurous` · `--max-pages <n>` · `--era 2000-|-1980|1990-2010` ·
-`--genre`/`--not-genre` · `--count <n>` · `--strict` · `--seed <n>` (re-roll near-ties).
-Each pick carries provenance (`nearestReadId`/`nearestReadTitle` — explain with it) plus
-`omitted[]` (high-relevance books a hard filter cut — offer them back). Exit codes:
-`0` ok · `2` usage · `3` no-data · `4` not-built (run an earlier step) · `5` network.
-
-After `add`, re-run `fetch → embed → build` to fold the new book into both the exclusion set
-and the taste centroids. On a fresh clone, run `fetch → embed → build` before `next`;
-the candidates, recommendations, and embedding cache are generated in `.cache/` and git-ignored.
-
-The Claude Code driver lives in `.claude/skills/shelf-skill/` (local, git-ignored) — it auto-triggers
-on any book request, routes to the right capability (recommend / retrieve / add / maintain), maps
-natural language to flags, and presents results in Kyle's voice.
+The full recommendation engine — `add`/`fetch`/`embed`/`build`/`next`/`profile`/`retrieve` and
+the agent usage contract (`AGENTS.md`) — now lives in the `shelf` repo. The Claude Code driver
+`.claude/skills/shelf-skill/` (local, git-ignored) runs `shelf` from there, not from this repo.
 
 ---
 
