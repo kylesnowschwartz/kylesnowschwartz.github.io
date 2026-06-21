@@ -1619,5 +1619,236 @@
     "isbn": "9780375406775",
     "coverId": 9296899,
     "year": 2005
+  },
+  {
+    "id": "the-brothers-karamazov",
+    "t": "The Brothers Karamazov",
+    "a": "Fyodor Dostoevsky",
+    "g": "Literary",
+    "s": [
+      "Classic"
+    ],
+    "b": [
+      "Crime × Literary"
+    ],
+    "why": "Patricide, faith, and doubt argued at full volume — the novel that taught you a murder plot can carry a whole philosophy.",
+    "isbn": "9798519937580",
+    "coverId": 11263774,
+    "year": 1880
+  },
+  {
+    "id": "hatchet",
+    "t": "Hatchet",
+    "a": "Gary Paulsen",
+    "g": "Literary",
+    "s": [
+      "Adventure & Survival",
+      "Classic"
+    ],
+    "b": [],
+    "why": "One boy, one hatchet, one wrecked bush plane — the childhood survival fantasy you read until the cover fell off.",
+    "isbn": "9781581180558",
+    "coverId": 11240448,
+    "year": 1987
+  },
+  {
+    "id": "my-side-of-the-mountain",
+    "t": "My Side of the Mountain",
+    "a": "Jean Craighead George",
+    "g": "Literary",
+    "s": [
+      "Adventure & Survival",
+      "Classic"
+    ],
+    "b": [],
+    "why": "A kid runs off to live in a hollowed-out tree with a falcon — the self-reliance daydream rendered in loving practical detail.",
+    "isbn": "9780333345092",
+    "coverId": 108669,
+    "year": 1959
+  },
+  {
+    "id": "big-red",
+    "t": "Big Red",
+    "a": "Jim Kjelgaard",
+    "g": "Literary",
+    "s": [
+      "Adventure & Survival",
+      "Classic"
+    ],
+    "b": [],
+    "why": "A boy, an Irish setter, and the north woods — the first of the Red books and the one that hooked you.",
+    "isbn": "9780812419597",
+    "coverId": 9583465,
+    "year": 1945
+  },
+  {
+    "id": "irish-red-son-of-big-red",
+    "t": "Irish Red: Son of Big Red",
+    "a": "Jim Kjelgaard",
+    "g": "Literary",
+    "s": [
+      "Adventure & Survival",
+      "Classic"
+    ],
+    "b": [],
+    "why": "The runt of the litter proves himself in the field — Kjelgaard doing what he does best, dogs and wild country.",
+    "isbn": "9780606007146",
+    "coverId": 7285860,
+    "year": 1951
+  },
+  {
+    "id": "outlaw-red-son-of-big-red",
+    "t": "Outlaw Red: Son of Big Red",
+    "a": "Jim Kjelgaard",
+    "g": "Literary",
+    "s": [
+      "Adventure & Survival",
+      "Classic"
+    ],
+    "b": [],
+    "why": "A champion setter goes feral and survives the wilderness alone — the third Red book and the wildest.",
+    "year": 1953,
+    "noIsbn": true
+  },
+  {
+    "id": "follow-my-leader",
+    "t": "Follow My Leader",
+    "a": "James B. Garfield",
+    "g": "Literary",
+    "s": [
+      "Classic"
+    ],
+    "b": [],
+    "why": "A boy blinded by a firecracker learns to trust a guide dog named Leader — quietly formative.",
+    "isbn": "9780140364859",
+    "coverId": 102041,
+    "year": 1957
+  },
+  {
+    "id": "little-lord-fauntleroy",
+    "t": "Little Lord Fauntleroy",
+    "a": "Frances Hodgson Burnett",
+    "g": "Literary",
+    "s": [
+      "Classic"
+    ],
+    "b": [],
+    "why": "A good-hearted American boy thaws a flinty English earl — sentimental in the best Victorian way.",
+    "isbn": "9798549875449",
+    "coverId": 29376,
+    "year": 1886
+  },
+  {
+    "id": "pollyanna",
+    "t": "Pollyanna",
+    "a": "Eleanor H. Porter",
+    "g": "Literary",
+    "s": [
+      "Classic"
+    ],
+    "b": [],
+    "why": "The Glad Game — relentless optimism that somehow earns its name rather than just preaching it.",
+    "isbn": "9781421889276",
+    "coverId": 902113,
+    "year": 1913
+  },
+  {
+    "id": "anne-of-green-gables",
+    "t": "Anne of Green Gables",
+    "a": "L. M. Montgomery",
+    "g": "Literary",
+    "s": [
+      "Classic"
+    ],
+    "b": [],
+    "why": "A red-headed orphan talks her way into Avonlea and never stops — the original chatterbox heroine.",
+    "isbn": "9781613822494",
+    "coverId": 14641084,
+    "year": 1908
+  },
+  {
+    "id": "the-giver",
+    "t": "The Giver",
+    "a": "Lois Lowry",
+    "g": "SFF",
+    "s": [
+      "Philosophical SF",
+      "Classic"
+    ],
+    "b": [
+      "Sci-Fi × Literary"
+    ],
+    "why": "The first dystopia that landed — a sameness so gentle you only feel the horror when the color bleeds in.",
+    "isbn": "9780613047920",
+    "coverId": 8352502,
+    "year": 1993
+  },
+  {
+    "id": "a-wrinkle-in-time",
+    "t": "A Wrinkle in Time",
+    "a": "Madeleine L'Engle",
+    "g": "SFF",
+    "s": [
+      "Portal Fantasy",
+      "Classic"
+    ],
+    "b": [
+      "Sci-Fi × Literary"
+    ],
+    "why": "Tesseracts, a dark planet, and love as the weapon against IT — sci-fi and faith braided together for kids.",
+    "isbn": "9780821925324",
+    "coverId": 8709146,
+    "year": 1962
+  },
+  {
+    "id": "a-wind-in-the-door",
+    "t": "A Wind in the Door",
+    "a": "Madeleine L'Engle",
+    "g": "SFF",
+    "s": [
+      "Portal Fantasy",
+      "Classic"
+    ],
+    "b": [
+      "Sci-Fi × Literary"
+    ],
+    "why": "Time Quintet two — cherubim, mitochondria, and Naming as the antidote to un-being.",
+    "isbn": "9780738305868",
+    "coverId": 8276481,
+    "year": 1973
+  },
+  {
+    "id": "a-swiftly-tilting-planet",
+    "t": "A Swiftly Tilting Planet",
+    "a": "Madeleine L'Engle",
+    "g": "SFF",
+    "s": [
+      "Portal Fantasy",
+      "Classic"
+    ],
+    "b": [
+      "Sci-Fi × Literary"
+    ],
+    "why": "A unicorn, a rune, and history rewritten to avert nuclear war — the most ambitious of the quartet.",
+    "isbn": "9780613721905",
+    "coverId": 8223424,
+    "year": 1978
+  },
+  {
+    "id": "many-waters",
+    "t": "Many Waters",
+    "a": "Madeleine L'Engle",
+    "g": "SFF",
+    "s": [
+      "Portal Fantasy",
+      "Classic"
+    ],
+    "b": [
+      "Sci-Fi × Literary"
+    ],
+    "why": "The Murry twins land in Noah’s desert before the flood — the odd, sun-baked outlier of the set.",
+    "isbn": "9786075277479",
+    "coverId": 6536498,
+    "year": 1986
   }
 ]
