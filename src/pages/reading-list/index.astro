@@ -1,6 +1,6 @@
 ---
 /**
- * Reading List — Kyle's "mental library", a filterable map of his read history.
+ * Reading List — "The House" (a Piranesi callback): everything Kyle's read.
  *
  * Standalone route (like marmiteroids / bumper-lanes): own <head> + fonts, but
  * imports global.css so it inherits the site's tokens, texture, and type. Three
@@ -20,8 +20,8 @@ const total = BOOKS.length;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mental Library — Kyle Snow Schwartz</title>
-  <meta name="description" content={`A filterable map of ${total} books read — by genre, sub-genre, and the blends in between.`} />
+  <title>The House — Kyle Snow Schwartz</title>
+  <meta name="description" content={`Everything I've read so I can remember — ${total} books, filterable by genre.`} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -34,13 +34,12 @@ const total = BOOKS.length;
   <div class="rl-page">
     <header class="rl-head">
       <a class="back" href="/">&larr; kyle snow schwartz</a>
-      <div class="eyebrow">Mental Library · {total} books read</div>
-      <h1>The mental library</h1>
+      <div class="eyebrow">The House · {total} books read</div>
+      <h1>The House</h1>
       <p class="sub">
-        Everything I've read, mapped by what it actually <em>is</em>. Click pills to filter by genre,
-        sub-genre, or genre blend — the shelf narrows to what remains, and every book shows why it earned its tags.
+        Everything I've read so that I can remember — don't judge me. There's some real books in there too.
       </p>
-      <div class="hint">pills within a row are OR · across rows they're AND · click any tag on a card to toggle it</div>
+      <div class="hint">Pills in one group widen the list; pills across groups narrow it. Click a card's tag to toggle it.</div>
     </header>
 
     <div class="layout">
@@ -195,6 +194,25 @@ const total = BOOKS.length;
       for (const c of arr) grid.appendChild(c);
     }
     sortSel.addEventListener('change', () => applySort(sortSel.value));
+
+    // --- view toggle: cards (default) vs condensed list. Restyles the same
+    //     cards via a class on the grid; preference persists in localStorage. ---
+    const viewBtns = Array.from(document.querySelectorAll<HTMLElement>('.viewbtn'));
+    function setView(v: string) {
+      grid.classList.toggle('list', v === 'list');
+      for (const b of viewBtns) {
+        const on = b.dataset.view === v;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', String(on));
+      }
+      try { localStorage.setItem('rl-view', v); } catch {}
+    }
+    for (const b of viewBtns) {
+      b.addEventListener('click', () => setView(b.dataset.view as string));
+    }
+    let savedView: string | null = null;
+    try { savedView = localStorage.getItem('rl-view'); } catch {}
+    if (savedView === 'list') setView('list');
 
     render();
   </script>
