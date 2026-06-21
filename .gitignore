@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Shelf recommender — local embedding vector cache (large, regenerable)
+.cache/
+
 # Build output
 dist/
 

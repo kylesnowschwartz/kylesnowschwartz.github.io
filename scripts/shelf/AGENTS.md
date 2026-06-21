@@ -1,0 +1,64 @@
+# shelf — agent usage
+
+`shelf` is a deterministic reading-recommendation engine. It is the PICKER: it
+ranks unread candidate books against a reader's shelf. A calling agent maps the
+human's natural language to flags, runs the engine, and explains the results.
+The engine never parses prose and never writes prose. No API keys; runs locally.
+
+Run from the repo root: `npm run shelf -- <command>` (or `node scripts/shelf.mjs <command>`).
+
+## Output contract
+
+- `--json` (default when stdout is piped) → machine-readable JSON on **stdout**.
+- Progress/logs → **stderr**. Errors → structured `{"error":{"code,message}}` on stderr.
+- Exit codes: `0` ok · `2` usage · `3` no-data · `4` not-built (run an earlier step) · `5` network.
+- Deterministic: same flags → same output.
+
+## Managing the read shelf (books.json)
+
+```bash
+npm run shelf -- add "<title>" "<author>" [--genre G --sub a,b --blend a,b --why "…"]  # one-shot add (resolves ISBN/year/cover; --dry-run to preview)
+npm run shelf -- enrich    # backfill missing ISBN/year/cover on books.json (idempotent)
+```
+
+## Pipeline (run once; artifacts are committed, the vector cache is not)
+
+```bash
+npm run shelf -- fetch     # → src/data/candidates.json   (Open Library; ~90s)
+npm run shelf -- embed     # → .cache/embeddings/         (local MiniLM; git-ignored)
+npm run shelf -- build     # → src/data/recommendations.json
+```
+
+After `add`, re-run fetch → embed → build to fold the new book into both the
+exclusion set and the taste centroids.
+
+On a fresh clone the committed `recommendations.json` exists but the embedding
+cache does not, so `next` in seed mode (and `build`) need `embed` run once first.
+
+## The product: `next`
+
+```bash
+npm run shelf -- next --mood comforting --max-pages 350 --count 5 --json
+npm run shelf -- next --like the-blade-itself,dune --count 8 --json
+```
+
+Flags: `--like <read-book-ids>` (ad-hoc seed; calibration off) · `--mood dark|comforting`
+· `--novelty familiar|adventurous` · `--genre <list>` / `--not-genre <list>` (genre
+steer; auto-disables genre-mix calibration) · `--adult` (drop juvenile/YA) · `--english`
+(drop likely non-English editions) · `--max-pages <n>` · `--era 2000-|-1980|1990-2010`
+· `--count <n>` · `--strict` (drop unknown-length books under a page cap) · `--seed <n>`.
+Genres: `SFF`, `Thriller`, `Horror`, `Literary`, `Nonfiction`. `--novelty` moves by
+embedding distance, NOT genre — use `--genre`/`--not-genre` (or seed mode) to shift genre.
+
+Each recommendation carries: `title, author, year, pages, isbn, genre` (inferred from
+nearest taste centroid), `score`, `baseScore`, `nearestReadId`, `nearestReadTitle`
+(provenance — explain with this), `darkness`, `novelty`, `audience` (`juvenile`|`general`),
+`langGuess` (`en`|`non-en`), `subjects`. The response also carries `filters` +
+`prefiltered` (counts the intent filters dropped silently), `omitted[]` (high-relevance
+books a hard page/era filter cut — offer them back) and `spread` (genre diversity).
+
+## Inspect
+
+```bash
+npm run shelf -- profile --json   # genre mix (calibration target), repeat authors, top sub-genres
+```

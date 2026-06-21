@@ -1850,5 +1850,48 @@
     "isbn": "9786075277479",
     "coverId": 6536498,
     "year": 1986
+  },
+  {
+    "id": "a-walk-in-the-woods",
+    "t": "A Walk in the Woods",
+    "a": "Bill Bryson",
+    "g": "Nonfiction",
+    "s": [
+      "Narrative Nonfiction",
+      "Adventure & Survival"
+    ],
+    "b": [],
+    "why": "Bryson fails to hike the Appalachian Trail and turns the failure into the funniest natural history you'll read.",
+    "isbn": "9780786215133",
+    "year": 1997
+  },
+  {
+    "id": "the-hitchhikers-guide-to-the-galaxy",
+    "t": "The Hitchhiker's Guide to the Galaxy",
+    "a": "Douglas Adams",
+    "g": "SFF",
+    "s": [
+      "Space Opera"
+    ],
+    "b": [
+      "Sci-Fi × Humor"
+    ],
+    "why": "Towels, Vogon poetry, and 42 — the comic galaxy romp, pure weightless fun.",
+    "isbn": "9780330302043",
+    "year": 1979
+  },
+  {
+    "id": "of-mice-and-men",
+    "t": "Of Mice and Men",
+    "a": "John Steinbeck",
+    "g": "Literary",
+    "s": [
+      "Literary",
+      "Historical Fiction"
+    ],
+    "b": [],
+    "why": "Steinbeck's lean Depression-era tragedy — two drifters and one impossible dream of a little place of their own.",
+    "isbn": "9781517444853",
+    "year": 1937
   }
 ]

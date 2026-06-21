@@ -9,7 +9,8 @@
     "check": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "enrich:books": "node scripts/enrich-books.mjs",
+    "enrich:books": "node scripts/shelf.mjs enrich",
+    "shelf": "node scripts/shelf.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -17,6 +18,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@xenova/transformers": "^2.17.2",
+    "commander": "^15.0.0",
     "typescript": "^5.9.3",
     "vitest": "^4.1.9"
   }
