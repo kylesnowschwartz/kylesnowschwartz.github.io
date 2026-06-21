@@ -1,0 +1,261 @@
+---
+/**
+ * Reading List — Kyle's "mental library", a filterable map of his read history.
+ *
+ * Standalone route (like marmiteroids / bumper-lanes): own <head> + fonts, but
+ * imports global.css so it inherits the site's tokens, texture, and type. Three
+ * layers: data (src/data/reading-list.ts), model (src/lib/reading-list.ts),
+ * view (the two components below).
+ */
+import '../../styles/global.css';
+import { BOOKS } from '../../data/reading-list';
+import FilterSidebar from '../../components/reading-list/FilterSidebar.astro';
+import BookGrid from '../../components/reading-list/BookGrid.astro';
+
+const total = BOOKS.length;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mental Library — Kyle Snow Schwartz</title>
+  <meta name="description" content={`A filterable map of ${total} books read — by genre, sub-genre, and the blends in between.`} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+  <div class="rl-page">
+    <header class="rl-head">
+      <a class="back" href="/">&larr; kyle snow schwartz</a>
+      <div class="eyebrow">Mental Library · {total} books read</div>
+      <h1>The mental library</h1>
+      <p class="sub">
+        Everything I've read, mapped by what it actually <em>is</em>. Click pills to filter by genre,
+        sub-genre, or genre blend — the shelf narrows to what remains, and every book shows why it earned its tags.
+      </p>
+      <div class="hint">pills within a row are OR · across rows they're AND · click any tag on a card to toggle it</div>
+    </header>
+
+    <div class="layout">
+      <FilterSidebar />
+      <BookGrid />
+    </div>
+
+    <footer class="rl-foot">
+      editorial classification — one reader's map, not gospel. argue with it.
+    </footer>
+  </div>
+
+  <script>
+    import { BOOKS, GROUPS } from '../../data/reading-list';
+    import {
+      emptyActive,
+      activeCount,
+      visible,
+      countForMode,
+      type Mode,
+    } from '../../lib/reading-list';
+
+    type FK = 'g' | 's' | 'b';
+
+    const active = emptyActive();
+    let mode: Mode = 'or';
+
+    const grid = document.getElementById('rl-grid') as HTMLElement;
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.card'));
+    const tags = Array.from(grid.querySelectorAll<HTMLElement>('.tag'));
+    const pills = Array.from(document.querySelectorAll<HTMLElement>('.pill'));
+    const modeBtns = Array.from(document.querySelectorAll<HTMLElement>('#rl-mode button'));
+    const empty = document.getElementById('rl-empty') as HTMLElement;
+    const countEl = document.getElementById('rl-count') as HTMLElement;
+    const clearBtn = document.getElementById('rl-clear') as HTMLElement;
+    const mcOr = document.getElementById('rl-mc-or') as HTMLElement;
+    const mcAnd = document.getElementById('rl-mc-and') as HTMLElement;
+    const hintEl = document.getElementById('rl-modehint') as HTMLElement;
+    const modeWrap = document.getElementById('rl-mode') as HTMLElement;
+
+    function toggle(group: FK, val: string) {
+      const set = active[group];
+      if (set.has(val)) set.delete(val);
+      else set.add(val);
+      render();
+    }
+
+    function render() {
+      let shown = 0;
+      for (const card of cards) {
+        const bk = BOOKS[Number(card.dataset.idx)];
+        if (!bk) continue;
+        const vis = visible(bk, active, GROUPS, mode);
+        card.hidden = !vis;
+        if (vis) shown++;
+      }
+      empty.hidden = shown !== 0;
+
+      for (const p of pills) {
+        const g = p.dataset.group as FK;
+        p.classList.toggle('on', active[g].has(p.dataset.val as string));
+      }
+      for (const t of tags) {
+        const g = t.dataset.group as FK;
+        t.classList.toggle('match', active[g].has(t.dataset.val as string));
+      }
+
+      const total = BOOKS.length;
+      countEl.innerHTML = `<b>${shown}</b> of ${total} books${shown < total ? ' · filtered' : ''}`;
+      const any = activeCount(active) > 0;
+      clearBtn.classList.toggle('on', any);
+
+      // Only show the ANY/ALL toggle when it actually changes the result —
+      // i.e. the two modes yield different counts. Otherwise (single pill,
+      // single-valued genre, non-overlapping picks) hide the whole control.
+      const nOr = countForMode(BOOKS, active, GROUPS, 'or');
+      const nAnd = countForMode(BOOKS, active, GROUPS, 'and');
+      const toggleMeaningful = nOr !== nAnd;
+      modeWrap.hidden = !toggleMeaningful;
+      hintEl.hidden = !toggleMeaningful;
+      if (!toggleMeaningful) {
+        if (mode !== 'or') {
+          mode = 'or';
+          for (const b of modeBtns) b.classList.toggle('on', b.dataset.mode === 'or');
+        }
+        return;
+      }
+      mcOr.textContent = String(nOr);
+      mcAnd.textContent = String(nAnd);
+      hintEl.textContent = `switching to ALL drops ${nOr - nAnd} book${nOr - nAnd === 1 ? '' : 's'}`;
+      hintEl.classList.add('active');
+    }
+
+    for (const p of pills) {
+      p.addEventListener('click', () => toggle(p.dataset.group as FK, p.dataset.val as string));
+    }
+    for (const t of tags) {
+      t.addEventListener('click', () => toggle(t.dataset.group as FK, t.dataset.val as string));
+    }
+    clearBtn.addEventListener('click', () => {
+      active.g.clear();
+      active.s.clear();
+      active.b.clear();
+      render();
+    });
+    for (const btn of modeBtns) {
+      btn.addEventListener('click', () => {
+        mode = btn.dataset.mode as Mode;
+        for (const b of modeBtns) b.classList.toggle('on', b === btn);
+        render();
+      });
+    }
+
+    // --- sorting: reorders the card DOM in place; orthogonal to filtering ---
+    const sortSel = document.getElementById('rl-sort') as HTMLSelectElement;
+    const stripArticle = (s: string) => s.replace(/^(the|a|an)\s+/i, '');
+    const surname = (a: string) => {
+      const parts = a.split(/ & |, /)[0].trim().split(/\s+/);
+      return parts[parts.length - 1].toLowerCase();
+    };
+    function applySort(by: string) {
+      const arr = [...cards];
+      arr.sort((x, y) => {
+        const bx = BOOKS[Number(x.dataset.idx)];
+        const by2 = BOOKS[Number(y.dataset.idx)];
+        if (!bx || !by2) return 0;
+        switch (by) {
+          case 'title':
+            return stripArticle(bx.t).localeCompare(stripArticle(by2.t));
+          case 'author':
+            return surname(bx.a).localeCompare(surname(by2.a)) || stripArticle(bx.t).localeCompare(stripArticle(by2.t));
+          case 'year-asc':
+            return (bx.year ?? Infinity) - (by2.year ?? Infinity);
+          case 'year-desc':
+            return (by2.year ?? -Infinity) - (bx.year ?? -Infinity);
+          default:
+            return Number(x.dataset.idx) - Number(y.dataset.idx); // curated
+        }
+      });
+      for (const c of arr) grid.appendChild(c);
+    }
+    sortSel.addEventListener('change', () => applySort(sortSel.value));
+
+    render();
+  </script>
+
+  <style>
+    /* Categorical genre palette — 5 hues are required to encode 5 genres
+       (a documented exception to the 3-5 rule). Anchored by the site's neon
+       red and kept cream-friendly; vars inherit into the child components. */
+    .rl-page {
+      --rl-sff: #ff204e;
+      --rl-thriller: #1f6fa8;
+      --rl-horror: #8a2233;
+      --rl-literary: #5f7a3c;
+      --rl-nonfiction: #b07d2b;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: var(--s5) var(--s3) var(--s6);
+      position: relative;
+      z-index: 1;
+    }
+
+    .rl-head { margin-bottom: var(--s4); }
+    .back {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .back:hover { color: var(--color-accent); }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-top: var(--s3);
+    }
+    .rl-head h1 {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: -0.02em;
+      margin: var(--s0) 0 var(--s1);
+    }
+    .rl-head .sub { color: var(--color-text-muted); max-width: 60ch; margin: 0; }
+    .hint {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      margin-top: var(--s2);
+    }
+    .hint::before { content: '›'; color: var(--color-accent); margin-right: 6px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: var(--s4);
+      align-items: start;
+    }
+
+    .rl-foot {
+      margin-top: var(--s5);
+      padding-top: var(--s3);
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; gap: var(--s3); }
+    }
+  </style>
+</body>
+</html>

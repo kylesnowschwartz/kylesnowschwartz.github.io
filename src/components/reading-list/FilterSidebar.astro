@@ -1,0 +1,200 @@
+---
+/**
+ * FilterSidebar — facet pills + ANY/ALL mode toggle + live counts.
+ *
+ * Renders static markup at build time (every pill, with data-group/data-val
+ * hooks); the page's client script attaches listeners and toggles state.
+ */
+import { GROUPS, GENRES, facetCounts, facetValues, type GenreKey } from '../../data/reading-list';
+
+const counts = {
+  g: facetCounts('g'),
+  s: facetCounts('s'),
+  b: facetCounts('b'),
+};
+---
+
+<aside class="sidebar">
+  <div class="toolbar">
+    <span class="count" id="rl-count"></span>
+    <div class="seg" id="rl-mode" hidden title="How the selected sub-tags combine: ANY of them, or ALL of them">
+      <button data-mode="or" class="on" type="button">ANY <span class="mc" id="rl-mc-or">–</span></button>
+      <button data-mode="and" type="button">ALL <span class="mc" id="rl-mc-and">–</span></button>
+    </div>
+    <div class="modehint" id="rl-modehint" hidden></div>
+    <button class="btn-clear" id="rl-clear" type="button">✕ clear filters</button>
+  </div>
+
+  <div class="filters">
+    {GROUPS.map((grp) => (
+      <div class="fgroup">
+        <div class="fglabel">{grp.label} <span class="tip">{grp.tip}</span></div>
+        <div class="pills">
+          {facetValues(grp).map((val) => {
+            const isGenre = grp.key === 'g';
+            const label = isGenre ? GENRES[val as GenreKey] : val;
+            const cvar = isGenre ? `--c: var(--rl-${val.toLowerCase()})` : '';
+            return (
+              <button
+                type="button"
+                class={`pill${isGenre ? ' genre' : ' generic'}`}
+                data-group={grp.key}
+                data-val={val}
+                style={cvar}
+              >
+                {isGenre && <span class="swatch" />}
+                {label}
+                <span class="n">{counts[grp.key].get(val)}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    ))}
+  </div>
+</aside>
+
+<style>
+  .sidebar {
+    position: sticky;
+    top: var(--s2);
+    align-self: start;
+    max-height: calc(100dvh - var(--s3));
+    overflow-y: auto;
+    padding-right: var(--s1);
+    border-right: 1px solid var(--color-border);
+  }
+  .sidebar::-webkit-scrollbar { width: 8px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 999px; }
+
+  .toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    padding-bottom: var(--s2);
+    margin-bottom: var(--s2);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .count { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-muted); }
+  .count :global(b) { color: var(--color-text); font-size: 1rem; }
+
+  .seg {
+    display: flex;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+  /* the [hidden] attribute must beat `display: flex` above, or the toggle
+     never actually hides when ANY/ALL agree */
+  .seg[hidden],
+  .modehint[hidden] { display: none; }
+  .seg button {
+    flex: 1;
+    border: 0;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    padding: var(--s0) var(--s2);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .seg button.on { background: var(--color-text); color: var(--color-bg); }
+  .mc {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 0.65rem;
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    border-radius: 999px;
+    padding: 0 6px;
+    min-width: 16px;
+  }
+  .seg button.on .mc { background: rgba(255, 255, 255, 0.22); color: var(--color-bg); }
+
+  .modehint {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    min-height: 14px;
+  }
+  .modehint.active { color: var(--color-accent); }
+
+  .btn-clear {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: var(--s0) var(--s2);
+    cursor: pointer;
+    display: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .btn-clear.on { display: block; }
+  .btn-clear:hover { border-color: var(--color-accent); }
+
+  .fgroup { margin-bottom: var(--s3); }
+  .fglabel {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--s1);
+    display: flex;
+    align-items: baseline;
+    gap: var(--s1);
+  }
+  .fglabel .tip { text-transform: none; letter-spacing: 0; color: var(--color-border); font-size: 0.62rem; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-radius: 999px;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.12s ease, background 0.12s ease;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--color-text-muted); }
+  .pill .n {
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    border-radius: 999px;
+    padding: 1px 6px;
+    min-width: 18px;
+    text-align: center;
+  }
+  .pill .swatch { width: 8px; height: 8px; border-radius: 999px; background: var(--c); }
+
+  /* active genre pill: filled with its categorical hue */
+  .pill.genre.on { background: var(--c); border-color: transparent; color: #fff; }
+  .pill.genre.on .swatch { background: rgba(255, 255, 255, 0.85); }
+  .pill.genre.on .n { background: rgba(255, 255, 255, 0.22); color: #fff; }
+  /* active sub/blend pill: near-black fill keeps neon red reserved for emphasis */
+  .pill.generic.on { background: var(--color-text); border-color: transparent; color: var(--color-bg); }
+  .pill.generic.on .n { background: rgba(255, 255, 255, 0.18); color: var(--color-bg); }
+
+  @media (max-width: 900px) {
+    .sidebar {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      border-right: 0;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--s3);
+    }
+  }
+</style>

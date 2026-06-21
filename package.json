@@ -7,6 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "enrich:books": "node scripts/enrich-books.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -14,6 +17,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
   }
 }
