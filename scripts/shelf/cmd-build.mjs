@@ -9,8 +9,8 @@
 //   • novelty      — distance from everything already read (novelty dial)
 //
 // Output is a flat, human-auditable array (THE quality gate: eyeball the top).
-import { readFile, writeFile } from 'node:fs/promises';
-import { BOOKS_JSON, CANDIDATES_JSON, RECOMMENDATIONS_JSON } from './paths.mjs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { BOOKS_JSON, CACHE, CANDIDATES_JSON, RECOMMENDATIONS_JSON } from './paths.mjs';
 import { log, emit, fail, EXIT, color } from './output.mjs';
 import { loadVectors, readKey, candKey } from './cache.mjs';
 import { embedText } from './embed-model.mjs';
@@ -98,8 +98,9 @@ export async function run(opts) {
     .sort((a, b) => b.baseScore - a.baseScore || a.id.localeCompare(b.id));
 
   if (!opts.dryRun) {
+    await mkdir(CACHE, { recursive: true });
     await writeFile(RECOMMENDATIONS_JSON, JSON.stringify(recommendations, null, 2) + '\n');
-    log(color.accent(`  ✓ wrote ${recommendations.length} recommendations → src/data/recommendations.json`));
+    log(color.accent(`  ✓ wrote ${recommendations.length} recommendations → .cache/recommendations.json`));
   }
 
   const top = recommendations.slice(0, 10).map((r) => ({ t: r.t, a: r.a, genre: r.genre, baseScore: r.baseScore, near: r.nearestReadTitle }));

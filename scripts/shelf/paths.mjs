@@ -6,10 +6,10 @@ import { dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url)); // scripts/shelf
 export const ROOT = join(here, '..', '..'); // repo root
 export const DATA = join(ROOT, 'src', 'data');
-export const BOOKS_JSON = join(DATA, 'books.json');
-export const CANDIDATES_JSON = join(DATA, 'candidates.json');
-export const RECOMMENDATIONS_JSON = join(DATA, 'recommendations.json');
 export const CACHE = join(ROOT, '.cache');
+export const BOOKS_JSON = join(DATA, 'books.json');
+export const CANDIDATES_JSON = join(CACHE, 'candidates.json');
+export const RECOMMENDATIONS_JSON = join(CACHE, 'recommendations.json');
 export const EMBED_CACHE = join(CACHE, 'embeddings');
 // Z-lib browser session state (cookies + localStorage), written by
 // `shelf zlib-login` and read by the retrieve driver. `.cache/` is

@@ -33,28 +33,4 @@ const books = defineCollection({
     }),
 });
 
-/**
- * Recommendation artifact, produced by `npm run shelf -- build` from the read
- * shelf + the fetched candidate pool. Committed so the future website UI can
- * read it with zero rework; validated here so a malformed build fails loudly.
- * `genre` is INFERRED (nearest read-shelf centroid), not the publisher's label.
- */
-const recommendations = defineCollection({
-  loader: file('src/data/recommendations.json'),
-  schema: z.object({
-    t: z.string(),
-    a: z.string(),
-    year: z.number().optional(),
-    pages: z.number().optional(),
-    isbn: z.string().optional(),
-    genre: z.enum(['SFF', 'Thriller', 'Horror', 'Literary', 'Nonfiction']),
-    baseScore: z.number(), // cosine to nearest taste centroid, [0,1]
-    nearestReadId: z.string(),
-    nearestReadTitle: z.string(),
-    darkness: z.number().min(0).max(1), // mood axis: 0 comforting → 1 dark
-    novelty: z.number().min(0).max(1), // 0 familiar → 1 far from the shelf
-    subjects: z.array(z.string()),
-  }),
-});
-
-export const collections = { books, recommendations };
+export const collections = { books };

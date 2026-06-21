@@ -2,8 +2,8 @@
 // own taste signals: more by authors they read (familiar) + top-rated books in
 // the sub-genres they gravitate to (discovery). Open Library is primary; Google
 // Books is best-effort. Deduped against the read shelf and against itself.
-import { readFile, writeFile } from 'node:fs/promises';
-import { BOOKS_JSON, CANDIDATES_JSON } from './paths.mjs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { BOOKS_JSON, CACHE, CANDIDATES_JSON } from './paths.mjs';
 import { log, emit, fail, EXIT, color } from './output.mjs';
 import { byAuthor, bySubject, googleBySubject } from './sources.mjs';
 import { dedupKey, slugify, asciiRatio, isJuvenile, hasForeignSubjectTag } from './util.mjs';
@@ -126,8 +126,9 @@ export async function run(opts) {
   if (candidates.length === 0) fail(EXIT.NO_DATA, 'no candidates found — all queries returned read or duplicate books');
 
   if (!opts.dryRun) {
+    await mkdir(CACHE, { recursive: true });
     await writeFile(CANDIDATES_JSON, JSON.stringify(candidates, null, 2) + '\n');
-    log(color.accent(`  ✓ wrote ${candidates.length} candidates → src/data/candidates.json`));
+    log(color.accent(`  ✓ wrote ${candidates.length} candidates → .cache/candidates.json`));
   } else {
     log(color.dim(`  would write ${candidates.length} candidates`));
   }

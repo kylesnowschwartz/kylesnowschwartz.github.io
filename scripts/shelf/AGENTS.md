@@ -21,19 +21,19 @@ npm run shelf -- add "<title>" "<author>" [--genre G --sub a,b --blend a,b --why
 npm run shelf -- enrich    # backfill missing ISBN/year/cover on books.json (idempotent)
 ```
 
-## Pipeline (run once; artifacts are committed, the vector cache is not)
+## Pipeline (run after adding books or on a fresh clone; artifacts are git-ignored in .cache/)
 
 ```bash
-npm run shelf -- fetch     # → src/data/candidates.json   (Open Library; ~90s)
+npm run shelf -- fetch     # → .cache/candidates.json     (Open Library; ~90s)
 npm run shelf -- embed     # → .cache/embeddings/         (local MiniLM; git-ignored)
-npm run shelf -- build     # → src/data/recommendations.json
+npm run shelf -- build     # → .cache/recommendations.json
 ```
 
 After `add`, re-run fetch → embed → build to fold the new book into both the
 exclusion set and the taste centroids.
 
-On a fresh clone the committed `recommendations.json` exists but the embedding
-cache does not, so `next` in seed mode (and `build`) need `embed` run once first.
+On a fresh clone, run `fetch → embed → build` before `next`; the candidates,
+recommendations, and embedding cache are generated in `.cache/` and git-ignored.
 
 ## The product: `next`
 

@@ -126,10 +126,10 @@ runs the engine, and explains the picks. **Canonical usage: `scripts/shelf/AGENT
 npm run shelf -- add "<title>" "<author>"   # one-shot add: resolves ISBN/year/cover, dedup-guards
 npm run shelf -- enrich                      # backfill missing ISBN/year/cover (idempotent)
 
-# Pipeline — run once after adding books; commit the artifacts, the vector cache is git-ignored
-npm run shelf -- fetch     # → src/data/candidates.json   (Open Library; ~90s)
+# Pipeline — run after adding books or on a fresh clone; artifacts are git-ignored in .cache/
+npm run shelf -- fetch     # → .cache/candidates.json      (Open Library; ~90s)
 npm run shelf -- embed     # → .cache/embeddings/          (local MiniLM)
-npm run shelf -- build     # → src/data/recommendations.json
+npm run shelf -- build     # → .cache/recommendations.json
 
 # The product
 npm run shelf -- next --mood comforting --max-pages 350 --json
@@ -145,8 +145,8 @@ Each pick carries provenance (`nearestReadId`/`nearestReadTitle` — explain wit
 `0` ok · `2` usage · `3` no-data · `4` not-built (run an earlier step) · `5` network.
 
 After `add`, re-run `fetch → embed → build` to fold the new book into both the exclusion set
-and the taste centroids. On a fresh clone the embedding cache is absent, so seed-mode `next`
-and `build` need `embed` run once first.
+and the taste centroids. On a fresh clone, run `fetch → embed → build` before `next`;
+the candidates, recommendations, and embedding cache are generated in `.cache/` and git-ignored.
 
 The Claude Code driver lives in `.claude/skills/shelf-skill/` (local, git-ignored) — it auto-triggers
 on any book request, routes to the right capability (recommend / retrieve / add / maintain), maps
@@ -155,6 +155,5 @@ natural language to flags, and presents results in Kyle's voice.
 ---
 
 Read HYPERRESEARCH.md to understand how to use the /hyperresearch deep-research protocol
-
 
 
