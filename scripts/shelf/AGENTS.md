@@ -62,3 +62,36 @@ books a hard page/era filter cut — offer them back) and `spread` (genre divers
 ```bash
 npm run shelf -- profile --json   # genre mix (calibration target), repeat authors, top sub-genres
 ```
+
+## Retrieve a copy
+
+```bash
+npm run shelf -- retrieve --isbn <isbn> --json
+npm run shelf -- retrieve --title "..." --author "..." --ext azw3,epub --english --json
+npm run shelf -- retrieve --isbn <isbn> --dry-run --json     # rank without downloading
+npm run shelf -- retrieve --source-id zlib:r9bkkbjyzB --json # exact pick (skip search+rank)
+```
+
+Search runs through a headless Go binary (fast, JSON). Download runs through a
+**persistent Playwright Chromium session** named `zlib` (the only thing z-lib's
+`/dl/` endpoint accepts is a real browser). The session lives on disk in Chrome's
+user-data-dir and survives between runs; the saved state at `.cache/zlib-state.json`
+is a portable backup.
+
+Delivery destination (set by `retrieve/deliver.mjs`):
+- `/Volumes/Kindle/documents/` when the Kindle is mounted (`kind: "kindle"`)
+- `~/Downloads/` otherwise (`kind: "downloads"`)
+- `<dir>` when `--dest <dir>` is given (`kind: "override"`)
+
+Filename is slugified safe text + format extension (e.g. `brian-robeson-01-hatchet.azw3`).
+Each result carries `picked`, `destination`, `mounted`, `kind`, `format`, `sizeBytes`,
+`alternatives[]`, `omitted[]` (candidates a hard filter dropped — surface them back).
+
+Retrieve exit codes (same vocabulary): `5` means the source needs authentication
+or is unavailable. If it returns `"sourceCode": "SOURCE_AUTH_REQUIRED"`, re-run:
+
+```bash
+npm run shelf -- zlib-login   # opens a headed browser; sign in once, then close
+```
+
+Cookies last ~30 days; you'll only need this on a fresh machine or after expiry.

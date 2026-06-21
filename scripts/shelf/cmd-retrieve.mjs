@@ -249,7 +249,16 @@ function handleSourceError(err) {
       SOURCE_BIN_MISSING: [EXIT.USAGE, err.message],
     };
     const [code, message] = map[err.code] || [EXIT.NETWORK, err.message];
-    fail(code, message, { sourceCode: err.code });
+    // Preserve the source-specific message as `sourceMessage`. The mapped
+    // `message` is the generic agent-facing rephrasing ("source could not
+    // find a matching copy"); the original carries the precise reason (e.g.
+    // the DMCA takedown text) the agent needs to give the user a useful next
+    // step. Only emit it when it adds information beyond the generic.
+    const extra = { sourceCode: err.code };
+    if (err.message && err.message !== message) {
+      extra.sourceMessage = err.message;
+    }
+    fail(code, message, extra);
   }
   throw err;
 }

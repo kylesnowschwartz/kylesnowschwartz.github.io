@@ -1,26 +1,34 @@
-// Source backend: shells out to the `zlib` Go binary (our fork of
-// heartleo/zlib, with --json patches at v0.0.4+1) and translates its
-// response into the generic Candidate / DownloadResult shape that the
-// orchestrator depends on.
+// Source backend: z-lib via a hybrid transport.
+//
+//   search()   → shells out to the `zlib` Go binary (heartleo fork, --json
+//                patches at v0.0.4+1). The HTML page endpoint z-lib uses for
+//                search is lenient on client fingerprints — a headless Go
+//                client gets clean JSON back, fast.
+//
+//   download() → drives a persistent Playwright Chromium session through
+//                z-lib's actual download UI. The `/dl/<token>` endpoint
+//                refuses non-browser clients; the only thing that survives
+//                its anti-bot is a real browser. See playwright-driver.mjs.
 //
 // This file is the ONLY place in shelf that knows about z-lib. Everything
-// upstream sees opaque `sourceId` strings ("zlib:2RAqApzDRL") and generic
-// fields. Adding a second source means adding a sibling file under
-// sources/ and routing on the `sourceId` prefix; nothing above changes.
+// upstream sees opaque `sourceId` strings ("zlib:r9bkkbjyzB") and generic
+// fields. Adding a second source means adding a sibling file under sources/
+// and routing on the `sourceId` prefix; nothing above changes.
 //
-// Binary discovery is layered:
+// Binary discovery (search path) is layered:
 //   1) $SHELF_RETRIEVE_BIN if set (explicit override)
 //   2) ~/Code/my-projects/zlib/zlib if it exists (Kyle's dev layout)
 //   3) `zlib` on PATH (e.g. after `go install` or a symlink)
 //
-// Source-specific failure modes are translated to a stable error
-// vocabulary (SOURCE_AUTH_REQUIRED, SOURCE_NOT_FOUND, SOURCE_UNAVAILABLE)
-// so error messages never leak the backend's identity to higher layers.
+// Source-specific failure modes are translated to a stable error vocabulary
+// (SOURCE_AUTH_REQUIRED, SOURCE_NOT_FOUND, SOURCE_UNAVAILABLE) so error
+// messages never leak the backend's identity to higher layers.
 
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import { downloadViaBrowser, PlaywrightDriverError } from '../playwright-driver.mjs';
 
 export const SOURCE_NAME = 'zlib';
 
@@ -99,13 +107,16 @@ function runBinary(bin, args, { env = process.env, signal } = {}) {
 
 // Classify a non-zero exit into the generic error vocabulary. The stderr
 // inspection looks for stable substrings that heartleo's `formatCLIError`
-// produces (see internal/cli/root.go).
+// produces (see internal/cli/root.go). Only triggers downstream of `runBinary`,
+// which is now invoked only by search() — download-time error strings
+// ("no download url") that the binary's download path used to emit are no
+// longer relevant since download routes through the Playwright driver.
 function classifyExit(code, stderr, { stdout = '' } = {}) {
   const blob = `${stderr}\n${stdout}`.toLowerCase();
   if (blob.includes('not logged in') || blob.includes('session expired')) {
     return new SourceError('SOURCE_AUTH_REQUIRED', 'source requires authentication; log in to the backend separately', { stderr });
   }
-  if (blob.includes('no results found') || blob.includes('no download url')) {
+  if (blob.includes('no results found')) {
     return new SourceError('SOURCE_NOT_FOUND', 'source returned no matching book', { stderr });
   }
   if (blob.includes('network request failed') || blob.includes('challenge')) {
@@ -171,16 +182,19 @@ export async function search(opts = {}) {
 }
 
 /**
- * Download a previously-found candidate by its opaque sourceId. The
- * destination directory must already exist. Returns the absolute path
+ * Download a previously-found candidate by its opaque sourceId.
+ *
+ * Routes through the persistent Playwright session (see playwright-driver.mjs).
+ * The destination directory must already exist. Returns the absolute path
  * to the written file.
  *
  * @param {{
- *   sourceId: string,        // 'zlib:<book-id>'
+ *   sourceId: string,                // 'zlib:<book-id>'
  *   destDir: string,
  *   signal?: AbortSignal,
- *   bin?: string,
- *   env?: object,
+ *   pwBin?: string,                  // playwright-cli override (tests)
+ *   pwRunner?: Function,             // DI seam: bypass spawn (tests)
+ *   pwSessionName?: string,          // default 'zlib'
  * }} opts
  * @returns {Promise<{ path: string, sizeBytes: number, format: string|null, name: string|null }>}
  */
@@ -188,27 +202,75 @@ export async function download(opts = {}) {
   if (!opts.sourceId) throw new SourceError('SOURCE_BIN_MISSING', 'download requires sourceId');
   if (!opts.destDir) throw new SourceError('SOURCE_BIN_MISSING', 'download requires destDir');
   const id = parseSourceId(opts.sourceId);
-  const bin = opts.bin ?? resolveBinary({ env: opts.env });
-  const args = ['download', id, '--dir', opts.destDir, '--json'];
 
-  const { stdout } = await runBinary(bin, args, { env: opts.env, signal: opts.signal });
-  let payload;
+  let result;
   try {
-    payload = JSON.parse(stdout);
+    result = await downloadViaBrowser({
+      bookId: id,
+      destDir: opts.destDir,
+      sessionName: opts.pwSessionName,
+      bin: opts.pwBin,
+      runner: opts.pwRunner,
+      signal: opts.signal,
+    });
   } catch (err) {
-    throw new SourceError('SOURCE_UNAVAILABLE', 'source emitted invalid JSON', { cause: err });
+    if (err instanceof PlaywrightDriverError) {
+      throw translateDriverError(err);
+    }
+    throw err;
   }
-  if (!payload.path) {
-    throw new SourceError('SOURCE_UNAVAILABLE', 'source did not return a file path');
-  }
+
   return {
-    path: payload.path,
-    sizeBytes: Number(payload.size) || 0,
-    format: extractFormat(payload.path),
-    // `name` lets --source-id callers derive a delivery title without
-    // having gone through search first.
-    name: payload.name || null,
+    path: result.path,
+    sizeBytes: result.sizeBytes,
+    format: extractFormat(result.path),
+    // `name` lets --source-id callers derive a delivery title without having
+    // gone through search first. The browser driver's `suggestedFilename`
+    // includes z-lib's marketing suffix (" (z-library.sk, 1lib.sk, ...)");
+    // strip it back to the title proper.
+    name: titleFromSuggestedFilename(result.suggestedFilename),
   };
+}
+
+/**
+ * Translate a browser-driver failure into a SourceError so the generic
+ * error vocabulary stays the same regardless of which transport ran.
+ */
+function translateDriverError(err) {
+  switch (err.code) {
+    case 'PW_AUTH_REQUIRED':
+      return new SourceError('SOURCE_AUTH_REQUIRED', err.message, { cause: err });
+    case 'PW_NOT_INSTALLED':
+      return new SourceError(
+        'SOURCE_BIN_MISSING',
+        'playwright-cli not found on PATH; install it and re-run',
+        { cause: err },
+      );
+    case 'PW_BOOK_UNAVAILABLE':
+      // The book page loaded but the file is not deliverable (DMCA, region
+      // block, account-tier gate). Preserve the precise reason — the agent's
+      // recovery action depends on it (try a different edition? give up?).
+      return new SourceError('SOURCE_NOT_FOUND', err.message, { cause: err });
+    case 'PW_DOWNLOAD_FAILED':
+    case 'PW_UNAVAILABLE':
+    default:
+      return new SourceError('SOURCE_UNAVAILABLE', err.message, { cause: err });
+  }
+}
+
+/**
+ * Strip z-lib's marketing suffix from a downloaded filename to recover the
+ * delivery title. "Hatchet (Gary Paulsen) (z-library.sk, 1lib.sk, z-lib.sk).azw3"
+ * → "Hatchet (Gary Paulsen)". Returns null when the input lacks the suffix
+ * (then the caller falls back to user-supplied --title).
+ */
+export function titleFromSuggestedFilename(filename) {
+  if (typeof filename !== 'string' || !filename) return null;
+  // Drop trailing extension.
+  const stem = filename.replace(/\.[a-zA-Z0-9]+$/, '');
+  // Drop the z-lib marketing parenthetical anywhere in the name.
+  const cleaned = stem.replace(/\s*\(z-library\.sk[^)]*\)\s*/i, '').trim();
+  return cleaned || null;
 }
 
 // ─── helpers (exported for testing) ──────────────────────────────────────

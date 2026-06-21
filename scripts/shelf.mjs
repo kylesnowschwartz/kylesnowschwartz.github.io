@@ -112,6 +112,13 @@ program
   .addHelpText('after', '\nExamples:\n  $ shelf retrieve --isbn 9780441172719\n  $ shelf retrieve --title "Dune" --author "Frank Herbert" --ext epub,azw3\n  $ shelf retrieve --isbn 9780441172719 --dry-run --json\n  $ shelf retrieve --source-id zlib:19179031 --title "Hatchet"')
   .action(lazy('./shelf/cmd-retrieve.mjs', 'run'));
 
+program
+  .command('zlib-login')
+  .description('open a headed browser and persist the z-lib session (run once per ~30 days, or when retrieve reports auth expired)')
+  .option('--timeout <s>', 'seconds to wait for the login to complete', '300')
+  .addHelpText('after', '\nExamples:\n  $ shelf zlib-login\n  $ shelf zlib-login --timeout 600')
+  .action(lazy('./shelf/cmd-zlib-login.mjs', 'run'));
+
 program.parseAsync(process.argv).catch((err) => {
   process.stderr.write(`${JSON.stringify({ error: { code: 'ERROR', message: err.message } })}\n`);
   process.exit(EXIT.NETWORK);

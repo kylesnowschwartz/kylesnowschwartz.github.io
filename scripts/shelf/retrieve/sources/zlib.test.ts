@@ -21,6 +21,7 @@ import {
   extractFormat,
   resolveBinary,
   bookIdFromUrl,
+  titleFromSuggestedFilename,
   SourceError,
   SOURCE_NAME,
 } from './zlib.mjs';
@@ -156,6 +157,11 @@ function writeFakeBinary(dir: string, name: string, body: string) {
   return path;
 }
 
+// Fake binary for the search tests below. `download` is intentionally NOT
+// stubbed: the source backend's download() routes through the Playwright
+// driver (mocked separately via pwRunner injection), so any accidental
+// re-introduction of a binary-spawn download path would surface as a
+// runtime error from this fake's `unknown subcommand` branch.
 const SEARCH_FAKE = `
 const sub = process.argv[2];
 const argv = process.argv.slice(3);
@@ -182,14 +188,6 @@ if (sub === 'search') {
     ],
     page: 1, total_pages: 1,
   }));
-  process.exit(0);
-}
-if (sub === 'download') {
-  const id = argv[0];
-  const dirIdx = argv.indexOf('--dir');
-  const dir = dirIdx >= 0 ? argv[dirIdx + 1] : '.';
-  const path = dir + '/' + id + '.epub';
-  console.log(JSON.stringify({ id, name: 'Test Book', path, size: 1234567 }));
   process.exit(0);
 }
 process.stderr.write('unknown subcommand: ' + sub + '\\n');
@@ -253,25 +251,143 @@ describe('search (spawn-based)', () => {
   });
 });
 
-describe('download (spawn-based)', () => {
-  it('writes a file via the fake binary and returns its absolute path + size', async () => {
+// ─── download: now via the playwright driver, mocked at the runner seam ──
+//
+// The real integration (driver → playwright-cli → z-lib UI → file) was
+// verified manually on Hatchet (428,796-byte AZW3, 2.6s click-to-save).
+// Here we assert the source-backend layer's translation contract: the
+// driver's result shape lands as the documented Candidate-download shape,
+// and the driver's error vocabulary maps to the source error vocabulary.
+
+/**
+ * Fake runner matching the playwright-cli output the driver expects.
+ * Reproduces just enough of the markdown shape to round-trip a JSON Result.
+ */
+function fakePwRunner(suggestedFilename: string, savedAt: string) {
+  return async (_bin: string, args: string[]) => {
+    const sub = args.find((a) => !a.startsWith('-'));
+    if (sub === 'cookie-get') {
+      return { stdout: 'remix_userid=12345678 (domain: .z-lib.sk, path: /)', stderr: '' };
+    }
+    if (sub === 'goto') {
+      return { stdout: '### Page\nfake\n', stderr: '' };
+    }
+    if (sub === 'run-code') {
+      const body = JSON.stringify({
+        path: savedAt,
+        suggestedFilename,
+        elapsedMs: 2621,
+        failure: null,
+      });
+      return { stdout: `### Result\n${body}\n### Ran Playwright code\n`, stderr: '' };
+    }
+    throw new Error(`fake pw runner: unhandled ${JSON.stringify(args)}`);
+  };
+}
+
+describe('download (browser driver)', () => {
+  it('returns the saved path, sized from disk, with format extracted from the filename', async () => {
     const dest = mkdtempSync(join(tmpdir(), 'shelf-deliver-test-'));
     try {
-      const res = await download({ sourceId: 'zlib:fake-1', destDir: dest, bin: fakeBin });
-      expect(res.path).toBe(`${dest}/fake-1.epub`);
-      expect(res.sizeBytes).toBe(1234567);
-      expect(res.format).toBe('epub');
-      // `name` from the binary lets --source-id callers derive a delivery
-      // title without having gone through search first.
-      expect(res.name).toBe('Test Book');
+      const filename = 'Brian Robeson - 01 - Hatchet (Gary Paulsen) (z-library.sk, 1lib.sk, z-lib.sk).azw3';
+      const savedAt = join(dest, filename);
+      writeFileSync(savedAt, Buffer.alloc(428796, 0));
+      const res = await download({
+        sourceId: 'zlib:r9bkkbjyzB',
+        destDir: dest,
+        pwRunner: fakePwRunner(filename, savedAt),
+      });
+      expect(res.path).toBe(savedAt);
+      expect(res.sizeBytes).toBe(428796);
+      expect(res.format).toBe('azw3');
+      // titleFromSuggestedFilename strips the z-lib marketing parenthetical.
+      expect(res.name).toBe('Brian Robeson - 01 - Hatchet (Gary Paulsen)');
     } finally {
       rmSync(dest, { recursive: true, force: true });
     }
   });
 
-  it('rejects an empty or wrong-namespace sourceId before spawning', async () => {
-    await expect(download({ sourceId: '', destDir: '/tmp', bin: fakeBin })).rejects.toThrow(SourceError);
-    await expect(download({ sourceId: 'other:x', destDir: '/tmp', bin: fakeBin })).rejects.toThrow(SourceError);
+  it('rejects an empty or wrong-namespace sourceId before invoking the driver', async () => {
+    const runner = fakePwRunner('x.azw3', '/should/not/reach');
+    await expect(download({ sourceId: '', destDir: '/tmp', pwRunner: runner })).rejects.toThrow(SourceError);
+    await expect(download({ sourceId: 'other:x', destDir: '/tmp', pwRunner: runner })).rejects.toThrow(SourceError);
+  });
+
+  it('translates PW_AUTH_REQUIRED into SOURCE_AUTH_REQUIRED', async () => {
+    const dest = mkdtempSync(join(tmpdir(), 'shelf-deliver-test-'));
+    try {
+      // Empty cookie-get → driver throws PW_AUTH_REQUIRED before the run-code call.
+      const runner = async (_bin: string, args: string[]) => {
+        const sub = args.find((a) => !a.startsWith('-'));
+        if (sub === 'cookie-get') return { stdout: '', stderr: '' };
+        throw new Error('runner reached past auth probe');
+      };
+      await expect(
+        download({ sourceId: 'zlib:abc', destDir: dest, pwRunner: runner }),
+      ).rejects.toMatchObject({ code: 'SOURCE_AUTH_REQUIRED' });
+    } finally {
+      rmSync(dest, { recursive: true, force: true });
+    }
+  });
+
+  it('translates PW_NOT_INSTALLED into SOURCE_BIN_MISSING', async () => {
+    const dest = mkdtempSync(join(tmpdir(), 'shelf-deliver-test-'));
+    try {
+      // Real spawn against an impossible playwright-cli binary.
+      await expect(
+        download({ sourceId: 'zlib:abc', destDir: dest, pwBin: '/nope/playwright-cli' }),
+      ).rejects.toMatchObject({ code: 'SOURCE_BIN_MISSING' });
+    } finally {
+      rmSync(dest, { recursive: true, force: true });
+    }
+  });
+
+  it('translates PW_BOOK_UNAVAILABLE into SOURCE_NOT_FOUND, preserving the reason', async () => {
+    // Simulates the DMCA case: cookies fine, page loads, but the script
+    // reports `{ unavailable: true, reason: "..." }` because there is no
+    // download button. The agent should hear "not found on this source", not
+    // "auth required" or "unavailable, retry".
+    const dest = mkdtempSync(join(tmpdir(), 'shelf-deliver-test-'));
+    try {
+      const runner = async (_bin: string, args: string[]) => {
+        const sub = args.find((a) => !a.startsWith('-'));
+        if (sub === 'cookie-get') {
+          return { stdout: 'remix_userid=12345678', stderr: '' };
+        }
+        if (sub === 'goto') return { stdout: '### Page\nfake\n', stderr: '' };
+        if (sub === 'run-code') {
+          const body = JSON.stringify({
+            unavailable: true,
+            reason: "This book isn't available for download due to the complaint of the copyright holder Macmillan",
+          });
+          return { stdout: `### Result\n${body}\n### Ran Playwright code\n`, stderr: '' };
+        }
+        throw new Error(`fake runner: unhandled ${JSON.stringify(args)}`);
+      };
+      await expect(
+        download({ sourceId: 'zlib:pqxgMr3aze', destDir: dest, pwRunner: runner }),
+      ).rejects.toMatchObject({
+        code: 'SOURCE_NOT_FOUND',
+        message: expect.stringContaining('copyright holder'),
+      });
+    } finally {
+      rmSync(dest, { recursive: true, force: true });
+    }
+  });
+});
+
+describe('titleFromSuggestedFilename', () => {
+  it('strips the z-lib marketing parenthetical and trailing extension', () => {
+    expect(
+      titleFromSuggestedFilename('Hatchet (Gary Paulsen) (z-library.sk, 1lib.sk, z-lib.sk).azw3'),
+    ).toBe('Hatchet (Gary Paulsen)');
+  });
+  it('returns the stem when no marketing suffix is present', () => {
+    expect(titleFromSuggestedFilename('dune.epub')).toBe('dune');
+  });
+  it('returns null on falsy or non-string input', () => {
+    expect(titleFromSuggestedFilename('')).toBeNull();
+    expect(titleFromSuggestedFilename(null as unknown as string)).toBeNull();
   });
 });
 

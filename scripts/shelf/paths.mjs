@@ -11,3 +11,7 @@ export const CANDIDATES_JSON = join(DATA, 'candidates.json');
 export const RECOMMENDATIONS_JSON = join(DATA, 'recommendations.json');
 export const CACHE = join(ROOT, '.cache');
 export const EMBED_CACHE = join(CACHE, 'embeddings');
+// Z-lib browser session state (cookies + localStorage), written by
+// `shelf zlib-login` and read by the retrieve driver. `.cache/` is
+// gitignored so the auth state never lands in commits.
+export const ZLIB_STATE_FILE = join(CACHE, 'zlib-state.json');
