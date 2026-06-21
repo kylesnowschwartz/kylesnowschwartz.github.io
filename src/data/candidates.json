@@ -321,27 +321,6 @@
     ]
   },
   {
-    "id": "ada-nabokov",
-    "t": "Ada",
-    "a": "Vladimir Nabokov",
-    "year": 1969,
-    "isbn": "9780070457201",
-    "pages": 589,
-    "subjects": [
-      "Russian fiction",
-      "Incest",
-      "Brothers and sisters",
-      "Symbolism",
-      "Teachers",
-      "Upper class families",
-      "Fiction",
-      "Continental european fiction (fictional works by one author)"
-    ],
-    "sources": [
-      "openlibrary:author:Vladimir Nabokov"
-    ]
-  },
-  {
     "id": "alcatraz-versus-the-evil-librarians-sanderson",
     "t": "Alcatraz versus the Evil Librarians",
     "a": "Brandon Sanderson",
@@ -676,6 +655,27 @@
     ],
     "sources": [
       "openlibrary:author:Joe Abercrombie"
+    ]
+  },
+  {
+    "id": "big-data-revolution-thomas",
+    "t": "Big Data Revolution",
+    "a": "Rob Thomas",
+    "year": 2015,
+    "isbn": "9781322593043",
+    "pages": 288,
+    "subjects": [
+      "Decision making",
+      "Data processing",
+      "Big data",
+      "Data mining",
+      "Organizational effectiveness",
+      "BUSINESS & ECONOMICS",
+      "Industrial Management",
+      "Management"
+    ],
+    "sources": [
+      "openlibrary:author:Rob Thomas"
     ]
   },
   {
@@ -1056,28 +1056,6 @@
     ]
   },
   {
-    "id": "cities-of-the-plain-mccarthy",
-    "t": "Cities of the Plain",
-    "a": "Cormac McCarthy",
-    "year": 1998,
-    "isbn": "9781890885045",
-    "pages": 298,
-    "subjects": [
-      "French fiction",
-      "Littérature western",
-      "Histoires d'amour",
-      "Ranch life",
-      "Fiction",
-      "New mexico, fiction",
-      "Texas, fiction",
-      "Fiction, men's adventure"
-    ],
-    "firstSentence": "THEY STOOD in the doorway and stomped the rain from their boots and swung their hats and wiped the water from their faces.",
-    "sources": [
-      "openlibrary:author:Cormac McCarthy"
-    ]
-  },
-  {
     "id": "city-of-golden-shadow-williams",
     "t": "City of Golden Shadow",
     "a": "Tad Williams",
@@ -1234,48 +1212,6 @@
     "firstSentence": "THE BLIMP HUNG MOTIONLESS in the tropical air, poised and tranquil, like a fish suspended in an aquarium.",
     "sources": [
       "openlibrary:subject:Cold War"
-    ]
-  },
-  {
-    "id": "czas-pogardy-sapkowski",
-    "t": "Czas pogardy",
-    "a": "Andrzej Sapkowski",
-    "year": 1995,
-    "isbn": "9788370540913",
-    "pages": 331,
-    "subjects": [
-      "Polish Fantasy fiction",
-      "Fiction, fantasy, epic",
-      "Monsters",
-      "Fiction",
-      "Assassins",
-      "Suffering",
-      "Murder",
-      "Magic"
-    ],
-    "sources": [
-      "openlibrary:author:Andrzej Sapkowski"
-    ]
-  },
-  {
-    "id": "dar-nabokov",
-    "t": "Dar",
-    "a": "Vladimir Nabokov",
-    "year": 1923,
-    "isbn": "9780297167099",
-    "pages": 378,
-    "subjects": [
-      "Russian fiction",
-      "Russian Authors",
-      "Immigrants",
-      "Psychological fiction",
-      "Fiction",
-      "Continental european fiction (fictional works by one author)",
-      "Translations into English",
-      "English fiction"
-    ],
-    "sources": [
-      "openlibrary:author:Vladimir Nabokov"
     ]
   },
   {
@@ -1440,6 +1376,28 @@
     "firstSentence": "This time there would be no witnesses.",
     "sources": [
       "openlibrary:author:Douglas Adams"
+    ]
+  },
+  {
+    "id": "doctor-no-fleming",
+    "t": "Doctor No",
+    "a": "Ian Fleming",
+    "year": 1958,
+    "isbn": "9780451016706",
+    "pages": 240,
+    "subjects": [
+      "Detective and mystery stories",
+      "Fiction",
+      "James Bond (Fictitious character)",
+      "Bond, james (fictitious character), fiction",
+      "Fiction, mystery & detective, general",
+      "Jamaica, fiction",
+      "Fiction, thrillers, espionage",
+      "Spy stories"
+    ],
+    "firstSentence": "Punctually at six o'clock the sun set with a last yellow flash behind the Blue Mountains, a wave of violet shadow poured down Richmond Road, and the crickets and tree frogs in the fine gardens began to zing and tinkle.",
+    "sources": [
+      "openlibrary:subject:Spy Thriller"
     ]
   },
   {
@@ -2055,6 +2013,27 @@
     ]
   },
   {
+    "id": "gynaecology-and-obstetrics-monaghan",
+    "t": "Gynaecology and obstetrics",
+    "a": "John M. Monaghan",
+    "year": 1983,
+    "isbn": "9780750614900",
+    "pages": 615,
+    "subjects": [
+      "Chirurgie",
+      "Female Generative organs",
+      "Gynakologische Chirurgie",
+      "Geburtshilfliche Chirurgie",
+      "Organes genitaux femelles",
+      "Obstetrics",
+      "Female Genitalia",
+      "Surgery"
+    ],
+    "sources": [
+      "openlibrary:author:Rob Thomas"
+    ]
+  },
+  {
     "id": "half-a-king-abercrombie",
     "t": "Half a King",
     "a": "Joe Abercrombie",
@@ -2090,6 +2069,17 @@
     "sources": [
       "openlibrary:author:F. Paul Wilson",
       "openlibrary:author:Gary Stevenson"
+    ]
+  },
+  {
+    "id": "handbook-of-strategic-environmental-assessment-sadler",
+    "t": "Handbook of Strategic Environmental Assessment",
+    "a": "Barry Sadler",
+    "year": 2012,
+    "isbn": "9781136539107",
+    "subjects": [],
+    "sources": [
+      "openlibrary:author:Rob Thomas"
     ]
   },
   {
@@ -2307,6 +2297,25 @@
     ]
   },
   {
+    "id": "india-crowther",
+    "t": "India",
+    "a": "Geoff Crowther",
+    "year": 1981,
+    "isbn": "9780864424914",
+    "pages": 800,
+    "subjects": [
+      "Travel & holiday guides",
+      "Travel",
+      "Travel - Foreign",
+      "Asia - India",
+      "India",
+      "Guidebooks"
+    ],
+    "sources": [
+      "openlibrary:author:Rob Thomas"
+    ]
+  },
+  {
     "id": "inviting-interruptions-bacchilega",
     "t": "Inviting Interruptions",
     "a": "Author Reviewer Series Editor Cristina Bacchilega",
@@ -2405,28 +2414,6 @@
     "firstSentence": "\"Suppose you have run an experiment on 20 subjects, and have obtained a significant result which confirms your theory (z = 2.23, p < .05, two-tailed).",
     "sources": [
       "openlibrary:author:Daniel Kahneman"
-    ]
-  },
-  {
-    "id": "julie-of-the-wolves-george",
-    "t": "Julie of the Wolves",
-    "a": "Jean Craighead George",
-    "year": 1972,
-    "isbn": "9789991497419",
-    "pages": 176,
-    "subjects": [
-      "Juvenile fiction",
-      "Eskimos",
-      "Wolves",
-      "Newbery Medal",
-      "Survival skills",
-      "Fiction",
-      "Translations into Spanish",
-      "Lobos"
-    ],
-    "firstSentence": "MIYAX PUSHED BACK THE HOOD OF HER sealskin parka and looked at the Arctic sun.",
-    "sources": [
-      "openlibrary:author:Jean Craighead George"
     ]
   },
   {
@@ -2535,28 +2522,6 @@
     "firstSentence": "\"I'm going to get that bloody bastard if I die in the attempt.\"",
     "sources": [
       "openlibrary:author:James Clavell"
-    ]
-  },
-  {
-    "id": "krew-elfow-sapkowski",
-    "t": "Krew elfów",
-    "a": "Andrzej Sapkowski",
-    "year": 1994,
-    "isbn": "9783423247542",
-    "pages": 379,
-    "subjects": [
-      "Fantasy",
-      "Fiction",
-      "Fiction, fantasy, general",
-      "Science fiction, fantasy, horror",
-      "Assassins",
-      "Polish Fantasy fiction",
-      "Fiction, fantasy, epic",
-      "Vampires, fiction"
-    ],
-    "firstSentence": "The town was in flames.",
-    "sources": [
-      "openlibrary:author:Andrzej Sapkowski"
     ]
   },
   {
@@ -2717,7 +2682,8 @@
     "firstSentence": "ON the 24th of February, 1815, the lookout of Notre-Dame de la Garde signalled the three-master, the Pharaon, from Smyrna, Trieste, and Naples.",
     "sources": [
       "openlibrary:subject:Historical Fiction",
-      "openlibrary:subject:Literary"
+      "openlibrary:subject:Literary",
+      "openlibrary:subject:Classic"
     ]
   },
   {
@@ -2789,7 +2755,8 @@
       "suspense"
     ],
     "sources": [
-      "openlibrary:subject:Space Opera"
+      "openlibrary:subject:Space Opera",
+      "openlibrary:subject:Epic Fantasy"
     ]
   },
   {
@@ -3155,6 +3122,23 @@
     ]
   },
   {
+    "id": "marketing-management-3rd-edn-epub-ebook-kotler",
+    "t": "Marketing Management 3rd edn ePub eBook",
+    "a": "Philip Kotler",
+    "year": 2016,
+    "isbn": "9781292106083",
+    "pages": 976,
+    "subjects": [
+      "General",
+      "Non-classifiable",
+      "Business & economics -> marketing -> principles of marketing",
+      "Non-classifiable -> non-classifiable -> non-classifiable"
+    ],
+    "sources": [
+      "openlibrary:subject:Economics & Markets"
+    ]
+  },
+  {
     "id": "marketing-research-churchill",
     "t": "Marketing research",
     "a": "Gilbert A. Churchill",
@@ -3337,27 +3321,6 @@
     ],
     "sources": [
       "openlibrary:author:Jason Matthews"
-    ]
-  },
-  {
-    "id": "miecz-przeznaczenia-sapkowski",
-    "t": "Miecz przeznaczenia",
-    "a": "Andrzej Sapkowski",
-    "year": 1992,
-    "isbn": "9780316389716",
-    "pages": 400,
-    "subjects": [
-      "Fiction, fantasy, general",
-      "New York Times bestseller",
-      "Fiction, fantasy, short stories",
-      "Polish Fantasy fiction",
-      "Assassins",
-      "Monsters",
-      "Fiction",
-      "adventure"
-    ],
-    "sources": [
-      "openlibrary:author:Andrzej Sapkowski"
     ]
   },
   {
@@ -4105,27 +4068,6 @@
     ]
   },
   {
-    "id": "ostatnie-zyczenie-sapkowski",
-    "t": "Ostatnie Życzenie",
-    "a": "Andrzej Sapkowski",
-    "year": 1993,
-    "isbn": "9781473235090",
-    "pages": 342,
-    "subjects": [
-      "Fantasy",
-      "Fiction",
-      "Translations into English",
-      "Polish fiction",
-      "Fiction, fantasy, general",
-      "Fiction, fantasy, short stories",
-      "nyt:mass-market-paperback=2015-07-05",
-      "New York Times bestseller"
-    ],
-    "sources": [
-      "openlibrary:author:Andrzej Sapkowski"
-    ]
-  },
-  {
     "id": "other-worlds-than-these-adams",
     "t": "Other Worlds Than These",
     "a": "John Joseph Adams",
@@ -4160,27 +4102,6 @@
     "firstSentence": "I was the shadow of the waxwing slain By the falls azure in the windowpane; I was the smudge of ashen fluff-and I Lived on, flew on, in the reflected sky.",
     "sources": [
       "openlibrary:author:Vladimir Nabokov"
-    ]
-  },
-  {
-    "id": "pani-jeziora-sapkowski",
-    "t": "Pani Jeziora",
-    "a": "Andrzej Sapkowski",
-    "year": 1999,
-    "isbn": "9789198616910",
-    "pages": 554,
-    "subjects": [
-      "Heiresses",
-      "Wizards",
-      "Magic",
-      "Elves",
-      "Fiction",
-      "Fiction, fantasy, general",
-      "fantasy",
-      "polish literature"
-    ],
-    "sources": [
-      "openlibrary:author:Andrzej Sapkowski"
     ]
   },
   {
@@ -4379,48 +4300,6 @@
     ]
   },
   {
-    "id": "pnin-nabokov",
-    "t": "Pnin",
-    "a": "Vladimir Nabokov",
-    "year": 1957,
-    "isbn": "9788328700192",
-    "pages": 191,
-    "subjects": [
-      "Fiction",
-      "Russian Americans in fiction",
-      "College teachers in fiction",
-      "Russian Americans",
-      "Immigrants",
-      "College teachers",
-      "Immigrants in fiction",
-      "Russian language books"
-    ],
-    "sources": [
-      "openlibrary:author:Vladimir Nabokov"
-    ]
-  },
-  {
-    "id": "point-blanc-horowitz",
-    "t": "Point Blanc",
-    "a": "Anthony Horowitz",
-    "year": 2001,
-    "isbn": "9781419300745",
-    "pages": 274,
-    "subjects": [
-      "Young Adult Fiction",
-      "Orphans",
-      "Spies",
-      "Cloning",
-      "Schools",
-      "Fiction",
-      "Thriller",
-      "Reading Level-Grade 7"
-    ],
-    "sources": [
-      "openlibrary:subject:Espionage"
-    ]
-  },
-  {
     "id": "poison-feather-fitzsimmons",
     "t": "Poison feather",
     "a": "Matthew FitzSimmons",
@@ -4500,7 +4379,8 @@
     ],
     "firstSentence": "It is a truth universally acknowledged that a single man in possession of a good fortune must be in want of a wife.",
     "sources": [
-      "openlibrary:subject:Historical Fiction"
+      "openlibrary:subject:Historical Fiction",
+      "openlibrary:subject:Literary"
     ]
   },
   {
@@ -4535,6 +4415,27 @@
     "firstSentence": "NORMAN BATES heard the noise and a shock went through him.",
     "sources": [
       "openlibrary:author:Jim Kjelgaard"
+    ]
+  },
+  {
+    "id": "rats-saw-god-thomas",
+    "t": "Rats saw god",
+    "a": "Rob Thomas",
+    "year": 1996,
+    "isbn": "9781442457386",
+    "pages": 220,
+    "subjects": [
+      "Schools",
+      "Divorce",
+      "Fiction",
+      "Fathers and sons",
+      "High schools",
+      "Children's fiction",
+      "Fathers and sons, fiction",
+      "Schools, fiction"
+    ],
+    "sources": [
+      "openlibrary:author:Rob Thomas"
     ]
   },
   {
@@ -4680,27 +4581,6 @@
     ],
     "sources": [
       "openlibrary:subject:Family Saga"
-    ]
-  },
-  {
-    "id": "rising-sun-the-andromeda-strain-binary-crichton",
-    "t": "Rising Sun / The Andromeda Strain / Binary",
-    "a": "Michael Crichton",
-    "year": 1994,
-    "isbn": "9780091785857",
-    "pages": 708,
-    "subjects": [
-      "Japanese culture",
-      "Yakuza",
-      "Los Angeles Police Department",
-      "murder",
-      "Industries",
-      "Police in fiction",
-      "Japanese corporations in fiction",
-      "Police"
-    ],
-    "sources": [
-      "openlibrary:subject:Techno-Thriller"
     ]
   },
   {
@@ -4966,6 +4846,27 @@
     ]
   },
   {
+    "id": "slave-day-thomas",
+    "t": "Slave Day",
+    "a": "Rob Thomas",
+    "year": 1997,
+    "isbn": "9781534429659",
+    "pages": 256,
+    "subjects": [
+      "Fiction",
+      "Schools",
+      "Race relations",
+      "High schools",
+      "Children's fiction",
+      "Schools, fiction",
+      "Race relations, fiction",
+      "Children, fiction"
+    ],
+    "sources": [
+      "openlibrary:author:Rob Thomas"
+    ]
+  },
+  {
     "id": "snow-dog-kjelgaard",
     "t": "Snow Dog",
     "a": "Jim Kjelgaard",
@@ -5129,6 +5030,28 @@
     "firstSentence": "‘I don’t understand what you’re asking for,’ the man in Target in Boston kept saying to me.",
     "sources": [
       "openlibrary:author:Johann Hari"
+    ]
+  },
+  {
+    "id": "stone-butch-blues-feinberg",
+    "t": "Stone Butch Blues",
+    "a": "Leslie Feinberg",
+    "year": 1993,
+    "isbn": "9788416946167",
+    "pages": 452,
+    "subjects": [
+      "gay",
+      "Coming out (Sexual orientation)",
+      "Fiction",
+      "lgbt",
+      "Transsexuals",
+      "Lesbians",
+      "transgender",
+      "Butch and femme (Lesbianism)"
+    ],
+    "firstSentence": "Liebe Theresa, ich liege auf dem Bett und vermisse Dich.",
+    "sources": [
+      "openlibrary:subject:Memoir"
     ]
   },
   {
@@ -6083,6 +6006,27 @@
     ]
   },
   {
+    "id": "the-help-stockett",
+    "t": "The Help",
+    "a": "Kathryn Stockett",
+    "year": 2009,
+    "isbn": "9780241972229",
+    "pages": 479,
+    "subjects": [
+      "novels",
+      "Fiction",
+      "Civil rights movements",
+      "Household employees",
+      "African American women",
+      "literary fiction",
+      "historical fiction",
+      "domestic fiction"
+    ],
+    "sources": [
+      "openlibrary:subject:Historical Fiction"
+    ]
+  },
+  {
     "id": "the-hero-of-ages-sanderson",
     "t": "The Hero of Ages",
     "a": "Brandon Sanderson",
@@ -6292,6 +6236,28 @@
     ],
     "sources": [
       "openlibrary:author:Jonathan Gottschall"
+    ]
+  },
+  {
+    "id": "the-long-way-to-a-small-angry-planet-chambers",
+    "t": "The Long Way to a Small, Angry Planet",
+    "a": "Becky Chambers",
+    "year": 2014,
+    "isbn": "9787555027706",
+    "pages": 445,
+    "subjects": [
+      "Fiction",
+      "Science fiction",
+      "Extraterrestrial beings",
+      "Interplanetary voyages",
+      "Fiction, science fiction, general",
+      "LGBTQ science fiction & fantasy",
+      "Space warfare",
+      "Action & Adventure"
+    ],
+    "firstSentence": "Als sie in der Kapsel die Augen aufschlug, erinnerte sie sich an dreierlei.",
+    "sources": [
+      "openlibrary:subject:Space Opera"
     ]
   },
   {
@@ -6718,6 +6684,28 @@
     ]
   },
   {
+    "id": "the-price-of-salt-highsmith",
+    "t": "The Price of Salt",
+    "a": "Patricia Highsmith",
+    "year": 1952,
+    "isbn": "9781626543102",
+    "pages": 276,
+    "subjects": [
+      "collectionID:Sleazy_pulp",
+      "Fiction",
+      "Lesbians",
+      "Lesbian romance novel",
+      "Lesbian love story",
+      "Divorce",
+      "Child custody",
+      "Road trip"
+    ],
+    "firstSentence": "The lunch hour in the co-workers' cafeteria at Frankenberg's had reached its peak.",
+    "sources": [
+      "openlibrary:subject:Media Tie-In"
+    ]
+  },
+  {
     "id": "the-prince-and-the-pauper-twain",
     "t": "The Prince and the Pauper",
     "a": "Mark Twain",
@@ -6899,6 +6887,27 @@
     "firstSentence": "IN THE ROARING NINETIES, growth soared to levels not seen in a generation.",
     "sources": [
       "openlibrary:author:Joseph E. Stiglitz"
+    ]
+  },
+  {
+    "id": "the-scam-basu",
+    "t": "The scam",
+    "a": "Debashis Basu",
+    "year": 1993,
+    "isbn": "9788185944104",
+    "pages": 304,
+    "subjects": [
+      "Corrupt practices",
+      "History",
+      "Securities fraud",
+      "Stock brokers",
+      "Stock exchanges",
+      "Stockbrokers",
+      "White Collar Crime",
+      "Business/Economics"
+    ],
+    "sources": [
+      "openlibrary:subject:Crime"
     ]
   },
   {
@@ -7222,28 +7231,6 @@
     ]
   },
   {
-    "id": "the-two-towers-tolkien",
-    "t": "The Two Towers",
-    "a": "J.R.R. Tolkien",
-    "year": 1954,
-    "isbn": "9788445009604",
-    "pages": 434,
-    "subjects": [
-      "Ents",
-      "Orcs",
-      "hobbits",
-      "magic",
-      "Ficción fantástica inglesa",
-      "Ficción",
-      "translations into Spanish",
-      "readers for new literates"
-    ],
-    "firstSentence": "ARAGORN sped on up the hill.",
-    "sources": [
-      "openlibrary:author:J.R.R. Tolkien"
-    ]
-  },
-  {
     "id": "the-valley-of-fear-doyle",
     "t": "The Valley of Fear",
     "a": "Arthur Conan Doyle",
@@ -7466,29 +7453,6 @@
     ],
     "sources": [
       "openlibrary:subject:Space Opera"
-    ]
-  },
-  {
-    "id": "titus-andronicus-shakespeare",
-    "t": "Titus Andronicus",
-    "a": "William Shakespeare",
-    "year": 1893,
-    "isbn": "9781484074350",
-    "pages": 120,
-    "subjects": [
-      "Translations into Japanese",
-      "Generals",
-      "Drama",
-      "History",
-      "Tragedies",
-      "Andronicus, Titus (Legendary character) -- Drama",
-      "Goths -- Drama",
-      "Generals -- Drama"
-    ],
-    "sources": [
-      "openlibrary:author:Frank Herbert",
-      "openlibrary:author:F. Paul Wilson",
-      "openlibrary:author:Gary Stevenson"
     ]
   },
   {
@@ -7943,7 +7907,30 @@
     ],
     "firstSentence": "Far out in the uncharted backwaters of the unfashionable end of the Western Spiral arm of the Galaxy lies a small unregarded yellow sun.",
     "sources": [
-      "openlibrary:subject:Short Stories"
+      "openlibrary:subject:Short Stories",
+      "openlibrary:subject:Travel"
+    ]
+  },
+  {
+    "id": "world-war-z-brooks",
+    "t": "World War Z",
+    "a": "Max Brooks",
+    "year": 2006,
+    "isbn": "9789507880902",
+    "pages": 422,
+    "subjects": [
+      "Humor",
+      "nyt:trade_fiction_paperback=2011-08-20",
+      "Fiction",
+      "New York Times bestseller",
+      "Zombies",
+      "War",
+      "Large type books",
+      "Imaginary wars and battles"
+    ],
+    "firstSentence": "آن واقعه نام‌های بسیاری دارد: «دوران بحران»، «سال‌های سیاه»، «طاعون متحرک» و نیز نام‌هایی تازه‌تر و «جوان‌پسند»تر مانند «جنگ جهانی ز» یا «جنگ اول ز».",
+    "sources": [
+      "openlibrary:subject:Post-Apocalyptic"
     ]
   },
   {

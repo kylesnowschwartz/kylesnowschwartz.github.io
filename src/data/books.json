@@ -1893,5 +1893,19 @@
     "why": "Steinbeck's lean Depression-era tragedy — two drifters and one impossible dream of a little place of their own.",
     "isbn": "9781517444853",
     "year": 1937
+  },
+  {
+    "id": "green-thumb",
+    "t": "Green Thumb",
+    "a": "Rob Thomas",
+    "g": "Literary",
+    "s": [
+      "Adventure & Survival"
+    ],
+    "b": [],
+    "why": "A teen botany prodigy wins a trip into the Amazon and stumbles onto a mad-scientist plot in the canopy — early Rob Thomas (yes, the Veronica Mars one) doing kid-eco-thriller.",
+    "isbn": "9780689828867",
+    "coverId": 434685,
+    "year": 1999
   }
 ]
