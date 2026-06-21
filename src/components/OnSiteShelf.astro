@@ -36,6 +36,12 @@ const { items } = Astro.props;
               <i style="--c:#b07d2b; --h:92%; --r:18deg"></i>
             </span>
           )}
+          {item.kind === 'trophy' && (
+            <span class="trophy" aria-hidden="true">
+              <span class="trophy-cup">🏆</span>
+              <span class="blink-badge">NEW!</span>
+            </span>
+          )}
           <span class="onsite-label">{item.name}</span>
           {item.desc && <span class="onsite-desc">{item.desc}</span>}
         </a>
@@ -142,13 +148,75 @@ const { items } = Astro.props;
     transform: rotate(var(--r)) translateY(-3px);
   }
 
-  /* Respect reduced-motion: hold the spines still (no fan), keep the colors. */
+  /* worst-commish-ever — a deliberately 1996 GeoCities artifact: navy tiled
+     bg, beveled Win95 button, Comic Sans, a trophy and a blinking NEW! badge.
+     The clash is the point; it's quarantined to this one cell so it reads as
+     authored, not broken. Hover "presses" the bevel (outset -> inset). */
+  .link-trophy {
+    background:
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 4px),
+      #000080;
+    border: 3px outset #c0c0c0;
+    text-align: center;
+  }
+
+  .link-trophy:hover {
+    border-color: #c0c0c0;
+    border-style: inset;
+    box-shadow: none;
+  }
+
+  .link-trophy .onsite-label {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-weight: 700;
+    color: #ffff00;
+    text-shadow: 1px 1px 0 #ff00ff;
+  }
+
+  .link-trophy .onsite-desc {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    color: #00ffff;
+    opacity: 1;
+  }
+
+  .trophy {
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .trophy-cup {
+    font-size: 1.7rem;
+    vertical-align: middle;
+  }
+
+  .blink-badge {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    padding: 0 3px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #ff0000;
+    background: #ffff00;
+    border: 1px solid #ff0000;
+    animation: blink 1s steps(1, end) infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* Respect reduced-motion: hold the spines still (no fan), stop the blink. */
   @media (prefers-reduced-motion: reduce) {
     .spines i {
       transition: none;
     }
     .link-spines:hover .spines i {
       transform: none;
+    }
+    .blink-badge {
+      animation: none;
     }
   }
 </style>
