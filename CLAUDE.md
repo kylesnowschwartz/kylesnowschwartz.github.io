@@ -148,8 +148,9 @@ After `add`, re-run `fetch → embed → build` to fold the new book into both t
 and the taste centroids. On a fresh clone the embedding cache is absent, so seed-mode `next`
 and `build` need `embed` run once first.
 
-The Claude Code driver lives in `.claude/skills/next-read/` (local, git-ignored) — it auto-triggers
-on natural-language reading requests, maps them to flags, and presents picks in Kyle's voice.
+The Claude Code driver lives in `.claude/skills/shelf-skill/` (local, git-ignored) — it auto-triggers
+on any book request, routes to the right capability (recommend / retrieve / add / maintain), maps
+natural language to flags, and presents results in Kyle's voice.
 
 ---
 
