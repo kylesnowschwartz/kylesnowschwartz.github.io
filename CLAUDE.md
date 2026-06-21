@@ -107,5 +107,9 @@ Fantasy Football League Site - A **1996 GeoCities-style website** for a 25-year 
 
 Design spec extracted from Space Jam 1996: .agent-history/reverse-prompt-spacejam-1996.md
 
+---
+
+Read HYPERRESEARCH.md to understand how to use the /hyperresearch deep-research protocol
+
 
 
