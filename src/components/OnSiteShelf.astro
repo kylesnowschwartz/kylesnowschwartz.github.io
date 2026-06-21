@@ -23,18 +23,22 @@ const { items } = Astro.props;
   <ul class="onsite-list">
     {items.map((item) => (
       <li class:list={['onsite-item', `kind-${item.kind}`]}>
-        {item.kind === 'jar' ? (
-          <a href={item.href} class="onsite-link jar-link">
+        <a href={item.href} class:list={['onsite-link', `link-${item.kind}`]}>
+          {item.kind === 'jar' && (
             <canvas id="marmite-jar" width="150" height="150"></canvas>
-            <span class="onsite-label">{item.name}</span>
-            {item.desc && <span class="onsite-desc">{item.desc}</span>}
-          </a>
-        ) : (
-          <a href={item.href} class="onsite-link">
-            <span class="onsite-label">{item.name}</span>
-            {item.desc && <span class="onsite-desc">{item.desc}</span>}
-          </a>
-        )}
+          )}
+          {item.kind === 'spines' && (
+            <span class="spines" aria-hidden="true">
+              <i style="--c:#ff204e; --h:90%; --r:-18deg"></i>
+              <i style="--c:#1f6fa8; --h:70%; --r:-9deg"></i>
+              <i style="--c:#8a2233; --h:100%; --r:0deg"></i>
+              <i style="--c:#5f7a3c; --h:80%; --r:9deg"></i>
+              <i style="--c:#b07d2b; --h:92%; --r:18deg"></i>
+            </span>
+          )}
+          <span class="onsite-label">{item.name}</span>
+          {item.desc && <span class="onsite-desc">{item.desc}</span>}
+        </a>
       </li>
     ))}
   </ul>
@@ -94,18 +98,57 @@ const { items } = Astro.props;
   }
 
   /* marmiteroids — the live spinning jar, centered above its label */
-  .jar-link {
+  .link-jar {
     text-align: center;
   }
 
-  .jar-link canvas {
+  .link-jar canvas {
     display: block;
     margin: 0 auto 0.4rem;
     border-bottom: 2px solid transparent;
     transition: border-color 0.2s ease;
   }
 
-  .jar-link:hover canvas {
+  .link-jar:hover canvas {
     border-bottom-color: var(--color-accent);
+  }
+
+  /* reading-list — five book spines (genre-colored) that fan out on hover,
+     like pulling books off a shelf. Decorative; the label carries the name. */
+  .link-spines {
+    text-align: center;
+  }
+
+  .spines {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 56px;
+    margin-bottom: 0.5rem;
+  }
+
+  .spines i {
+    display: block;
+    width: 9px;
+    height: var(--h, 80%);
+    background: var(--c);
+    border: 1px solid rgba(60, 40, 20, 0.35);
+    transform-origin: bottom center;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .link-spines:hover .spines i {
+    transform: rotate(var(--r)) translateY(-3px);
+  }
+
+  /* Respect reduced-motion: hold the spines still (no fan), keep the colors. */
+  @media (prefers-reduced-motion: reduce) {
+    .spines i {
+      transition: none;
+    }
+    .link-spines:hover .spines i {
+      transform: none;
+    }
   }
 </style>
