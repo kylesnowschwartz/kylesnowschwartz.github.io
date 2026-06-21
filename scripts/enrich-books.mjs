@@ -1,10 +1,9 @@
 // Enrich books.json with ISBN-13, Open Library cover id, and first-publish year
 // from the free, keyless Open Library search API. Idempotent (skips books that
 // are already fully enriched) and polite (throttled). Run: `npm run enrich:books`.
-import { readFile, writeFile } from 'node:fs/promises';
+import { readBooks, writeBooks } from './books-io.mjs';
 
-const url = new URL('../src/data/books.json', import.meta.url);
-const books = JSON.parse(await readFile(url, 'utf8'));
+const books = await readBooks();
 
 const THROTTLE_MS = 300;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -43,6 +42,7 @@ async function lookup(book) {
   return { isbn: pickIsbn(doc.isbn), coverId: doc.cover_i, year: doc.first_publish_year };
 }
 
+let hadError = false;
 for (const book of books) {
   // fully enriched = ISBN resolved (or known-missing) AND a publish year known
   if ((book.isbn || book.noIsbn) && book.year !== undefined) continue;
@@ -64,30 +64,20 @@ for (const book of books) {
     const tag = book.isbn ? `→ ${book.isbn}` : '— no ISBN';
     console.log(`  ${book.isbn ? '✓' : '✗'} ${book.t} ${tag}${book.year ? ` (${book.year})` : ''}`);
   } catch (err) {
+    hadError = true;
     console.log(`  ! ${book.t} — ${err.message}`);
   }
   await sleep(THROTTLE_MS);
 }
 
-// preserve id-first key order
-const ordered = books.map((b) => ({
-  id: b.id,
-  t: b.t,
-  a: b.a,
-  g: b.g,
-  s: b.s,
-  b: b.b,
-  why: b.why,
-  ...(b.isbn ? { isbn: b.isbn } : {}),
-  ...(b.coverId !== undefined ? { coverId: b.coverId } : {}),
-  ...(b.year !== undefined ? { year: b.year } : {}),
-  ...(b.noIsbn ? { noIsbn: true } : {}),
-}));
-
-await writeFile(url, JSON.stringify(ordered, null, 2) + '\n');
+await writeBooks(books);
 
 const resolved = books.filter((b) => b.isbn).length;
 const noIsbn = books.filter((b) => !b.isbn).map((b) => b.t);
-const noYear = books.filter((b) => b.year === undefined).map((b) => b.t);
-console.log(`\nISBN resolved ${resolved}/${books.length}; years missing: ${noYear.length}`);
+const noYear = books.filter((b) => b.year === undefined).length;
+console.log(`\nISBN resolved ${resolved}/${books.length}; years missing: ${noYear}`);
 if (noIsbn.length) console.log('No ISBN:\n' + noIsbn.map((t) => `  - ${t}`).join('\n'));
+if (hadError) {
+  console.error('\nSome lookups failed (network/HTTP error). Re-run `npm run enrich:books`.');
+  process.exitCode = 1; // surface the failure to CI / callers instead of a silent success
+}

@@ -20,7 +20,7 @@ const books = defineCollection({
       s: z.array(z.string()),
       b: z.array(z.string()),
       why: z.string(),
-      isbn: z.string().optional(),
+      isbn: z.string().min(1).optional(),
       coverId: z.number().optional(),
       year: z.number().optional(),
       noIsbn: z.boolean().optional(),

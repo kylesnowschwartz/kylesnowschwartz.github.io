@@ -27,14 +27,14 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
         <div class="author">{bk.a}</div>
         <p class="why">{bk.why}</p>
         <div class="tags">
-          <button type="button" class="tag genre" data-group="g" data-val={bk.g} style={`--c: var(--rl-${bk.g.toLowerCase()})`}>
+          <button type="button" aria-pressed="false" class="tag genre" data-group="g" data-val={bk.g} style={`--c: var(--rl-${bk.g.toLowerCase()})`}>
             {GENRES[bk.g as GenreKey]}
           </button>
           {bk.s.map((x) => (
-            <button type="button" class="tag" data-group="s" data-val={x}>{x}</button>
+            <button type="button" aria-pressed="false" class="tag" data-group="s" data-val={x}>{x}</button>
           ))}
           {bk.b.map((x) => (
-            <button type="button" class="tag" data-group="b" data-val={x}>{x}</button>
+            <button type="button" aria-pressed="false" class="tag" data-group="b" data-val={x}>{x}</button>
           ))}
         </div>
       </article>

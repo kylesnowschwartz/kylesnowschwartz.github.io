@@ -17,9 +17,9 @@ const counts = {
 <aside class="sidebar">
   <div class="toolbar">
     <span class="count" id="rl-count"></span>
-    <div class="seg" id="rl-mode" hidden title="How the selected sub-tags combine: ANY of them, or ALL of them">
-      <button data-mode="or" class="on" type="button">ANY <span class="mc" id="rl-mc-or">–</span></button>
-      <button data-mode="and" type="button">ALL <span class="mc" id="rl-mc-and">–</span></button>
+    <div class="seg" id="rl-mode" hidden role="group" aria-label="Combine the selected sub-tags as ANY or ALL">
+      <button data-mode="or" class="on" type="button" aria-pressed="true">ANY <span class="mc" id="rl-mc-or">–</span></button>
+      <button data-mode="and" type="button" aria-pressed="false">ALL <span class="mc" id="rl-mc-and">–</span></button>
     </div>
     <div class="modehint" id="rl-modehint" hidden></div>
     <button class="btn-clear" id="rl-clear" type="button">✕ clear filters</button>
@@ -37,6 +37,7 @@ const counts = {
             return (
               <button
                 type="button"
+                aria-pressed="false"
                 class={`pill${isGenre ? ' genre' : ' generic'}`}
                 data-group={grp.key}
                 data-val={val}

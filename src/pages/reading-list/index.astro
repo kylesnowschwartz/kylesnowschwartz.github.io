@@ -101,37 +101,50 @@ const total = BOOKS.length;
 
       for (const p of pills) {
         const g = p.dataset.group as FK;
-        p.classList.toggle('on', active[g].has(p.dataset.val as string));
+        const on = active[g].has(p.dataset.val as string);
+        p.classList.toggle('on', on);
+        p.setAttribute('aria-pressed', String(on));
       }
       for (const t of tags) {
         const g = t.dataset.group as FK;
-        t.classList.toggle('match', active[g].has(t.dataset.val as string));
+        const on = active[g].has(t.dataset.val as string);
+        t.classList.toggle('match', on);
+        t.setAttribute('aria-pressed', String(on));
       }
 
       const total = BOOKS.length;
       countEl.innerHTML = `<b>${shown}</b> of ${total} books${shown < total ? ' · filtered' : ''}`;
-      const any = activeCount(active) > 0;
-      clearBtn.classList.toggle('on', any);
+      clearBtn.classList.toggle('on', activeCount(active) > 0);
 
-      // Only show the ANY/ALL toggle when it actually changes the result —
-      // i.e. the two modes yield different counts. Otherwise (single pill,
-      // single-valued genre, non-overlapping picks) hide the whole control.
+      updateModeToggle();
+    }
+
+    // The ANY/ALL toggle is only worth showing when it actually changes the
+    // result — i.e. the two modes yield different counts. Otherwise (single
+    // pill, single-valued genre, non-overlapping picks) hide the whole control.
+    function updateModeToggle() {
       const nOr = countForMode(BOOKS, active, GROUPS, 'or');
       const nAnd = countForMode(BOOKS, active, GROUPS, 'and');
-      const toggleMeaningful = nOr !== nAnd;
-      modeWrap.hidden = !toggleMeaningful;
-      hintEl.hidden = !toggleMeaningful;
-      if (!toggleMeaningful) {
-        if (mode !== 'or') {
-          mode = 'or';
-          for (const b of modeBtns) b.classList.toggle('on', b.dataset.mode === 'or');
-        }
+      const meaningful = nOr !== nAnd;
+      modeWrap.hidden = !meaningful;
+      hintEl.hidden = !meaningful;
+      if (!meaningful) {
+        if (mode !== 'or') setMode('or');
         return;
       }
       mcOr.textContent = String(nOr);
       mcAnd.textContent = String(nAnd);
       hintEl.textContent = `switching to ALL drops ${nOr - nAnd} book${nOr - nAnd === 1 ? '' : 's'}`;
       hintEl.classList.add('active');
+    }
+
+    function setMode(next: Mode) {
+      mode = next;
+      for (const b of modeBtns) {
+        const on = b.dataset.mode === next;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', String(on));
+      }
     }
 
     for (const p of pills) {
@@ -148,8 +161,7 @@ const total = BOOKS.length;
     });
     for (const btn of modeBtns) {
       btn.addEventListener('click', () => {
-        mode = btn.dataset.mode as Mode;
-        for (const b of modeBtns) b.classList.toggle('on', b === btn);
+        setMode(btn.dataset.mode as Mode);
         render();
       });
     }

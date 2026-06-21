@@ -1,9 +1,8 @@
 // One-shot: give each book a stable slug `id` (required by Astro's file()
 // loader, and a durable key for CRUD + ISBN matching). Idempotent.
-import { readFile, writeFile } from 'node:fs/promises';
+import { readBooks, writeBooks } from './books-io.mjs';
 
-const url = new URL('../src/data/books.json', import.meta.url);
-const books = JSON.parse(await readFile(url, 'utf8'));
+const books = await readBooks();
 
 const slug = (s) =>
   s
@@ -23,20 +22,5 @@ for (const b of books) {
   seen.add(b.id);
 }
 
-// rewrite with id first, dropping undefined optional fields
-const ordered = books.map((b) => ({
-  id: b.id,
-  t: b.t,
-  a: b.a,
-  g: b.g,
-  s: b.s,
-  b: b.b,
-  why: b.why,
-  ...(b.isbn ? { isbn: b.isbn } : {}),
-  ...(b.coverId !== undefined ? { coverId: b.coverId } : {}),
-  ...(b.year !== undefined ? { year: b.year } : {}),
-  ...(b.noIsbn ? { noIsbn: true } : {}),
-}));
-
-await writeFile(url, JSON.stringify(ordered, null, 2) + '\n');
-console.log(`stamped ids on ${ordered.length} books`);
+await writeBooks(books);
+console.log(`stamped ids on ${books.length} books`);
