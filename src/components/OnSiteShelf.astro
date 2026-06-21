@@ -1,0 +1,111 @@
+---
+// The "shelf" of on-site destinations. Each is an object that leaks the world
+// it leads to: a spinning 3D jar (marmiteroids), fan-out book spines
+// (reading-list), and a deliberately-1996 trophy (worst-commish-ever).
+// The jar's WebGL init lives in index.astro (it needs the page's three.js
+// importmap), so this component owns markup + style only.
+interface OnSiteItem {
+  name: string;
+  href: string;
+  kind: 'jar' | 'spines' | 'trophy';
+  desc?: string;
+}
+
+interface Props {
+  items: OnSiteItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="onsite">
+  <h3 class="onsite-title">On site</h3>
+  <ul class="onsite-list">
+    {items.map((item) => (
+      <li class:list={['onsite-item', `kind-${item.kind}`]}>
+        {item.kind === 'jar' ? (
+          <a href={item.href} class="onsite-link jar-link">
+            <canvas id="marmite-jar" width="150" height="150"></canvas>
+            <span class="onsite-label">{item.name}</span>
+            {item.desc && <span class="onsite-desc">{item.desc}</span>}
+          </a>
+        ) : (
+          <a href={item.href} class="onsite-link">
+            <span class="onsite-label">{item.name}</span>
+            {item.desc && <span class="onsite-desc">{item.desc}</span>}
+          </a>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .onsite {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .onsite-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .onsite-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .onsite-link {
+    display: block;
+    font-family: var(--font-mono);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: 0.6rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .onsite-link:hover {
+    border-color: var(--color-accent-secondary);
+    box-shadow: 0 0 16px rgba(0, 255, 222, 0.15);
+  }
+
+  .onsite-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text);
+  }
+
+  .onsite-desc {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    margin-top: 0.15rem;
+    line-height: 1.2;
+  }
+
+  /* marmiteroids — the live spinning jar, centered above its label */
+  .jar-link {
+    text-align: center;
+  }
+
+  .jar-link canvas {
+    display: block;
+    margin: 0 auto 0.4rem;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .jar-link:hover canvas {
+    border-bottom-color: var(--color-accent);
+  }
+</style>

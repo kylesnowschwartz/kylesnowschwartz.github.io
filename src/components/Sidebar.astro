@@ -1,5 +1,7 @@
 ---
 // Sidebar component with projects navigation
+import OnSiteShelf from './OnSiteShelf.astro';
+
 interface Project {
   name: string;
   href: string;
@@ -7,12 +9,20 @@ interface Project {
   desc?: string;
 }
 
+interface OnSiteItem {
+  name: string;
+  href: string;
+  kind: 'jar' | 'spines' | 'trophy';
+  desc?: string;
+}
+
 interface Props {
-  projects: Project[];
+  repos: Project[];
+  onSite: OnSiteItem[];
   class?: string;
 }
 
-const { projects, class: className } = Astro.props;
+const { repos, onSite, class: className } = Astro.props;
 
 // Short text labels for language badges — readable at any size, terminal-native
 const langBadges: Record<string, string> = {
@@ -38,30 +48,23 @@ const langBadges: Record<string, string> = {
         <span>Projects</span>
       </summary>
       <ul class="project-list">
-        {projects.map((project) => {
+        {repos.map((project) => {
           const badge = project.lang ? langBadges[project.lang] : null;
           return (
             <li>
-              {project.name === 'marmiteroids' ? (
-                <a href={project.href} class="marmite-link">
-                  <canvas id="marmite-jar" width="150" height="150"></canvas>
-                  <span class="sr-only">marmiteroids</span>
-                  {project.desc && <span class="project-desc">{project.desc}</span>}
-                </a>
-              ) : (
-                <a href={project.href}>
-                  <span class="project-name">
-                    {project.name}
-                    {badge && <span class="lang-badge">{badge}</span>}
-                  </span>
-                  {project.desc && <span class="project-desc">{project.desc}</span>}
-                </a>
-              )}
+              <a href={project.href}>
+                <span class="project-name">
+                  {project.name}
+                  {badge && <span class="lang-badge">{badge}</span>}
+                </span>
+                {project.desc && <span class="project-desc">{project.desc}</span>}
+              </a>
             </li>
           );
         })}
       </ul>
     </details>
+    <OnSiteShelf items={onSite} />
   </div>
 </aside>
 
@@ -176,32 +179,6 @@ const langBadges: Record<string, string> = {
     margin-top: 0.1rem;
     letter-spacing: 0.02em;
     line-height: 1.2;
-  }
-
-  /* Marmite jar link */
-  .marmite-link {
-    display: block;
-    padding: 0;
-    transition: padding-left 0.2s ease;
-  }
-
-  .marmite-link::before {
-    display: none;
-  }
-
-  .marmite-link:hover {
-    padding-left: 0.5rem;
-  }
-
-  .marmite-link canvas {
-    display: inline-block;
-    vertical-align: middle;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease;
-  }
-
-  .marmite-link:hover canvas {
-    border-bottom-color: var(--color-accent);
   }
 
   /* Mobile responsive */

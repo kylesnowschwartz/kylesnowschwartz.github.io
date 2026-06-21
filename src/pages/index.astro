@@ -7,7 +7,8 @@ import AboutPanel from '../components/AboutPanel.astro';
 import SkillsSection from '../components/SkillsSection.astro';
 import Footer from '../components/Footer.astro';
 
-const projects = [
+// External code (GitHub) — rendered as the terminal-style `> name` list.
+const repos = [
   { name: 'tail-claude', href: 'https://github.com/kylesnowschwartz/tail-claude', lang: 'go', desc: 'TUI for Claude sessions' },
   { name: 'SimpleClaude', href: 'https://github.com/kylesnowschwartz/SimpleClaude', lang: 'ruby', desc: 'Claude plugin framework' },
   { name: 'zsh-ai-cmd', href: 'https://github.com/kylesnowschwartz/zsh-ai-cmd', lang: 'shell', desc: 'natural language to shell' },
@@ -16,8 +17,14 @@ const projects = [
   { name: 'tail-claude-hud', href: 'https://github.com/kylesnowschwartz/tail-claude-hud', lang: 'go', desc: 'statusline for Claude sessions' },
   { name: 'hgnucomb', href: 'https://github.com/kylesnowschwartz/hgnucomb', lang: 'ts', desc: 'spatial terminal multiplexer' },
   { name: 'claude-bumper-lanes', href: 'https://github.com/kylesnowschwartz/claude-bumper-lanes', lang: 'go', desc: 'git-backed edit guardrails' },
-  { name: 'marmiteroids', href: '/marmiteroids/', lang: 'threejs', desc: '' },
-  { name: 'mental-library', href: '/reading-list/', lang: 'astro', desc: 'filterable map of books read' },
+];
+
+// On-site destinations — each rendered as a bespoke object that leaks the
+// world it leads to (see OnSiteShelf.astro). `kind` selects the treatment.
+const onSite = [
+  { name: 'marmiteroids', href: '/marmiteroids/', kind: 'jar' as const, desc: 'floating 3D art piece' },
+  { name: 'reading-list', href: '/reading-list/', kind: 'spines' as const, desc: 'filterable map of books read' },
+  { name: 'worst-commish-ever', href: '/worst-commish-ever/', kind: 'trophy' as const, desc: '25 years of fantasy-football crimes' },
 ];
 
 const skills = [
@@ -96,7 +103,7 @@ const socialLinks = [
 
   <div class="container">
     <main class="page-grid">
-      <Sidebar projects={projects} class="g-sidebar" />
+      <Sidebar repos={repos} onSite={onSite} class="g-sidebar" />
 
       <AboutPanel title="Who" class="g-who who">
         <p>Kyle Snow Schwartz.</p>
