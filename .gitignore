@@ -15,3 +15,9 @@ dist/
 # Tools
 .playwright-mcp
 .playwright-cli/
+
+# Agent + research artifacts
+.agents/
+.hyperresearch/
+research/
+skills-lock.json
