@@ -59,6 +59,7 @@ const total = BOOKS.length;
       activeCount,
       visible,
       countForMode,
+      availableCounts,
       type Mode,
     } from '../../lib/reading-list';
 
@@ -71,6 +72,7 @@ const total = BOOKS.length;
     const cards = Array.from(grid.querySelectorAll<HTMLElement>('.card'));
     const tags = Array.from(grid.querySelectorAll<HTMLElement>('.tag'));
     const pills = Array.from(document.querySelectorAll<HTMLElement>('.pill'));
+    const fgroups = Array.from(document.querySelectorAll<HTMLElement>('.fgroup'));
     const modeBtns = Array.from(document.querySelectorAll<HTMLElement>('#rl-mode button'));
     const empty = document.getElementById('rl-empty') as HTMLElement;
     const countEl = document.getElementById('rl-count') as HTMLElement;
@@ -98,11 +100,32 @@ const total = BOOKS.length;
       }
       empty.hidden = shown !== 0;
 
+      // Faceted pill narrowing: a pill's count reflects how many books it would
+      // still reach given the OTHER groups' active filters; a pill that reaches
+      // zero (e.g. "Hard Magic" once "Nonfiction" is picked) is hidden so no
+      // dead-end combo is offered. A selected pill always stays visible so it
+      // can be toggled back off, even if its own contextual count is 0.
+      const avail = {
+        g: availableCounts(BOOKS, active, GROUPS, 'g', mode),
+        s: availableCounts(BOOKS, active, GROUPS, 's', mode),
+        b: availableCounts(BOOKS, active, GROUPS, 'b', mode),
+      };
       for (const p of pills) {
         const g = p.dataset.group as FK;
-        const on = active[g].has(p.dataset.val as string);
+        const val = p.dataset.val as string;
+        const on = active[g].has(val);
+        const n = avail[g].get(val) ?? 0;
+        const nEl = p.querySelector('.n');
+        if (nEl) nEl.textContent = String(n);
+        p.hidden = n === 0 && !on;
         p.classList.toggle('on', on);
         p.setAttribute('aria-pressed', String(on));
+      }
+      // Collapse a whole facet group once all its pills are hidden, so an empty
+      // "Genre blend" label never lingers under a narrowing selection.
+      for (const fg of fgroups) {
+        const anyVisible = Array.from(fg.querySelectorAll<HTMLElement>('.pill')).some((p) => !p.hidden);
+        fg.hidden = !anyVisible;
       }
       for (const t of tags) {
         const g = t.dataset.group as FK;

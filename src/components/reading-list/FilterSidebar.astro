@@ -150,7 +150,7 @@ const counts = {
     align-items: baseline;
     gap: var(--s1);
   }
-  .fglabel .tip { text-transform: none; letter-spacing: 0; color: var(--color-border); font-size: 0.62rem; }
+  .fglabel .tip { text-transform: none; letter-spacing: 0; color: var(--color-text-muted); font-size: 0.62rem; }
 
   .pills { display: flex; flex-wrap: wrap; gap: 6px; }
   .pill {
@@ -168,6 +168,10 @@ const counts = {
     transition: border-color 0.12s ease, background 0.12s ease;
     user-select: none;
   }
+  /* [hidden] must beat `display: inline-flex` above (and `display: block`
+     below), or a narrowed-out pill/group still paints — same lesson as .seg */
+  .pill[hidden],
+  .fgroup[hidden] { display: none; }
   .pill:hover { border-color: var(--color-text-muted); }
   .pill .n {
     font-size: 0.6rem;

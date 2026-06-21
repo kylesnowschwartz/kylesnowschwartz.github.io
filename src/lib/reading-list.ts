@@ -27,7 +27,7 @@ export function activeCount(active: ActiveState): number {
   return active.g.size + active.s.size + active.b.size;
 }
 
-function bookMatchesGroup(bk: Book, active: ActiveState, key: FacetKey, mode: Mode): boolean {
+export function bookMatchesGroup(bk: Book, active: ActiveState, key: FacetKey, mode: Mode): boolean {
   const sel = active[key];
   if (sel.size === 0) return true;
   const v = bk[key];
@@ -42,4 +42,31 @@ export function visible(bk: Book, active: ActiveState, groups: FacetGroup[], mod
 
 export function countForMode(books: Book[], active: ActiveState, groups: FacetGroup[], mode: Mode): number {
   return books.reduce((n, bk) => n + (visible(bk, active, groups, mode) ? 1 : 0), 0);
+}
+
+/**
+ * Faceted availability: for each value in `group`, how many books carry it
+ * among those already matching every OTHER group's active filters. Excluding
+ * the value's own group is what keeps the two filter rules intact — within a
+ * group, pills widen (a sibling pill never zeroes out its neighbours), so its
+ * own selection is dropped; across groups, pills narrow, so those constraints
+ * stay. A value the client should hide (e.g. "Hard Magic" once "Nonfiction" is
+ * picked) lands here as 0.
+ */
+export function availableCounts(
+  books: Book[],
+  active: ActiveState,
+  groups: FacetGroup[],
+  group: FacetKey,
+  mode: Mode,
+): Map<string, number> {
+  const others = groups.filter((g) => g.key !== group);
+  const counts = new Map<string, number>();
+  for (const bk of books) {
+    if (!others.every((g) => bookMatchesGroup(bk, active, g.key, mode))) continue;
+    const v = bk[group];
+    const vals = Array.isArray(v) ? v : [v];
+    for (const x of vals) counts.set(x as string, (counts.get(x as string) || 0) + 1);
+  }
+  return counts;
 }

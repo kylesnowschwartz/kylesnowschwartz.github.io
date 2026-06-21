@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { BOOKS, GROUPS } from '../data/reading-list';
-import { emptyActive, activeCount, visible, countForMode } from './reading-list';
+import { emptyActive, activeCount, visible, countForMode, availableCounts } from './reading-list';
 
 /**
  * These tests pin down the ANY (or) vs ALL (and) semantics that drive the
@@ -77,6 +77,39 @@ describe('reading-list filter model', () => {
     // Two co-occurring sub-genres → counts differ → the toggle must show.
     const twoSubs = { ...emptyActive(), s: sel('Epic Fantasy', 'Grimdark') };
     expect(countForMode(BOOKS, twoSubs, GROUPS, 'or')).not.toBe(countForMode(BOOKS, twoSubs, GROUPS, 'and'));
+  });
+
+  describe('availableCounts — faceted pill narrowing', () => {
+    it('with no filters, equals the static full-library counts per value', () => {
+      const active = emptyActive();
+      const s = availableCounts(BOOKS, active, GROUPS, 's', 'or');
+      const epic = BOOKS.filter((b) => b.s.includes('Epic Fantasy')).length;
+      expect(s.get('Epic Fantasy')).toBe(epic);
+    });
+
+    it('narrows a cross-group facet: a sub-genre absent from the picked genre drops to 0/undefined', () => {
+      // Pick a genre, then any sub-genre that no book of that genre carries must
+      // be unavailable — this is the "Nonfiction + Hard Magic" dead-end case.
+      const active = { ...emptyActive(), g: sel('Nonfiction') };
+      const s = availableCounts(BOOKS, active, GROUPS, 's', 'or');
+      const nonfictionSubs = new Set(BOOKS.filter((b) => b.g === 'Nonfiction').flatMap((b) => b.s));
+      for (const [val, n] of s) {
+        expect(n).toBeGreaterThan(0);
+        expect(nonfictionSubs.has(val)).toBe(true);
+      }
+      // A sub-genre that exists in the library but not under Nonfiction is gone.
+      const orphan = [...new Set(BOOKS.flatMap((b) => b.s))].find((v) => !nonfictionSubs.has(v));
+      if (orphan) expect(s.get(orphan)).toBeUndefined();
+    });
+
+    it('does not narrow within a group: sibling genres keep their full counts (they widen)', () => {
+      // Selecting one genre must NOT shrink the other genre pills — same-group
+      // pills combine as OR, so they stay clickable to widen the result.
+      const active = { ...emptyActive(), g: sel('Nonfiction') };
+      const g = availableCounts(BOOKS, active, GROUPS, 'g', 'or');
+      const sff = BOOKS.filter((b) => b.g === 'SFF').length;
+      expect(g.get('SFF')).toBe(sff);
+    });
   });
 
   it('every book is enriched (has an isbn, or noIsbn after a failed lookup)', () => {
