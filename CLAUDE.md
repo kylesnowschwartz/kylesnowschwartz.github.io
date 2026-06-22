@@ -112,20 +112,20 @@ Design spec extracted from Space Jam 1996: .agent-history/reverse-prompt-spaceja
 
 ## Reading List (data synced from the external `shelf` repo)
 
-`/reading-list` is a filterable map of books Kyle has read. This repo renders it from two
-**committed copies** owned by the external `shelf` engine:
-- `src/data/books.json` — the read shelf. An Astro content collection + Zod schema in
-  `src/content.config.ts` validates it at build (git-as-DB — a bad genre fails `astro sync`).
-- `src/lib/recommend.ts` — the pure ranking model (shared with the page's client-side filters).
+`/reading-list` is a filterable map of books Kyle has read. This repo renders it from a single
+**committed copy** owned by the external `shelf` engine: `src/data/books.json`. An Astro
+content collection + Zod schema in `src/content.config.ts` validates it at build (git-as-DB —
+a bad genre fails `astro sync`). The page's faceted filtering lives entirely in
+`src/lib/reading-list.ts` (no ranking model — that's the shelf engine's, not the website's).
 
-**Both are derived, not authored here.** The `shelf` repo (`../shelf`, separate git repo) is
-the source of truth and the only writer. After Kyle changes the shelf, `shelf export` writes
-byte-identical copies into this repo's `src/data/` and `src/lib/`; committing them deploys the
-update. **Never hand-edit these two files** — the next `shelf export` overwrites them.
+**`books.json` is derived, not authored here.** The `shelf` repo (separate git repo) is the
+source of truth and the only writer. After Kyle changes the shelf, `shelf export` writes a
+byte-identical copy into this repo's `src/data/`; committing it deploys the update.
+**Never hand-edit `src/data/books.json`** — the next `shelf export` overwrites it.
 
 The full recommendation engine — `add`/`fetch`/`embed`/`build`/`next`/`profile`/`retrieve` and
-the agent usage contract (`AGENTS.md`) — now lives in the `shelf` repo. The Claude Code driver
-`.claude/skills/shelf-skill/` (local, git-ignored) runs `shelf` from there, not from this repo.
+the agent usage contract (`AGENTS.md`) — lives in the `shelf` repo, distributed as a Claude
+Code plugin (skill + `bin/shelf`). The driver is no longer kept in this repo.
 
 ---
 
