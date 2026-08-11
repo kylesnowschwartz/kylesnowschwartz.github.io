@@ -17,6 +17,11 @@ interface Props {
 }
 
 const { years, data, headers = ["Year", "🏆 Champion", "🍌 Last Place"] } = Astro.props;
+
+const footnotes = years
+  .filter(year => data[year].note)
+  .map((year, i) => ({ year, marker: "*".repeat(i + 1), text: data[year].note! }));
+const markerFor = (year: number) => footnotes.find(f => f.year === year)?.marker;
 ---
 
 <table class="fame-shame-table">
@@ -31,13 +36,21 @@ const { years, data, headers = ["Year", "🏆 Champion", "🍌 Last Place"] } = 
       return (
         <tr class:list={[{ 'missing-year': d.missing }]}>
           <td class="year-col">{year}</td>
-          <td class="fame-col">{d.champion}</td>
+          <td class="fame-col">{d.champion}{markerFor(year) && <sup class="footnote-marker">{markerFor(year)}</sup>}</td>
           <td class="shame-col">{d.lastPlace}</td>
         </tr>
       );
     })}
   </tbody>
 </table>
+
+{footnotes.length > 0 && (
+  <p class="fame-shame-footnotes">
+    {footnotes.map(f => (
+      <span class="footnote"><sup class="footnote-marker">{f.marker}</sup>{f.text}</span>
+    ))}
+  </p>
+)}
 
 <style>
   .fame-shame-table {
@@ -84,5 +97,20 @@ const { years, data, headers = ["Year", "🏆 Champion", "🍌 Last Place"] } = 
 
   .shame-col {
     color: var(--wce-text-red);
+  }
+
+  .fame-shame-footnotes {
+    margin: var(--wce-space-sm) 0 0;
+    font-size: 0.75rem;
+    color: var(--wce-silver);
+  }
+
+  .footnote {
+    display: block;
+  }
+
+  .footnote-marker {
+    color: var(--wce-text-yellow);
+    margin-right: 3px;
   }
 </style>

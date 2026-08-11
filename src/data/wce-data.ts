@@ -13,6 +13,8 @@ export interface SeasonData {
   lastPlace: string;
   lastPlaceMgr: string;
   missing?: boolean;
+  /** Footnote shown under the Wall of Fame & Shame when Yahoo's numbers are wrong. */
+  note?: string;
 }
 
 export interface Team {
@@ -43,26 +45,34 @@ const MISSING_YEAR: SeasonData = {
 
 export const LEAGUE_DATA: Record<number, SeasonData> = {
   2005: MISSING_YEAR,
-  2006: { champion: "Beantown Ballers", championMgr: "JBex", record: "8-6", lastPlace: "BATMAN", lastPlaceMgr: "Kyle" },
+  // TODO: recover Ben Walker's real 2006 record; Yahoo's is unusable.
+  2006: {
+    champion: "Team Weak",
+    championMgr: "Ben Walker",
+    record: MISSING,
+    lastPlace: "BATMAN",
+    lastPlaceMgr: "Kyle",
+    note: "Ben Walker won 2006. Yahoo credits Beantown Ballers (Justin) and its win-loss record for the year is wrong."
+  },
   2007: MISSING_YEAR,
   2008: MISSING_YEAR,
   2009: MISSING_YEAR,
   2010: { champion: "Captain Arab", championMgr: "Nahush", record: "12-2", lastPlace: "Dallas Cowboys", lastPlaceMgr: "Unknown" },
-  2011: { champion: "The Violets", championMgr: "Ben", record: "9-5", lastPlace: "kittencock", lastPlaceMgr: "THomas" },
+  2011: { champion: "The Violets", championMgr: "Ben Walker", record: "9-5", lastPlace: "kittencock", lastPlaceMgr: "THomas" },
   2012: { champion: "Mohawk National", championMgr: "McLean", record: "9-5", lastPlace: "TheTheobaldWolftones", lastPlaceMgr: "Bryan" },
   2013: { champion: "Big Bird", championMgr: "Jonathan Young", record: "9-5", lastPlace: "Bronuts", lastPlaceMgr: "THomas" },
   2014: { champion: "Embrace The Chaos!", championMgr: "Gary", record: "9-5", lastPlace: "Half-Smokes", lastPlaceMgr: "Dave G" },
   2015: { champion: "Half-Smokes", championMgr: "Dave G", record: "9-5", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
-  2016: { champion: "Koala lambpork", championMgr: "THomas", record: "7-7", lastPlace: "The Violets", lastPlaceMgr: "Ben" },
+  2016: { champion: "Koala lambpork", championMgr: "THomas", record: "7-7", lastPlace: "The Violets", lastPlaceMgr: "Ben Walker" },
   2017: { champion: "Nerd Rage", championMgr: "Kyle", record: "10-4", lastPlace: "Big Bird", lastPlaceMgr: "Jonathan Young" },
   2018: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "10-4", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
-  2019: { champion: "Ben's Bold Team", championMgr: "Ben", record: "7-7", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
+  2019: { champion: "Ben's Bold Team", championMgr: "Ben Knopf", record: "7-7", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
   2020: { champion: "Big Bird", championMgr: "Jonathan Young", record: "10-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
   2021: { champion: "Mohawk National", championMgr: "McLean", record: "11-4", lastPlace: "Mi Nombre es Peyton", lastPlaceMgr: "Aaron" },
   2022: { champion: "Koala lambpork", championMgr: "THomas", record: "9-6", lastPlace: "F.U.B.A.R.", lastPlaceMgr: "Bryan" },
   2023: { champion: "TheSkeeterValentines", championMgr: "JBex", record: "9-5", lastPlace: "Mohawk National", lastPlaceMgr: "McLean" },
   2024: { champion: "Koala lambpork", championMgr: "THomas", record: "14-1", lastPlace: "Nerd Rage", lastPlaceMgr: "Kyle" },
-  2025: { champion: "Koala lambpork", championMgr: "THomas", record: "8-7", lastPlace: "The Violets", lastPlaceMgr: "Ben" }
+  2025: { champion: "Koala lambpork", championMgr: "THomas", record: "8-7", lastPlace: "The Violets", lastPlaceMgr: "Ben Walker" }
 };
 
 // Current season standings
@@ -76,11 +86,11 @@ export const TEAMS: Team[] = [
   { name: "Mohawk National", manager: "McLean", wins: 8, losses: 7 },
   { name: "Big Bird", manager: "Jonathan Young", wins: 7, losses: 8 },
   { name: "Embrace The Chaos!", manager: "Gary", wins: 8, losses: 7 },
-  { name: "Ben's Bold Team", manager: "Ben", wins: 8, losses: 7 },
+  { name: "Ben's Bold Team", manager: "Ben Knopf", wins: 8, losses: 7 },
   { name: "Half-Smokes", manager: "Dave G", wins: 7, losses: 8 },
   { name: "SCHNEEBO'S CTE DREAMERZ", manager: "Boost Poppa Charlie", wins: 7, losses: 8 },
   { name: "TheSkeeterValentines", manager: "JBex", wins: 6, losses: 9 },
-  { name: "The Violets", manager: "Ben", wins: 3, losses: 12 }
+  { name: "The Violets", manager: "Ben Walker", wins: 3, losses: 12 }
 ];
 
 // Manager history - aggregated from all seasons
@@ -90,9 +100,14 @@ export const HEROES: Record<string, Hero> = {
     teamNames: ["Mi Nombre es Peyton"],
     seasons: 14
   },
-  "Ben": {
+  "Ben Knopf": {
+    years: "2019-2025",
+    teamNames: ["Ben's Bold Team"],
+    seasons: 7
+  },
+  "Ben Walker": {
     years: "2006-2025",
-    teamNames: ["Team Weak", "The Violets", "Ben's Bold Team"],
+    teamNames: ["Team Weak", "The Violets"],
     seasons: 17
   },
   "Boost Poppa Charlie": {
@@ -150,7 +165,10 @@ export const HEROES: Record<string, Hero> = {
 };
 
 /**
- * Display name mapping - transforms API names to display names
+ * Display name mapping - transforms API names to display names.
+ *
+ * Yahoo reports both Ben Knopf and Ben Walker under the nickname "Ben", so they
+ * cannot be told apart by name alone; their full names are written into the data above.
  */
 const MANAGER_DISPLAY_NAMES: Record<string, string> = {
   'BC': 'Conway',
