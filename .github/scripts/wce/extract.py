@@ -21,8 +21,9 @@ from yfpy.query import YahooFantasySportsQuery
 
 # Paths
 SCRIPT_DIR = Path(__file__).parent
-PROJECT_DIR = SCRIPT_DIR.parent
-DATA_DIR = PROJECT_DIR / "data"
+PROJECT_DIR = SCRIPT_DIR.parent  # holds the .env with the Yahoo credentials
+REPO_ROOT = SCRIPT_DIR.parents[2]
+DATA_DIR = REPO_ROOT / "public/worst-commish-ever/data"
 
 # League info
 GAME_CODE = "nfl"
