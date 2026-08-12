@@ -11,7 +11,6 @@ import {
   TEAMS,
   CURRENT_YEAR,
   HERO_POPUPS,
-  displayName,
   getLeagueYears,
   getHeroesSorted
 } from '../../data/wce-data.ts';
@@ -68,7 +67,7 @@ const sortedHeroes = getHeroesSorted();
         {TEAMS.map(team => (
           <TeamCard
             name={team.name}
-            manager={displayName(team.manager)}
+            manager={team.manager}
             wins={team.wins}
             losses={team.losses}
             year={CURRENT_YEAR}

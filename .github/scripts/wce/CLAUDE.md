@@ -14,4 +14,8 @@ const HERO_POPUPS = {
 
 ---
 
-Ensure you maintain the MANAGER_DISPLAY_NAMES pattern in src/data/wce-data.ts which maps API data to display data.
+Yahoo's nicknames are mapped to display names in the `identities` list in
+`src/data/wce-corrections.json`. Each entry names the person, the Yahoo nickname, and
+optionally the teams that scope it, which is how two managers sharing one nickname are
+told apart. `src/data/wce-seasons.generated.ts` is derived from the extracts plus that
+file and is never edited by hand — change the corrections and run `npm run wce:data`.

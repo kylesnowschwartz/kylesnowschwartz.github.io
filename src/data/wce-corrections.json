@@ -1,0 +1,44 @@
+{
+  "$comment": "Hand-authored. Every deviation from Yahoo's raw season.json lives here and nowhere else. Editing this file and re-running `npm run wce:data` is the only way to change src/data/wce-seasons.generated.ts.",
+
+  "identities": [
+    {
+      "person": "Ben Knopf",
+      "yahooNickname": "Ben",
+      "teams": ["Ben's Bold Team"],
+      "reason": "Yahoo reports Ben Knopf and Ben Walker under the same nickname, so they can only be told apart by team."
+    },
+    {
+      "person": "Ben Walker",
+      "yahooNickname": "Ben",
+      "teams": ["Team Weak", "The Violets"],
+      "reason": "Yahoo reports Ben Knopf and Ben Walker under the same nickname, so they can only be told apart by team."
+    },
+    {
+      "person": "Conway",
+      "yahooNickname": "BC",
+      "reason": "Conway's nickname changed between seasons."
+    },
+    {
+      "person": "Conway",
+      "yahooNickname": "Bryan",
+      "reason": "Conway's nickname changed between seasons."
+    },
+    {
+      "person": "Unknown",
+      "yahooNickname": "--hidden--",
+      "listAsManager": false,
+      "reason": "Yahoo hides these managers' nicknames. Four teams across 2006, 2010, and 2011 are affected and may be four different people, so they get no manager card."
+    }
+  ],
+
+  "seasons": {
+    "2006": {
+      "champion": "Team Weak",
+      "note": "Ben Walker won 2006 with Team Weak. Yahoo ranks Beantown Ballers first, and both teams finished 8-6, so Yahoo's tiebreak between them is where the record went wrong.",
+      "reason": "Yahoo's rank for this season is wrong. Ben Walker won; Yahoo credits Justin's Beantown Ballers."
+    }
+  },
+
+  "firstSeason": 2005
+}
