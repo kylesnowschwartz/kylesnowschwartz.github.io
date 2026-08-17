@@ -24,12 +24,13 @@ const { title, class: className } = Astro.props;
     height: 100%; /* fill the grid cell so row neighbours align */
   }
 
-  /* "Who" is the lead narrative (tier 2): its first line reads larger,
-     anchoring the page's reading order below the wordmark. */
+  /* "Who" is the lead narrative (tier 2): its first line reads larger and
+     in the display mono, anchoring the reading order below the wordmark. */
   .who .panel-content :global(p:first-child) {
-    font-size: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 1.375rem;
     color: var(--color-text);
-    line-height: 1.4;
+    line-height: 1.3;
     margin-bottom: 1rem;
   }
 
@@ -38,29 +39,30 @@ const { title, class: className } = Astro.props;
     box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
   }
 
+  /* Terminal-poster header: the panel title IS the loud element — display-
+     sized mono with a prompt glyph, instead of a whispering eyebrow. */
   .panel-header {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
+    line-height: 1;
     color: var(--color-accent-tertiary);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    margin-bottom: var(--s3);
   }
 
   .panel-header::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--color-accent-tertiary);
+    content: '> ';
+    color: var(--color-accent);
   }
 
   .panel-content {
-    font-size: 0.9375rem;
-    color: var(--color-text-muted);
-    line-height: 1.7;
+    font-family: var(--font-grotesk);
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.55;
+    overflow-wrap: anywhere;
   }
 
   .panel-content :global(p) {

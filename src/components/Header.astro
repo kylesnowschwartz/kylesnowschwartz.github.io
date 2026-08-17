@@ -148,7 +148,7 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
 
   .tagline {
     font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: clamp(1rem, 1.6vw, 1.375rem);
     color: var(--color-text-muted);
     margin-top: var(--s4);
   }

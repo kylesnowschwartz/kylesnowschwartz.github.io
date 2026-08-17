@@ -1,0 +1,153 @@
+---
+// Full-width Projects band — the marquee row of the page grid. Spans all 13
+// columns, echoing the wordmark's horizontal run; repos flow in three
+// mono columns (one on mobile).
+interface Project {
+  name: string;
+  href: string;
+  lang?: string;
+  desc?: string;
+}
+
+interface Props {
+  repos: Project[];
+  class?: string;
+}
+
+const { repos, class: className } = Astro.props;
+
+// Short text labels for language badges — readable at any size, terminal-native
+const langBadges: Record<string, string> = {
+  go: 'Go',
+  ruby: 'Rb',
+  shell: 'Sh',
+  ts: 'TS',
+  js: 'JS',
+};
+---
+
+<section class:list={['projects-panel', className]}>
+  <h3 class="projects-header">Projects</h3>
+  <ul class="project-list">
+    {repos.map((project) => {
+      const badge = project.lang ? langBadges[project.lang] : null;
+      return (
+        <li>
+          <a href={project.href}>
+            <span class="project-name">
+              {project.name}
+              {badge && <span class="lang-badge">{badge}</span>}
+            </span>
+            {project.desc && <span class="project-desc">{project.desc}</span>}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<style>
+  .projects-panel {
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+
+  .projects-panel:hover {
+    border-color: var(--color-accent-secondary);
+    box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
+  }
+
+  .projects-header {
+    font-family: var(--font-mono);
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--color-accent-tertiary);
+    margin-bottom: var(--s3);
+  }
+
+  .projects-header::before {
+    content: '> ';
+    color: var(--color-accent);
+  }
+
+  .project-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: var(--s4);
+    row-gap: var(--s2);
+  }
+
+  .project-list a {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    display: block;
+    position: relative;
+    padding: 0.125rem 0;
+    transition: color 0.2s ease;
+  }
+
+  .project-list a::before {
+    content: '>';
+    position: absolute;
+    left: -0.85rem;
+    color: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .project-list a:hover {
+    color: var(--color-accent);
+  }
+
+  .project-list a:hover::before {
+    opacity: 1;
+  }
+
+  .project-name {
+    display: block;
+  }
+
+  .lang-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    line-height: 1;
+    padding: 0.1em 0.3em;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    vertical-align: 0.1em;
+    margin-right: 0.2rem;
+    transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .project-list a:hover .lang-badge {
+    opacity: 1;
+    color: var(--color-accent-tertiary);
+    border-color: var(--color-accent-tertiary);
+  }
+
+  .project-desc {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    margin-top: 0.1rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 900px) {
+    .project-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

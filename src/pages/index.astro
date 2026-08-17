@@ -2,21 +2,31 @@
 // Main site homepage
 import '../styles/global.css';
 import Header from '../components/Header.astro';
-import Sidebar from '../components/Sidebar.astro';
+import OnSiteShelf from '../components/OnSiteShelf.astro';
+import ProjectsPanel from '../components/ProjectsPanel.astro';
 import AboutPanel from '../components/AboutPanel.astro';
 import SkillsSection from '../components/SkillsSection.astro';
 import Footer from '../components/Footer.astro';
 
-// External code (GitHub) — rendered as the terminal-style `> name` list.
+// External code (GitHub) — the full-width marquee band. Reading order =
+// importance: proven adoption first, then the newest agent-tooling
+// direction, then distinctive ecosystem work, one product closer.
 const repos = [
   { name: 'tail-claude', href: 'https://github.com/kylesnowschwartz/tail-claude', lang: 'go', desc: 'TUI for Claude sessions' },
-  { name: 'SimpleClaude', href: 'https://github.com/kylesnowschwartz/SimpleClaude', lang: 'ruby', desc: 'Claude plugin framework' },
+  { name: 'SimpleClaude', href: 'https://github.com/kylesnowschwartz/SimpleClaude', lang: 'ruby', desc: 'practical minimalism for AI-assisted programming' },
   { name: 'zsh-ai-cmd', href: 'https://github.com/kylesnowschwartz/zsh-ai-cmd', lang: 'shell', desc: 'natural language to shell' },
   { name: 'claude-code-hero', href: 'https://github.com/kylesnowschwartz/claude-code-hero', lang: 'ruby', desc: 'gamified Claude Code quest' },
-  { name: 'ralph-ban', href: 'https://github.com/kylesnowschwartz/ralph-ban', lang: 'go', desc: 'ralph/kanban hybrid' },
-  { name: 'tail-claude-hud', href: 'https://github.com/kylesnowschwartz/tail-claude-hud', lang: 'go', desc: 'statusline for Claude sessions' },
-  { name: 'hgnucomb', href: 'https://github.com/kylesnowschwartz/hgnucomb', lang: 'ts', desc: 'spatial terminal multiplexer' },
   { name: 'claude-bumper-lanes', href: 'https://github.com/kylesnowschwartz/claude-bumper-lanes', lang: 'go', desc: 'git-backed edit guardrails' },
+  { name: 'ralph-ban', href: 'https://github.com/kylesnowschwartz/ralph-ban', lang: 'go', desc: 'ralph/kanban hybrid' },
+  { name: 'agent-ouija', href: 'https://github.com/kylesnowschwartz/agent-ouija', lang: 'go', desc: 'read agent session state off disk' },
+  { name: 'agent-love-letters', href: 'https://github.com/kylesnowschwartz/agent-love-letters', lang: 'js', desc: 'one-shot letters for agents in other repos' },
+  { name: 'tail-claude-mux', href: 'https://github.com/kylesnowschwartz/tail-claude-mux', lang: 'go', desc: 'tmux sidebar with live agent state' },
+  { name: 'gearshifter', href: 'https://github.com/kylesnowschwartz/gearshifter', lang: 'go', desc: 'tmux control-deck popup for Claude Code' },
+  { name: 'hgnucomb', href: 'https://github.com/kylesnowschwartz/hgnucomb', lang: 'ts', desc: 'spatial terminal multiplexer' },
+  { name: 'prompt-intercept-pattern', href: 'https://github.com/kylesnowschwartz/prompt-intercept-pattern', lang: 'shell', desc: 'hook-intercepted commands, no API call' },
+  { name: 'plugin-dev', href: 'https://github.com/kylesnowschwartz/plugin-dev', lang: 'shell', desc: 'toolkit for building Claude Code plugins' },
+  { name: 'tail-claude-hud', href: 'https://github.com/kylesnowschwartz/tail-claude-hud', lang: 'go', desc: 'statusline for Claude sessions' },
+  { name: 'shelf', href: 'https://github.com/kylesnowschwartz/shelf', lang: 'js', desc: 'local reading-recommendation engine' },
 ];
 
 // On-site destinations — each rendered as a bespoke object that leaks the
@@ -78,7 +88,7 @@ const socialLinks = [
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;700&display=swap"
     rel="stylesheet">
   <script type="importmap">
   {
@@ -104,7 +114,9 @@ const socialLinks = [
 
   <div class="container">
     <main class="page-grid">
-      <Sidebar repos={repos} onSite={onSite} class="g-sidebar" />
+      <div class="onsite-box g-onsite">
+        <OnSiteShelf items={onSite} />
+      </div>
 
       <AboutPanel title="Who" class="g-who who">
         <p>Kyle Snow Schwartz.</p>
@@ -122,9 +134,11 @@ const socialLinks = [
         <p>Based in New Zealand since before it was cool.</p>
         <p>Find me on <a href="https://github.com/kylesnowschwartz">GitHub</a> or <a
             href="https://www.linkedin.com/in/kyle-snow-schwartz-432697103">LinkedIn</a>, read my <a
-            href="/cv/">CV</a>, or email <a
-            href="mailto:Kyle.SnowSchwartz@gmail.com">Kyle.SnowSchwartz@gmail.com</a>.</p>
+            href="/cv/">CV</a>, or email:</p>
+        <p class="email-line"><a href="mailto:Kyle.SnowSchwartz@gmail.com">Kyle.SnowSchwartz@<wbr />gmail.com</a></p>
       </AboutPanel>
+
+      <ProjectsPanel repos={repos} class="g-projects" />
 
       <SkillsSection header="What I know" categories={skills} variant="skills" class="g-know" />
       <SkillsSection header="What I believe" categories={values} variant="values" class="g-believe" />
@@ -235,9 +249,11 @@ const socialLinks = [
   /* === THE PAGE GRID — "making & breaking the grid" (see CLAUDE.md) ===
      One shared 13-column grid. Every block is placed by column span and
      shares alignment lines; folds land on Fibonacci ratios (≈ φ):
-       line 6  → sidebar : content = 5 : 8
-       line 11 → what : where      = 5 : 3
-       line 9  → know : believe    = 8 : 5
+       line 6  → shelf : content = 5 : 8
+       line 11 → what : where    = 5 : 3
+       line 9  → know : believe  = 8 : 5
+     Projects runs full-width (1 / 14) as the marquee band, echoing the
+     wordmark's horizontal energy.
      No negative-margin nudges. The only break is the header wordmark. */
   .page-grid {
     display: grid;
@@ -250,14 +266,43 @@ const socialLinks = [
     align-content: start;
   }
 
+  /* The email is as wide as the Where box: give it its own mono line that
+     breaks only at the <wbr> after the @, never mid-word. */
+  .email-line a {
+    font-family: var(--font-mono);
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
   /* Placement lives here; component styling stays in each component.
      g-* classes ride on the child component roots, so target them global. */
-  .page-grid > :global(.g-sidebar) { grid-column: 1 / 6;  grid-row: 1 / 3; }
+  .page-grid > .g-onsite           { grid-column: 1 / 6;  grid-row: 1 / 3; }
   .page-grid > :global(.g-who)     { grid-column: 6 / 14; grid-row: 1 / 2; }
   .page-grid > :global(.g-what)    { grid-column: 6 / 11; grid-row: 2 / 3; }
   .page-grid > :global(.g-where)   { grid-column: 11 / 14; grid-row: 2 / 3; }
-  .page-grid > :global(.g-know)    { grid-column: 1 / 9;  grid-row: 3 / 4; }
-  .page-grid > :global(.g-believe) { grid-column: 9 / 14; grid-row: 3 / 4; }
+  .page-grid > :global(.g-projects) { grid-column: 1 / 14; grid-row: 3 / 4; }
+  .page-grid > :global(.g-know)    { grid-column: 1 / 9;  grid-row: 4 / 5; }
+  .page-grid > :global(.g-believe) { grid-column: 9 / 14; grid-row: 4 / 5; }
+
+  /* On-site shelf as a standalone surface box; the shelf drops its
+     "section divider" chrome because the box provides the boundary. */
+  .onsite-box {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .onsite-box:hover {
+    border-color: var(--color-accent-secondary);
+    box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
+  }
+
+  .onsite-box :global(.onsite) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
 
   /* === ASYMMETRIC BACKGROUND COMPOSITION (z-index 0, behind content) === */
   .bg-layers {
@@ -329,10 +374,11 @@ const socialLinks = [
       min-height: 0;
     }
 
-    .page-grid > :global(.g-sidebar),
+    .page-grid > .g-onsite,
     .page-grid > :global(.g-who),
     .page-grid > :global(.g-what),
     .page-grid > :global(.g-where),
+    .page-grid > :global(.g-projects),
     .page-grid > :global(.g-know),
     .page-grid > :global(.g-believe) {
       grid-column: 1 / -1;
