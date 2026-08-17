@@ -1,0 +1,103 @@
+---
+/**
+ * CV Page - Colocated feature folder
+ *
+ * All CV-related files live in src/pages/cv/:
+ * - index.astro (this file) - page entry point
+ * - _data.ts - structured data (career, skills, qualifications)
+ * - _profile.md - profile prose section
+ * - _roles.md - selected roles prose section
+ * - _cv.css - print-first styles
+ * - _components/ - CV-specific components
+ * - CLAUDE.md - feature documentation
+ *
+ * Files prefixed with _ are excluded from Astro routing.
+ */
+
+// Local components (colocated)
+import CVHeader from './_components/CVHeader.astro';
+import ViewModeToggle from './_components/ViewModeToggle.astro';
+import MarkdownViewer from './_components/MarkdownViewer.astro';
+import CareerSummary from './_components/CareerSummary.astro';
+import SkillsGrid from './_components/SkillsGrid.astro';
+import Qualifications from './_components/Qualifications.astro';
+
+// Styles
+import '../../styles/global.css';
+import '../../styles/cv.css';
+
+// Single source of truth: frontmatter = structured data, body = prose
+import { Content as ProseContent, frontmatter as cv } from './_content.md';
+import contentRaw from './_content.md?raw';
+
+// Body-only raw markdown for the source view
+const rawSource = `# ${cv.name}\n\n${contentRaw.replace(/^---[\s\S]*?---\n/, '')}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{cv.name} - CV</title>
+  <meta name="description" content={`${cv.title} - ${cv.tagline || ''}`}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="cv-page" data-view-mode="html" data-zoom="125">
+  <ViewModeToggle />
+
+  <article class="cv-document">
+    <!-- HTML View (default) -->
+    <div class="view-html">
+      <CVHeader {...cv} />
+      <div class="cv-content">
+        <!-- All prose sections, in _content.md body order -->
+        <ProseContent />
+
+        <!-- Skills (structured) -->
+        {cv.skills && (
+          <SkillsGrid categories={cv.skills} />
+        )}
+
+        <!-- Qualifications (structured) -->
+        {cv.qualifications && (
+          <Qualifications entries={cv.qualifications} />
+        )}
+      </div>
+    </div>
+
+    <!-- Markdown View -->
+    <div class="view-markdown" hidden>
+      <MarkdownViewer source={rawSource} />
+    </div>
+
+    <footer class="cv-footer print-hidden">
+      <p>Last updated: {cv.updated}</p>
+    </footer>
+  </article>
+</body>
+</html>
+
+<style>
+  /* View mode visibility */
+  .cv-page[data-view-mode="html"] .view-html {
+    display: block;
+  }
+
+  .cv-page[data-view-mode="html"] .view-markdown {
+    display: none;
+  }
+
+  .cv-page[data-view-mode="markdown"] .view-html {
+    display: none;
+  }
+
+  .cv-page[data-view-mode="markdown"] .view-markdown {
+    display: block;
+  }
+</style>

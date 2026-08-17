@@ -1,0 +1,46 @@
+---
+/**
+ * CareerSummary - Renders career entries from structured frontmatter data
+ * Replaces HTML divs that were embedded in markdown
+ */
+interface CareerEntry {
+  role: string;
+  company: string;
+  location?: string;
+  type?: string; // e.g., "fully remote"
+  startDate: string;
+  endDate?: string; // undefined = "Present"
+}
+
+interface Props {
+  entries: CareerEntry[];
+  note?: string; // "Prior roles include..."
+}
+
+const { entries, note } = Astro.props;
+
+// Format date range: "Apr 2021 – Present" or "Oct 2015 – Mar 2021"
+function formatDateRange(start: string, end?: string): string {
+  return end ? `${start} – ${end}` : `${start} – Present`;
+}
+
+// Format role line: "Senior Engineer (fully remote) – Envato, NZ"
+function formatRole(entry: CareerEntry): string {
+  const parts = [entry.role];
+  if (entry.type) parts.push(`(${entry.type})`);
+  parts.push('–', entry.company);
+  if (entry.location) parts.push(`, ${entry.location}`);
+  return parts.join(' ').replace(' , ', ', ');
+}
+---
+
+<section class="career-summary">
+  <h2>Career Summary</h2>
+  {entries.map((entry) => (
+    <div class="career-entry">
+      <span class="role"><strong>{entry.role}</strong>{entry.type && ` (${entry.type})`} – {entry.company}{entry.location && `, ${entry.location}`}</span>
+      <span class="date">{formatDateRange(entry.startDate, entry.endDate)}</span>
+    </div>
+  ))}
+  {note && <p class="career-note">{note}</p>}
+</section>

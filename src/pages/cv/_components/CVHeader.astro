@@ -1,0 +1,163 @@
+---
+interface Props {
+  name: string;
+  title: string;
+  tagline?: string;
+  location: string;
+  phone?: string;
+  email: string;
+  website?: string;
+  github?: string;
+  linkedin?: string;
+}
+
+const { name, title, tagline, location, phone, email, website, github, linkedin } = Astro.props;
+
+// Build contact items for pipe-separated display
+const contactItems = [
+  location,
+  phone,
+  email,
+].filter(Boolean);
+---
+
+<header class="cv-header">
+  <h1>{name}</h1>
+  <p class="contact-line">
+    {contactItems.map((item, i) => (
+      <>
+        {i > 0 && <span class="separator">|</span>}
+        {item === email ? (
+          <a href={`mailto:${email}`}>{email}</a>
+        ) : (
+          <span>{item}</span>
+        )}
+      </>
+    ))}
+    {website && (
+      <>
+        <span class="separator">|</span>
+        <a href={`https://${website}`}>{website}</a>
+      </>
+    )}
+    {github && (
+      <>
+        <span class="separator">|</span>
+        <a href={`https://github.com/${github}`}>github.com/{github}</a>
+      </>
+    )}
+    {linkedin && (
+      <>
+        <span class="separator">|</span>
+        <a href={`https://www.linkedin.com/in/${linkedin}`}>linkedin.com/in/{linkedin}</a>
+      </>
+    )}
+  </p>
+  <p class="title-line">
+    <strong>{title}</strong>
+    {tagline && <span class="tagline">{tagline}</span>}
+  </p>
+  <div class="header-rule"></div>
+</header>
+
+<style>
+  .cv-header {
+    margin-bottom: 16pt;
+  }
+
+  h1 {
+    font-size: 24pt;
+    font-weight: 400;
+    color: var(--cv-header-bg, #1e293b);
+    margin-bottom: 4pt;
+    letter-spacing: -0.02em;
+  }
+
+  .contact-line {
+    font-size: 10pt;
+    color: var(--cv-accent, #2563eb);
+    margin-bottom: 6pt;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6pt;
+  }
+
+  .contact-line a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-line a:hover {
+    text-decoration: underline;
+  }
+
+  .separator {
+    opacity: 0.6;
+  }
+
+  .title-line {
+    font-size: 11pt;
+    color: var(--cv-text, #0f172a);
+    margin-bottom: 8pt;
+  }
+
+  .title-line strong {
+    font-weight: 600;
+  }
+
+  .header-rule {
+    height: 4pt;
+    background-color: var(--cv-accent, #2563eb);
+    border-radius: 2pt;
+  }
+
+  /* Print styles
+     Note: These are component-specific sizing adjustments (font sizes, margins)
+     not utility-class candidates. Utility classes work best for boolean toggles
+     (print-hidden, print-shadow-none) and common resets (print-p-0, print-m-0).
+  */
+  @media print {
+    .cv-header {
+      margin-bottom: 8pt;  /* Tighter for print density */
+    }
+
+    h1 {
+      font-size: 22pt;
+      margin-bottom: 2pt;
+    }
+
+    .contact-line {
+      font-size: 9pt;
+      margin-bottom: 3pt;
+      gap: 4pt;
+    }
+
+    .title-line {
+      font-size: 10pt;
+      margin-bottom: 4pt;
+    }
+
+    .header-rule {
+      height: 3pt;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 20pt;
+    }
+
+    .contact-line {
+      flex-direction: column;
+      gap: 4pt;
+    }
+
+    .separator {
+      display: none;
+    }
+  }
+</style>

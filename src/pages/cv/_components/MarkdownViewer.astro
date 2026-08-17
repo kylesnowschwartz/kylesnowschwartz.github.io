@@ -1,0 +1,112 @@
+---
+interface Props {
+  source: string;
+}
+
+const { source } = Astro.props;
+---
+
+<div class="markdown-viewer">
+  <div class="markdown-header">
+    <span class="filename">kyle-snow-schwartz.md</span>
+    <button type="button" class="copy-btn" aria-label="Copy to clipboard">
+      Copy
+    </button>
+  </div>
+  <pre class="markdown-source"><code>{source}</code></pre>
+</div>
+
+<script is:inline>
+  (function() {
+    const copyBtn = document.querySelector('.markdown-viewer .copy-btn');
+    const source = document.querySelector('.markdown-source code');
+
+    if (!copyBtn || !source) return;
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(source.textContent || '');
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      } catch (err) {
+        copyBtn.textContent = 'Failed';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      }
+    });
+  })();
+</script>
+
+<style>
+  .markdown-viewer {
+    background: var(--cv-text, #0f172a);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .markdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .filename {
+    font-family: var(--font-mono, 'Share Tech Mono', monospace);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .copy-btn {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .markdown-source {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: var(--font-mono, 'Share Tech Mono', monospace);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-source code {
+    font-family: inherit;
+  }
+
+  /* Hide in print */
+  @media print {
+    .markdown-viewer {
+      display: none !important;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .markdown-source {
+      font-size: 0.7rem;
+      padding: 0.75rem;
+    }
+  }
+</style>

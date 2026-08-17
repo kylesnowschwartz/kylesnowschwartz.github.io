@@ -24,3 +24,5 @@ dist/
 .hyperresearch/
 research/
 skills-lock.json
+mockups/
+.DS_Store

@@ -139,6 +139,16 @@ a:focus-visible {
   }
 }
 
+/* === PRINT === */
+@media print {
+  /* Remove scanline texture in print - causes empty pages */
+  body::before {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+  }
+}
+
 /* === RESPONSIVE GAP === */
 @media (max-width: 600px) {
   :root {
