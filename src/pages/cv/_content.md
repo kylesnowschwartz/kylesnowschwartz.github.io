@@ -26,7 +26,7 @@ Software engineer with eleven years of experience. Since sending my first prompt
 
 ## Selected Engagements — AI Adoption & Enablement (Envato, 2025–Present)
 
-### Embedded coaching: a new data warehouse (Apr–May 2026)
+### Embedded coaching: a new data warehouse
 
 The data team was starting a new data warehouse. I embedded with them for a month to coach AI-assisted workflows: 1-on-1 pairing sessions plus two hands-on workshops. The warehouse was built AI-first: agents generated the models from human-approved designs, then the team reconciled them row-for-row against the legacy warehouse. The team lead wrote: "The project has succeeded beyond all our expectations… it wouldn't have been possible without your support and guidance."
 
