@@ -36,7 +36,7 @@ I architected Envato's internal Claude Code plugin marketplace and am its top co
 
 ### Quantified before/after impact
 
-- A CI-optimization plugin cut build times by roughly **58% on average** across three pipelines.
+- A CI-optimization plugin cut build times by roughly **58% on average** across field-tested pipelines.
 - A dependency-management plugin I paired on let another team automate **80% of routine Dependabot PRs**.
 
 ### Workshops and community
