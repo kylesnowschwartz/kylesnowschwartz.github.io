@@ -2,7 +2,7 @@
 name: Kyle Snow Schwartz
 title: Applied AI Engineer
 tagline: I embed with engineering teams and make coding agents work for you
-location: Wellington, New Zealand · US/NZ dual citizen · NZT (UTC+12)
+location: Wellington, New Zealand · US/NZ dual citizen
 phone: +64 204 065 8034
 email: Kyle.SnowSchwartz@gmail.com
 website: kylesnowschwartz.com
