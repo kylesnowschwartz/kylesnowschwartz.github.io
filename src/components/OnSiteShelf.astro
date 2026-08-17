@@ -7,7 +7,7 @@
 interface OnSiteItem {
   name: string;
   href: string;
-  kind: 'jar' | 'spines' | 'trophy';
+  kind: 'jar' | 'spines' | 'trophy' | 'paper';
   desc?: string;
 }
 
@@ -34,6 +34,12 @@ const { items } = Astro.props;
               <i style="--c:#8a2233; --h:100%; --r:0deg"></i>
               <i style="--c:#5f7a3c; --h:80%; --r:9deg"></i>
               <i style="--c:#b07d2b; --h:92%; --r:18deg"></i>
+            </span>
+          )}
+          {item.kind === 'paper' && (
+            <span class="paper" aria-hidden="true">
+              <span class="paper-rule"></span>
+              <i></i><i></i><i></i><i style="--w:60%"></i>
             </span>
           )}
           {item.kind === 'trophy' && (
@@ -146,6 +152,52 @@ const { items } = Astro.props;
 
   .link-spines:hover .spines i {
     transform: rotate(var(--r)) translateY(-3px);
+  }
+
+  /* cv — a tilted A4 sheet with the CV's green header rule and faint text
+     lines; straightens on hover, like picking the page up off the desk. */
+  .link-paper {
+    text-align: center;
+  }
+
+  .paper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 42px;
+    height: 56px;
+    margin: 0 auto 0.5rem;
+    padding: 7px 6px;
+    background: #fdfdfc;
+    border: 1px solid rgba(60, 60, 60, 0.45);
+    transform: rotate(-4deg);
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .paper-rule {
+    display: block;
+    height: 3px;
+    background: #1d6a45;
+  }
+
+  .paper i {
+    display: block;
+    width: var(--w, 100%);
+    height: 2px;
+    background: rgba(60, 60, 60, 0.35);
+  }
+
+  .link-paper:hover .paper {
+    transform: rotate(0deg) translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .paper {
+      transition: none;
+    }
+    .link-paper:hover .paper {
+      transform: none;
+    }
   }
 
   /* worst-commish-ever — a deliberately 1996 GeoCities artifact: navy tiled
