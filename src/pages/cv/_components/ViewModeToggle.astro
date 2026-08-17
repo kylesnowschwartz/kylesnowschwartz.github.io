@@ -4,6 +4,8 @@
 ---
 
 <div class="cv-controls print-hidden">
+  <a class="home-link" href="/" aria-label="Back to homepage"><span class="prompt">&gt;</span> cd ~</a>
+
   <nav class="view-mode-toggle" aria-label="View mode">
     <button type="button" data-mode="markdown" aria-pressed="false">
       Markdown
@@ -89,6 +91,33 @@
     padding: 0.75rem;
     background: var(--cv-bg-muted, #f8fafc);
     border-radius: 6px;
+    position: relative;
+  }
+
+  /* Route home: a terminal wink pinned to the bar's left edge, so the
+     view controls stay visually centered. */
+  .home-link {
+    position: absolute;
+    left: 0.75rem;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--cv-border, #e2e8f0);
+    border-radius: 4px;
+    background: var(--cv-bg, white);
+    color: var(--cv-text-muted, #475569);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .home-link .prompt {
+    color: var(--cv-accent, #2563eb);
+  }
+
+  .home-link:hover {
+    border-color: var(--cv-accent, #2563eb);
+    color: var(--cv-accent, #2563eb);
   }
 
   .view-mode-toggle {
@@ -165,6 +194,12 @@
 
     .zoom-control {
       display: none;
+    }
+
+    .home-link {
+      position: static;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8rem;
     }
 
     button {
