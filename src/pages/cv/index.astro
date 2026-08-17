@@ -26,21 +26,12 @@ import Qualifications from './_components/Qualifications.astro';
 import '../../styles/global.css';
 import '../../styles/cv.css';
 
-// Import prose markdown sections (colocated)
-import { Content as ProfileContent } from './_profile.md';
-import { Content as ProjectsContent } from './_projects.md';
-import { Content as RolesContent } from './_roles.md';
+// Single source of truth: frontmatter = structured data, body = prose
+import { Content as ProseContent, frontmatter as cv } from './_content.md';
+import contentRaw from './_content.md?raw';
 
-// Load structured data
-import { cv } from './_data';
-
-// Read raw markdown for source view
-import profileRaw from './_profile.md?raw';
-import projectsRaw from './_projects.md?raw';
-import rolesRaw from './_roles.md?raw';
-
-// Combine raw sources for markdown viewer
-const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${projectsRaw}\n\n${rolesRaw}`;
+// Body-only raw markdown for the source view
+const rawSource = `# ${cv.name}\n\n${contentRaw.replace(/^---[\s\S]*?---\n/, '')}`;
 ---
 
 <!DOCTYPE html>
@@ -53,7 +44,7 @@ const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${projectsRaw}\n\n${rolesRaw
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;600&display=swap"
     rel="stylesheet">
 </head>
 
@@ -65,16 +56,8 @@ const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${projectsRaw}\n\n${rolesRaw
     <div class="view-html">
       <CVHeader {...cv} />
       <div class="cv-content">
-        <!-- Profile (prose) -->
-        <ProfileContent />
-
-        <!-- Projects (prose) -->
-        <ProjectsContent />
-
-        <!-- Career Summary (structured) -->
-        {cv.career && (
-          <CareerSummary entries={cv.career} note={cv.careerNote} />
-        )}
+        <!-- All prose sections, in _content.md body order -->
+        <ProseContent />
 
         <!-- Skills (structured) -->
         {cv.skills && (
@@ -85,9 +68,6 @@ const rawSource = `# ${cv.name}\n\n${profileRaw}\n\n${projectsRaw}\n\n${rolesRaw
         {cv.qualifications && (
           <Qualifications entries={cv.qualifications} />
         )}
-
-        <!-- Selected Roles (prose) -->
-        <RolesContent />
       </div>
     </div>
 

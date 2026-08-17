@@ -6,11 +6,12 @@ interface Props {
   location: string;
   phone?: string;
   email: string;
+  website?: string;
   github?: string;
   linkedin?: string;
 }
 
-const { name, title, tagline, location, phone, email, github, linkedin } = Astro.props;
+const { name, title, tagline, location, phone, email, website, github, linkedin } = Astro.props;
 
 // Build contact items for pipe-separated display
 const contactItems = [
@@ -33,10 +34,28 @@ const contactItems = [
         )}
       </>
     ))}
+    {website && (
+      <>
+        <span class="separator">|</span>
+        <a href={`https://${website}`}>{website}</a>
+      </>
+    )}
+    {github && (
+      <>
+        <span class="separator">|</span>
+        <a href={`https://github.com/${github}`}>github.com/{github}</a>
+      </>
+    )}
+    {linkedin && (
+      <>
+        <span class="separator">|</span>
+        <a href={`https://www.linkedin.com/in/${linkedin}`}>linkedin.com/in/{linkedin}</a>
+      </>
+    )}
   </p>
   <p class="title-line">
     <strong>{title}</strong>
-    {tagline && <> | {tagline}</>}
+    {tagline && <span class="tagline">{tagline}</span>}
   </p>
   <div class="header-rule"></div>
 </header>

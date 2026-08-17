@@ -481,3 +481,74 @@
     grid-template-columns: 1fr;
   }
 }
+
+.cv-content .skills-line {
+  margin: 0 0 0.35em;
+}
+
+@media print {
+  .cv-content .skills-line {
+    margin: 0 0 2pt;
+    font-size: 9pt;
+  }
+}
+
+/* ===================
+   GROTESK THEME (selected design)
+   Space Grotesk display · IBM Plex Sans body · forest-green accent
+   =================== */
+:root {
+  --cv-header-bg: #16211b;
+  --cv-accent: #1d6a45;
+  --cv-accent-light: #2a8a5c;
+  --cv-text: #16211b;
+  --cv-text-muted: #5a6660;
+  --cv-text-light: #5a6660;
+}
+
+.cv-page {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.52;
+  hyphens: none;
+}
+
+.cv-content h2,
+.cv-content h3,
+.cv-header h1 {
+  font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+  font-style: normal;
+}
+
+.cv-content h2 {
+  color: var(--cv-text);
+  font-size: 12pt;
+  font-weight: 700;
+  border-bottom: none;
+  display: table;
+  padding-bottom: 1pt;
+  border-bottom: 2pt solid var(--cv-accent);
+}
+
+.cv-content h3 { font-weight: 600; }
+
+.cv-content li { margin-bottom: 0.55em; }
+.cv-content ul { padding-left: 1.5em; }
+
+@media print {
+  .cv-page { line-height: 1.5; }
+  /* measure ~85 chars: wider side margins than the old Google-Docs match */
+  @page { margin: 0.45in 0.75in; }
+  .cv-content h2, .cv-content h3 { break-after: avoid-page; }
+  .cv-content p, .cv-content li { orphans: 2; widows: 2; }
+  .cv-content h2 {
+    border-bottom: 2pt solid var(--cv-accent);
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Centered header; tagline on its own line */
+.cv-header { text-align: center; }
+.cv-header .contact-line { justify-content: center; }
+.cv-header .title-line strong { display: block; }
+.cv-header .tagline { color: var(--cv-text-muted); display: block; }
