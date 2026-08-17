@@ -28,7 +28,7 @@ Software engineer with eleven years of experience. Since sending my first prompt
 
 ### Embedded coaching: a new data warehouse (Apr–May 2026)
 
-The data team was starting a new data warehouse. I embedded with them for a month to coach AI-assisted workflows: 1-on-1 pairing sessions plus two hands-on workshops. The warehouse was built AI-first, and the team lead wrote: "The project has succeeded beyond all our expectations… it wouldn't have been possible without your support and guidance."
+The data team was starting a new data warehouse. I embedded with them for a month to coach AI-assisted workflows: 1-on-1 pairing sessions plus two hands-on workshops. The warehouse was built AI-first: agents generated the models from human-approved designs, then the team reconciled them row-for-row against the legacy warehouse. The team lead wrote: "The project has succeeded beyond all our expectations… it wouldn't have been possible without your support and guidance."
 
 ### Platform: the internal plugin marketplace for coding agents
 
@@ -37,7 +37,7 @@ I architected Envato's internal plugin marketplace for coding agents and am its 
 ### Quantified before/after impact
 
 - I prototyped the consolidation of Envato's four Dependabot-triage systems into two layers: an SLA tracker and an AI remediation pipeline. Along the way I replaced an LLM step with a deterministic one, cutting agent cost per dependency review by roughly **95%** in live runs.
-- The Dependabot CLI another team runs in their tech-support process today derives from a tool I wrote; their lead credits it with "significantly reducing the load on tech support."
+- The Dependabot CLI another team runs in their tech-support process today is built from a tool I wrote; their lead credits it with "significantly reducing the load on tech support."
 
 ### Workshops and community
 
@@ -49,7 +49,7 @@ IT Ops asked for help creating an AI API key naming standard covering Claude, Op
 
 ### Engagements to strategy
 
-The team decides what to build through discovery: hypothesis-driven proposals verified with spikes. I run that loop end to end—I surveyed engineering org-wide, and my discovery proposal drawn from its results informed team OKRs. I also presented Envato's AI-engineering pedagogical approach to Shutterstock engineering (our parent company) in a cross-company session.
+The team decides what to build through discovery: hypothesis-driven proposals verified with spikes. I surveyed engineering org-wide, and my discovery proposal drawn from its results fed the team's Key Results planning. I also presented Envato's AI-engineering pedagogical approach to Shutterstock engineering (our parent company) in a cross-company session.
 
 ## Experience
 
@@ -63,7 +63,7 @@ Built white-labelable software for energy retailers, progressing from developer 
 
 ## OSS Projects
 
-**[tail-claude](https://github.com/kylesnowschwartz/tail-claude)** — A Go Bubble Tea TUI for reading Claude Code session logs: see what your agent actually did.
+**[tail-claude](https://github.com/kylesnowschwartz/tail-claude)** — A Go Bubble Tea TUI for reading Claude Code session logs: see what Claude hides from you.
 
 **[claude-code-hero](https://github.com/kylesnowschwartz/claude-code-hero)** — A training game that teaches Claude Code's full surface (hooks, agents, plugins, MCP); you ship your own working plugin in a Dungeon-Crawler setting completely built on Claude Code's runtime.
 
