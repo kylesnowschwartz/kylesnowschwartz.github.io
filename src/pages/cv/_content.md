@@ -34,11 +34,6 @@ The data team was starting a new data warehouse. I embedded with them for a mont
 
 I architected Envato's internal plugin marketplace for coding agents and am its top contributor of **21 domain-scoped plugins**. In an org-wide survey of engineering, the most-used shared plugin reached **69% adoption** amongst respondents, and other engineers now ship their own plugins into it. The CTO directed other engineers to me for MCP server guidance, and for help proving a tedious manual process could be automated with AI.
 
-### Quantified before/after impact
-
-- I prototyped the consolidation of Envato's four Dependabot-triage systems into two layers: an SLA tracker and an AI remediation pipeline. Along the way I replaced an LLM step with a deterministic one, cutting agent cost per dependency review by roughly **95%** in live runs.
-- The Dependabot CLI another team runs in their tech-support process today is built from a tool I wrote; their lead credits it with "significantly reducing the load on tech support."
-
 ### Workshops and community
 
 I've run a Claude Code workshop series since August 2025 and a weekly AI Community of Practice. I built **claude-code-hero**, a training game where engineers ship their own working Claude Code plugin. My mantra is "show don't tell."
@@ -49,7 +44,12 @@ IT Ops asked for help creating an AI API key naming standard covering Claude, Op
 
 ### Engagements to strategy
 
-The team decides what to build through discovery: hypothesis-driven proposals verified with spikes. I surveyed engineering org-wide, and my discovery proposal drawn from its results fed the team's Key Results planning. I also presented Envato's AI-engineering pedagogical approach to Shutterstock engineering (our parent company) in a cross-company session.
+My team decides what to build through discovery: hypothesis-driven proposals verified with spikes. I surveyed engineering org-wide, and my discovery proposal drawn from its results fed the team's Key Results planning. I also presented Envato's AI-engineering pedagogical approach to Shutterstock engineering (our parent company) in a cross-company session.
+
+### Quantified before/after impact
+
+- I prototyped the consolidation of Envato's four Dependabot-triage systems into two layers: an SLA tracker and an AI remediation pipeline. Along the way I replaced an LLM step with a deterministic one, cutting agent cost per dependency review by roughly **95%** in live runs.
+- The Dependabot CLI another team runs in their tech-support process today is built from a tool I wrote; their lead credits it with "significantly reducing the load on tech support."
 
 ## Experience
 
