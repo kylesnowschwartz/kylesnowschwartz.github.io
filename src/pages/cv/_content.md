@@ -22,7 +22,7 @@ qualifications:
 
 ## Profile
 
-Software engineer with eleven years of experience. Since sending my first prompt to Claude Code, I've barely touched an IDE—going all in on the highest level of abstraction available. When Envato opened its Claude Code beta in May 2025, I volunteered as an AI Champion, built the case for treating AI enablement as an engineering discipline, encouraged my team to treat Claude like a customizable operating system, and in March 2026 became a founding member of the AI Engineering team. My essay "Fault Lines in AI Engineering" influenced the team's operating strategy. The work below is that discipline in practice: embedding with teams, architecting agentic workflows, coaching & learning, and measuring what changed.
+Software engineer with eleven years of experience. Since sending my first prompt to Claude Code, I've barely touched an IDE—going all in on the highest level of abstraction available. When Envato opened its Claude Code beta in May 2025, I volunteered as an AI Champion, built the case for treating AI enablement as an engineering discipline, encouraged my team to treat Claude like a customizable operating system, and in March 2026 became a founding member of the AI Engineering team. My essay "Fault Lines in AI Engineering" helped shape the team's charter. The work below is that discipline in practice: embedding with teams, architecting agentic workflows, coaching & learning, and measuring what changed.
 
 ## Selected Engagements — AI Adoption & Enablement (Envato, 2025–Present)
 
