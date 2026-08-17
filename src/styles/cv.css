@@ -536,6 +536,17 @@
 
 @media print {
   .cv-page { line-height: 1.5; }
+  /* White paper: the site-wide texture tiles (global.css body layers) must not
+     print into the margins or past the document's end. */
+  html, body, .cv-page {
+    background: white !important;
+    background-image: none !important;
+  }
+  html::before, html::after, body::before, body::after {
+    display: none !important;
+    background: none !important;
+  }
+  .cv-document { box-shadow: none !important; }
   /* measure ~85 chars: wider side margins than the old Google-Docs match */
   @page { margin: 0.45in 0.75in; }
   .cv-content h2, .cv-content h3 { break-after: avoid-page; }
