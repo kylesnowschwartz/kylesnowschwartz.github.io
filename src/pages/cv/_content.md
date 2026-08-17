@@ -45,7 +45,7 @@ I've run a Claude Code workshop series since August 2025 and a weekly AI Communi
 
 ### From engagements to strategy
 
-I presented Envato's AI-engineering approach to Shutterstock engineering in a cross-company session, ran the org-wide survey of engineers, and authored the team's discovery proposal from its results—turning what we learned in individual engagements into the team's playbook.
+The team decides what to build through discovery: hypothesis-driven proposals verified with spikes. I run that loop end to end—I surveyed engineering org-wide, and my discovery proposal drawn from its results shaped what we build next. I also presented Envato's AI-engineering approach to Shutterstock engineering in a cross-company session.
 
 ## Experience
 
