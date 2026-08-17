@@ -1,7 +1,7 @@
 ---
 name: Kyle Snow Schwartz
 title: Applied AI Engineer
-tagline: I embed with engineering teams and make coding agents stick
+tagline: I embed with engineering teams and make coding agents work for you
 location: Wellington, New Zealand · US/NZ dual citizen · NZT (UTC+12)
 phone: +64 204 065 8034
 email: Kyle.SnowSchwartz@gmail.com
@@ -22,7 +22,7 @@ qualifications:
 
 ## Profile
 
-Software engineer with eleven years of experience. Since sending my first prompt to Claude Code, I've barely touched an IDE—going all in on the highest level of abstraction available. When Envato opened its Claude Code beta in May 2025, I volunteered as an AI Champion, built the case for treating AI enablement as an engineering discipline, and in March 2026 became a founding member of the AI Engineering team, where I authored "Fault Lines in AI Engineering", the team's operating strategy. The work below is that discipline in practice: embedding with teams, architecting agentic workflows, teaching, and measuring what changed.
+Software engineer with eleven years of experience. Since sending my first prompt to Claude Code, I've barely touched an IDE—going all in on the highest level of abstraction available. When Envato opened its Claude Code beta in May 2025, I volunteered as an AI Champion, built the case for treating AI enablement as an engineering discipline, encouraged my team to treat Claude like a customizable operating system, and in March 2026 became a founding member of the AI Engineering team. The work below is that discipline in practice: embedding with teams, architecting agentic workflows, teaching, and measuring what changed.
 
 ## Selected Engagements — AI Adoption & Enablement (Envato, 2025–Present)
 
@@ -49,7 +49,7 @@ I presented Envato's AI-engineering approach to Shutterstock engineering in a cr
 
 ## Experience
 
-### Senior Engineer | Envato (2021–Present)
+### Engineer III | Envato (2021–Present)
 
 Modernized a 15-year-old Rails marketplace serving millions of users—Rails 4.x through 7.x while keeping revenue flowing. Accountable for security, GDPR compliance, and zero-downtime delivery. Our 12-month handover of the platform to a contracting team was completed in less than 8 months—AI-assisted workflows I introduced were a big part of why. From May 2025, focus shifted to the AI adoption and enablement work above.
 
