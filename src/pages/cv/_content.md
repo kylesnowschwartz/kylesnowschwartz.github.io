@@ -22,30 +22,30 @@ qualifications:
 
 ## Profile
 
-Software engineer with eleven years of experience. Since sending my first prompt to Claude Code, I've barely touched an IDE—going all in on the highest level of abstraction available. When Envato opened its Claude Code beta in May 2025, I volunteered as an AI Champion, built the case for treating AI enablement as an engineering discipline, encouraged my team to treat Claude like a customizable operating system, and in March 2026 became a founding member of the AI Engineering team. My essay "Fault Lines in AI Engineering" influenced the team's operating strategy. The work below is that discipline in practice: embedding with teams, architecting agentic workflows, teaching, and measuring what changed.
+Software engineer with eleven years of experience. Since sending my first prompt to Claude Code, I've barely touched an IDE—going all in on the highest level of abstraction available. When Envato opened its Claude Code beta in May 2025, I volunteered as an AI Champion, built the case for treating AI enablement as an engineering discipline, encouraged my team to treat Claude like a customizable operating system, and in March 2026 became a founding member of the AI Engineering team. My essay "Fault Lines in AI Engineering" influenced the team's operating strategy. The work below is that discipline in practice: embedding with teams, architecting agentic workflows, coaching & learning, and measuring what changed.
 
 ## Selected Engagements — AI Adoption & Enablement (Envato, 2025–Present)
 
 ### Embedded coaching: Project Recast (Apr–May 2026)
 
-The data team was starting a new data warehouse. I embedded with them for a month to coach AI-assisted workflows—pair sessions plus two hands-on workshops. The warehouse was built AI-first, and the team lead wrote: "The project has succeeded beyond all our expectations… it wouldn't have been possible without your support and guidance."
+The data team was starting a new data warehouse. I embedded with them for a month to coach AI-assisted workflows: pair sessions plus two hands-on workshops. The warehouse was built AI-first, and the team lead wrote: "The project has succeeded beyond all our expectations… it wouldn't have been possible without your support and guidance."
 
 ### Platform: the internal Claude Code plugin marketplace
 
-I architected Envato's internal Claude Code plugin marketplace—**21 domain-scoped plugins**—and I'm its top contributor (**145/331 commits**, 18 contributors). In an org-wide survey of 27 engineers, the most-used shared plugin reached **69% adoption**, and other engineers now ship their own plugins into it. The CTO directed other engineers to me for MCP server guidance.
+I architected Envato's internal Claude Code plugin marketplace and am its top contributor of **21 domain-scoped plugins**. In an org-wide survey of engineering, the most-used shared plugin reached **69% adoption** amongst respondants, and other engineers now ship their own plugins into it. The CTO directed other engineers to me for MCP server guidance, and for help proving a tedious manual process could be automated with AI.
 
 ### Quantified before/after impact
 
-- A CI-optimization plugin cut build pipelines **19→8, 13→7, and 5→1.5 minutes**.
+- A CI-optimization plugin cut build times by roughly **58% on average** across three pipelines.
 - A dependency-management plugin I paired on let another team automate **80% of routine Dependabot PRs**.
 
 ### Workshops and community
 
-I've run a Claude Code workshop series since August 2025 and a weekly AI Community of Practice. I built claude-code-hero, a training game where engineers ship their own working Claude Code plugin. Coaching over instructing is how I work.
+I've run a Claude Code workshop series since August 2025 and a weekly AI Community of Practice. I built **claude-code-hero**, a training game where engineers ship their own working Claude Code plugin. My mantra is "show don't tell."
 
 ### From engagements to strategy
 
-I presented Envato's AI-engineering approach to Shutterstock engineering in a cross-company session (May 2026, ~13 attendees), ran the org-wide survey of 27 engineers, and authored the team's discovery proposal from its results—turning what we learned in individual engagements into the team's playbook.
+I presented Envato's AI-engineering approach to Shutterstock engineering in a cross-company session, ran the org-wide survey of engineers, and authored the team's discovery proposal from its results—turning what we learned in individual engagements into the team's playbook.
 
 ## Experience
 
