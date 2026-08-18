@@ -33,6 +33,25 @@ const schwartz = ascii('schwartz');
   </div>
 </header>
 
+<script>
+  // Fire-and-complete glitch: mouseenter arms it, animationend disarms it.
+  // While armed, re-entries are ignored, so the gesture always plays whole.
+  const header = document.querySelector('header')!;
+  const banner = header.querySelector('.ascii-banner')!;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  header.addEventListener('mouseenter', () => {
+    if (reducedMotion.matches) return;
+    banner.classList.add('is-glitching');
+  });
+
+  banner.addEventListener('animationend', (e) => {
+    if ((e.target as HTMLElement).classList.contains('name-schwartz')) {
+      banner.classList.remove('is-glitching');
+    }
+  });
+</script>
+
 <style>
   /* Viewport chrome, not document content: fixed so the rubber-band bounce
      can't peel it off the top. Reads as the chassis bezel edge. */
@@ -97,7 +116,63 @@ const schwartz = ascii('schwartz');
     white-space: pre;
     letter-spacing: -0.05em;
     user-select: none;
-    transition: transform var(--dur-long) var(--ease-out);
+  }
+
+  /* CRT sync-loss glitch: one-shot chromatic aberration on hover-in — the
+     red and cyan channels split in hard steps, then snap clean. The glitch
+     rolls down the wordmark (each name fires 60ms after the one above, like
+     sync loss traveling down a screen) while the stair-step deepens: each
+     name slides one further grid step right and holds while hovered. */
+  /* Split amplitude decays 3→2→1→0, keyframed to the boomerang's timeline:
+     hardest split at launch, flip at the 40% turnaround, dead by the time
+     the name settles home. Both animations share one 600ms clock. */
+  @keyframes crt-glitch {
+    0% {
+      text-shadow: -3px 0 var(--color-accent), 3px 0 var(--color-accent-secondary);
+      animation-timing-function: step-end;
+    }
+    40% {
+      text-shadow: 2px 0 var(--color-accent), -2px 0 var(--color-accent-secondary);
+      animation-timing-function: step-end;
+    }
+    65% {
+      text-shadow: -1px 0 var(--color-accent), 1px 0 var(--color-accent-secondary);
+      animation-timing-function: step-end;
+    }
+    85%, 100% {
+      text-shadow: none;
+    }
+  }
+
+  /* Boomerang: each name shoots out to its deepened step, then eases back
+     home — a one-shot gesture, not a held state. Distance set per name. */
+  @keyframes stair-boomerang {
+    0% {
+      transform: translateX(0);
+      animation-timing-function: var(--ease-out);
+    }
+    40% {
+      transform: translateX(var(--step, 13px));
+      animation-timing-function: var(--ease-in-out);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Triggered by the .is-glitching class (added on mouseenter, removed on
+     animationend) rather than :hover, so a fast mouse pass still plays the
+     full gesture instead of cancelling mid-flight. */
+  .ascii-banner.is-glitching .name {
+    animation: crt-glitch 600ms 1, stair-boomerang 600ms 1;
+  }
+  .ascii-banner.is-glitching .name-snow {
+    --step: calc(var(--s2) * 2);
+    animation-delay: 40ms;
+  }
+  .ascii-banner.is-glitching .name-schwartz {
+    --step: calc(var(--s2) * 3);
+    animation-delay: 80ms;
   }
 
   /* Stair-step stack: each tier indents further, so the longest line
@@ -112,10 +187,6 @@ const schwartz = ascii('schwartz');
 
   .ascii-banner .name-schwartz {
     padding-left: 16ch;
-  }
-
-  header:hover .ascii-banner {
-    transform: translateX(var(--s2));
   }
 
   /* Below the grid breakpoint there is no grid to break: the wordmark
