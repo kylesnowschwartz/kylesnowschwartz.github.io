@@ -1,10 +1,20 @@
 ---
 // Header component with ASCII banner and tagline
+import { readFileSync } from 'node:fs';
+
 interface Props {
   tagline?: string;
 }
 
 const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
+
+// Inline the wordmark at build time: the ASCII must be in the initial HTML
+// payload so the header renders complete on first paint, in step with the
+// page-grid's load cascade.
+const ascii = (name: string) => readFileSync(`public/ascii/${name}.txt`, 'utf-8');
+const kyle = ascii('kyle');
+const snow = ascii('snow');
+const schwartz = ascii('schwartz');
 ---
 
 <div class="theme-banner"></div>
@@ -14,28 +24,14 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
          container's right edge while staying pinned left to grid line 1. -->
     <div class="ascii-bleed">
       <div class="ascii-banner" aria-label="Kyle Snow Schwartz">
-        <span class="name name-kyle" data-src="/ascii/kyle.txt"></span>
-        <span class="name name-snow" data-src="/ascii/snow.txt"></span>
-        <span class="name name-schwartz" data-src="/ascii/schwartz.txt"></span>
+        <span class="name name-kyle">{kyle}</span>
+        <span class="name name-snow">{snow}</span>
+        <span class="name name-schwartz">{schwartz}</span>
       </div>
     </div>
     <p class="tagline"><span>{tagline}</span></p>
   </div>
 </header>
-
-<script>
-  // Load ASCII art from external files
-  document.querySelectorAll('.ascii-banner [data-src]').forEach(async (el) => {
-    try {
-      const response = await fetch((el as HTMLElement).dataset.src!);
-      if (response.ok) {
-        el.textContent = await response.text();
-      }
-    } catch (e) {
-      console.warn('Failed to load ASCII art:', (el as HTMLElement).dataset.src);
-    }
-  });
-</script>
 
 <style>
   .theme-banner {
