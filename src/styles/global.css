@@ -134,6 +134,14 @@ body > *:not(.bg-layers) {
   border: 0;
 }
 
+/* === TEXT SELECTION === */
+/* The one place the accent floods text: a neon red highlight bar. Ink stays
+   dark — cream-on-red falls below 4.5:1 contrast for selected body text. */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-text);
+}
+
 /* === FOCUS STATES === */
 a:focus-visible {
   outline: 2px solid var(--color-accent);
