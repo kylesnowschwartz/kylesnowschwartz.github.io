@@ -94,7 +94,7 @@ const { tagline = '// # TODO: set inspired tagline' } = Astro.props;
     white-space: pre;
     letter-spacing: -0.05em;
     user-select: none;
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform var(--dur-long) var(--ease-out);
   }
 
   /* Stair-step stack: each tier indents further, so the longest line

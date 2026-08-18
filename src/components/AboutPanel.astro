@@ -20,7 +20,7 @@ const { title, class: className } = Astro.props;
     padding: 1.5rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
     height: 100%; /* fill the grid cell so row neighbours align */
   }
 
@@ -77,7 +77,7 @@ const { title, class: className } = Astro.props;
     color: var(--color-accent);
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: border-color 0.2s ease;
+    transition: border-color var(--dur-micro) var(--ease-out);
   }
 
   .panel-content :global(a:hover) {

@@ -93,7 +93,7 @@ const { items } = Astro.props;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
     padding: 0.6rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
   }
 
   .onsite-link:hover {
@@ -125,7 +125,7 @@ const { items } = Astro.props;
     display: block;
     margin: 0 auto 0.4rem;
     border-bottom: 2px solid transparent;
-    transition: border-color 0.2s ease;
+    transition: border-color var(--dur-micro) var(--ease-out);
   }
 
   .link-jar:hover canvas {
@@ -154,7 +154,7 @@ const { items } = Astro.props;
     background: var(--c);
     border: 1px solid rgba(60, 40, 20, 0.35);
     transform-origin: bottom center;
-    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform var(--dur-short) var(--ease-out);
   }
 
   .link-spines:hover .spines i {
@@ -178,7 +178,7 @@ const { items } = Astro.props;
     background: #fdfdfc;
     border: 1px solid rgba(60, 60, 60, 0.45);
     transform: rotate(-4deg);
-    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition: transform var(--dur-short) var(--ease-out);
   }
 
   .paper-rule {

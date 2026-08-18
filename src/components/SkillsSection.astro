@@ -37,7 +37,7 @@ const { header, categories, variant = 'skills', class: className } = Astro.props
     padding: 2rem;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
     height: 100%; /* fill the grid cell so row neighbours align at the top */
   }
 
@@ -98,7 +98,7 @@ const { header, categories, variant = 'skills', class: className } = Astro.props
     padding: 0.375rem 0.75rem;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    transition: border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), background var(--dur-micro) var(--ease-out);
   }
 
   .skill-item:hover {

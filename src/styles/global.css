@@ -29,6 +29,16 @@
   --s0: 5px;  --s1: 8px;  --s2: 13px; --s3: 21px;
   --s4: 34px; --s5: 55px; --s6: 89px; --s7: 144px;
   --col-gap: var(--s3); /* 21px — single consistent gutter everywhere */
+
+  /* Motion canon — exponential ease-out for entering states, ease-in for
+     exits. The browser-default `ease` keyword is banned; always reference
+     these tokens. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; /* button press, toggle tick, color shift */
+  --dur-short: 220ms; /* hover lift, tooltip, menu open */
+  --dur-long: 420ms;  /* drawer, accordion, page reveal */
 }
 
 /* === RESET === */

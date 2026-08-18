@@ -55,7 +55,7 @@ const { year = new Date().getFullYear(), socialLinks } = Astro.props;
     font-size: 0.75rem;
     color: var(--color-text-muted);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--dur-micro) var(--ease-out);
   }
 
   .social-links a:hover {
