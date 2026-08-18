@@ -284,6 +284,28 @@ const socialLinks = [
   .page-grid > :global(.g-know)    { grid-column: 1 / 9;  grid-row: 4 / 5; }
   .page-grid > :global(.g-believe) { grid-column: 9 / 14; grid-row: 4 / 5; }
 
+  /* Page-load orchestration: one staggered entrance in grid reading order
+     (left→right, top→bottom), then stillness. Total stagger stays under
+     500ms so the page settles fast. Reduced-motion zeroes duration+delay
+     globally (global.css), so the fill jumps straight to visible. */
+  .page-grid > * , .page-grid > :global(*) {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: grid-reveal var(--dur-long) var(--ease-out) forwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+  .page-grid > .g-onsite            { --i: 0; }
+  .page-grid > :global(.g-who)      { --i: 1; }
+  .page-grid > :global(.g-what)     { --i: 2; }
+  .page-grid > :global(.g-where)    { --i: 3; }
+  .page-grid > :global(.g-projects) { --i: 4; }
+  .page-grid > :global(.g-know)     { --i: 5; }
+  .page-grid > :global(.g-believe)  { --i: 6; }
+
+  @keyframes grid-reveal {
+    to { opacity: 1; transform: none; }
+  }
+
   /* On-site shelf as a standalone surface box; the shelf drops its
      "section divider" chrome because the box provides the boundary. */
   .onsite-box {
