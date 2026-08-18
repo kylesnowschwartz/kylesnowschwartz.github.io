@@ -34,9 +34,16 @@ const schwartz = ascii('schwartz');
 </header>
 
 <style>
+  /* Viewport chrome, not document content: fixed so the rubber-band bounce
+     can't peel it off the top. Reads as the chassis bezel edge. */
   .theme-banner {
-    height: 4px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
     background: linear-gradient(90deg, var(--color-accent-tertiary), var(--color-accent));
+    z-index: 10;
   }
 
   header {

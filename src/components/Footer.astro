@@ -13,6 +13,7 @@ interface Props {
 const { year = new Date().getFullYear(), socialLinks } = Astro.props;
 ---
 
+<div class="theme-banner-bottom"></div>
 <footer>
   <div class="container">
     <div class="footer-content">
@@ -27,6 +28,18 @@ const { year = new Date().getFullYear(), socialLinks } = Astro.props;
 </footer>
 
 <style>
+  /* Bottom bezel edge — mirrors the header's fixed top bar so the viewport
+     is framed top and bottom; fixed so the overscroll bounce can't move it. */
+  .theme-banner-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent-tertiary), var(--color-accent));
+    z-index: 10;
+  }
+
   footer {
     border-top: 1px solid var(--color-border);
     padding: 2rem 0;
