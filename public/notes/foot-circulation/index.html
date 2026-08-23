@@ -1,0 +1,1865 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<title>Foot and hand circulation — preparation notes for a vascular appointment</title>
+<style>
+/* @house-style-tokens:begin — generated from house-style-tokens.css, do not hand-edit */
+/* ============================================================================
+   House style tokens — the authority for every value in a generated document.
+   Inline this block. It is the whole design system: colour, type, space,
+   width, radius, and print. A value that is not in here does not exist.
+
+   Two layers throughout. The reference layer names pigments and raw steps and
+   holds every literal. The role layer names jobs and selects from the
+   reference layer. Only the reference layer changes when the palette changes,
+   and dark mode selects different steps rather than inverting.
+   ============================================================================ */
+
+:root {
+  /* -- reference: neutrals ------------------------------------------------ */
+  --ivory: #FAF9F5;
+  --white: #FFFFFF;
+  --wash-l: #F0EEE6;
+  --oat-l: #E3DACC;
+  --line-l: #D1CFC5;
+  --line-strong-l: #BBB7AC;
+  --gray-500: #87867F;   /* borders and fills only: 3.47:1 as text on ivory */
+  --gray-600: #605F58;
+  --gray-700: #3D3D3A;
+  --slate: #141413;
+  --slate-900: #1E1D1A;
+  --slate-800: #282721;
+  --slate-700: #333229;
+  --slate-600: #3E3D38;
+  --slate-500: #51504A;
+  --gray-350: #B4B3AB;
+  --gray-250: #CECDC5;
+  --paper: #F2F0EA;
+
+  /* -- reference: five series hues, one step per mode ---------------------
+     Each set passes the palette validator under --pairs all on its own
+     surface. Series colours are marks, never text: text wears text tokens. */
+  --clay: #994210;      --clay-text-on-dark: #f17d44;  --clay-mark-on-dark: #bf4f04;
+  --indigo: #5168b9;    --indigo-on-dark: #5c77df;
+  --teal: #00a1a2;      --teal-on-dark: #009ea0;
+  --ochre: #8d7f00;     --ochre-on-dark: #a79700;
+  --plum: #733378;      --plum-on-dark: #98449e;
+
+  /* -- reference: status, re-stepped per mode and per job -----------------
+     Light needs one step. Dark needs two: the lightness band governs whether
+     marks read as equal-weight siblings, which text does not need to do, and
+     no single step satisfies both. Deriving the mark step by maximising
+     chroma fails — it puts red and amber at the same lightness, the one cue
+     deuteranopia leaves intact, collapsing separation to ΔE 0.5. */
+  --red: #971a20;       --red-text-on-dark: #f87b5c;   --red-mark-on-dark: #ca3403;
+  --amber: #896a00;     --amber-text-on-dark: #f6c330; --amber-mark-on-dark: #b78d00;
+  --blue: #2757b6;      --blue-text-on-dark: #79b4ff;  --blue-mark-on-dark: #026cd1;
+
+  /* -- reference: tinted surfaces and their borders -----------------------
+     A tint is an opaque step rather than an rgba, so its contrast is a fact
+     the checker can read instead of something that depends on whatever sits
+     behind it. One alpha per mode against the page — 0.14 light, 0.22 dark —
+     for the fill, and whatever alpha reaches 3:1 for the border, since a
+     border is a non-text object. The fill is derived from the mode's text
+     step and the border from its mark step.
+
+     Text on a tint is --body, never the role colour. Solving for role-coloured
+     text puts warning's light alpha at 0.02, which is no tint at all: warning
+     on ivory is 4.83:1 and any tint spends the margin. The role still reads —
+     it colours the border and the icon, which is what the status rule already
+     requires of it. */
+  --red-soft: #ecdad7;   --red-soft-on-dark: #462b23;
+  --red-line: #bf7375;   --red-line-on-dark: #b83105;
+  --amber-soft: #eae5d3; --amber-soft-on-dark: #463a19;
+  --amber-line: #a58e3d; --amber-line-on-dark: #7e6307;
+  --blue-soft: #dce2ec;  --blue-soft-on-dark: #2a3747;
+  --blue-line: #7190cc;  --blue-line-on-dark: #0463be;
+  --clay-soft: #ecdfd5;  --clay-soft-on-dark: #452b1e;
+  --clay-line: #bb8260;  --clay-line-on-dark: #a54606;
+
+  /* A solid button needs a hover it cannot get from the base step. One fixed
+     lightness move at the same hue and chroma: darker on a light page, lighter
+     on a dark one. White text stays above 8.5:1 on every one of them. */
+  --clay-hover: #812c00;  --clay-hover-on-dark: #ff955d;
+  --red-hover: #7e0008;   --red-hover-on-dark: #ff9373;
+  --blue-hover: #11409d;  --blue-hover-on-dark: #90ccff;
+
+  /* -- reference: families ------------------------------------------------
+     ui-serif and ui-monospace resolve only in Safari; everywhere else they
+     fall through to the next slot, so the named faces do the real work.
+     Liberation, Noto and DejaVu are the Linux slots — without them none of
+     these stacks resolves to an intended face there. */
+  --font-prose: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: ui-serif, Georgia, "Liberation Serif", "Noto Serif",
+                  "DejaVu Serif", "Times New Roman", serif;
+  --font-data: ui-monospace, Menlo, Consolas, "Liberation Mono",
+               "DejaVu Sans Mono", monospace;
+
+  /* -- type: nine steps, named by job so a size is chosen by meaning ------
+     Calibrated for --font-prose. Two exceptions and no others: serif body
+     text uses --text-body-display, mono metadata uses --text-meta-data. */
+  --text-micro: 0.6875rem;   /* 11px — one glanced token, never compared */
+  --text-meta: 0.8125rem;    /* 13px — UI, metadata, table cells, chart labels */
+  --text-body: 1rem;         /* 16px — prose floor */
+  --text-lead: 1.125rem;     /* 18px */
+  --text-h4: 1.3125rem;      /* 21px */
+  --text-h3: 1.5rem;         /* 24px */
+  --text-h2: 1.875rem;       /* 30px */
+  --text-h1: 2.375rem;       /* 38px */
+  --text-display: 3.25rem;   /* 52px — one per document */
+
+  /* Equal apparent size across families: x-height/em is 0.508 prose,
+     0.481 display, 0.547 data. */
+  --text-body-display: 1.125rem;  /* 18px serif reads as 16px sans */
+  --text-meta-data: 0.75rem;      /* 12px mono reads as 13px sans */
+
+  /* -- weight: two values --------------------------------------------------
+     Georgia renders 400 and 500 identically and 600 identically to 700;
+     Segoe UI has no 500 face; DejaVu and Liberation have two weights. For
+     emphasis between normal and bold, change family or size. */
+  --weight-normal: 400;
+  --weight-bold: 700;
+
+  /* -- leading and tracking ----------------------------------------------- */
+  --leading-tight: 1.15;   /* 30px and up */
+  --leading-snug: 1.35;    /* headings 18–24px, table cells */
+  --leading-normal: 1.55;  /* body prose */
+  --leading-loose: 1.7;    /* prose at --text-meta */
+  --track-display: -0.02em;
+  --track-normal: 0;
+  --track-caps: 0.08em;    /* uppercase labels: required, not decorative */
+  --track-micro: 0.04em;   /* 11–13px mono, to offset crowding */
+
+  /* -- space: twelve rungs on a 4pt grid ---------------------------------- */
+  --sp-0: 0px;   --sp-2: 2px;   --sp-4: 4px;   --sp-8: 8px;
+  --sp-12: 12px; --sp-16: 16px; --sp-20: 20px; --sp-24: 24px;
+  --sp-32: 32px; --sp-48: 48px; --sp-64: 64px; --sp-96: 96px;
+
+  /* -- radius: four values ------------------------------------------------ */
+  --r-4: 4px; --r-8: 8px; --r-12: 12px; --r-full: 999px;
+
+  /* Every border in the system is one pixel, so pulling an element up by exactly
+     one border width is a real measurement rather than a gap off the scale. */
+  --hairline: 1px;
+
+  /* -- width -------------------------------------------------------------
+     278 + 32 + 726 = 1036 = 1100 − 2×32. The 726/278 split is 2.6115,
+     0.249% off φ². Prose caps well below its column: 726px runs about 94
+     characters, and 540 runs 70–74. Tables, charts and code use the column. */
+  --page-pad: 32px;
+  --gutter: 32px;
+  --w-rail: 278px;
+  --w-text: 726px;
+  --w-measure: 540px;
+  --shell: 1100px;
+  --shell-read: 808px;
+  --shell-wide: 1320px;
+  --w-steps: 320px;
+  --w-pane: 840px;
+  --w-card: 344px;
+  --w-card-wide: 464px;
+
+  /* -- elevation ---------------------------------------------------------- */
+  --shadow-card: 0 6px 24px rgba(0, 0, 0, 0.08);
+  /* A negative spread, so the shadow reads as a lifted edge rather than a halo. */
+  --shadow-edge: 0 10px 16px -12px rgba(0, 0, 0, 0.35);
+
+  /* -- motion: two curves ------------------------------------------------
+     Standard for anything that moves between two states. Overshoot only for
+     a deliberate bounce, which is a decision about the animation rather than
+     a default. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* -- role: light -------------------------------------------------------- */
+  --bg: var(--ivory);
+  --surface: var(--white);
+  --wash: var(--wash-l);
+  --line: var(--line-l);
+  --line-strong: var(--line-strong-l);
+  --oat: var(--oat-l);
+  --ink: var(--slate);
+  --body: var(--gray-700);
+  --muted: var(--gray-600);
+  --fill: var(--gray-500);
+
+  /* Slot order is fixed and never cycled. Indigo leads so a single-series chart
+     reads as data rather than as branding, and clay sits last because it is also
+     the accent, which stays reserved for emphasis. The order is chosen by
+     measured adjacent separation: this arrangement lifts the worst adjacent
+     tritan pair from 6.6 to 14.9 light and 16.0 dark. */
+  --s1: var(--indigo);
+  --s2: var(--ochre);
+  --s3: var(--plum);
+  --s4: var(--teal);
+  --s5: var(--clay);
+
+  --critical: var(--red);
+  --critical-mark: var(--red);
+  --warning: var(--amber);
+  --warning-mark: var(--amber);
+  --positive: var(--blue);
+  --positive-mark: var(--blue);
+
+  --accent: var(--clay);
+  --accent-mark: var(--clay);
+
+  /* A solid status or accent fill and the label that sits on it. This pair does
+     not follow the text steps: --accent in dark mode is a light orange meant to
+     be read as text, and a white label on it measures 2.71:1. A solid fill is a
+     non-text object, so it needs 3:1 against the page and 4.5:1 for its own
+     label — light mode gets that from the light pigment, dark mode from the mark
+     step. Warning is the one whose label differs by mode, because amber is light
+     enough that white fails on it. */
+  --accent-solid: var(--clay);       --on-accent: var(--white);
+  --critical-solid: var(--red);      --on-critical: var(--white);
+  --warning-solid: var(--amber);     --on-warning: var(--white);
+  --positive-solid: var(--blue);     --on-positive: var(--white);
+
+  /* A tinted surface and its border. Text on one of these is --body. */
+  --critical-soft: var(--red-soft);      --critical-line: var(--red-line);
+  --warning-soft: var(--amber-soft);     --warning-line: var(--amber-line);
+  --positive-soft: var(--blue-soft);     --positive-line: var(--blue-line);
+  --accent-soft: var(--clay-soft);       --accent-line: var(--clay-line);
+  --critical-hover: var(--red-hover);
+  --positive-hover: var(--blue-hover);
+  --accent-hover: var(--clay-hover);
+
+  /* An inverted band — a punch slide, a summary callout, a primary control. It is
+     defined against the page, so it flips with it: painting one --panel would make
+     it the dark page's own colour and invert nothing. The muted tier is its own
+     token because it inverts too, and --muted is the page's tier, not this one. */
+  --invert: var(--ink);
+  --on-invert: var(--bg);
+  --on-invert-muted: var(--gray-350);
+  /* The accent inverts too: --accent is solved against the page, and an inverted
+     band is the opposite of the page, so it takes the other mode's step. */
+  --on-invert-accent: var(--clay-text-on-dark);
+
+  --zone: rgba(20, 20, 19, 0.025);
+  /* A banded row inside an always-dark panel. It cannot use --zone, which
+     inverts with the mode while the panel does not. */
+  --panel-zone: rgba(250, 249, 245, 0.045);
+
+  /* -- role: the always-dark panel ---------------------------------------
+     A code listing or diff view is one colour in both modes, so the mode-aware
+     roles are wrong inside it: --muted resolves to #605F58 in light mode and
+     would sit at 2.87:1 on this surface. These do not change between modes,
+     which is the whole point of them. */
+  --panel: var(--slate);
+  --panel-raised: var(--gray-700);
+  --panel-ink: var(--paper);
+  --panel-body: var(--gray-250);
+  /* --gray-500 is 2.98:1 on --panel-raised, so the muted tier steps up one:
+     a panel's own de-emphasis tier has to clear AA on the raised surface too,
+     not only on the panel. */
+  --panel-muted: var(--gray-350);
+  /* The seam between a panel and the page, and the one panel role that flips.
+     In dark mode --panel and --bg are the same step by design, so a code block
+     with no edge has no boundary at all. Light mode needs none: a near-black
+     panel on ivory is already its own boundary, so the edge takes the panel's
+     colour there and disappears. */
+  --panel-edge: var(--panel);
+  /* A panel's own status steps. A diff row inside an always-dark panel cannot take
+     --positive-soft: that tint is solved against the page and flips, so in light
+     mode it paints a pale band inside a black panel and the panel's own ink lands
+     on it at 1.14:1. These hold the on-dark steps in both modes, like the rest of
+     the panel roles. */
+  --panel-critical: var(--red-text-on-dark);
+  --panel-positive: var(--blue-text-on-dark);
+  /* A step up from the plain dark accent, because this one also has to clear AA
+     on the panel's own tinted rows, not only on the panel: --clay-text-on-dark
+     is 4.47:1 on --panel-positive-soft. */
+  --panel-accent: var(--clay-hover-on-dark);
+  --panel-critical-soft: var(--red-soft-on-dark);
+  --panel-positive-soft: var(--blue-soft-on-dark);
+
+  /* A scrim behind a modal or over an image. Dark in both modes: it darkens
+     whatever it covers rather than following the page. */
+  --scrim: rgba(20, 20, 19, 0.55);
+}
+
+html.dark {
+  /* Different steps, never an inversion. */
+  --bg: var(--slate);
+  --surface: var(--slate-900);
+  --wash: var(--slate-800);
+  --oat: var(--slate-700);
+  --line: var(--slate-600);
+  --line-strong: var(--slate-500);
+  --ink: var(--paper);
+  --body: var(--gray-250);
+  --muted: var(--gray-350);
+  --fill: var(--gray-500);
+
+  --s1: var(--indigo-on-dark);
+  --s2: var(--ochre-on-dark);
+  --s3: var(--plum-on-dark);
+  --s4: var(--teal-on-dark);
+  --s5: var(--clay-mark-on-dark);
+
+  --critical: var(--red-text-on-dark);
+  --critical-mark: var(--red-mark-on-dark);
+  --warning: var(--amber-text-on-dark);
+  --warning-mark: var(--amber-mark-on-dark);
+  --positive: var(--blue-text-on-dark);
+  --positive-mark: var(--blue-mark-on-dark);
+
+  --accent: var(--clay-text-on-dark);
+  --accent-mark: var(--clay-mark-on-dark);
+
+  --accent-solid: var(--clay-mark-on-dark);    --on-accent: var(--white);
+  --critical-solid: var(--red-mark-on-dark);   --on-critical: var(--white);
+  --warning-solid: var(--amber-mark-on-dark);  --on-warning: var(--slate);
+  --positive-solid: var(--blue-mark-on-dark);  --on-positive: var(--white);
+
+  --critical-soft: var(--red-soft-on-dark);   --critical-line: var(--red-line-on-dark);
+  --warning-soft: var(--amber-soft-on-dark);  --warning-line: var(--amber-line-on-dark);
+  --positive-soft: var(--blue-soft-on-dark);  --positive-line: var(--blue-line-on-dark);
+  --accent-soft: var(--clay-soft-on-dark);    --accent-line: var(--clay-line-on-dark);
+  --critical-hover: var(--red-hover-on-dark);
+  --positive-hover: var(--blue-hover-on-dark);
+  --accent-hover: var(--clay-hover-on-dark);
+
+  --panel-edge: var(--gray-600);
+  --on-invert-muted: var(--gray-600);
+  --on-invert-accent: var(--clay);
+
+  --zone: rgba(250, 249, 245, 0.03);
+  --shadow-card: 0 6px 24px rgba(0, 0, 0, 0.45);
+  --shadow-edge: 0 10px 16px -12px rgba(0, 0, 0, 0.45);
+
+  /* Light-on-dark reads heavier than dark-on-light at the same weight, and a
+     weight step down is unavailable on two-weight faces. Loosen instead. */
+  --leading-normal: 1.65;
+}
+
+/* Numbers that must align in a column or hold position in a chart use the data
+   face. tabular-nums measures as a no-op on Georgia, Times, Arial and
+   Helvetica, so it is an enhancement and never the mechanism. */
+.tabular {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+
+.label-caps {
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+  font-size: var(--text-meta);
+  font-weight: var(--weight-bold);
+}
+
+/* A band cancels the page padding to span the shell's outer box. Neither
+   width:100vw nor width:100% is correct: inside a split track both resolve to
+   the wrong box, and 100vw ignores the scrollbar. */
+.bleed {
+  margin-inline: calc(-1 * var(--page-pad));
+  padding-inline: var(--page-pad);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media print {
+  /* prefers-color-scheme is not suppressed for print, so a dark-mode reader
+     exports a black page unless the role layer is reset to light here. */
+  :root,
+  html.dark {
+    color-scheme: light;
+    --bg: var(--ivory);
+    --surface: var(--white);
+    --wash: var(--wash-l);
+    --line: var(--line-l);
+    --line-strong: var(--line-strong-l);
+    --ink: var(--slate);
+    --body: var(--gray-700);
+    --muted: var(--gray-600);
+    --s1: var(--indigo);
+    --s2: var(--ochre);
+    --s3: var(--plum);
+    --s4: var(--teal);
+    --s5: var(--clay);
+    --critical: var(--red);
+    --critical-mark: var(--red);
+    --warning: var(--amber);
+    --warning-mark: var(--amber);
+    --positive: var(--blue);
+    --positive-mark: var(--blue);
+    --oat: var(--oat-l);
+    --panel-edge: var(--panel);
+    --on-invert-muted: var(--gray-350);
+    --on-invert-accent: var(--clay-text-on-dark);
+    --accent: var(--clay);
+    --accent-mark: var(--clay);
+    --accent-solid: var(--clay);       --on-accent: var(--white);
+    --critical-solid: var(--red);      --on-critical: var(--white);
+    --warning-solid: var(--amber);     --on-warning: var(--white);
+    --positive-solid: var(--blue);     --on-positive: var(--white);
+    --critical-soft: var(--red-soft);      --critical-line: var(--red-line);
+    --warning-soft: var(--amber-soft);     --warning-line: var(--amber-line);
+    --positive-soft: var(--blue-soft);     --positive-line: var(--blue-line);
+    --accent-soft: var(--clay-soft);       --accent-line: var(--clay-line);
+    --critical-hover: var(--red-hover);
+    --positive-hover: var(--blue-hover);
+    --accent-hover: var(--clay-hover);
+    --leading-normal: 1.45;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--body);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  thead { display: table-header-group; }
+  tr, figure, pre { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+
+  .no-print { display: none; }
+
+  @page { margin: 16mm; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* @house-style-tokens:end */
+
+  /* Light only. Nothing sets the html.dark class, so the dark role layer in
+     the token block above never applies; color-scheme keeps form controls and
+     scrollbars light too. */
+  :root { color-scheme: light; }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  /* This document is read by a 68-year-old, often on a phone, sometimes in a
+     waiting room. Body text sits one step above the 16px prose floor and the
+     measure runs to --w-text rather than --w-measure, trading a slightly long
+     line for fewer of them. */
+  body {
+    margin: 0;
+    padding: var(--sp-64) var(--sp-24) var(--sp-96);
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--font-prose);
+    font-size: var(--text-lead);
+    line-height: var(--leading-normal);
+  }
+
+  .page { max-width: var(--shell-read); margin: 0 auto; }
+
+  p { margin: 0 0 var(--sp-16); max-width: var(--w-text); }
+  section > p, section > ul, section > ol { max-width: var(--w-text); }
+  strong { color: var(--ink); font-weight: var(--weight-bold); }
+
+  /* ---------- Header ---------- */
+  header { margin-bottom: var(--sp-32); }
+  .doc-kind {
+    font-family: var(--font-data);
+    font-size: var(--text-meta-data);
+    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
+    color: var(--muted);
+    margin-bottom: var(--sp-12);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: var(--weight-normal);
+    font-size: var(--text-h1);
+    letter-spacing: var(--track-display);
+    line-height: var(--leading-tight);
+    color: var(--ink);
+    margin: 0 0 var(--sp-16);
+  }
+  .lede {
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    line-height: var(--leading-normal);
+    color: var(--body);
+    max-width: var(--w-text);
+    margin: 0 0 var(--sp-20);
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-8);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--sp-8);
+    font-size: var(--text-meta);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+    border-radius: var(--r-full);
+    padding: var(--sp-4) var(--sp-12);
+    min-height: var(--sp-24);
+    background: var(--wash);
+    color: var(--body);
+    border: var(--hairline) solid var(--line);
+  }
+  .pill .k { font-weight: var(--weight-normal); color: var(--muted); }
+
+  /* ---------- Contents ---------- */
+  .contents {
+    margin: var(--sp-32) 0 var(--sp-48);
+    padding: var(--sp-16) var(--sp-20);
+    border: var(--hairline) solid var(--line);
+    border-radius: var(--r-12);
+    background: var(--surface);
+  }
+  .contents-title {
+    font-family: var(--font-data);
+    font-size: var(--text-micro);
+    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
+    color: var(--muted);
+    margin-bottom: var(--sp-12);
+  }
+  .contents ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--w-rail)), 1fr));
+    gap: var(--sp-4) var(--sp-20);
+    counter-reset: toc;
+  }
+  .contents li { counter-increment: toc; }
+  .contents a {
+    display: block;
+    padding: var(--sp-4) 0;
+    min-height: var(--sp-24);
+    color: var(--body);
+    text-decoration: none;
+    font-size: var(--text-meta);
+    border-bottom: var(--hairline) solid transparent;
+  }
+  .contents a::before {
+    content: counter(toc) ".";
+    font-family: var(--font-data);
+    font-size: var(--text-meta-data);
+    color: var(--muted);
+    margin-right: var(--sp-8);
+  }
+  .contents a:hover { color: var(--ink); border-bottom-color: var(--line-strong); }
+
+  /* ---------- Summary band ---------- */
+  /* A tinted panel rather than an inverted band: the whole document stays
+     light, including the one block that would normally punch. */
+  .summary {
+    background: var(--accent-soft);
+    border: var(--hairline) solid var(--accent-line);
+    color: var(--body);
+    border-radius: var(--r-12);
+    padding: var(--sp-24) var(--sp-32);
+    margin: 0 0 var(--sp-48);
+  }
+  .summary-label {
+    font-family: var(--font-data);
+    font-size: var(--text-micro);
+    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
+    color: var(--accent);
+    margin-bottom: var(--sp-12);
+  }
+  .summary p {
+    margin: 0 0 var(--sp-12);
+    max-width: none;
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+  }
+  .summary p:last-child { margin-bottom: 0; }
+  .summary strong { color: var(--ink); font-weight: var(--weight-bold); }
+
+  /* ---------- Sections ---------- */
+  section { margin-bottom: var(--sp-64); scroll-margin-top: var(--sp-24); }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: var(--weight-normal);
+    font-size: var(--text-h2);
+    letter-spacing: var(--track-display);
+    line-height: var(--leading-tight);
+    color: var(--ink);
+    margin: 0 0 var(--sp-8);
+  }
+  h3 {
+    font-family: var(--font-prose);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-h4);
+    line-height: var(--leading-snug);
+    color: var(--ink);
+    margin: var(--sp-32) 0 var(--sp-12);
+  }
+  h4 {
+    font-family: var(--font-prose);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-body);
+    line-height: var(--leading-snug);
+    color: var(--ink);
+    margin: var(--sp-24) 0 var(--sp-8);
+  }
+  hr.rule { border: none; border-top: var(--hairline) solid var(--line); margin: 0 0 var(--sp-24); }
+
+  ul, ol { margin: 0 0 var(--sp-16); padding-left: var(--sp-20); }
+  li { margin-bottom: var(--sp-8); }
+  li:last-child { margin-bottom: 0; }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    border-radius: var(--r-12);
+    padding: var(--sp-20) var(--sp-24);
+    margin: 0 0 var(--sp-24);
+    border: var(--hairline) solid var(--line);
+    background: var(--wash);
+    color: var(--body);
+  }
+  .callout > :last-child { margin-bottom: 0; }
+  .callout p, .callout ul, .callout ol { max-width: none; }
+  .callout-label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-8);
+    font-size: var(--text-meta);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
+    margin-bottom: var(--sp-12);
+  }
+  .callout-label .icon {
+    font-family: var(--font-data);
+    font-size: var(--text-meta-data);
+    line-height: 1;
+    border-radius: var(--r-full);
+    border: var(--hairline) solid currentColor;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .callout.caution { background: var(--warning-soft); border-color: var(--warning-line); }
+  .callout.caution .callout-label { color: var(--warning); }
+  .callout.note { background: var(--positive-soft); border-color: var(--positive-line); }
+  .callout.note .callout-label { color: var(--positive); }
+
+  /* ---------- Facts list ----------
+     One fact per row, label beside value, so nothing depends on reading a run
+     of pills in the right order. */
+  .facts {
+    display: grid;
+    grid-template-columns: var(--w-rail) 1fr;
+    gap: var(--sp-0) var(--sp-20);
+    max-width: var(--w-text);
+    margin: 0 0 var(--sp-24);
+    border-top: var(--hairline) solid var(--line);
+  }
+  .facts dt {
+    padding: var(--sp-8) var(--sp-0);
+    font-size: var(--text-meta);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
+    color: var(--muted);
+    border-bottom: var(--hairline) solid var(--line);
+  }
+  .facts dd {
+    margin: 0;
+    padding: var(--sp-8) var(--sp-0);
+    color: var(--ink);
+    border-bottom: var(--hairline) solid var(--line);
+  }
+
+  /* ---------- Spoken script ---------- */
+  .script {
+    max-width: var(--w-text);
+    margin: 0 0 var(--sp-24);
+    padding: var(--sp-20) var(--sp-24);
+    border-left: var(--sp-4) solid var(--accent-line);
+    background: var(--accent-soft);
+    border-radius: 0 var(--r-12) var(--r-12) 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h4);
+    line-height: var(--leading-normal);
+    color: var(--body);
+  }
+  .script p { max-width: none; margin: 0 0 var(--sp-12); }
+  .script p:last-child { margin-bottom: 0; }
+
+  /* ---------- Ranked causes ---------- */
+  .ranked { list-style: none; margin: 0; padding: 0; }
+  .ranked > li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--sp-16);
+    padding: var(--sp-20) 0;
+    border-top: var(--hairline) solid var(--line);
+    margin: 0;
+  }
+  .ranked > li:last-child { border-bottom: var(--hairline) solid var(--line); }
+  .rank-num {
+    font-family: var(--font-data);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--text-h4);
+    color: var(--muted);
+    line-height: var(--leading-snug);
+  }
+  .rank-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-8) var(--sp-12);
+    margin-bottom: var(--sp-8);
+  }
+  .rank-name { font-size: var(--text-h4); font-weight: var(--weight-bold); color: var(--ink); }
+  .rank-body { max-width: var(--w-text); }
+  .rank-body p:last-child { margin-bottom: 0; }
+  .tag {
+    font-family: var(--font-data);
+    font-size: var(--text-meta-data);
+    letter-spacing: var(--track-micro);
+    text-transform: uppercase;
+    padding: var(--sp-2) var(--sp-8);
+    border-radius: var(--r-4);
+    border: var(--hairline) solid var(--line-strong);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .tag.high { border-color: var(--critical-line); color: var(--critical); }
+  .tag.moderate { border-color: var(--warning-line); color: var(--warning); }
+
+  /* ---------- Table ---------- */
+  .scroll-x { overflow-x: auto; margin: 0 0 var(--sp-24); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-meta);
+    line-height: var(--leading-snug);
+  }
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--sp-12) var(--sp-16);
+    border-bottom: var(--hairline) solid var(--line);
+    overflow-wrap: anywhere;
+  }
+  thead th {
+    font-weight: var(--weight-bold);
+    color: var(--ink);
+    border-bottom: var(--hairline) solid var(--line-strong);
+  }
+  tbody th { font-weight: var(--weight-bold); color: var(--ink); width: 30%; }
+  tbody tr:nth-child(even) { background: var(--zone); }
+
+  /* ---------- Two-column do / don't ---------- */
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--w-rail)), 1fr));
+    gap: var(--sp-24);
+    margin-bottom: var(--sp-24);
+  }
+  .col-card {
+    border: var(--hairline) solid var(--line);
+    border-radius: var(--r-12);
+    padding: var(--sp-20);
+    background: var(--surface);
+  }
+  .col-card h4 { margin-top: 0; }
+  .col-card ul { max-width: none; margin-bottom: 0; }
+
+  /* ---------- Checklist ---------- */
+  .checklist { list-style: none; margin: 0 0 var(--sp-24); padding: 0; }
+  .checklist > li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: var(--sp-12);
+    padding: var(--sp-12) 0;
+    border-bottom: var(--hairline) solid var(--line);
+    margin: 0;
+    max-width: var(--w-text);
+  }
+  .box {
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+    border: var(--hairline) solid var(--line-strong);
+    border-radius: var(--r-4);
+    background: var(--surface);
+  }
+  .ask { color: var(--ink); font-weight: var(--weight-bold); }
+  .why { display: block; color: var(--muted); font-size: var(--text-meta); margin-top: var(--sp-4); }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar { display: flex; gap: var(--sp-8); margin-bottom: var(--sp-32); }
+  .btn {
+    font-family: var(--font-data);
+    font-size: var(--text-meta-data);
+    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
+    min-height: var(--sp-24);
+    padding: var(--sp-8) var(--sp-16);
+    color: var(--muted);
+    background: var(--surface);
+    border: var(--hairline) solid var(--line);
+    border-radius: var(--r-full);
+    cursor: pointer;
+  }
+  .btn:hover { color: var(--ink); border-color: var(--line-strong); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    margin-top: var(--sp-64);
+    padding-top: var(--sp-24);
+    border-top: var(--hairline) solid var(--line);
+    font-size: var(--text-meta);
+    line-height: var(--leading-loose);
+    color: var(--muted);
+  }
+  footer p { max-width: var(--w-text); }
+
+  /* ---------- Phone ----------
+     One breakpoint, below which every multi-column arrangement collapses and
+     the page padding shrinks so the text keeps its width instead of the
+     margins keeping theirs. */
+  @media (max-width: 700px) {
+    body { padding: var(--sp-32) var(--sp-16) var(--sp-64); }
+    h1 { font-size: var(--text-h2); }
+    h2 { font-size: var(--text-h3); }
+    .lede, .script { font-size: var(--text-lead); }
+    .script { padding: var(--sp-16); }
+    .summary { padding: var(--sp-20); }
+    .callout { padding: var(--sp-16); }
+    .contents ol { gap: var(--sp-0); }
+
+    /* The label stacks above its value rather than holding a rail-width column. */
+    .facts { grid-template-columns: 1fr; gap: var(--sp-0); }
+    .facts dt { border-bottom: none; padding-bottom: var(--sp-0); }
+
+    /* The rank number moves onto the same line as the name rather than holding
+       a 40px column that the text can no longer spare. */
+    .ranked > li { grid-template-columns: 1fr; gap: var(--sp-4); }
+    .rank-num {
+      font-size: var(--text-meta);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--track-caps);
+    }
+    .rank-num::after { content: " of 8"; }
+
+    /* A three-column comparison does not fit a phone, so each row becomes a
+       stacked block with its own heading. */
+    table, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    tbody th {
+      display: block;
+      width: 100%;
+      border-bottom: none;
+      padding-bottom: var(--sp-4);
+    }
+    tbody tr {
+      border-bottom: var(--hairline) solid var(--line-strong);
+      padding: var(--sp-8) 0;
+    }
+    tbody td { border-bottom: none; padding: var(--sp-2) var(--sp-16); }
+    tbody td::before {
+      content: attr(data-col) ": ";
+      font-weight: var(--weight-bold);
+      color: var(--ink);
+    }
+  }
+
+  @media print {
+    body { padding: 0; }
+    .contents, .toolbar { display: none; }
+    section { margin-bottom: var(--sp-32); }
+    .ranked > li { break-inside: avoid; }
+    .checklist > li { break-inside: avoid; }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <div class="doc-kind">Preparation notes &middot; not a medical diagnosis</div>
+    <h1>Your feet and hands before the vascular appointment</h1>
+    <p class="lede">
+      Notes to help you and your GP prepare. They gather what is known, what is
+      still unanswered, and what to ask. They are not written by a doctor and
+      they replace nothing a doctor tells you &mdash; where this page and a
+      clinician disagree, the clinician is right.
+    </p>
+  </header>
+
+  <div class="toolbar no-print">
+    <button class="btn" type="button" onclick="window.print()">Print</button>
+  </div>
+
+  <nav class="contents" aria-label="Contents">
+    <div class="contents-title">On this page</div>
+    <ol>
+      <li><a href="#start">Start here</a></li>
+      <li><a href="#changes">If things change before your appointment</a></li>
+      <li><a href="#going-on">What is going on</a></li>
+      <li><a href="#causes">Possible causes, ranked</a></li>
+      <li><a href="#appointment">Before and at your appointment</a></li>
+      <li><a href="#home">What to do at home</a></li>
+    </ol>
+  </nav>
+
+  <section id="start">
+    <h2>Start here</h2>
+    <hr class="rule">
+
+    <h3>What we know so far</h3>
+
+    <dl class="facts">
+      <dt>Diagnosis</dt><dd>Raynaud&rsquo;s</dd>
+      <dt>Medication</dt><dd>Amlodipine 2.5&nbsp;mg, one tablet a day</dd>
+      <dt>Right big toe</dt><dd>Dark, very sensitive to pressure</dd>
+      <dt>Left big toe</dt><dd>White, poor circulation</dd>
+      <dt>Left fourth toe</dt><dd>Very sensitive</dd>
+      <dt>Both feet</dt><dd>Stiff and sore; callus on a lesser toe</dd>
+      <dt>Hands</dt><dd>Sore while cycling</dd>
+      <dt>Course</dt><dd>Worsening steadily for months, not levelling off</dd>
+      <dt>Tobacco</dt><dd>Never smoked</dd>
+      <dt>Other health</dt><dd>No diabetes; blood pressure normal; fit and active</dd>
+      <dt>Cycling</dt><dd>50&ndash;100&nbsp;km a week in cleated shoes</dd>
+      <dt>Past treatment</dt><dd>Prostate cancer, treated with brachytherapy</dd>
+      <dt>Family history</dt><dd>Mother had amputations caused by untreated vascular disease</dd>
+      <dt>Next appointment</dt><dd>Vascular surgery, about three weeks away</dd>
+    </dl>
+
+    <h3>How to use this</h3>
+
+    <p>
+      Print it and take it in. The checklist in
+      <a href="#appointment">Before and at your appointment</a> has tick boxes
+      for the things to say and ask, which is the part that matters most on the
+      day. Read the rest once; you do not need to remember it.
+    </p>
+
+    <div class="callout note">
+      <div class="callout-label"><span class="icon" aria-hidden="true">&rarr;</span> Start this today</div>
+      <p>
+        <strong>Photograph the dark right big toe once a day</strong> &mdash;
+        same spot, same light, foot relaxed and not held or pressed. The surgeon
+        needs to see which way it is heading, not one moment. Holding a foot for
+        the camera squeezes the blood out of the skin and creates white patches
+        that are not really there, so let it rest first.
+      </p>
+    </div>
+
+    <p>
+      One caution about the photographs you already have. Phone cameras shift
+      skin tone badly, and callus is yellow-white on its own and is not a sign
+      of circulation. A colour change only counts when it appears again with the
+      foot relaxed, unhandled, and in daylight.
+    </p>
+
+    <h3>Worth doing today</h3>
+
+    <p>
+      Seven things that cost little or nothing, carry almost no risk, and do not
+      need anyone&rsquo;s permission. Full detail is in
+      <a href="#home">What to do at home</a>.
+    </p>
+
+    <ol>
+      <li>
+        <strong>Keep your whole body warm, starting now.</strong> The highest
+        value thing on this page and it is free. Warm torso, warm socks and
+        shoes indoors, dressed before you get cold rather than after.
+      </li>
+      <li>
+        <strong>Photograph the dark toe daily</strong>, as described above.
+      </li>
+      <li>
+        <strong>Ring the GP for the toe pressure test.</strong> Fifteen minutes,
+        no special equipment, and it either reassures you or moves your
+        appointment forward.
+      </li>
+      <li>
+        <strong>Take your medicine list to any pharmacist.</strong> Free, no
+        appointment, same day. Ask them to check whether anything you take
+        narrows blood vessels. Decongestants and some over-the-counter remedies
+        do, and this is exactly the kind of question a pharmacist answers on the
+        spot.
+      </li>
+      <li>
+        <strong>Loosen your footwear and stop cold-weather rides</strong> until
+        you have been seen.
+      </li>
+      <li>
+        <strong>Dig out the oncology records</strong> for the brachytherapy
+        details, and write down your answers to the questions in
+        <a href="#appointment">Before and at your appointment</a>.
+      </li>
+      <li>
+        <strong>Cut caffeine back</strong> and keep off tobacco entirely.
+      </li>
+    </ol>
+
+    <div class="callout note">
+      <div class="callout-label"><span class="icon" aria-hidden="true">?</span> What about aspirin?</div>
+      <p>
+        A fair question, and the answer is <strong>ask, do not self-start</strong>
+        &mdash; but ask this week rather than in three weeks.
+      </p>
+      <p>
+        If the cause turns out to be artery disease or small travelling clots,
+        <strong>a low daily dose of aspirin is a standard treatment</strong> and
+        a specialist would very likely start you on it. So it is not a strange
+        idea. But aspirin causes stomach bleeding in a minority of people, it
+        does nothing for the vessel spasm of Raynaud&rsquo;s itself, and whether
+        it suits you depends on your other medicines and your stomach history.
+      </p>
+      <p>
+        That is a two-minute decision for a GP and a bad one to make alone. Put
+        it on the same phone call as the toe pressure test: <em>&ldquo;given
+        what is going on with my feet, should I be on low-dose aspirin
+        now?&rdquo;</em> The same applies to any supplement sold for
+        circulation.
+      </p>
+    </div>
+  </section>
+
+  <section id="changes">
+    <h2>If things change before your appointment</h2>
+    <hr class="rule">
+
+    <p>
+      Nothing here is a prediction. It is on the page for the same reason a
+      smoke alarm is: so that if one specific, recognisable thing happens,
+      nobody has to work out what to do while it is happening.
+    </p>
+
+    <p>
+      The reasoning is straightforward. Reduced blood supply is something you
+      can live with for a long time. Blood supply that <em>stops</em> damages
+      tissue within hours. The signs below are the ones that tell those apart.
+    </p>
+
+    <h3>Straight to hospital</h3>
+
+    <div class="callout caution">
+      <div class="callout-label"><span class="icon" aria-hidden="true">!</span> Go to A&amp;E now if either of these happens</div>
+      <p>
+        A&amp;E is the hospital emergency department. Go the same hour, not the
+        next day.
+      </p>
+      <ul>
+        <li>
+          <strong>A foot goes cold and pale or blotchy and stays that way after
+          warming up.</strong> A Raynaud&rsquo;s attack looks much like this,
+          but it settles with warmth within minutes to an hour. One that does
+          not settle can mean an artery has blocked.
+        </li>
+        <li>
+          <strong>Sudden numbness or weakness in a foot or leg.</strong> Nerves
+          need more blood than skin does, so they complain first when supply
+          drops sharply. Treat it as a signal about timing, not a symptom to sit
+          out.
+        </li>
+      </ul>
+    </div>
+
+    <h3>Same day, but not hospital</h3>
+
+    <div class="callout note">
+      <div class="callout-label"><span class="icon" aria-hidden="true">&rarr;</span> Ring your GP today, or use urgent care, if</div>
+      <ul>
+        <li>
+          <strong>A toe turns black, or skin breaks open into a sore.</strong>
+          This means a new area, or the dark right big toe getting visibly
+          worse. A sore on a foot with reduced blood supply will not close on
+          its own and can become infected, so getting it cleaned and dressed
+          early is what keeps it small.
+        </li>
+        <li>
+          <strong>Pain becomes constant at rest, wakes you at night, and eases
+          when you hang the foot out of bed.</strong> That means the foot is
+          relying on gravity to get enough blood, and it is a clear reason to
+          have the vascular appointment brought forward.
+        </li>
+      </ul>
+    </div>
+
+    <h3>What to say at A&amp;E</h3>
+
+    <p>
+      Emergency departments sort people by what they hear in the first thirty
+      seconds. Saying the right things is not about sounding dramatic &mdash; it
+      is about reaching the right team instead of the general queue. Open with
+      something close to this:
+    </p>
+
+    <div class="script">
+      <p>
+        &ldquo;I think I may have a blood supply problem in my foot. It has gone
+        cold and pale and it has not come back with warming.
+      </p>
+      <p>
+        I have diagnosed Raynaud&rsquo;s, and my right big toe has been dark and
+        very tender for several weeks. I had brachytherapy for prostate cancer.
+        I already have a vascular surgery appointment booked.
+      </p>
+      <p>
+        Could someone check the pulses in my foot with a Doppler, and could you
+        ask whether the vascular team should see me?&rdquo;
+      </p>
+    </div>
+
+    <p>
+      Three parts of that carry the weight. <strong>Cold and pale, not coming
+      back with warming</strong> separates a blocked artery from a
+      Raynaud&rsquo;s attack. <strong>A toe dark for several weeks</strong>
+      tells them the foot already had reduced blood supply before today, so
+      there is less margin than the current picture suggests.
+      <strong>Already under vascular surgery</strong> tells them this is a known
+      problem that has changed, not a new mystery.
+    </p>
+
+    <p>
+      Then ask for two things, in this order: a <strong>handheld Doppler check
+      of the foot pulses</strong>, which is done at the bedside in two minutes,
+      and an answer to <strong>&ldquo;should the on-call vascular team see
+      me?&rdquo;</strong> Ask the second one again before you leave if nobody
+      has answered it. The fuller list of tests is in
+      <a href="#appointment">the checklist</a>, and the same requests apply.
+    </p>
+
+    <p>
+      Take the printed page, your daily photographs, your medicine list, and the
+      year of the prostate treatment if you know it.
+    </p>
+
+    <h3>Meanwhile, this week</h3>
+
+    <div class="callout note">
+      <div class="callout-label"><span class="icon" aria-hidden="true">&rarr;</span> Book a routine GP appointment</div>
+      <p>
+        This is the calm version of everything above, and the path you are far
+        more likely to take. Ask for an <strong>ankle-brachial index</strong>
+        &mdash; blood pressure measured at your ankle and compared with your arm
+        &mdash; and, more importantly, a <strong>toe pressure</strong> reading.
+        It takes about fifteen minutes and needs nothing a GP surgery does not
+        already have.
+      </p>
+      <p>
+        A normal result is real reassurance for very little trouble. An abnormal
+        one is a concrete reason to move the vascular appointment earlier, which
+        is a much better way to be seen sooner than waiting for something to go
+        wrong.
+      </p>
+    </div>
+  </section>
+
+  <section id="going-on">
+    <h2>What is going on</h2>
+    <hr class="rule">
+
+    <p>
+      Raynaud&rsquo;s is small blood vessels in the fingers and toes clamping
+      shut in response to cold or stress, so the skin goes white, often then
+      blue, then red as blood returns. It comes in two forms, and which form
+      this is matters more than the diagnosis itself.
+    </p>
+
+    <div class="scroll-x">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Primary (Raynaud&rsquo;s disease)</th>
+            <th scope="col">Secondary (Raynaud&rsquo;s phenomenon)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Cause</th>
+            <td data-col="Primary">None. It is the whole condition.</td>
+            <td data-col="Secondary">Another disease is driving it.</td>
+          </tr>
+          <tr>
+            <th scope="row">Usual age at onset</th>
+            <td data-col="Primary">15&ndash;30</td>
+            <td data-col="Secondary">Later in life, often over 40</td>
+          </tr>
+          <tr>
+            <th scope="row">Who</th>
+            <td data-col="Primary">Mostly women</td>
+            <td data-col="Secondary">Either sex</td>
+          </tr>
+          <tr>
+            <th scope="row">Pattern</th>
+            <td data-col="Primary">Symmetrical, both sides alike</td>
+            <td data-col="Secondary">Often uneven between limbs and toes</td>
+          </tr>
+          <tr>
+            <th scope="row">Over time</th>
+            <td data-col="Primary">Stable, or improves</td>
+            <td data-col="Secondary">Can get worse</td>
+          </tr>
+          <tr>
+            <th scope="row">Tissue damage</th>
+            <td data-col="Primary">Does not cause sores or tissue loss</td>
+            <td data-col="Secondary">Can cause sores and tissue loss</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <strong>Your case matches none of the primary criteria and all of the
+      secondary ones:</strong> it started at 68, in a man, unevenly between
+      toes and between feet, and it is getting worse. So the question worth
+      answering is not whether this is Raynaud&rsquo;s. It is
+      <strong>what is causing the Raynaud&rsquo;s</strong>.
+    </p>
+
+    <h3>Three things Raynaud&rsquo;s alone does not explain</h3>
+
+    <ol>
+      <li>
+        <strong>A toe that stays dark.</strong> A Raynaud&rsquo;s colour change
+        is an episode: it comes with cold or stress and goes with warmth, over
+        minutes to hours. Your right big toe has stayed dark and painfully
+        tender across weeks. That is not an episode &mdash; it means the blood
+        supply to it is short continuously, and it is the finding that sets the
+        urgency on this page.
+      </li>
+      <li>
+        <strong>Steady worsening.</strong> Primary Raynaud&rsquo;s stays put or
+        improves. Months of getting worse without levelling off points to an
+        underlying process that is itself progressing.
+      </li>
+      <li>
+        <strong>Hands as well as feet.</strong> Symptoms in all four limbs point
+        to something affecting the whole body rather than a problem confined to
+        the leg arteries. That raises the priority of the autoimmune blood
+        tests.
+      </li>
+    </ol>
+
+    <div class="summary">
+      <div class="summary-label">What follows from this</div>
+      <p>
+        Never having smoked removes the smoking-related causes and makes
+        ordinary furring of the arteries a weaker explanation in a fit man with
+        normal blood pressure and no diabetes. When the usual culprits are
+        absent and the symptoms are still there, an autoimmune condition or
+        small clots travelling from higher up become the more likely
+        explanations.
+      </p>
+      <p>
+        So you need <strong>two referrals, not one</strong>: vascular surgery
+        for the arteries and the dark toe, and <strong>rheumatology</strong> for
+        the autoimmune causes that blood tests and a nailfold examination can
+        find.
+      </p>
+    </div>
+  </section>
+
+  <section id="causes">
+    <h2>Possible causes, ranked</h2>
+    <hr class="rule">
+
+    <p>
+      Ordered by how well each fits your symptoms, not by how likely it is.
+      None is established. They are here so the right tests get ordered.
+    </p>
+
+    <ol class="ranked">
+      <li>
+        <div class="rank-num">1</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Atheroembolism, or &ldquo;blue toe syndrome&rdquo;</span>
+            <span class="tag high">Most important not to miss</span>
+          </div>
+          <p>
+            Small fragments break off a fatty deposit or a bulge in a larger
+            artery higher up &mdash; in the abdomen, pelvis, or behind the knee
+            &mdash; travel down, and block the tiny vessels in a toe. The
+            signature matches your right foot exactly: <strong>one discoloured,
+            very tender toe on a foot that is otherwise warm</strong>.
+          </p>
+          <p>
+            It is first because it is the most costly to miss, and it is missed
+            often: the pulses usually feel normal, so the foot gets called
+            healthy. The source needs finding, because it will keep sending
+            fragments until it is treated.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">2</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Autoimmune connective tissue disease</span>
+            <span class="tag high">What the blood tests look for</span>
+          </div>
+          <p>
+            Scleroderma-spectrum disease, lupus, and related conditions are the
+            classic causes of secondary Raynaud&rsquo;s, and hands and feet
+            together point this way. This is what the rheumatology referral
+            exists to find or rule out.
+          </p>
+          <p>
+            The tests are cheap and worth doing regardless.
+            <strong>Nailfold capillaroscopy</strong> is a magnified look at the
+            tiny vessels at the base of a nail; they look normal in primary
+            Raynaud&rsquo;s and visibly abnormal in scleroderma-spectrum
+            disease. Alongside it go three antibody blood tests &mdash;
+            <strong>ANA</strong>, <strong>anti-centromere</strong>, and
+            <strong>anti-Scl-70</strong> &mdash; which look for signs that the
+            immune system is attacking the body&rsquo;s own connective tissue.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">3</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Ordinary artery disease from fatty deposits</span>
+            <span class="tag moderate">Less likely for you than for most</span>
+          </div>
+          <p>
+            Age 68 and your mother&rsquo;s vascular disease keep this on the
+            list. But the rest of your risk profile argues against it being the
+            main story: never smoked, no diabetes, normal blood pressure, and a
+            high level of fitness. That combination makes it a weaker
+            explanation here than it would be in most men your age.
+          </p>
+          <p>
+            It is not ruled out. Endurance athletes do get artery disease, and
+            being fit can hide the usual warning sign &mdash; calf pain on
+            walking &mdash; for years. Disease in the small arteries below the
+            knee causes foot symptoms without that calf pain, which is why the
+            <strong>toe pressure matters more than the ankle pressure</strong>:
+            stiff arteries can make an ankle reading look falsely normal.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">4</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Radiation damage to the pelvic arteries</span>
+            <span class="tag moderate">Turns on one unanswered question</span>
+          </div>
+          <p>
+            Radiation can make artery walls thicken and scar, and the narrowing
+            shows up years or decades later. When radiotherapy is delivered as
+            an external beam through the pelvis it passes straight through the
+            arteries feeding the legs, and this becomes a serious candidate.
+          </p>
+          <p>
+            <strong>Brachytherapy is different.</strong> It treats prostate
+            cancer with small radioactive seeds placed inside the prostate. The
+            dose is intense at the seeds and falls away sharply with distance,
+            so the arteries running to the legs sit well outside the treated
+            area. Damage to them is not what seeds usually cause.
+          </p>
+          <p>
+            One thing decides this entry: <strong>brachytherapy is often
+            combined with a course of external beam radiotherapy</strong> for
+            men at higher risk. If you had both, this moves up the list
+            considerably. If you had seeds only, it stays here as a background
+            possibility. Your oncology records will say &mdash; it is not worth
+            working out from memory.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">5</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Cancer-associated Raynaud&rsquo;s</span>
+            <span class="tag">Uncommon</span>
+          </div>
+          <p>
+            Raynaud&rsquo;s appearing for the first time in an older man is a
+            recognised, if uncommon, sign associated with an active cancer.
+            Given the prostate history it is worth saying out loud, and it is a
+            reason to make sure your routine cancer follow-up is up to date.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">6</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Cycling pressure on the feet and hands</span>
+            <span class="tag">Adds to it, does not explain it</span>
+          </div>
+          <p>
+            50&ndash;100&nbsp;km a week in stiff-soled cleated shoes causes real
+            problems: the forefoot squeezed against a narrow toe box, pain under
+            the ball of the foot, and a thickened, painful nerve between the
+            toes. These explain stiffness, soreness, and the callus well. They
+            explain colour change poorly.
+          </p>
+          <p>
+            The sore hands may be a separate mechanical problem rather than more
+            Raynaud&rsquo;s. Three conditions are common in high-mileage riders:
+          </p>
+          <ul>
+            <li>
+              <strong>Handlebar palsy.</strong> Pressure on the outer edge of
+              the palm squashes a nerve. Numbness, tingling, and weakness in the
+              ring and little fingers. Usually fixed by changing position.
+            </li>
+            <li>
+              <strong>Carpal tunnel compression.</strong> Pressure and a
+              bent-back wrist irritate a different nerve. Numbness in the thumb,
+              index, and middle fingers, often worse at night.
+            </li>
+            <li>
+              <strong>Hypothenar hammer syndrome.</strong> Repeated impact of
+              the palm against the handlebars damages an artery inside the hand,
+              which can then throw small clots into the fingers. This one causes
+              genuine loss of blood supply to the fingers, and it is why the
+              hands belong at the vascular appointment even though they seem
+              minor next to the feet.
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">7</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">Blood disorders</span>
+            <span class="tag">One blood test settles it</span>
+          </div>
+          <p>
+            Conditions where the blood carries too many red cells or platelets
+            cause burning, painful, discoloured hands and feet, and clotting. A
+            full blood count answers it.
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <div class="rank-num">8</div>
+        <div class="rank-body">
+          <div class="rank-head">
+            <span class="rank-name">External iliac artery endofibrosis</span>
+            <span class="tag">Rare, and a cyclist&rsquo;s condition</span>
+          </div>
+          <p>
+            A thickening of an artery in the pelvis, seen almost only in
+            high-mileage cyclists from repeated deep hip flexion. It normally
+            shows up as power loss or thigh pain at maximum effort rather than
+            changes at rest, so it fits poorly &mdash; but your riding volume
+            puts you in the group it affects, and it is easy to miss without
+            exercise testing.
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <h3>Also considered, and set aside</h3>
+
+    <ul>
+      <li>
+        <strong>Buerger&rsquo;s disease.</strong> Inflammation of the small
+        arteries of the hands and feet, otherwise a good match. It occurs
+        essentially only in tobacco users, so it is off the list.
+      </li>
+      <li>
+        <strong>A sudden arterial blockage.</strong> Months of gradual change
+        while still cycling rules this out as what is happening now. It could
+        still happen later, which is what the first section is for.
+      </li>
+      <li>
+        <strong>Diabetic foot disease.</strong> No diabetes. Still worth one
+        <strong>HbA1c</strong> blood test, which shows average blood sugar over
+        about three months, because undiagnosed diabetes at 68 is common.
+      </li>
+      <li>
+        <strong>Skin infection.</strong> No fever, no spreading warm redness, no
+        discharge, and both feet are involved.
+      </li>
+      <li>
+        <strong>Gout.</strong> Usually one joint turning hot, red, and swollen
+        over hours, not a slow change across both feet. A dark tender big toe
+        can mimic it, so not fully off until examined.
+      </li>
+      <li>
+        <strong>Plantar fasciitis.</strong> That causes heel pain worst on the
+        first steps of the morning, and it does not change the colour of
+        anything.
+      </li>
+      <li>
+        <strong>Callus alone.</strong> It is there and it is part of what the
+        photographs show, but callus does not make a whole toe progressively
+        painful or discoloured.
+      </li>
+    </ul>
+  </section>
+
+  <section id="appointment">
+    <h2>Before and at your appointment</h2>
+    <hr class="rule">
+
+    <h3>Work these out beforehand</h3>
+
+    <p>
+      Only you can answer these, and each one changes the diagnosis. Write the
+      answers down and take them in. Two of them &mdash; the first and the
+      seventh &mdash; would change the plan, and neither is currently known.
+    </p>
+
+    <ol>
+      <li>
+        <strong>Do your hands change colour when you are not cycling?</strong>
+        Handling frozen food, a cold morning, holding a cold drink. White then
+        blue then red is Raynaud&rsquo;s. Numbness and pins-and-needles with
+        normal colour is a squashed nerve.
+      </li>
+      <li>
+        <strong>Which fingers?</strong> Ring and little finger together, or
+        thumb through middle finger, points to nerve compression. Scattered or
+        all fingers points to Raynaud&rsquo;s.
+      </li>
+      <li>
+        <strong>One hand or both, and is one worse?</strong> Clearly one-sided
+        points to a mechanical or artery cause in that arm.
+      </li>
+      <li>
+        <strong>Does it ease within minutes of stopping and shaking your hands
+        out?</strong> Typical of nerve compression.
+      </li>
+      <li>
+        <strong>Does position change the colour of your feet?</strong>
+        Photograph a relaxed foot flat, then raised at 45&deg; for a minute,
+        then hanging down for a minute. Going pale when raised and flushing a
+        slow deep red when lowered is a specific sign of poor artery supply.
+      </li>
+      <li>
+        <strong>Pain at rest or only on walking and riding, and how far can you
+        walk before it hurts?</strong> A rough figure in metres or minutes is
+        more useful than &ldquo;a while&rdquo;.
+      </li>
+      <li>
+        <strong>Does the dark toe change with warmth, or stay the same colour
+        all the time?</strong> A toe that lightens when warm is behaving like a
+        severe Raynaud&rsquo;s episode. One that stays the same regardless of
+        temperature means the blood supply is continuously short, which is the
+        more serious reading.
+      </li>
+      <li>
+        <strong>Was the brachytherapy given alone, or with external beam
+        radiotherapy? Was hormone therapy given, and for how long? What year
+        was the treatment?</strong> Your oncology records will have all three.
+      </li>
+    </ol>
+
+    <h3>Tell them</h3>
+
+    <ul class="checklist">
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">My right big toe has been dark and very sensitive to pressure for weeks, not minutes.</span>
+          <span class="why">Lead with this. It is what separates a Raynaud&rsquo;s episode from continuously poor blood supply.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">It has worsened steadily for months and has not levelled off.</span>
+          <span class="why">Primary Raynaud&rsquo;s does not progress, so progression is itself a finding.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Both hands are affected too, during cycling.</span>
+          <span class="why">Easy to leave out as minor. It changes this from a leg problem to a possible whole-body one.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">My mother had amputations caused by untreated vascular disease.</span>
+          <span class="why">A parent with limb-threatening artery disease raises the bar for being reassured.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Prostate cancer treated with brachytherapy &mdash; and whether external beam radiotherapy or hormone therapy were given too.</span>
+          <span class="why">Say all three parts. Seeds alone spare the leg arteries; an external beam through the pelvis does not, and hormone therapy raises cardiovascular risk.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">I cycle 50&ndash;100&nbsp;km a week in cleated shoes, with weight on my hands.</span>
+          <span class="why">Both a possible cause and something you can change. Doctors rarely ask.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">I have never smoked, have no diabetes, normal blood pressure, and I am fit.</span>
+          <span class="why">Say it as a group. It is not reassurance, it is a finding: with the usual risk factors all absent, the cause is more likely to be autoimmune or small clots than ordinary furring of the arteries.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Here is my full list of medicines and supplements, including anything bought over the counter.</span>
+          <span class="why">Several common medicines narrow blood vessels and make Raynaud&rsquo;s worse.</span>
+        </span>
+      </li>
+    </ul>
+
+    <h3>Ask them</h3>
+
+    <ul class="checklist">
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Was my amlodipine prescribed for blood pressure or for the Raynaud&rsquo;s, and can the dose be increased?</span>
+          <span class="why">2.5&nbsp;mg is a cautious starting dose, and this class of medicine is routinely increased for Raynaud&rsquo;s when tolerated. If it has never been reviewed against symptoms, this is the fastest lever available.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Has secondary Raynaud&rsquo;s been ruled out, and by which tests?</span>
+          <span class="why">The specific ones are nailfold capillaroscopy, ANA, anti-centromere, and anti-Scl-70. If none has been done, it has not been ruled out.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Can I have my ankle-brachial index <em>and toe pressures</em> measured, both legs?</span>
+          <span class="why">Ask for the toe reading explicitly. Ankle readings can look falsely normal when arteries are stiff, which hides disease in the small vessels.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Can I be referred to a rheumatologist as well as the vascular surgeon?</span>
+          <span class="why">New Raynaud&rsquo;s at 68 in a man warrants the autoimmune workup whatever the arteries show. Two specialists, two different questions.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">If the pulses in my foot are normal, should we still scan higher up for a source of small clots?</span>
+          <span class="why">This is the question that finds blue toe syndrome. It calls for a duplex ultrasound &mdash; a scan that shows both the shape of an artery and the blood moving through it &mdash; from the abdomen down, not the foot alone.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Can I have bloods done: full blood count, HbA1c, cholesterol, kidney function, ESR and CRP, and clotting?</span>
+          <span class="why">ESR and CRP are two general markers of inflammation. Together this panel covers diabetes, blood disorders, inflammation, and cardiovascular risk in one draw.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Are any of my current medicines making this worse?</span>
+          <span class="why">Beta blockers, decongestants, some migraine medicines, and stimulants all narrow blood vessels. Commonly overlooked.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Should I keep cycling, and at what intensity and temperature?</span>
+          <span class="why">Walking builds circulation and helps artery disease; cold-weather riding is a strong Raynaud&rsquo;s trigger. Get a clear instruction rather than guessing.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">Can I be referred to a podiatrist for the callus and nail care?</span>
+          <span class="why">Cutting or filing callus at home on a foot with poor blood supply risks a wound that will not heal.</span>
+        </span>
+      </li>
+      <li>
+        <span class="box" aria-hidden="true"></span>
+        <span>
+          <span class="ask">What exactly should make me come back sooner, or go to A&amp;E?</span>
+          <span class="why">Get their own list, in their words, written down before you leave.</span>
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="home">
+    <h2>What to do at home</h2>
+    <hr class="rule">
+
+    <p>
+      With Raynaud&rsquo;s confirmed, warmth is treatment rather than comfort.
+      None of this replaces medical treatment and all of it is safe to start
+      now.
+    </p>
+
+    <div class="cols">
+      <div class="col-card">
+        <h4>Do</h4>
+        <ul>
+          <li>
+            <strong>Warm your whole body, not just your feet.</strong> Blood is
+            pulled away from the hands and feet when your trunk is cold, so a
+            warm torso and a hat do more for your toes than thick socks alone.
+          </li>
+          <li>
+            <strong>Wear socks and warm shoes indoors</strong>, and warm the
+            shoes before putting them on.
+          </li>
+          <li>
+            <strong>Dress for the cold before going out</strong>, not after
+            feeling cold. Once an attack starts it is much harder to reverse.
+          </li>
+          <li>
+            <strong>When an attack starts:</strong> get somewhere warm, put your
+            hands or feet in <em>warm, not hot</em> water, and move and massage
+            them.
+          </li>
+          <li>
+            <strong>Check both feet daily</strong> in good light, including
+            between and underneath the toes. Use a mirror.
+          </li>
+          <li>
+            <strong>Moisturise</strong>, but keep the skin between your toes dry
+            so cracks do not let infection in.
+          </li>
+          <li>
+            <strong>Keep walking.</strong> Regular walking builds up small
+            side-branch blood vessels and is the best-evidenced treatment for
+            artery disease in the legs that does not involve surgery.
+          </li>
+          <li>
+            <strong>Manage stress.</strong> It triggers attacks through the same
+            nerve pathway as cold. A real trigger, not a soft one.
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-card">
+        <h4>Do not</h4>
+        <ul>
+          <li>
+            <strong>No hot water bottles, heat pads, hot soaks, or radiators
+            against your feet.</strong> Warm only. Skin with poor blood flow
+            burns without the normal warning pain, and a burn there may not
+            heal.
+          </li>
+          <li>
+            <strong>No tobacco</strong>, and avoid other people&rsquo;s smoke.
+          </li>
+          <li>
+            <strong>No cutting, filing, or acid treatment of callus or corns at
+            home.</strong> A podiatrist does this safely.
+          </li>
+          <li>
+            <strong>No decongestants containing pseudoephedrine</strong>, and
+            check before starting anything new.
+          </li>
+          <li>
+            <strong>No compression socks or tight elastic</strong> unless a
+            vascular specialist prescribes them. Compression on a foot already
+            short of blood makes it worse.
+          </li>
+          <li>
+            <strong>No vibrating tools</strong> &mdash; angle grinders, hammer
+            drills, mowers. Vibration worsens Raynaud&rsquo;s and can cause it.
+          </li>
+          <li>
+            <strong>No aspirin or circulation supplements started on your
+            own</strong> &mdash; but do ask the GP about low-dose aspirin this
+            week, because it is a standard treatment if the cause turns out to
+            be artery disease or small clots.
+          </li>
+          <li>
+            <strong>Cut back caffeine.</strong> It narrows blood vessels.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>On the bike</h3>
+
+    <ul>
+      <li>
+        <strong>Feet:</strong> winter overshoes, toe covers, and disposable
+        chemical toe warmers. Air moving over your foot at speed cools it hard
+        even in mild weather.
+      </li>
+      <li>
+        <strong>Shoes:</strong> wider toe box, better cushioning, looser straps.
+        Move the cleats slightly rearward to take pressure off the ball of the
+        foot. Never let a shoe squeeze a numb or discoloured toe.
+      </li>
+      <li>
+        <strong>Hands:</strong> thick, padded, windproof full-finger gloves.
+        Change hand position every few minutes, and keep weight off the outer
+        edge of the palm &mdash; that spot is where both the nerve and the
+        artery are vulnerable.
+      </li>
+      <li>
+        <strong>Relax your grip</strong>, with slightly bent elbows, so your
+        arms absorb road buzz instead of your hands. Padded bar tape and wider
+        tyres at lower pressure help too.
+      </li>
+      <li>
+        <strong>Get your bike fit checked.</strong> Too much body weight carried
+        on the hands is the root of most of these problems, and saddle and stem
+        adjustments fix it.
+      </li>
+      <li>
+        <strong>Ease off for now.</strong> Ride the warmest part of the day,
+        skip cold and wet rides, and stop any ride that brings on colour change
+        or pain rather than pushing through.
+      </li>
+    </ul>
+
+    <footer>
+      <p>
+        A last word on the ranked list: the order reflects how well each cause
+        fits your symptoms, not how likely it is. A condition placed first
+        because missing it would be costly is not thereby the most probable one.
+      </p>
+    </footer>
+  </section>
+
+</div>
+
+</body>
+</html>
