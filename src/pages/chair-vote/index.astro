@@ -353,13 +353,22 @@ const FABRICS = [
     });
     let touchX = 0;
     let touchY = 0;
+    let multiTouch = false;
     vBody.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) {
+        multiTouch = true;
+        return;
+      }
+      multiTouch = false;
       touchX = e.touches[0].clientX;
       touchY = e.touches[0].clientY;
     }, { passive: true });
-    // Only a clearly sideways swipe steps, so a sloppy vertical drag never
+    // Only a clearly sideways one-finger swipe at normal zoom steps, so a
+    // sloppy vertical drag, a pinch, or panning a zoomed-in photo never
     // changes fabric.
     vBody.addEventListener('touchend', (e) => {
+      if (multiTouch || e.touches.length > 0) return;
+      if ((window.visualViewport?.scale ?? 1) > 1.01) return;
       const dx = e.changedTouches[0].clientX - touchX;
       const dy = e.changedTouches[0].clientY - touchY;
       if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > 2 * Math.abs(dy)) step(dx < 0 ? 1 : -1);
@@ -698,7 +707,7 @@ const FABRICS = [
       justify-content: center;
       align-content: center;
       overflow: hidden;
-      touch-action: pan-y;
+      touch-action: pan-y pinch-zoom;
     }
     .v-face { margin: 0; position: relative; width: min(100cqw, 50cqh); }
     .v-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
