@@ -12,7 +12,7 @@
  * appends a new row, and only each person's latest row counts.
  */
 
-const SHEET_ID = 'REPLACE_WITH_SHEET_ID';
+const SHEET_ID = '1gCH-tA-cbbvKInuoKpxiR9wRJpu6GxvYzmeaPtuSxOU';
 
 const ALLOWED_SLUGS = [
   'alluvial-eucalyptus',
