@@ -6,6 +6,9 @@
  * the URL can vote for up to three fabrics under a typed name. Votes live in a
  * Google Sheet behind the Apps Script web app in apps-script/chair-vote.gs;
  * ENDPOINT is that deployment's /exec URL.
+ *
+ * Phone-first: a compact grid to select from, a full-screen viewer to compare
+ * renders large, and Submit → name sheet → send.
  */
 import '../../styles/global.css';
 
@@ -34,13 +37,13 @@ const FABRICS = [
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="noindex" />
   <title>Chair fabric vote</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Share+Tech+Mono&display=swap"
     rel="stylesheet"
   />
 </head>
@@ -48,38 +51,44 @@ const FABRICS = [
 <body>
   <main class="cv-page" id="cv" data-endpoint={ENDPOINT} data-max={MAX_PICKS}>
     <header class="cv-head">
-      <div class="eyebrow">Dining chairs · {FABRICS.length} fabrics</div>
-      <h1>Which fabric?</h1>
-      <p class="sub">
-        Each picture is the real chairs with the fabric drawn at its true size. Tap up to {MAX_PICKS}
-        you like, add your name, and vote. You can come back and change your vote.
-      </p>
+      <h1>Which chair fabric?</h1>
+      <p class="sub">Real chairs, fabric at true size. Select up to {MAX_PICKS}, tap a photo to see it big.</p>
     </header>
 
     <p class="banner" id="cv-banner" role="status" hidden></p>
     <p class="banner mine" id="cv-mine" hidden></p>
 
-    <div class="grid" id="cv-grid">
-      {FABRICS.map((f) => (
-        <figure class="card" data-slug={f.slug} data-label={f.label}>
-          <button type="button" class="pick" aria-pressed="false">
-            <img src={f.src} alt={`Chairs in ${f.label}`} width="1160" height="1160" loading="lazy" decoding="async" />
-            <span class="tick" aria-hidden="true">✓</span>
-          </button>
-          <figcaption>
-            <span class="label"><b>{f.name} {f.colour}</b> <span class="brand">{f.brand}</span></span>
-            <button type="button" class="zoom" aria-label={`View ${f.label} larger`}>enlarge</button>
-          </figcaption>
-        </figure>
-      ))}
+    <div class="seg" role="group" aria-label="View">
+      <button type="button" data-view="choose" class="on" aria-pressed="true">Choose</button>
+      <button type="button" data-view="results" aria-pressed="false">Results <span class="seg-n" id="cv-seg-n"></span></button>
     </div>
 
-    <section class="results" aria-labelledby="cv-results-h">
-      <h2 id="cv-results-h">Votes so far</h2>
-      <p class="voters" id="cv-voters">Loading…</p>
-      <ol class="tally" id="cv-tally">
+    <section id="cv-choose" aria-label="Fabrics">
+      <ul class="grid" id="cv-grid">
+        {FABRICS.map((f, i) => (
+          <li class="card" data-slug={f.slug} data-label={f.label} data-idx={i}>
+            <button type="button" class="thumb" aria-label={`View ${f.label} larger`}>
+              <img src={f.src} alt="" width="1160" height="1160" loading="lazy" decoding="async" />
+            </button>
+            <button type="button" class="pick" role="checkbox" aria-checked="false">
+              <span class="box" aria-hidden="true"></span>
+              <span class="plabel">
+                <b>{f.name} {f.colour}</b>
+                <span class="brand">{f.brand}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section id="cv-results" aria-labelledby="cv-results-h" hidden>
+      <h2 id="cv-results-h" class="visually-hidden">Results</h2>
+      <p class="voters" id="cv-voters">Loading votes…</p>
+      <ol class="tally loading" id="cv-tally">
         {FABRICS.map((f) => (
           <li data-slug={f.slug}>
+            <img src={f.src} alt="" width="44" height="44" loading="lazy" decoding="async" />
             <span class="tname">{f.name} {f.colour}</span>
             <span class="bar"><span class="fill"></span></span>
             <span class="tcount">–</span>
@@ -87,9 +96,38 @@ const FABRICS = [
         ))}
       </ol>
     </section>
+  </main>
 
-    <form class="ballot" id="cv-form" novalidate>
-      <div class="count" id="cv-count" aria-live="polite">Pick up to {MAX_PICKS}</div>
+  <div class="bar-bottom" id="cv-bar">
+    <span class="count" id="cv-count" aria-live="polite">Select up to {MAX_PICKS}</span>
+    <button type="button" class="primary" id="cv-submit" disabled>Submit</button>
+  </div>
+
+  <dialog class="viewer" id="cv-viewer" aria-label="Fabric viewer">
+    <div class="v-top">
+      <span class="v-pos" id="cv-v-pos"></span>
+      <button type="button" class="v-close" id="cv-v-close" aria-label="Close">×</button>
+    </div>
+    <div class="v-stage" id="cv-v-stage">
+      <img id="cv-v-img" alt="" />
+    </div>
+    <div class="v-foot">
+      <div class="v-label">
+        <b id="cv-v-name"></b>
+        <span class="brand" id="cv-v-brand"></span>
+      </div>
+      <div class="v-nav">
+        <button type="button" class="v-step" id="cv-v-prev" aria-label="Previous fabric">‹</button>
+        <button type="button" class="v-pick" id="cv-v-pick" aria-pressed="false"></button>
+        <button type="button" class="v-step" id="cv-v-next" aria-label="Next fabric">›</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="sheet" id="cv-sheet" aria-labelledby="cv-sheet-h">
+    <form id="cv-form" novalidate>
+      <h2 id="cv-sheet-h">Who's voting?</h2>
+      <p class="sheet-picks" id="cv-sheet-picks"></p>
       <input
         id="cv-name"
         name="name"
@@ -100,16 +138,12 @@ const FABRICS = [
         aria-label="Your name"
         required
       />
-      <button type="submit" id="cv-submit">Vote</button>
+      <p class="sheet-msg" id="cv-sheet-msg" role="alert" hidden></p>
+      <div class="sheet-actions">
+        <button type="button" class="ghost" id="cv-sheet-cancel">Cancel</button>
+        <button type="submit" class="primary" id="cv-send">Send vote</button>
+      </div>
     </form>
-  </main>
-
-  <dialog class="viewer" id="cv-viewer">
-    <form method="dialog">
-      <button class="close" aria-label="Close">×</button>
-    </form>
-    <img id="cv-viewer-img" alt="" />
-    <p id="cv-viewer-cap"></p>
   </dialog>
 
   <script>
@@ -117,27 +151,45 @@ const FABRICS = [
     type Ballot = { name: string; picks: string[] };
 
     const STORAGE_KEY = 'chair-vote';
+    const SWIPE_MIN_PX = 50;
 
-    const root = document.getElementById('cv') as HTMLElement;
+    const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+    const root = $('cv');
     const endpoint = root.dataset.endpoint ?? '';
     const maxPicks = Number(root.dataset.max);
-    const grid = document.getElementById('cv-grid') as HTMLElement;
-    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.card'));
-    const banner = document.getElementById('cv-banner') as HTMLElement;
-    const mine = document.getElementById('cv-mine') as HTMLElement;
-    const countEl = document.getElementById('cv-count') as HTMLElement;
-    const form = document.getElementById('cv-form') as HTMLFormElement;
-    const nameInput = document.getElementById('cv-name') as HTMLInputElement;
-    const submitBtn = document.getElementById('cv-submit') as HTMLButtonElement;
-    const votersEl = document.getElementById('cv-voters') as HTMLElement;
-    const tallyList = document.getElementById('cv-tally') as HTMLOListElement;
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('#cv-grid .card'));
+    const banner = $('cv-banner');
+    const mine = $('cv-mine');
+    const countEl = $('cv-count');
+    const submitBtn = $<HTMLButtonElement>('cv-submit');
+    const segBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.seg button'));
+    const segN = $('cv-seg-n');
+    const chooseView = $('cv-choose');
+    const resultsView = $('cv-results');
+    const votersEl = $('cv-voters');
+    const tallyList = $<HTMLOListElement>('cv-tally');
     const tallyRows = Array.from(tallyList.querySelectorAll<HTMLLIElement>('li'));
-    const viewer = document.getElementById('cv-viewer') as HTMLDialogElement;
-    const viewerImg = document.getElementById('cv-viewer-img') as HTMLImageElement;
-    const viewerCap = document.getElementById('cv-viewer-cap') as HTMLElement;
 
+    const viewer = $<HTMLDialogElement>('cv-viewer');
+    const vImg = $<HTMLImageElement>('cv-v-img');
+    const vPos = $('cv-v-pos');
+    const vName = $('cv-v-name');
+    const vBrand = $('cv-v-brand');
+    const vPick = $<HTMLButtonElement>('cv-v-pick');
+    const vStage = $('cv-v-stage');
+
+    const sheet = $<HTMLDialogElement>('cv-sheet');
+    const form = $<HTMLFormElement>('cv-form');
+    const nameInput = $<HTMLInputElement>('cv-name');
+    const sheetPicks = $('cv-sheet-picks');
+    const sheetMsg = $('cv-sheet-msg');
+    const sendBtn = $<HTMLButtonElement>('cv-send');
+
+    const slugs = cards.map((c) => c.dataset.slug as string);
     const labelOf = new Map(cards.map((c) => [c.dataset.slug as string, c.dataset.label as string]));
-    const picked = new Set<string>();
+    // Array, not Set: pick order drives the 1/2/3 badges.
+    let picked: string[] = [];
+    let viewing = 0;
 
     function showBanner(text: string, kind: 'info' | 'error' | 'ok') {
       banner.textContent = text;
@@ -145,28 +197,61 @@ const FABRICS = [
       banner.hidden = false;
     }
 
+    // Messages raised while the name sheet is open belong inside it; the page
+    // banner is hidden behind the modal.
+    function showMessage(text: string, kind: 'info' | 'error' | 'ok') {
+      if (sheet.open) {
+        sheetMsg.textContent = text;
+        sheetMsg.hidden = false;
+      } else {
+        showBanner(text, kind);
+      }
+    }
+
+    function togglePick(slug: string) {
+      if (picked.includes(slug)) picked = picked.filter((s) => s !== slug);
+      else if (picked.length < maxPicks) picked = [...picked, slug];
+      renderPicks();
+    }
+
     function renderPicks() {
-      const full = picked.size >= maxPicks;
+      const full = picked.length >= maxPicks;
       for (const card of cards) {
-        const on = picked.has(card.dataset.slug as string);
+        const order = picked.indexOf(card.dataset.slug as string) + 1;
+        const on = order > 0;
         const btn = card.querySelector('.pick') as HTMLButtonElement;
         card.classList.toggle('on', on);
-        // aria-disabled rather than disabled so a full ballot still lets you
-        // untick a pick; the click handler enforces the cap.
         card.classList.toggle('capped', full && !on);
-        btn.setAttribute('aria-pressed', String(on));
+        (btn.querySelector('.box') as HTMLElement).textContent = on ? String(order) : '';
+        btn.setAttribute('aria-checked', String(on));
+        // aria-disabled rather than disabled so a full ballot still lets you
+        // untick a pick; togglePick enforces the cap.
         btn.setAttribute('aria-disabled', String(full && !on));
       }
       countEl.textContent = full
-        ? `${picked.size} of ${maxPicks} picked — untick one to swap`
-        : picked.size === 0
-          ? `Pick up to ${maxPicks}`
-          : `${picked.size} of ${maxPicks} picked`;
+        ? `${picked.length} of ${maxPicks} picked — untick one to swap`
+        : picked.length === 0
+          ? `Select up to ${maxPicks}`
+          : `${picked.length} of ${maxPicks} picked`;
       countEl.classList.toggle('full', full);
+      submitBtn.disabled = !endpoint || picked.length === 0;
+      if (viewer.open) renderViewer();
+    }
+
+    function setView(view: 'choose' | 'results') {
+      chooseView.hidden = view !== 'choose';
+      resultsView.hidden = view !== 'results';
+      for (const b of segBtns) {
+        const on = b.dataset.view === view;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', String(on));
+      }
     }
 
     function renderTallies({ tallies, voters }: Tallies) {
+      tallyList.classList.remove('loading');
       votersEl.textContent = `${voters} ${voters === 1 ? 'person has' : 'people have'} voted`;
+      segN.textContent = `(${voters})`;
       const top = Math.max(1, ...Object.values(tallies));
       const sorted = [...tallyRows].sort(
         (a, b) => (tallies[b.dataset.slug as string] ?? 0) - (tallies[a.dataset.slug as string] ?? 0),
@@ -182,9 +267,8 @@ const FABRICS = [
     function renderMine(ballot: Ballot | null) {
       if (!ballot) return;
       const names = ballot.picks.map((s) => labelOf.get(s) ?? s).join(', ');
-      mine.textContent = `${ballot.name}, you voted for ${names}. You can change your vote: pick again and press Vote.`;
+      mine.textContent = `${ballot.name}, you voted for ${names}. You can change your vote: pick again and press Submit.`;
       mine.hidden = false;
-      submitBtn.textContent = 'Change vote';
     }
 
     function loadBallot(): Ballot | null {
@@ -212,37 +296,84 @@ const FABRICS = [
       return data;
     }
 
-    for (const card of cards) {
+    // --- viewer ---
+    function renderViewer() {
+      const card = cards[viewing];
       const slug = card.dataset.slug as string;
-      card.querySelector('.pick')!.addEventListener('click', () => {
-        if (picked.has(slug)) picked.delete(slug);
-        else if (picked.size < maxPicks) picked.add(slug);
-        renderPicks();
-      });
-      card.querySelector('.zoom')!.addEventListener('click', () => {
-        const img = card.querySelector('img') as HTMLImageElement;
-        viewerImg.src = img.src;
-        viewerImg.alt = img.alt;
-        viewerCap.textContent = card.dataset.label as string;
-        viewer.showModal();
-      });
+      const order = picked.indexOf(slug) + 1;
+      const full = picked.length >= maxPicks;
+      vImg.src = (card.querySelector('img') as HTMLImageElement).src;
+      vImg.alt = `Chairs in ${card.dataset.label}`;
+      vPos.textContent = `${viewing + 1} / ${cards.length}`;
+      vName.textContent = (card.querySelector('.plabel b') as HTMLElement).textContent;
+      vBrand.textContent = (card.querySelector('.brand') as HTMLElement).textContent;
+      vPick.textContent = order > 0 ? `Picked ✓ ${order}` : full ? `${maxPicks} picked — untick one` : 'Pick this';
+      vPick.classList.toggle('on', order > 0);
+      vPick.setAttribute('aria-pressed', String(order > 0));
+      vPick.disabled = order === 0 && full;
     }
-    viewer.addEventListener('click', (e) => {
-      if (e.target === viewer) viewer.close();
+    function openViewer(i: number) {
+      viewing = i;
+      renderViewer();
+      viewer.showModal();
+    }
+    function step(delta: number) {
+      viewing = (viewing + delta + cards.length) % cards.length;
+      renderViewer();
+    }
+    $('cv-v-close').addEventListener('click', () => viewer.close());
+    $('cv-v-prev').addEventListener('click', () => step(-1));
+    $('cv-v-next').addEventListener('click', () => step(1));
+    vPick.addEventListener('click', () => togglePick(slugs[viewing]));
+    viewer.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+    let touchX = 0;
+    let touchY = 0;
+    vStage.addEventListener('touchstart', (e) => {
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
+    vStage.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+    });
+
+    // --- grid ---
+    cards.forEach((card, i) => {
+      card.querySelector('.thumb')!.addEventListener('click', () => openViewer(i));
+      card.querySelector('.pick')!.addEventListener('click', () => togglePick(slugs[i]));
+    });
+    for (const b of segBtns) b.addEventListener('click', () => setView(b.dataset.view as 'choose' | 'results'));
+
+    // --- submit → name sheet → send ---
+    submitBtn.addEventListener('click', () => {
+      if (!endpoint) return showBanner('Voting is not connected yet. Check back soon.', 'info');
+      if (picked.length === 0) return showBanner('Tap at least one fabric first.', 'error');
+      sheetPicks.textContent = picked.map((s, i) => `${i + 1}. ${labelOf.get(s) ?? s}`).join('\n');
+      sheetMsg.hidden = true;
+      sheet.showModal();
+      nameInput.focus();
+    });
+    $('cv-sheet-cancel').addEventListener('click', () => sheet.close());
+    nameInput.addEventListener('input', () => { sheetMsg.hidden = true; });
+    sheet.addEventListener('click', (e) => {
+      if (e.target === sheet) sheet.close();
     });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = nameInput.value.trim();
-      if (!endpoint) return showBanner('Voting is not connected yet. Check back soon.', 'info');
-      if (picked.size === 0) return showBanner('Tap at least one fabric first.', 'error');
       if (!name) {
         nameInput.focus();
-        return showBanner('Add your name so a second vote replaces your first.', 'error');
+        return showMessage('Add your name so a second vote replaces your first.', 'error');
       }
 
       const ballot: Ballot = { name, picks: [...picked] };
-      submitBtn.disabled = true;
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending…';
       try {
         // text/plain keeps this a "simple" request with no CORS preflight,
         // which Apps Script web apps cannot answer.
@@ -252,235 +383,331 @@ const FABRICS = [
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         });
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ballot)); } catch {}
+        sheet.close();
         renderTallies(result);
         renderMine(ballot);
         showBanner('Thanks, your vote is in.', 'ok');
+        setView('results');
+        window.scrollTo({ top: 0 });
       } catch (err) {
-        showBanner(`Your vote did not go through: ${(err as Error).message}`, 'error');
+        showMessage(`Your vote did not go through: ${(err as Error).message}`, 'error');
       } finally {
-        submitBtn.disabled = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send vote';
       }
     });
 
+    // --- boot ---
     const saved = loadBallot();
     if (saved) {
       nameInput.value = saved.name;
-      for (const s of saved.picks) if (labelOf.has(s)) picked.add(s);
+      picked = saved.picks.filter((s) => labelOf.has(s)).slice(0, maxPicks);
       renderMine(saved);
     }
     renderPicks();
 
     if (!endpoint) {
       showBanner('Voting is not connected yet. You can look at the fabrics, but votes cannot be saved.', 'info');
+      tallyList.classList.remove('loading');
       votersEl.textContent = 'No votes yet: voting is not connected.';
-      submitBtn.disabled = true;
     } else {
       call()
         .then(renderTallies)
         .catch((err) => {
+          tallyList.classList.remove('loading');
           votersEl.textContent = `Could not load votes: ${(err as Error).message}`;
         });
     }
   </script>
 
   <style>
+    /* Page-local role tokens over the global palette. */
+    .cv-page, .bar-bottom, .viewer, .sheet {
+      --pick: var(--color-accent);
+      --ok: #5f7a3c;
+      --ink: var(--color-text);
+      --tap: 44px;
+    }
+
     .cv-page {
-      max-width: var(--container-max);
+      max-width: 1040px;
       margin: 0 auto;
-      /* Bottom padding clears the sticky ballot bar. */
-      padding: var(--s4) var(--s2) calc(var(--s7) + var(--s4));
+      /* Bottom padding clears the sticky Submit bar. */
+      padding: var(--s3) var(--s2) calc(var(--s6) + env(safe-area-inset-bottom));
       position: relative;
       z-index: 1;
     }
 
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
     .cv-head h1 {
       font-family: var(--font-sans);
       font-weight: 700;
-      font-size: clamp(2rem, 6vw, 3rem);
+      font-size: clamp(1.5rem, 5vw, 2.25rem);
       letter-spacing: -0.02em;
-      margin: var(--s0) 0 var(--s1);
+      line-height: 1.15;
     }
-    .cv-head .sub { color: var(--color-text-muted); max-width: 60ch; margin: 0 0 var(--s3); }
+    .cv-head .sub {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin: var(--s0) 0 var(--s2);
+    }
 
     .banner {
-      padding: var(--s2) var(--s3);
-      margin-bottom: var(--s3);
+      padding: var(--s1) var(--s2);
+      margin-bottom: var(--s2);
+      font-size: 0.9rem;
+      line-height: 1.4;
       border: 1px solid var(--color-border);
       border-left: 4px solid var(--color-text-muted);
       background: var(--color-surface);
     }
-    .banner[data-kind='error'] { border-left-color: var(--color-accent); }
-    .banner[data-kind='ok'], .banner.mine { border-left-color: #5f7a3c; }
+    .banner[data-kind='error'] { border-left-color: var(--pick); }
+    .banner[data-kind='ok'], .banner.mine { border-left-color: var(--ok); }
 
-    /* One image per row on phones: the renders are only useful big enough to
-       judge pattern scale. */
-    .grid {
+    .seg {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--s3);
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: var(--s2);
+      border: 1px solid var(--ink);
+      background: var(--color-surface);
     }
-    @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    .seg button {
+      min-height: var(--tap);
+      font: inherit;
+      font-weight: 700;
+      border: 0;
+      background: none;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .seg button.on { background: var(--ink); color: var(--color-surface); }
+    .seg-n { font-family: var(--font-mono); font-weight: 400; }
+
+    .grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+      gap: var(--s2);
+    }
+    @media (min-width: 720px) {
+      .grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--s3); }
+    }
 
     .card {
-      margin: 0;
       background: var(--color-surface);
       border: 1px solid var(--color-border);
-      transition: border-color var(--dur-micro) var(--ease-out), opacity var(--dur-short) var(--ease-out);
+      transition: opacity var(--dur-short) var(--ease-out);
     }
-    .card.on { border-color: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent); }
-    .card.capped { opacity: 0.5; }
-    .card.capped .pick { cursor: not-allowed; }
+    .card.on { outline: 3px solid var(--pick); outline-offset: -1px; }
+    /* Dim only the control, so capped photos stay comparable. */
+    .card.capped .pick { opacity: 0.45; }
 
-    .pick {
+    .thumb {
       display: block;
-      position: relative;
       width: 100%;
       padding: 0;
       border: 0;
-      background: none;
-      cursor: pointer;
+      background: #fff;
+      cursor: zoom-in;
     }
-    .pick img { display: block; width: 100%; height: auto; }
-    .tick {
-      position: absolute;
-      top: var(--s2);
-      right: var(--s2);
-      width: 2.25rem;
-      height: 2.25rem;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #fff;
-      background: rgba(28, 25, 23, 0.35);
-      border: 2px solid #fff;
-    }
-    .card.on .tick { background: var(--color-accent); }
+    .thumb img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
 
-    figcaption {
+    .pick {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: var(--s1);
-      padding: var(--s1) var(--s2);
+      width: 100%;
+      min-height: var(--tap);
+      padding: var(--s1);
+      font: inherit;
+      text-align: left;
+      border: 0;
+      border-top: 1px solid var(--color-border);
+      background: none;
+      color: var(--ink);
+      cursor: pointer;
     }
+    .card.capped .pick { cursor: not-allowed; }
+    .box {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--ink);
+      background: #fff;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #fff;
+    }
+    .card.on .box { background: var(--pick); border-color: var(--pick); }
+    .plabel { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+    .plabel b { font-size: 0.9rem; }
     .brand {
       font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--color-text-muted);
-      margin-left: var(--s0);
     }
-    .zoom {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      padding: var(--s0) var(--s1);
-      border: 1px solid var(--color-border);
-      background: none;
-      color: var(--color-text-muted);
-      cursor: pointer;
-    }
-    .zoom:hover { color: var(--color-accent); border-color: var(--color-accent); }
 
-    .results { margin-top: var(--s5); max-width: 640px; }
-    .results h2 { font-size: 1.4rem; margin-bottom: var(--s0); }
-    .voters { color: var(--color-text-muted); margin: 0 0 var(--s2); }
-    .tally { list-style: none; padding: 0; margin: 0; }
+    .voters { color: var(--color-text-muted); margin: 0 0 var(--s2); font-size: 0.95rem; }
+    .tally { list-style: none; }
     .tally li {
       display: grid;
-      grid-template-columns: minmax(8rem, 12rem) 1fr 2ch;
+      grid-template-columns: 44px minmax(0, 9rem) 1fr 2ch;
       align-items: center;
       gap: var(--s2);
       padding: var(--s0) 0;
+      border-bottom: 1px solid var(--color-border);
     }
+    .tally img { width: 44px; height: 44px; object-fit: cover; display: block; }
     .tname { font-size: 0.9rem; }
-    .bar { height: 0.7rem; background: var(--color-border); }
+    .bar { height: 10px; background: var(--color-border); }
     .fill {
       display: block;
       height: 100%;
       width: 0;
-      background: var(--color-accent);
+      background: var(--pick);
       transition: width var(--dur-long) var(--ease-out);
     }
     .tcount { font-family: var(--font-mono); text-align: right; }
+    .tally.loading .tcount { visibility: hidden; }
+    .tally.loading .bar {
+      background: linear-gradient(90deg, var(--color-border) 30%, var(--color-surface) 50%, var(--color-border) 70%);
+      background-size: 300% 100%;
+      animation: shimmer 1.4s linear infinite;
+    }
+    @keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+    @media (prefers-reduced-motion: reduce) { .tally.loading .bar { animation: none; } }
 
-    .ballot {
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .primary, .ghost {
+      min-height: var(--tap);
+      padding: 0 var(--s3);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .primary { border: 0; background: var(--ink); color: var(--color-surface); }
+    .primary:disabled { opacity: 0.35; cursor: not-allowed; }
+    .ghost { border: 1px solid var(--color-border); background: none; color: var(--ink); }
+
+    /* position: fixed must beat global.css's `body > * { position: relative }`. */
+    .bar-bottom {
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
       z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: var(--s1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s2);
       padding: var(--s1) var(--s2) calc(var(--s1) + env(safe-area-inset-bottom));
       background: var(--color-surface);
       border-top: 1px solid var(--color-border);
       box-shadow: 0 -4px 16px rgba(28, 25, 23, 0.08);
     }
-    .count {
-      grid-column: 1 / -1;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--color-text-muted);
-    }
-    .count.full { color: var(--color-accent); }
-    /* 16px minimum stops iOS Safari zooming the page on focus. */
-    .ballot input {
-      font: inherit;
-      font-size: 16px;
-      padding: var(--s1) var(--s2);
-      border: 1px solid var(--color-border);
-      background: #fff;
-      min-width: 0;
-    }
-    .ballot button {
-      font: inherit;
-      font-weight: 600;
-      padding: var(--s1) var(--s3);
-      border: 0;
-      background: var(--color-text);
-      color: var(--color-surface);
-      cursor: pointer;
-    }
-    .ballot button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .count { font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-text-muted); }
+    .count.full { color: var(--pick); }
 
     /* global.css zeroes margins and makes every body child position:
-       relative, which together pin the modal to the top-left corner. */
+       relative, which together pin a modal to the top-left corner. */
+    .viewer, .sheet { position: fixed; margin: auto; padding: 0; border: 0; }
+    .viewer::backdrop, .sheet::backdrop { background: rgba(28, 25, 23, 0.85); }
+
     .viewer {
-      position: fixed;
-      margin: auto;
-      max-width: min(96vw, 1160px);
-      max-height: 96vh;
-      padding: 0;
-      border: 0;
-      background: var(--color-surface);
+      width: 100vw;
+      height: 100dvh;
+      max-width: none;
+      max-height: none;
+      background: var(--ink);
+      color: var(--color-surface);
     }
-    .viewer::backdrop { background: rgba(28, 25, 23, 0.8); }
-    .viewer img { display: block; width: 100%; height: auto; max-height: 88vh; object-fit: contain; }
-    .viewer p { margin: 0; padding: var(--s1) var(--s2); font-weight: 600; }
-    .viewer .close {
-      position: absolute;
-      top: var(--s1);
-      right: var(--s1);
-      width: 2.5rem;
-      height: 2.5rem;
+    .viewer[open] { display: flex; flex-direction: column; }
+    .v-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(var(--s0) + env(safe-area-inset-top)) var(--s2) var(--s0);
+    }
+    .v-pos { font-family: var(--font-mono); font-size: 0.85rem; }
+    .v-close {
+      width: var(--tap);
+      height: var(--tap);
       border: 0;
-      border-radius: 50%;
-      font-size: 1.5rem;
+      background: none;
+      color: inherit;
+      font-size: 2rem;
       line-height: 1;
-      background: rgba(28, 25, 23, 0.6);
-      color: #fff;
       cursor: pointer;
     }
+    .v-stage {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      touch-action: pan-y;
+    }
+    /* Absolute fill: a percentage max-height inside a flex-sized box does not
+       resolve, and the image would overflow onto the controls on wide screens. */
+    .v-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .v-foot {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--s2) var(--s2) calc(var(--s2) + env(safe-area-inset-bottom));
+    }
+    .v-label { display: flex; align-items: baseline; gap: var(--s1); margin-bottom: var(--s2); }
+    .v-label b { font-size: 1.1rem; }
+    .v-label .brand { color: #d6d3d1; }
+    .v-nav { display: grid; grid-template-columns: var(--tap) 1fr var(--tap); gap: var(--s1); }
+    .v-step, .v-pick {
+      min-height: 52px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #57534e;
+      background: none;
+      color: inherit;
+    }
+    .v-step { font-size: 1.6rem; line-height: 1; }
+    .v-pick { background: var(--color-surface); color: var(--ink); border-color: var(--color-surface); font-size: 1.05rem; }
+    .v-pick.on { background: var(--pick); border-color: var(--pick); color: #fff; }
+    .v-pick:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .sheet {
+      width: 100%;
+      max-width: 480px;
+      margin: auto auto 0;
+      background: var(--color-surface);
+      color: var(--ink);
+    }
+    @media (min-width: 720px) { .sheet { margin: auto; } }
+    .sheet form {
+      display: grid;
+      gap: var(--s2);
+      padding: var(--s3) var(--s2) calc(var(--s3) + env(safe-area-inset-bottom));
+    }
+    .sheet h2 { font-size: 1.25rem; }
+    .sheet-picks { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.4; white-space: pre-line; }
+    /* 16px minimum stops iOS Safari zooming the page on focus. */
+    .sheet input {
+      min-height: var(--tap);
+      padding: 0 var(--s2);
+      font: inherit;
+      font-size: 16px;
+      border: 1px solid var(--color-text-muted);
+      background: #fff;
+    }
+    .sheet-msg { color: var(--pick); font-size: 0.9rem; line-height: 1.4; }
+    .sheet-actions { display: grid; grid-template-columns: 1fr 2fr; gap: var(--s1); }
   </style>
 </body>
 </html>
