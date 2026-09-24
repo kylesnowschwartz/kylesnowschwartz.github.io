@@ -56,7 +56,6 @@ const FABRICS = [
     </header>
 
     <p class="banner" id="cv-banner" role="status" hidden></p>
-    <p class="banner mine" id="cv-mine" hidden></p>
 
     <div class="seg" role="group" aria-label="View">
       <button type="button" data-view="choose" class="on" aria-pressed="true">Choose</button>
@@ -159,7 +158,6 @@ const FABRICS = [
     const maxPicks = Number(root.dataset.max);
     const cards = Array.from(document.querySelectorAll<HTMLElement>('#cv-grid .card'));
     const banner = $('cv-banner');
-    const mine = $('cv-mine');
     const countEl = $('cv-count');
     const submitBtn = $<HTMLButtonElement>('cv-submit');
     const segBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.seg button'));
@@ -241,6 +239,8 @@ const FABRICS = [
     function setView(view: 'choose' | 'results') {
       chooseView.hidden = view !== 'choose';
       resultsView.hidden = view !== 'results';
+      // Submit only makes sense while choosing; on Results it reads as "vote again".
+      document.body.classList.toggle('cv-results-view', view === 'results');
       for (const b of segBtns) {
         const on = b.dataset.view === view;
         b.classList.toggle('on', on);
@@ -262,13 +262,6 @@ const FABRICS = [
         (row.querySelector('.fill') as HTMLElement).style.width = `${(n / top) * 100}%`;
         tallyList.appendChild(row);
       }
-    }
-
-    function renderMine(ballot: Ballot | null) {
-      if (!ballot) return;
-      const names = ballot.picks.map((s) => labelOf.get(s) ?? s).join(', ');
-      mine.textContent = `${ballot.name}, you voted for ${names}. You can change your vote: pick again and press Submit.`;
-      mine.hidden = false;
     }
 
     function loadBallot(): Ballot | null {
@@ -385,7 +378,6 @@ const FABRICS = [
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ballot)); } catch {}
         sheet.close();
         renderTallies(result);
-        renderMine(ballot);
         showBanner('Thanks, your vote is in.', 'ok');
         setView('results');
         window.scrollTo({ top: 0 });
@@ -402,7 +394,6 @@ const FABRICS = [
     if (saved) {
       nameInput.value = saved.name;
       picked = saved.picks.filter((s) => labelOf.has(s)).slice(0, maxPicks);
-      renderMine(saved);
     }
     renderPicks();
 
@@ -437,6 +428,8 @@ const FABRICS = [
       position: relative;
       z-index: 1;
     }
+    :global(body.cv-results-view) .bar-bottom { display: none; }
+    :global(body.cv-results-view) .cv-page { padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom)); }
 
     .cv-head h1 {
       font-family: var(--font-sans);
@@ -462,7 +455,7 @@ const FABRICS = [
       background: var(--color-surface);
     }
     .banner[data-kind='error'] { border-left-color: var(--pick); }
-    .banner[data-kind='ok'], .banner.mine { border-left-color: var(--ok); }
+    .banner[data-kind='ok'] { border-left-color: var(--ok); }
 
     .seg {
       display: grid;
