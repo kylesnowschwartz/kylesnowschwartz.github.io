@@ -114,7 +114,7 @@ const FABRICS = [
     <div class="v-body" id="cv-v-body">
       <figure class="v-face v-chair"><div class="v-img"><img id="cv-v-img" alt="" /></div></figure>
       <figure class="v-face v-fabric">
-        <figcaption>Fabric close-up</figcaption>
+        <figcaption>Fabric</figcaption>
         <div class="v-img"><img id="cv-v-swatch" alt="" /></div>
       </figure>
     </div>
@@ -320,7 +320,6 @@ const FABRICS = [
       viewing = i;
       renderViewer();
       openDialog(viewer);
-      vBody.scrollTop = 0;
     }
     function step(delta: number) {
       viewing = (viewing + delta + cards.length) % cards.length;
@@ -358,8 +357,8 @@ const FABRICS = [
       touchX = e.touches[0].clientX;
       touchY = e.touches[0].clientY;
     }, { passive: true });
-    // Only a clearly sideways swipe steps, so scrolling down to the fabric
-    // close-up with a slightly diagonal thumb never changes fabric.
+    // Only a clearly sideways swipe steps, so a sloppy vertical drag never
+    // changes fabric.
     vBody.addEventListener('touchend', (e) => {
       const dx = e.changedTouches[0].clientX - touchX;
       const dy = e.changedTouches[0].clientY - touchY;
@@ -688,27 +687,35 @@ const FABRICS = [
       cursor: pointer;
     }
 
-    /* Phones: chair on top, fabric close-up below, scrolling between the
-       fixed header and controls. */
+    /* Phones: chair and fabric as two edge-to-edge squares, centred between
+       the header and controls, so both are visible without scrolling. */
     .v-body {
       flex: 1;
       min-height: 0;
-      overflow-y: auto;
-      overscroll-behavior: contain;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-content: center;
+      overflow: hidden;
       touch-action: pan-y;
     }
-    .v-face { margin: 0; }
-    .v-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+    .v-face { margin: 0; position: relative; }
+    .v-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
     .v-fabric figcaption {
-      padding: var(--s3) var(--s2) var(--s1);
+      position: absolute;
+      top: var(--s0);
+      left: var(--s0);
+      z-index: 1;
+      padding: 2px var(--s0);
+      font-size: 0.75rem;
       font-weight: 700;
-      color: #d6d3d1;
+      background: rgba(28, 25, 23, 0.7);
+      color: #fff;
     }
 
     /* Wide screens: side by side, both fitted to the space without scrolling. */
     @media (min-width: 720px) {
       .v-body {
-        overflow: hidden;
+        align-content: stretch;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--s3);
@@ -716,12 +723,19 @@ const FABRICS = [
       }
       /* Fixed caption row on both faces so the two images line up. */
       .v-face { display: grid; grid-template-rows: 2rem 1fr; min-height: 0; }
-      .v-fabric figcaption { padding: 0; line-height: 2rem; }
+      .v-fabric figcaption {
+        position: static;
+        padding: 0;
+        font-size: 1rem;
+        line-height: 2rem;
+        background: none;
+        color: #d6d3d1;
+      }
       .v-chair .v-img { grid-row: 2; }
       /* Absolute fill: a percentage max-height inside a grid-sized box does
          not resolve, and the image would overflow onto the controls. */
       .v-img { position: relative; min-height: 0; }
-      .v-img img { position: absolute; inset: 0; height: 100%; }
+      .v-img img { position: absolute; inset: 0; height: 100%; object-fit: contain; }
     }
     .v-foot {
       width: 100%;
