@@ -108,16 +108,15 @@ const FABRICS = [
 
   <dialog class="viewer" id="cv-viewer" aria-label="Fabric viewer">
     <div class="v-top">
+      <button type="button" class="v-close" id="cv-v-close"><span aria-hidden="true">✕</span> Close</button>
       <span class="v-pos" id="cv-v-pos"></span>
-      <div class="v-faces" role="group" aria-label="Show">
-        <button type="button" data-face="chair" class="on" aria-pressed="true">Chair</button>
-        <button type="button" data-face="fabric" aria-pressed="false">Fabric</button>
-      </div>
-      <button type="button" class="v-close" id="cv-v-close" aria-label="Close">×</button>
     </div>
-    <div class="v-stage" id="cv-v-stage" data-face="chair">
-      <figure class="v-face v-chair"><img id="cv-v-img" alt="" /></figure>
-      <figure class="v-face v-fabric"><img id="cv-v-swatch" alt="" /></figure>
+    <div class="v-body" id="cv-v-body">
+      <figure class="v-face v-chair"><div class="v-img"><img id="cv-v-img" alt="" /></div></figure>
+      <figure class="v-face v-fabric">
+        <figcaption>Fabric close-up</figcaption>
+        <div class="v-img"><img id="cv-v-swatch" alt="" /></div>
+      </figure>
     </div>
     <div class="v-foot">
       <div class="v-label">
@@ -125,9 +124,9 @@ const FABRICS = [
         <span class="brand" id="cv-v-brand"></span>
       </div>
       <div class="v-nav">
-        <button type="button" class="v-step" id="cv-v-prev" aria-label="Previous fabric">‹</button>
+        <button type="button" class="v-step" id="cv-v-prev">‹ Previous</button>
+        <button type="button" class="v-step" id="cv-v-next">Next ›</button>
         <button type="button" class="v-pick" id="cv-v-pick" aria-pressed="false"></button>
-        <button type="button" class="v-step" id="cv-v-next" aria-label="Next fabric">›</button>
       </div>
     </div>
   </dialog>
@@ -183,9 +182,8 @@ const FABRICS = [
     const vName = $('cv-v-name');
     const vBrand = $('cv-v-brand');
     const vPick = $<HTMLButtonElement>('cv-v-pick');
-    const vStage = $('cv-v-stage');
+    const vBody = $('cv-v-body');
     const vSwatch = $<HTMLImageElement>('cv-v-swatch');
-    const faceBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-faces button'));
 
     const sheet = $<HTMLDialogElement>('cv-sheet');
     const form = $<HTMLFormElement>('cv-form');
@@ -321,42 +319,51 @@ const FABRICS = [
     function openViewer(i: number) {
       viewing = i;
       renderViewer();
-      viewer.showModal();
+      openDialog(viewer);
+      vBody.scrollTop = 0;
     }
     function step(delta: number) {
       viewing = (viewing + delta + cards.length) % cards.length;
       renderViewer();
     }
+    // --- Back closes the open dialog instead of leaving the page ---
+    // Opening pushes one history entry; popstate (Back button or back-swipe)
+    // closes the dialog. Any other close (✕, Escape, Cancel, a sent vote)
+    // pops that entry, so no stale entry is left for Back to land on.
+    const DIALOG_STATE = 'cv-dialog';
+    function openDialog(d: HTMLDialogElement) {
+      d.showModal();
+      history.pushState({ [DIALOG_STATE]: true }, '');
+    }
+    for (const d of [viewer, sheet]) {
+      d.addEventListener('close', () => {
+        if (history.state?.[DIALOG_STATE]) history.back();
+      });
+    }
+    window.addEventListener('popstate', () => {
+      for (const d of [viewer, sheet]) if (d.open) d.close();
+    });
+
     $('cv-v-close').addEventListener('click', () => viewer.close());
     $('cv-v-prev').addEventListener('click', () => step(-1));
     $('cv-v-next').addEventListener('click', () => step(1));
     vPick.addEventListener('click', () => togglePick(slugs[viewing]));
-    // Phones show one face at a time so each can fill the width; the choice
-    // sticks while stepping through fabrics. Wide screens show both.
-    for (const b of faceBtns) {
-      b.addEventListener('click', () => {
-        vStage.dataset.face = b.dataset.face;
-        for (const o of faceBtns) {
-          const on = o === b;
-          o.classList.toggle('on', on);
-          o.setAttribute('aria-pressed', String(on));
-        }
-      });
-    }
     viewer.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') step(-1);
       if (e.key === 'ArrowRight') step(1);
     });
     let touchX = 0;
     let touchY = 0;
-    vStage.addEventListener('touchstart', (e) => {
+    vBody.addEventListener('touchstart', (e) => {
       touchX = e.touches[0].clientX;
       touchY = e.touches[0].clientY;
     }, { passive: true });
-    vStage.addEventListener('touchend', (e) => {
+    // Only a clearly sideways swipe steps, so scrolling down to the fabric
+    // close-up with a slightly diagonal thumb never changes fabric.
+    vBody.addEventListener('touchend', (e) => {
       const dx = e.changedTouches[0].clientX - touchX;
       const dy = e.changedTouches[0].clientY - touchY;
-      if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+      if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > 2 * Math.abs(dy)) step(dx < 0 ? 1 : -1);
     });
 
     // --- grid ---
@@ -372,7 +379,7 @@ const FABRICS = [
       if (picked.length === 0) return showBanner('Tap at least one fabric first.', 'error');
       sheetPicks.textContent = picked.map((s, i) => `${i + 1}. ${labelOf.get(s) ?? s}`).join('\n');
       sheetMsg.hidden = true;
-      sheet.showModal();
+      openDialog(sheet);
       nameInput.focus();
     });
     $('cv-sheet-cancel').addEventListener('click', () => sheet.close());
@@ -669,46 +676,52 @@ const FABRICS = [
       justify-content: space-between;
       padding: calc(var(--s0) + env(safe-area-inset-top)) var(--s2) var(--s0);
     }
-    .v-pos { font-family: var(--font-mono); font-size: 0.85rem; min-width: 4ch; }
-    .v-faces { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #57534e; }
-    .v-faces button {
+    .v-pos { font-family: var(--font-mono); font-size: 0.95rem; }
+    .v-close {
       min-height: var(--tap);
       padding: 0 var(--s2);
       font: inherit;
       font-weight: 700;
-      font-size: 0.9rem;
-      border: 0;
+      border: 1px solid #57534e;
       background: none;
       color: inherit;
       cursor: pointer;
     }
-    .v-faces button.on { background: var(--color-surface); color: var(--ink); }
-    .v-close {
-      width: var(--tap);
-      height: var(--tap);
-      border: 0;
-      background: none;
-      color: inherit;
-      font-size: 2rem;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .v-stage {
+
+    /* Phones: chair on top, fabric close-up below, scrolling between the
+       fixed header and controls. */
+    .v-body {
       flex: 1;
       min-height: 0;
-      display: grid;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       touch-action: pan-y;
     }
-    .v-face { position: relative; min-height: 0; margin: 0; }
-    .v-stage[data-face='chair'] .v-fabric,
-    .v-stage[data-face='fabric'] .v-chair { display: none; }
-    /* Absolute fill: a percentage max-height inside a flex-sized box does not
-       resolve, and the image would overflow onto the controls on wide screens. */
-    .v-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .v-face { margin: 0; }
+    .v-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
+    .v-fabric figcaption {
+      padding: var(--s3) var(--s2) var(--s1);
+      font-weight: 700;
+      color: #d6d3d1;
+    }
+
+    /* Wide screens: side by side, both fitted to the space without scrolling. */
     @media (min-width: 720px) {
-      .v-faces { display: none; }
-      .v-stage { grid-template-columns: 1fr 1fr; gap: var(--s3); padding: 0 var(--s3); }
-      .v-stage[data-face] .v-face { display: block; }
+      .v-body {
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--s3);
+        padding: 0 var(--s3);
+      }
+      /* Fixed caption row on both faces so the two images line up. */
+      .v-face { display: grid; grid-template-rows: 2rem 1fr; min-height: 0; }
+      .v-fabric figcaption { padding: 0; line-height: 2rem; }
+      .v-chair .v-img { grid-row: 2; }
+      /* Absolute fill: a percentage max-height inside a grid-sized box does
+         not resolve, and the image would overflow onto the controls. */
+      .v-img { position: relative; min-height: 0; }
+      .v-img img { position: absolute; inset: 0; height: 100%; }
     }
     .v-foot {
       width: 100%;
@@ -719,7 +732,8 @@ const FABRICS = [
     .v-label { display: flex; align-items: baseline; gap: var(--s1); margin-bottom: var(--s2); }
     .v-label b { font-size: 1.1rem; }
     .v-label .brand { color: #d6d3d1; }
-    .v-nav { display: grid; grid-template-columns: var(--tap) 1fr var(--tap); gap: var(--s1); }
+    .v-nav { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1); }
+    .v-pick { grid-column: 1 / -1; }
     .v-step, .v-pick {
       min-height: 52px;
       font: inherit;
@@ -729,7 +743,7 @@ const FABRICS = [
       background: none;
       color: inherit;
     }
-    .v-step { font-size: 1.6rem; line-height: 1; }
+    .v-step { font-size: 1rem; }
     .v-pick { background: var(--color-surface); color: var(--ink); border-color: var(--color-surface); font-size: 1.05rem; }
     .v-pick.on { background: var(--pick); border-color: var(--pick); color: #fff; }
     .v-pick:disabled { opacity: 0.5; cursor: not-allowed; }
