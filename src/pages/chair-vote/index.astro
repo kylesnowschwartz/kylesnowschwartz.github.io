@@ -30,7 +30,7 @@ const FABRICS = [
   { slug: 'warwick-uluwatu-natural', brand: 'Warwick', name: 'Uluwatu', colour: 'Natural' },
   { slug: 'warwick-uluwatu-terra', brand: 'Warwick', name: 'Uluwatu', colour: 'Terra' },
   { slug: 'zepel-montague-ash', brand: 'Zepel', name: 'Montague', colour: 'Ash' },
-].map((f) => ({ ...f, label: `${f.brand} ${f.name} — ${f.colour}`, src: `/chair-vote/${f.slug}.jpg`, swatch: `/chair-vote/swatches/${f.slug}.jpg` }));
+].map((f) => ({ ...f, label: `${f.brand} ${f.name} — ${f.colour}`, src: `/chair-vote/${f.slug}.jpg`, thumb: `/chair-vote/thumbs/${f.slug}.jpg`, swatch: `/chair-vote/swatches/${f.slug}.jpg`, swatchThumb: `/chair-vote/swatches/thumbs/${f.slug}.jpg` }));
 ---
 
 <!DOCTYPE html>
@@ -65,10 +65,10 @@ const FABRICS = [
     <section id="cv-choose" aria-label="Fabrics">
       <ul class="grid" id="cv-grid">
         {FABRICS.map((f, i) => (
-          <li class="card" data-slug={f.slug} data-label={f.label} data-swatch={f.swatch} data-idx={i}>
+          <li class="card" data-slug={f.slug} data-label={f.label} data-src={f.src} data-swatch={f.swatch} data-idx={i}>
             <button type="button" class="thumb" aria-label={`View ${f.label} larger`}>
-              <img src={f.src} alt="" width="1160" height="1160" loading="lazy" decoding="async" />
-              <img class="inset" src={f.swatch} alt={`${f.label} fabric swatch`} width="600" height="600" loading="lazy" decoding="async" />
+              <img src={f.thumb} alt="" width="480" height="480" loading="lazy" decoding="async" />
+              <img class="inset" src={f.swatchThumb} alt={`${f.label} fabric swatch`} width="200" height="200" loading="lazy" decoding="async" />
             </button>
             <button type="button" class="pick" role="checkbox" aria-checked="false">
               <span class="box" aria-hidden="true"></span>
@@ -89,8 +89,8 @@ const FABRICS = [
         {FABRICS.map((f) => (
           <li data-slug={f.slug}>
             <span class="tthumb">
-              <img src={f.src} alt="" width="44" height="44" loading="lazy" decoding="async" />
-              <img class="inset" src={f.swatch} alt={`${f.label} fabric swatch`} width="20" height="20" loading="lazy" decoding="async" />
+              <img src={f.thumb} alt="" width="44" height="44" loading="lazy" decoding="async" />
+              <img class="inset" src={f.swatchThumb} alt={`${f.label} fabric swatch`} width="20" height="20" loading="lazy" decoding="async" />
             </span>
             <span class="tname">{f.name} {f.colour}</span>
             <span class="bar"><span class="fill"></span></span>
@@ -306,7 +306,7 @@ const FABRICS = [
       const slug = card.dataset.slug as string;
       const order = picked.indexOf(slug) + 1;
       const full = picked.length >= maxPicks;
-      vImg.src = (card.querySelector('img') as HTMLImageElement).src;
+      vImg.src = card.dataset.src as string;
       vImg.alt = `Chairs in ${card.dataset.label}`;
       vSwatch.src = card.dataset.swatch as string;
       vSwatch.alt = `${card.dataset.label} fabric swatch`;
