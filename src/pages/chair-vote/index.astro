@@ -687,18 +687,20 @@ const FABRICS = [
       cursor: pointer;
     }
 
-    /* Phones: chair and fabric as two edge-to-edge squares, centred between
-       the header and controls, so both are visible without scrolling. */
+    /* Phones: chair stacked on fabric, each the largest square that lets both
+       fit between the header and controls — side min(width, height / 2) of
+       the image area, measured with container query units. */
     .v-body {
       flex: 1;
       min-height: 0;
+      container-type: size;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      justify-content: center;
       align-content: center;
       overflow: hidden;
       touch-action: pan-y;
     }
-    .v-face { margin: 0; position: relative; }
+    .v-face { margin: 0; position: relative; width: min(100cqw, 50cqh); }
     .v-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
     .v-fabric figcaption {
       position: absolute;
@@ -715,14 +717,14 @@ const FABRICS = [
     /* Wide screens: side by side, both fitted to the space without scrolling. */
     @media (min-width: 720px) {
       .v-body {
+        justify-content: stretch;
         align-content: stretch;
-        display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--s3);
         padding: 0 var(--s3);
       }
       /* Fixed caption row on both faces so the two images line up. */
-      .v-face { display: grid; grid-template-rows: 2rem 1fr; min-height: 0; }
+      .v-face { display: grid; grid-template-rows: 2rem 1fr; min-height: 0; width: auto; }
       .v-fabric figcaption {
         position: static;
         padding: 0;
