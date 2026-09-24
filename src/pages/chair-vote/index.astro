@@ -30,7 +30,7 @@ const FABRICS = [
   { slug: 'warwick-uluwatu-natural', brand: 'Warwick', name: 'Uluwatu', colour: 'Natural' },
   { slug: 'warwick-uluwatu-terra', brand: 'Warwick', name: 'Uluwatu', colour: 'Terra' },
   { slug: 'zepel-montague-ash', brand: 'Zepel', name: 'Montague', colour: 'Ash' },
-].map((f) => ({ ...f, label: `${f.brand} ${f.name} — ${f.colour}`, src: `/chair-vote/${f.slug}.jpg` }));
+].map((f) => ({ ...f, label: `${f.brand} ${f.name} — ${f.colour}`, src: `/chair-vote/${f.slug}.jpg`, swatch: `/chair-vote/swatches/${f.slug}.jpg` }));
 ---
 
 <!DOCTYPE html>
@@ -65,9 +65,10 @@ const FABRICS = [
     <section id="cv-choose" aria-label="Fabrics">
       <ul class="grid" id="cv-grid">
         {FABRICS.map((f, i) => (
-          <li class="card" data-slug={f.slug} data-label={f.label} data-idx={i}>
+          <li class="card" data-slug={f.slug} data-label={f.label} data-swatch={f.swatch} data-idx={i}>
             <button type="button" class="thumb" aria-label={`View ${f.label} larger`}>
               <img src={f.src} alt="" width="1160" height="1160" loading="lazy" decoding="async" />
+              <img class="inset" src={f.swatch} alt={`${f.label} fabric swatch`} width="600" height="600" loading="lazy" decoding="async" />
             </button>
             <button type="button" class="pick" role="checkbox" aria-checked="false">
               <span class="box" aria-hidden="true"></span>
@@ -87,7 +88,10 @@ const FABRICS = [
       <ol class="tally loading" id="cv-tally">
         {FABRICS.map((f) => (
           <li data-slug={f.slug}>
-            <img src={f.src} alt="" width="44" height="44" loading="lazy" decoding="async" />
+            <span class="tthumb">
+              <img src={f.src} alt="" width="44" height="44" loading="lazy" decoding="async" />
+              <img class="inset" src={f.swatch} alt={`${f.label} fabric swatch`} width="20" height="20" loading="lazy" decoding="async" />
+            </span>
             <span class="tname">{f.name} {f.colour}</span>
             <span class="bar"><span class="fill"></span></span>
             <span class="tcount">–</span>
@@ -105,10 +109,15 @@ const FABRICS = [
   <dialog class="viewer" id="cv-viewer" aria-label="Fabric viewer">
     <div class="v-top">
       <span class="v-pos" id="cv-v-pos"></span>
+      <div class="v-faces" role="group" aria-label="Show">
+        <button type="button" data-face="chair" class="on" aria-pressed="true">Chair</button>
+        <button type="button" data-face="fabric" aria-pressed="false">Fabric</button>
+      </div>
       <button type="button" class="v-close" id="cv-v-close" aria-label="Close">×</button>
     </div>
-    <div class="v-stage" id="cv-v-stage">
-      <img id="cv-v-img" alt="" />
+    <div class="v-stage" id="cv-v-stage" data-face="chair">
+      <figure class="v-face v-chair"><img id="cv-v-img" alt="" /></figure>
+      <figure class="v-face v-fabric"><img id="cv-v-swatch" alt="" /></figure>
     </div>
     <div class="v-foot">
       <div class="v-label">
@@ -175,6 +184,8 @@ const FABRICS = [
     const vBrand = $('cv-v-brand');
     const vPick = $<HTMLButtonElement>('cv-v-pick');
     const vStage = $('cv-v-stage');
+    const vSwatch = $<HTMLImageElement>('cv-v-swatch');
+    const faceBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-faces button'));
 
     const sheet = $<HTMLDialogElement>('cv-sheet');
     const form = $<HTMLFormElement>('cv-form');
@@ -297,6 +308,8 @@ const FABRICS = [
       const full = picked.length >= maxPicks;
       vImg.src = (card.querySelector('img') as HTMLImageElement).src;
       vImg.alt = `Chairs in ${card.dataset.label}`;
+      vSwatch.src = card.dataset.swatch as string;
+      vSwatch.alt = `${card.dataset.label} fabric swatch`;
       vPos.textContent = `${viewing + 1} / ${cards.length}`;
       vName.textContent = (card.querySelector('.plabel b') as HTMLElement).textContent;
       vBrand.textContent = (card.querySelector('.brand') as HTMLElement).textContent;
@@ -318,6 +331,18 @@ const FABRICS = [
     $('cv-v-prev').addEventListener('click', () => step(-1));
     $('cv-v-next').addEventListener('click', () => step(1));
     vPick.addEventListener('click', () => togglePick(slugs[viewing]));
+    // Phones show one face at a time so each can fill the width; the choice
+    // sticks while stepping through fabrics. Wide screens show both.
+    for (const b of faceBtns) {
+      b.addEventListener('click', () => {
+        vStage.dataset.face = b.dataset.face;
+        for (const o of faceBtns) {
+          const on = o === b;
+          o.classList.toggle('on', on);
+          o.setAttribute('aria-pressed', String(on));
+        }
+      });
+    }
     viewer.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') step(-1);
       if (e.key === 'ArrowRight') step(1);
@@ -497,6 +522,7 @@ const FABRICS = [
 
     .thumb {
       display: block;
+      position: relative;
       width: 100%;
       padding: 0;
       border: 0;
@@ -504,6 +530,16 @@ const FABRICS = [
       cursor: zoom-in;
     }
     .thumb img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+    /* Swatch inset in the corner the chairs leave empty, so fabric and
+       render both read at thumbnail size. */
+    .inset {
+      position: absolute;
+      right: 6%;
+      bottom: 6%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px rgba(28, 25, 23, 0.35);
+    }
+    .thumb .inset { width: 34%; }
 
     .pick {
       display: flex;
@@ -552,7 +588,9 @@ const FABRICS = [
       padding: var(--s0) 0;
       border-bottom: 1px solid var(--color-border);
     }
-    .tally img { width: 44px; height: 44px; object-fit: cover; display: block; }
+    .tthumb { position: relative; display: block; width: 44px; height: 44px; }
+    .tthumb img { width: 44px; height: 44px; object-fit: cover; display: block; }
+    .tthumb .inset { width: 20px; height: 20px; right: -4px; bottom: -4px; border-width: 1px; }
     .tname { font-size: 0.9rem; }
     .bar { height: 10px; background: var(--color-border); }
     .fill {
@@ -631,7 +669,20 @@ const FABRICS = [
       justify-content: space-between;
       padding: calc(var(--s0) + env(safe-area-inset-top)) var(--s2) var(--s0);
     }
-    .v-pos { font-family: var(--font-mono); font-size: 0.85rem; }
+    .v-pos { font-family: var(--font-mono); font-size: 0.85rem; min-width: 4ch; }
+    .v-faces { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #57534e; }
+    .v-faces button {
+      min-height: var(--tap);
+      padding: 0 var(--s2);
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 0;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .v-faces button.on { background: var(--color-surface); color: var(--ink); }
     .v-close {
       width: var(--tap);
       height: var(--tap);
@@ -645,12 +696,20 @@ const FABRICS = [
     .v-stage {
       flex: 1;
       min-height: 0;
-      position: relative;
+      display: grid;
       touch-action: pan-y;
     }
+    .v-face { position: relative; min-height: 0; margin: 0; }
+    .v-stage[data-face='chair'] .v-fabric,
+    .v-stage[data-face='fabric'] .v-chair { display: none; }
     /* Absolute fill: a percentage max-height inside a flex-sized box does not
        resolve, and the image would overflow onto the controls on wide screens. */
-    .v-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .v-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    @media (min-width: 720px) {
+      .v-faces { display: none; }
+      .v-stage { grid-template-columns: 1fr 1fr; gap: var(--s3); padding: 0 var(--s3); }
+      .v-stage[data-face] .v-face { display: block; }
+    }
     .v-foot {
       width: 100%;
       max-width: 720px;
