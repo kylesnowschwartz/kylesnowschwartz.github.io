@@ -18,6 +18,7 @@ const ALLOWED_SLUGS = [
   'alluvial-eucalyptus',
   'alluvial-river',
   'gabrielle-graphite',
+  'gabrielle-ink',
   'gabrielle-walnut',
   'mokum-borabora-pacific',
   'mokum-borabora-spice',
