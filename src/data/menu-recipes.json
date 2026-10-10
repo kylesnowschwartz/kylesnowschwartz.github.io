@@ -458,7 +458,7 @@
       "Bake 20–22 min until set.",
       "Serve 2–3 per person, warmed."
     ],
-    "tip": "Makes 24. Keeps 4–5 days in the fridge and freezes well. For lunch, serve 2–3 with a leafy salad, cucumber, olives and pumpkin seeds dressed with olive oil, lemon and salt. Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
+    "tip": "Makes 24. Keeps 4–5 days in the fridge and freezes well. For lunch, serve 2–3 with a leafy salad, cucumber, olives and pumpkin seeds dressed with olive oil, lemon and salt."
   },
   {
     "id": "almond-crust-quiche",
@@ -575,7 +575,7 @@
       "Whisk the eggs, cream, cheese, salt and pepper, then fold in the cooked fillings.",
       "Pour into the crust and bake 30–35 min until just set."
     ],
-    "tip": "Cuts into 6 slices; a good savoury breakfast or a top-up when a day runs light. Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
+    "tip": "Cuts into 6 slices; a good savoury breakfast or a top-up when a day runs light."
   },
   {
     "id": "tuna-avocado-lettuce-boats",
@@ -742,7 +742,7 @@
     "serves": 1,
     "ingredients": [
       {
-        "text": "3–4 slices nitrate-free prosciutto (Parma ham is cured with salt only)",
+        "text": "3–4 slices nitrate-free prosciutto",
         "item": "nitrate-free prosciutto",
         "qty": 4,
         "unit": "slices",
@@ -1031,8 +1031,7 @@
       "Pour the beaten eggs over.",
       "As it sets, scatter the cheese and spinach on.",
       "Fold and slide out."
-    ],
-    "tip": "Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
+    ]
   },
   {
     "id": "steak-mushrooms-rocket",
@@ -2045,7 +2044,7 @@
       "Spread the avocado on the toast.",
       "Top with the kimchi and a drizzle of olive oil."
     ],
-    "tip": "Store-bought seed breads vary a lot. Check the carbohydrate per slice on the label (NZ labels already leave out fibre, so that figure is the net carbs) and pick one under 2 g a slice to keep this breakfast at the carbs shown. The seed loaf recipe in Extras is a homemade option. Add a soft-boiled egg on the side if you want it more filling; it adds well under 1g net."
+    "tip": "Pick the seed bread with the fewest carbs per slice, or bake the seed loaf in Extras. Add a soft-boiled egg on the side if you want it more filling; it adds well under 1g net."
   },
   {
     "id": "garlic-mushrooms-asparagus-seed-toast",
@@ -2138,7 +2137,7 @@
       "Toast the seed loaf slice.",
       "Pile the mushrooms and asparagus on the toast and finish with the parmesan."
     ],
-    "tip": "Store-bought seed breads vary a lot. Check the carbohydrate per slice on the label (NZ labels already leave out fibre, so that figure is the net carbs) and pick one under 2 g a slice to keep this breakfast at the carbs shown. The seed loaf recipe in Extras is a homemade option. No asparagus? Use a handful of baby spinach, wilted in the pan at the end."
+    "tip": "Pick the seed bread with the fewest carbs per slice, or bake the seed loaf in Extras. No asparagus? Use a handful of baby spinach, wilted in the pan at the end."
   },
   {
     "id": "warm-flax-coconut-porridge",
@@ -2289,7 +2288,7 @@
       "Plate the rocket, avocado and tomatoes.",
       "Add the bacon, then finish with lemon, olive oil and pepper."
     ],
-    "tip": "Add a slice of low-carb seed toast for about 2g more net. Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
+    "tip": "Add a slice of low-carb seed toast for about 2g more net."
   },
   {
     "id": "mozzarella-tomato-rocket-plate",
