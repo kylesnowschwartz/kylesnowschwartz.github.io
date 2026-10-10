@@ -42,7 +42,8 @@ export const MEAL_LABELS: Record<Meal, string> = {
   extra: 'Extra',
 };
 
-export const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
+/** The plan is a run of seven days, not tied to weekdays. */
+export const DAYS = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'] as const;
 
 /** Walking order through a typical supermarket. */
 export const AISLE_ORDER: readonly Aisle[] = ['veg', 'fruit-frozen', 'meat-fish', 'fridge', 'nuts-seeds', 'pantry'];
@@ -310,32 +311,32 @@ export function seededRandom(seed: number): () => number {
 }
 
 /**
- * Fill every empty `meal` slot. Each pick comes from the recipes used least
- * so far this week (unused first); ties break by the seeded shuffle.
+ * Fill one day's empty main-meal slots (the optional extra stays as it is).
+ * Each pick comes from the recipes used least so far this week, unused
+ * first; ties break by the seeded shuffle.
  */
-export function fillEmptySlots(plan: Plan, recipes: Recipe[], meal: Meal, seed: number): Plan {
+export function fillDay(plan: Plan, day: number, recipes: Recipe[], seed: number): Plan {
   const rand = seededRandom(seed);
-  const pool = recipes.filter((r) => r.meal === meal);
-  if (pool.length === 0) return plan;
-  const order = new Map(pool.map((r) => [r.id, rand()]));
   const counts = usageCounts(plan);
   let next = plan;
-  plan.forEach((day, i) => {
-    if (day[meal]) return;
+  for (const meal of MAIN_MEALS) {
+    if (plan[day][meal]) continue;
+    const pool = recipes.filter((r) => r.meal === meal);
+    if (pool.length === 0) continue;
+    const order = new Map(pool.map((r) => [r.id, rand()]));
     let best = pool[0];
     for (const r of pool) {
       const diff = (counts.get(r.id) ?? 0) - (counts.get(best.id) ?? 0);
       if (diff < 0 || (diff === 0 && order.get(r.id)! < order.get(best.id)!)) best = r;
     }
     counts.set(best.id, (counts.get(best.id) ?? 0) + 1);
-    order.set(best.id, rand());
-    next = setSlot(next, i, meal, best.id);
-  });
+    next = setSlot(next, day, meal, best.id);
+  }
   return next;
 }
 
-export function fillWeek(plan: Plan, recipes: Recipe[], seed: number): Plan {
-  return MAIN_MEALS.reduce((p, meal, i) => fillEmptySlots(p, recipes, meal, seed + i), plan);
+export function emptyMainSlots(day: DayPlan): number {
+  return MAIN_MEALS.filter((m) => !day[m]).length;
 }
 
 // ---------------------------------------------------------------- storage
@@ -343,30 +344,18 @@ export function fillWeek(plan: Plan, recipes: Recipe[], seed: number): Plan {
 export const STORAGE_KEY = 'weekly-menu';
 export const STATE_VERSION = 2;
 
-export interface CookTicks {
-  ingredients: number[];
-  steps: number[];
-}
-
 export interface MenuState {
   version: typeof STATE_VERSION;
   plan: Plan;
   /** Shopping lines already in the basket. */
   shopTicks: ShopTicks;
-  /** Per recipe id, which ingredient and step indexes are ticked. */
-  cook: Record<string, CookTicks>;
 }
 
 export function freshState(): MenuState {
-  return { version: STATE_VERSION, plan: emptyPlan(), shopTicks: {}, cook: {} };
+  return { version: STATE_VERSION, plan: emptyPlan(), shopTicks: {} };
 }
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
-
-function indexes(v: unknown, length: number): number[] {
-  if (!Array.isArray(v)) return [];
-  return [...new Set(v.filter((n): n is number => Number.isInteger(n) && n >= 0 && n < length))].sort((a, b) => a - b);
-}
 
 /**
  * Read saved state against the current recipes. Anything unreadable or from
@@ -406,20 +395,7 @@ export function loadState(raw: string | null, recipes: Recipe[]): MenuState {
   }
   const shopTicks = currentTicks(shoppingList(plan, recipes), savedTicks);
 
-  const cook: Record<string, CookTicks> = {};
-  if (isObject(data.cook)) {
-    for (const [id, ticks] of Object.entries(data.cook)) {
-      const r = map.get(id);
-      if (!r || !isObject(ticks)) continue;
-      const entry = {
-        ingredients: indexes(ticks.ingredients, r.ingredients.length),
-        steps: indexes(ticks.steps, r.method.length),
-      };
-      if (entry.ingredients.length || entry.steps.length) cook[id] = entry;
-    }
-  }
-
-  return { version: STATE_VERSION, plan, shopTicks, cook };
+  return { version: STATE_VERSION, plan, shopTicks };
 }
 
 export function saveState(state: MenuState): string {

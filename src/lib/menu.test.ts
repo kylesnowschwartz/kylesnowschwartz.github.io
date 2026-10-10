@@ -10,9 +10,8 @@ import {
   untickLine,
   currentTicks,
   weekNetCarbs,
-  fillEmptySlots,
-  fillWeek,
-  usageCounts,
+  fillDay,
+  emptyMainSlots,
   loadState,
   saveState,
   freshState,
@@ -207,38 +206,44 @@ describe('net carbs', () => {
   });
 });
 
-describe('fill empty slots', () => {
-  it('fills only empty slots of the given meal and keeps chosen ones', () => {
-    const start = plan([3, 'breakfast', 'omelette'], [0, 'lunch', 'salmon-salad']);
-    const filled = fillEmptySlots(start, RECIPES, 'breakfast', 1);
-    expect(filled.every((d) => d.breakfast !== null)).toBe(true);
-    expect(filled[3].breakfast).toBe('omelette');
-    expect(filled[0].lunch).toBe('salmon-salad');
-    expect(filled.every((d) => d.dinner === null)).toBe(true);
+describe('autofill a day', () => {
+  const shake = recipe('protein-shake', 'extra', 2, [ing('protein powder', 30, 'g', 'pantry')]);
+  const withExtra = [...RECIPES, shake];
+
+  it("fills only that day's empty main slots and keeps what is chosen", () => {
+    const start = plan([2, 'lunch', 'salmon-salad'], [3, 'breakfast', 'omelette']);
+    const filled = fillDay(start, 2, withExtra, 1);
+    expect(filled[2].breakfast).not.toBeNull();
+    expect(filled[2].lunch).toBe('salmon-salad');
+    expect(filled[2].dessert).toBe('choc-mousse');
+    expect(filled[2].dinner).toBeNull(); // no dinner recipes in the fixture
+    expect(filled[2].extra).toBeNull();
+    expect(filled.filter((_, i) => i !== 2)).toEqual(start.filter((_, i) => i !== 2));
   });
 
-  it('prefers recipes not yet used, then spreads use evenly', () => {
-    const start = plan([0, 'breakfast', 'omelette']);
-    const filled = fillEmptySlots(start, RECIPES, 'breakfast', 7);
-    expect(filled[1].breakfast).toBe('chia-pudding');
-    const counts = usageCounts(filled);
-    expect(counts.get('omelette')! + counts.get('chia-pudding')!).toBe(7);
-    expect(Math.abs(counts.get('omelette')! - counts.get('chia-pudding')!)).toBeLessThanOrEqual(1);
+  it('prefers a dish not yet planned this week', () => {
+    expect(fillDay(plan([0, 'breakfast', 'omelette']), 1, RECIPES, 7)[1].breakfast).toBe('chia-pudding');
+  });
+
+  it('then picks the least-used dish', () => {
+    const start = plan([0, 'breakfast', 'omelette'], [1, 'breakfast', 'chia-pudding'], [2, 'breakfast', 'chia-pudding']);
+    expect(fillDay(start, 3, RECIPES, 7)[3].breakfast).toBe('omelette');
   });
 
   it('is deterministic for a seed', () => {
-    expect(fillWeek(emptyPlan(), RECIPES, 42)).toEqual(fillWeek(emptyPlan(), RECIPES, 42));
+    expect(fillDay(emptyPlan(), 0, RECIPES, 42)).toEqual(fillDay(emptyPlan(), 0, RECIPES, 42));
   });
 
-  it('leaves slots empty when a meal has no recipes', () => {
-    const filled = fillWeek(emptyPlan(), RECIPES.filter((r) => r.meal !== 'dessert'), 3);
-    expect(filled.every((d) => d.dessert === null && d.breakfast !== null)).toBe(true);
+  it('counts the empty main slots, ignoring the extra', () => {
+    expect(emptyMainSlots(emptyPlan()[0])).toBe(4);
+    expect(emptyMainSlots(plan([0, 'breakfast', 'omelette'])[0])).toBe(3);
+    expect(emptyMainSlots(fillDay(emptyPlan(), 0, RECIPES, 3)[0])).toBe(1); // dinner has no recipes
   });
 });
 
 describe('saved state', () => {
   it('round-trips', () => {
-    const state = { ...freshState(), plan: plan([0, 'breakfast', 'omelette']), shopTicks: { [lineKey('eggs', 'whole')]: { qty: 3, plusALittle: false } }, cook: { omelette: { ingredients: [0], steps: [1] } } };
+    const state = { ...freshState(), plan: plan([0, 'breakfast', 'omelette']), shopTicks: { [lineKey('eggs', 'whole')]: { qty: 3, plusALittle: false } } };
     expect(loadState(saveState(state), RECIPES)).toEqual(state);
   });
 
@@ -252,14 +257,25 @@ describe('saved state', () => {
         [lineKey('baby spinach', 'g')]: { qty: 10, plusALittle: false },
         junk: 7,
       },
-      cook: { gone: { steps: [0] }, omelette: { ingredients: [0, 99, -1, 'x'], steps: [] } },
     });
     const s = loadState(raw, RECIPES);
     expect(s.plan[0]).toEqual({ breakfast: null, lunch: 'salmon-salad', dinner: null, dessert: null, extra: null });
     expect(s.plan).toHaveLength(7);
     // Eggs left the list with the omelette; spinach now needs more than was ticked.
     expect(s.shopTicks).toEqual({ [lineKey('salmon fillet', 'whole')]: { qty: 1, plusALittle: false } });
-    expect(s.cook).toEqual({ omelette: { ingredients: [0], steps: [] } });
+  });
+
+  it('loads a plan and shopping ticks saved with recipe step ticks', () => {
+    const raw = JSON.stringify({
+      version: 2,
+      plan: [{ breakfast: 'omelette', lunch: null, dinner: null, dessert: null, extra: null }],
+      shopTicks: { [lineKey('eggs', 'whole')]: { qty: 3, plusALittle: false } },
+      cook: { omelette: { ingredients: [0], steps: [1] } },
+    });
+    const s = loadState(raw, RECIPES);
+    expect(s.plan[0].breakfast).toBe('omelette');
+    expect(s.shopTicks).toEqual({ [lineKey('eggs', 'whole')]: { qty: 3, plusALittle: false } });
+    expect(s).not.toHaveProperty('cook');
   });
 
   it.each([null, '', 'not json', '[]', '{"plan": "x"}', JSON.stringify({ version: 0, plan: [] }), JSON.stringify({ version: 1, plan: [], shopTicks: [] }), 'null'])(

@@ -44,11 +44,10 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       <section id="view-plan" role="tabpanel" aria-labelledby="tab-plan" tabindex="-1">
         <div class="view-head">
           <h2>This week</h2>
-          <p class="soft">Tap a meal to choose a dish.</p>
+          <p class="soft">Tap a meal to choose a dish, or let Autofill pick for a day.</p>
         </div>
-        <div class="actions">
-          <button type="button" class="btn primary" id="fill">Fill the rest</button>
-          <button type="button" class="btn quiet" id="new-week">Start a new week</button>
+        <div class="actions end">
+          <button type="button" class="btn quiet" id="clear-plan">Clear</button>
         </div>
         <p class="status" id="plan-status" role="status"></p>
         <div id="days" class="days"></div>
@@ -105,11 +104,10 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       <h2 id="cook-title"></h2>
       <div class="cook-meta" id="cook-meta"></div>
       <h3>Ingredients</h3>
-      <ul id="cook-ings" class="ticks"></ul>
+      <ul id="cook-ings" class="cook-list"></ul>
       <h3>Method</h3>
-      <ol id="cook-steps" class="ticks steps"></ol>
+      <ol id="cook-steps" class="cook-list steps"></ol>
       <aside id="cook-tip" class="tip"></aside>
-      <button type="button" class="btn quiet" id="cook-reset">Clear the ticks</button>
     </div>
   </dialog>
 
@@ -123,11 +121,11 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
 
   <dialog id="confirm-new" class="sheet" aria-labelledby="confirm-title">
     <form method="dialog">
-      <h2 id="confirm-title">Start a new week?</h2>
-      <p>This clears every meal from the plan and all the ticks. Recipes stay as they are.</p>
+      <h2 id="confirm-title">Clear the whole plan and shopping ticks?</h2>
+      <p>Every meal comes off the plan and the shopping list starts unticked. The recipes stay.</p>
       <div class="actions">
-        <button class="btn primary" value="clear">Start fresh</button>
-        <button class="btn quiet" value="keep" autofocus>Keep this week</button>
+        <button class="btn primary" value="clear">Clear</button>
+        <button class="btn quiet" value="keep" autofocus>Keep the plan</button>
       </div>
     </form>
   </dialog>
@@ -143,7 +141,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       STORAGE_KEY,
       byId,
       dayNetCarbs,
-      fillWeek,
+      fillDay,
       lineAmount,
       loadState,
       saveState,
@@ -154,6 +152,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       untickLine,
       currentTicks,
       usageCounts,
+      type DayPlan,
       type Meal,
       type Recipe,
       type ShoppingGroup,
@@ -274,6 +273,9 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     const daysEl = $('days');
     const planStatus = $('plan-status');
 
+    // Only offer Autofill when it would actually fill something.
+    const canAutofill = (day: DayPlan) => MAIN_MEALS.some((m) => !day[m] && recipes.some((r) => r.meal === m));
+
     function renderPlan() {
       const usage = usageCounts(state.plan);
       daysEl.replaceChildren(
@@ -287,6 +289,9 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
               { class: 'day-head' },
               el('h3', { id: `day-${d}` }, DAYS[d]),
               el('span', { class: total ? 'carb-total' : 'carb-total none' }, total ? carbs(total) : 'Nothing planned'),
+              canAutofill(day)
+                ? el('button', { type: 'button', class: 'btn quiet small autofill', 'data-autofill': d, 'aria-label': `Autofill ${DAYS[d]}` }, 'Autofill')
+                : null,
             ),
             el(
               'ul',
@@ -329,7 +334,8 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     daysEl.addEventListener('click', (e) => {
       const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
       if (!btn) return;
-      if (btn.dataset.open) openRecipe(btn.dataset.open);
+      if (btn.dataset.autofill) autofill(Number(btn.dataset.autofill));
+      else if (btn.dataset.open) openRecipe(btn.dataset.open);
       else if (btn.dataset.day) openPicker(Number(btn.dataset.day), btn.dataset.meal as Meal);
     });
 
@@ -337,19 +343,19 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       daysEl.querySelector<HTMLElement>(`[data-day="${day}"][data-meal="${meal}"]`)?.focus();
     }
 
-    $('fill').addEventListener('click', () => {
-      const before = state.plan.flatMap((d) => MAIN_MEALS.filter((m) => !d[m])).length;
-      state.plan = fillWeek(state.plan, recipes, Date.now() % 2147483647);
-      const after = state.plan.flatMap((d) => MAIN_MEALS.filter((m) => !d[m])).length;
+    function autofill(d: number) {
+      const empty = MAIN_MEALS.filter((m) => !state.plan[d][m]);
+      state.plan = fillDay(state.plan, d, recipes, Date.now() % 2147483647);
       save();
       renderAll();
-      const filled = before - after;
-      planStatus.textContent =
-        filled > 0 ? `Filled ${filled} meal${filled === 1 ? '' : 's'}. Tap any of them to swap.` : 'Every meal already has a dish.';
-    });
+      // The day's Autofill button disappears once it is full, so focus moves to the first meal it chose.
+      const first = empty.find((m) => state.plan[d][m]);
+      if (first) focusSlot(d, first);
+      planStatus.textContent = `${DAYS[d]} is filled in. Tap any meal to swap it.`;
+    }
 
     const confirmNew = $<HTMLDialogElement>('confirm-new');
-    $('new-week').addEventListener('click', () => {
+    $('clear-plan').addEventListener('click', () => {
       confirmNew.returnValue = '';
       confirmNew.showModal();
     });
@@ -358,7 +364,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       state = loadState(null, recipes);
       save();
       renderAll();
-      planStatus.textContent = 'A fresh week. Tap a meal to begin.';
+      planStatus.textContent = 'The plan is clear. Tap a meal to begin.';
     });
 
     // ------------------------------------------------------------ picker
@@ -658,44 +664,13 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       if (document.visibilityState === 'visible' && cook.open) keepAwake();
     });
 
-    function cookTicks(id: string) {
-      return (state.cook[id] ??= { ingredients: [], steps: [] });
-    }
-
     function renderCook() {
       if (!cooking) return;
       const r = cooking;
-      const ticks = state.cook[r.id] ?? { ingredients: [], steps: [] };
       $('cook-title').textContent = r.name;
       $('cook-meta').replaceChildren(tagChips(r));
-      $('cook-ings').replaceChildren(
-        ...r.ingredients.map((ing, i) =>
-          el(
-            'li',
-            {},
-            el(
-              'label',
-              { class: ticks.ingredients.includes(i) ? 'tick done' : 'tick' },
-              el('input', { type: 'checkbox', 'data-kind': 'ingredients', 'data-i': i, checked: ticks.ingredients.includes(i) }),
-              el('span', {}, ing.text),
-            ),
-          ),
-        ),
-      );
-      $('cook-steps').replaceChildren(
-        ...r.method.map((step, i) =>
-          el(
-            'li',
-            {},
-            el(
-              'label',
-              { class: ticks.steps.includes(i) ? 'tick done' : 'tick' },
-              el('input', { type: 'checkbox', 'data-kind': 'steps', 'data-i': i, checked: ticks.steps.includes(i) }),
-              el('span', {}, el('span', { class: 'step-n' }, `Step ${i + 1}`), step),
-            ),
-          ),
-        ),
-      );
+      $('cook-ings').replaceChildren(...r.ingredients.map((ing) => el('li', {}, ing.text)));
+      $('cook-steps').replaceChildren(...r.method.map((step) => el('li', {}, step)));
       const tip = $('cook-tip');
       tip.hidden = !r.tip;
       tip.replaceChildren(r.tip ? el('strong', {}, 'Tip ') : '', r.tip ?? '');
@@ -715,25 +690,6 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     cook.addEventListener('close', () => {
       letSleep();
       cooking = null;
-    });
-
-    cook.addEventListener('change', (e) => {
-      const box = e.target as HTMLInputElement;
-      if (!cooking || !box.dataset.kind) return;
-      const kind = box.dataset.kind as 'ingredients' | 'steps';
-      const i = Number(box.dataset.i);
-      const t = cookTicks(cooking.id);
-      t[kind] = box.checked ? [...new Set([...t[kind], i])].sort((a, b) => a - b) : t[kind].filter((n) => n !== i);
-      box.closest('label')?.classList.toggle('done', box.checked);
-      save();
-    });
-
-    $('cook-reset').addEventListener('click', () => {
-      if (!cooking) return;
-      delete state.cook[cooking.id];
-      save();
-      renderCook();
-      cookStatus.textContent = 'Ticks cleared.';
     });
 
     const dayChooser = $<HTMLDialogElement>('day-chooser');
@@ -891,27 +847,32 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     }
     .tablist {
       display: flex;
+      gap: 6px;
       max-width: 720px;
       margin: 0 auto;
+      padding: 6px 8px;
     }
     .tablist [role='tab'] {
       flex: 1;
-      min-height: var(--tabs-h);
+      min-height: calc(var(--tabs-h) - 12px);
       border: 0;
+      border-radius: 12px;
       background: none;
       font: inherit;
       font-weight: 600;
       color: var(--soft);
       cursor: pointer;
-      border-top: 4px solid transparent;
+    }
+    .tablist [role='tab']:hover {
+      color: var(--teal-dark);
     }
     .tablist [role='tab'][aria-selected='true'] {
-      color: var(--teal-dark);
-      background: var(--mint);
-      border-top-color: var(--teal);
+      color: #fff;
+      background: var(--teal);
     }
     .tablist [role='tab']:focus-visible {
-      outline-offset: -4px;
+      outline: 3px solid var(--teal-dark);
+      outline-offset: 2px;
     }
 
     @media (min-width: 768px) {
@@ -930,17 +891,12 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       }
       .tablist {
         gap: 8px;
+        padding: 10px 0;
       }
       .tablist [role='tab'] {
         flex: 0 0 auto;
-        min-height: 52px;
-        padding: 0 22px;
-        border-top: 0;
-        border-bottom: 4px solid transparent;
-        border-radius: 10px 10px 0 0;
-      }
-      .tablist [role='tab'][aria-selected='true'] {
-        border-bottom-color: var(--teal);
+        min-height: 48px;
+        padding: 0 24px;
       }
     }
 
@@ -1004,6 +960,12 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     .actions .btn {
       flex: 1 1 140px;
     }
+    .actions.end {
+      justify-content: flex-end;
+    }
+    .actions.end .btn {
+      flex: 0 0 auto;
+    }
     .status {
       color: var(--teal-dark);
       font-weight: 600;
@@ -1045,11 +1007,13 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     }
     .day-head {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
+      align-items: center;
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 6px;
+    }
+    .day-head .carb-total {
+      margin-left: auto;
     }
     .day-head h3 {
       font-size: 1.2rem;
@@ -1167,8 +1131,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     .shop-lines .shop-row + .shop-row {
       border-top: 1px solid var(--line);
     }
-    .shop-line,
-    .tick {
+    .shop-line {
       display: flex;
       align-items: flex-start;
       gap: 14px;
@@ -1200,12 +1163,10 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       color: var(--teal-dark);
       margin-left: auto;
     }
-    .shop-row.done,
-    .tick.done {
+    .shop-row.done {
       opacity: 0.55;
     }
-    .shop-row.done .line-item,
-    #cook-ings .tick.done > span {
+    .shop-row.done .line-item {
       text-decoration: line-through;
     }
     .shop-lines .shop-line {
@@ -1412,21 +1373,25 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       color: var(--teal-dark);
       margin: 24px 0 8px;
     }
-    .cook .ticks {
+    .cook .cook-list {
+      list-style: disc;
+      padding: 14px 18px 14px 40px;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
     }
-    .cook .ticks li + li {
-      border-top: 1px solid var(--line);
+    .cook .cook-list.steps {
+      list-style: decimal;
     }
-    .step-n {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 700;
+    .cook .cook-list li {
+      padding-left: 4px;
+    }
+    .cook .cook-list li + li {
+      margin-top: 10px;
+    }
+    .cook .cook-list li::marker {
       color: var(--teal-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      font-weight: 700;
     }
     .tip {
       margin: 20px 0;
@@ -1450,8 +1415,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       .slot-dish,
       .pick,
       .recipe-card,
-      .shop-row,
-      .tick {
+      .shop-row {
         transition: background-color 0.15s, border-color 0.15s, opacity 0.2s;
       }
       .sheet[open] {
