@@ -150,6 +150,9 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       setSlot,
       shoppingList,
       shoppingListText,
+      tickLine,
+      untickLine,
+      currentTicks,
       usageCounts,
       type Meal,
       type Recipe,
@@ -225,6 +228,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
         tabButtons[i].tabIndex = on ? 0 : -1;
         $(`view-${t}`).hidden = !on;
       });
+      if (tab === 'shop') renderShop();
       if (focusTab) tabButtons[TABS.indexOf(tab)].focus();
       history.replaceState(null, '', `#${tab}`);
       window.scrollTo({ top: 0 });
@@ -250,11 +254,19 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     // ------------------------------------------------------------ dialogs
 
     for (const dlg of document.querySelectorAll('dialog')) {
-      // A tap on the dimmed backdrop lands on the dialog element itself.
-      dlg.addEventListener('click', (e) => {
-        if (e.target === dlg) dlg.close();
-      });
       dlg.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => dlg.close()));
+    }
+    // Bottom sheets close on a tap on the dimmed backdrop. Backdrop taps report
+    // the dialog as their target, as do taps on its own padding, so only a
+    // point outside the dialog's box counts. The full-screen recipe view has no
+    // backdrop and only closes from Back or Escape.
+    for (const dlg of document.querySelectorAll<HTMLDialogElement>('dialog.sheet')) {
+      dlg.addEventListener('click', (e) => {
+        if (e.target !== dlg) return;
+        const box = dlg.getBoundingClientRect();
+        const inside = e.clientX >= box.left && e.clientX <= box.right && e.clientY >= box.top && e.clientY <= box.bottom;
+        if (!inside) dlg.close();
+      });
     }
 
     // ------------------------------------------------------------ plan
@@ -410,27 +422,58 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     const shopStatus = $('shop-status');
     let groups: ShoppingGroup[] = [];
 
+    // A ticked line waits this long before sinking to the bottom of its aisle,
+    // so the next line doesn't slide under a finger mid-tap.
+    const SETTLE_MS = 1000;
+    const settleTimers = new Map<string, number>();
+
+    function updateShopCount() {
+      const buy = groups.filter((g) => g.id !== 'staples').flatMap((g) => g.lines);
+      const left = buy.filter((l) => !(l.key in state.shopTicks)).length;
+      $('shop-count').textContent =
+        groups.length === 0
+          ? ''
+          : buy.length === 0
+            ? 'Only kitchen basics this week.'
+            : left === 0
+              ? 'All done. Everything is in the basket.'
+              : `${left} of ${buy.length} things left to get.`;
+    }
+
+    // One short row per line keeps a long list scannable; tapping opens the
+    // full dish names. A single dish shows its name, clipped until opened.
+    function dishesFor(dishes: string[]): HTMLElement {
+      if (dishes.length === 1) {
+        return el('details', { class: 'line-for one' }, el('summary', {}, el('span', {}, `For ${dishes[0]}`)));
+      }
+      return el(
+        'details',
+        { class: 'line-for' },
+        el('summary', {}, el('span', {}, `For ${dishes.length} dishes`)),
+        el('p', {}, dishes.join(', ')),
+      );
+    }
+
     function renderShop() {
       groups = shoppingList(state.plan, recipes);
-      const ticked = new Set(state.shopTicks);
+      const live = currentTicks(groups, state.shopTicks);
+      if (Object.keys(live).length !== Object.keys(state.shopTicks).length) {
+        state.shopTicks = live;
+        save();
+      }
+      for (const t of settleTimers.values()) clearTimeout(t);
+      settleTimers.clear();
+
       const empty = groups.length === 0;
       $('shop-empty').hidden = !empty;
       $('shop-body').hidden = empty;
-
-      const buy = groups.filter((g) => g.id !== 'staples').flatMap((g) => g.lines);
-      const left = buy.filter((l) => !ticked.has(l.key)).length;
-      $('shop-count').textContent = empty
-        ? ''
-        : buy.length === 0
-          ? 'Only kitchen basics this week.'
-          : left === 0
-            ? 'All done. Everything is in the basket.'
-            : `${left} of ${buy.length} things left to get.`;
+      updateShopCount();
 
       const focusedKey = (document.activeElement as HTMLElement | null)?.dataset?.key;
       shopList.replaceChildren(
         ...groups.map((g) => {
-          const lines = [...g.lines.filter((l) => !ticked.has(l.key)), ...g.lines.filter((l) => ticked.has(l.key))];
+          const isOn = (key: string) => key in state.shopTicks;
+          const lines = [...g.lines.filter((l) => !isOn(l.key)), ...g.lines.filter((l) => isOn(l.key))];
           return el(
             'section',
             { class: g.id === 'staples' ? 'aisle staples' : 'aisle', 'aria-labelledby': `aisle-${g.id}` },
@@ -438,24 +481,20 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
             g.id === 'staples' ? el('p', { class: 'soft aisle-note' }, 'Most kitchens have these. Tick them off as you check.') : null,
             el(
               'ul',
-              { class: 'shop-lines card' },
+              { class: 'shop-lines card', 'data-group': g.id },
               ...lines.map((l) => {
                 const amt = lineAmount(l);
-                const on = ticked.has(l.key);
+                const on = isOn(l.key);
                 return el(
                   'li',
-                  {},
+                  { class: on ? 'shop-row done' : 'shop-row' },
                   el(
                     'label',
-                    { class: on ? 'shop-line done' : 'shop-line' },
+                    { class: 'shop-line' },
                     el('input', { type: 'checkbox', 'data-key': l.key, checked: on }),
-                    el(
-                      'span',
-                      { class: 'line-text' },
-                      el('span', { class: 'line-top' }, el('span', { class: 'line-item' }, cap(l.item)), amt ? el('span', { class: 'line-amt' }, amt) : null),
-                      el('span', { class: 'line-for' }, `For ${l.dishes.join(', ')}`),
-                    ),
+                    el('span', { class: 'line-top' }, el('span', { class: 'line-item' }, cap(l.item)), amt ? el('span', { class: 'line-amt' }, amt) : null),
                   ),
+                  g.id === 'staples' ? null : dishesFor(l.dishes),
                 );
               }),
             ),
@@ -465,20 +504,39 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       if (focusedKey) shopList.querySelector<HTMLElement>(`input[data-key="${CSS.escape(focusedKey)}"]`)?.focus();
     }
 
+    function settleGroup(ul: HTMLElement) {
+      const rows = [...ul.children] as HTMLElement[];
+      const sorted = [...rows.filter((r) => !r.classList.contains('done')), ...rows.filter((r) => r.classList.contains('done'))];
+      if (sorted.every((r, i) => r === rows[i])) return;
+      const focused = document.activeElement;
+      ul.append(...sorted);
+      if (focused instanceof HTMLElement && ul.contains(focused)) focused.focus();
+    }
+
     shopList.addEventListener('change', (e) => {
       const box = e.target as HTMLInputElement;
       const key = box.dataset.key;
-      if (!key) return;
-      const ticks = new Set(state.shopTicks);
-      if (box.checked) ticks.add(key);
-      else ticks.delete(key);
-      state.shopTicks = [...ticks];
+      const line = groups.flatMap((g) => g.lines).find((l) => l.key === key);
+      const row = box.closest<HTMLElement>('li');
+      const ul = row?.parentElement;
+      if (!key || !line || !row || !ul) return;
+      state.shopTicks = box.checked ? tickLine(state.shopTicks, line) : untickLine(state.shopTicks, key);
       save();
-      renderShop();
+      row.classList.toggle('done', box.checked);
+      updateShopCount();
+      const group = ul.dataset.group ?? '';
+      clearTimeout(settleTimers.get(group));
+      settleTimers.set(
+        group,
+        window.setTimeout(() => {
+          settleTimers.delete(group);
+          settleGroup(ul);
+        }, SETTLE_MS),
+      );
     });
 
     $('untick').addEventListener('click', () => {
-      state.shopTicks = [];
+      state.shopTicks = {};
       save();
       renderShop();
       shopStatus.textContent = 'Everything is unticked.';
@@ -500,7 +558,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     }
 
     $('share').addEventListener('click', async () => {
-      const text = shoppingListText(groups, new Set(state.shopTicks));
+      const text = shoppingListText(groups, state.shopTicks);
       if (navigator.share) {
         try {
           await navigator.share({ title: 'Shopping list', text });
@@ -565,16 +623,36 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     const cookStatus = $('cook-status');
     let cooking: Recipe | null = null;
     let wakeLock: WakeLockSentinel | null = null;
+    let wakeRequest: Promise<void> | null = null;
 
-    async function keepAwake() {
-      if (!('wakeLock' in navigator) || wakeLock) return;
-      try {
-        wakeLock = await navigator.wakeLock.request('screen');
-        wakeLock.addEventListener('release', () => (wakeLock = null));
-      } catch {
-        wakeLock = null;
-      }
+    // One lock at most: a request still in flight blocks a second one, and a
+    // lock that arrives after the recipe closed is handed straight back.
+    function keepAwake() {
+      if (!('wakeLock' in navigator) || wakeLock || wakeRequest) return;
+      wakeRequest = navigator.wakeLock
+        .request('screen')
+        .then((lock) => {
+          if (!cook.open || document.visibilityState !== 'visible') {
+            lock.release().catch(() => {});
+            return;
+          }
+          wakeLock = lock;
+          lock.addEventListener('release', () => {
+            if (wakeLock === lock) wakeLock = null;
+          });
+        })
+        .catch(() => {})
+        .finally(() => {
+          wakeRequest = null;
+        });
     }
+
+    function letSleep() {
+      const lock = wakeLock;
+      wakeLock = null;
+      lock?.release().catch(() => {});
+    }
+
     // The browser drops the lock whenever the tab is hidden.
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible' && cook.open) keepAwake();
@@ -635,8 +713,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     }
 
     cook.addEventListener('close', () => {
-      wakeLock?.release().catch(() => {});
-      wakeLock = null;
+      letSleep();
       cooking = null;
     });
 
@@ -1087,7 +1164,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     .staples .shop-lines {
       background: var(--mint);
     }
-    .shop-lines li + li {
+    .shop-lines .shop-row + .shop-row {
       border-top: 1px solid var(--line);
     }
     .shop-line,
@@ -1107,13 +1184,9 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       accent-color: var(--teal);
       cursor: pointer;
     }
-    .line-text {
-      display: flex;
-      flex-direction: column;
+    .line-top {
       flex: 1;
       min-width: 0;
-    }
-    .line-top {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -1127,17 +1200,58 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       color: var(--teal-dark);
       margin-left: auto;
     }
-    .line-for {
-      font-size: 0.85rem;
-      color: var(--soft);
-    }
-    .shop-line.done,
+    .shop-row.done,
     .tick.done {
       opacity: 0.55;
     }
-    .shop-line.done .line-item,
+    .shop-row.done .line-item,
     #cook-ings .tick.done > span {
       text-decoration: line-through;
+    }
+    .shop-lines .shop-line {
+      align-items: center;
+      padding: 8px 14px;
+      min-height: 46px;
+    }
+    /* Indented to line up with the item name beside the checkbox. */
+    .line-for {
+      margin: -6px 14px 0 56px;
+      padding-bottom: 6px;
+      font-size: 0.85rem;
+      line-height: 1.35;
+      color: var(--soft);
+    }
+    .line-for summary {
+      cursor: pointer;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      max-width: 100%;
+      color: var(--teal-dark);
+    }
+    .line-for summary span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .line-for[open] summary span {
+      white-space: normal;
+    }
+    .line-for.one summary {
+      color: var(--soft);
+    }
+    .line-for summary::marker,
+    .line-for summary::-webkit-details-marker {
+      display: none;
+    }
+    .line-for summary::after {
+      content: '▸';
+      flex: none;
+      margin-left: 6px;
+    }
+    .line-for[open] summary::after {
+      content: '▾';
     }
     .empty {
       padding: 20px;
@@ -1336,7 +1450,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       .slot-dish,
       .pick,
       .recipe-card,
-      .shop-line,
+      .shop-row,
       .tick {
         transition: background-color 0.15s, border-color 0.15s, opacity 0.2s;
       }

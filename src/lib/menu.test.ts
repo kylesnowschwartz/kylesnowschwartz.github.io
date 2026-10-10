@@ -6,6 +6,9 @@ import {
   formatQty,
   lineAmount,
   shoppingListText,
+  tickLine,
+  untickLine,
+  currentTicks,
   weekNetCarbs,
   fillEmptySlots,
   fillWeek,
@@ -129,7 +132,8 @@ describe('shopping list', () => {
 
   it('shares unticked lines as plain text', () => {
     const groups = shoppingList(plan([0, 'breakfast', 'omelette']), RECIPES);
-    const text = shoppingListText(groups, new Set([lineKey('eggs', 'whole')]));
+    const eggs = groups.flatMap((g) => g.lines).find((l) => l.item === 'eggs')!;
+    const text = shoppingListText(groups, tickLine({}, eggs));
     expect(text).toContain('Vegetables\n- baby spinach, 40 g');
     expect(text).toContain('Check you have\n- butter\n- salt');
     expect(text).not.toContain('eggs');
@@ -142,8 +146,14 @@ describe('formatQty', () => {
     [2, 'whole', '2'],
     [237, 'g', '240 g'],
     [12, 'g', '12 g'],
-    [47, 'g', '45 g'],
-    [1234, 'g', '1.2 kg'],
+    [47, 'g', '50 g'],
+    [104, 'g', '110 g'],
+    [96, 'g', '100 g'],
+    [1234, 'g', '1.3 kg'],
+    [1049, 'g', '1.1 kg'],
+    [1200, 'g', '1.2 kg'],
+    [996, 'ml', '1 L'],
+    [1.2, 'tbsp', '1½ tbsp'],
     [1000, 'g', '1 kg'],
     [1500, 'ml', '1.5 L'],
     [1.5, 'tbsp', '1½ tbsp'],
@@ -154,6 +164,39 @@ describe('formatQty', () => {
     [null, null, ''],
   ] as const)('%s %s → "%s"', (qty, unit, out) => {
     expect(formatQty(qty, unit)).toBe(out);
+  });
+});
+
+describe('shopping ticks', () => {
+  const omeletteOnly = plan([0, 'breakfast', 'omelette']);
+  const ticked = (p: Plan, item: string, unit: Ingredient['unit']) => tickLine({}, line(p, item, unit)!);
+
+  it('keeps a tick while the amount stays the same or drops', () => {
+    const t = ticked(plan([0, 'breakfast', 'omelette'], [1, 'breakfast', 'omelette']), 'eggs', 'whole');
+    expect(Object.keys(currentTicks(shoppingList(omeletteOnly, RECIPES), t))).toEqual([lineKey('eggs', 'whole')]);
+  });
+
+  it('drops a tick once the line asks for more than when it was ticked', () => {
+    const t = ticked(omeletteOnly, 'eggs', 'whole'); // 3 eggs
+    const more = setSlot(omeletteOnly, 0, 'lunch', 'mini-quiches'); // 8 eggs
+    expect(currentTicks(shoppingList(more, RECIPES), t)).toEqual({});
+  });
+
+  it('drops a tick when "a little more" is newly needed', () => {
+    const quiche = plan([0, 'lunch', 'mini-quiches']);
+    const t = ticked(quiche, 'butter', 'g');
+    const withOmelette = setSlot(quiche, 1, 'breakfast', 'omelette'); // adds a vague knob of butter
+    expect(currentTicks(shoppingList(withOmelette, RECIPES), t)).toEqual({});
+  });
+
+  it('drops ticks for lines no longer on the list, so re-adding a dish starts unticked', () => {
+    const t = ticked(omeletteOnly, 'eggs', 'whole');
+    expect(currentTicks(shoppingList(emptyPlan(), RECIPES), t)).toEqual({});
+  });
+
+  it('unticks a single line', () => {
+    const t = ticked(omeletteOnly, 'eggs', 'whole');
+    expect(untickLine(t, lineKey('eggs', 'whole'))).toEqual({});
   });
 });
 
@@ -195,7 +238,7 @@ describe('fill empty slots', () => {
 
 describe('saved state', () => {
   it('round-trips', () => {
-    const state = { ...freshState(), plan: plan([0, 'breakfast', 'omelette']), shopTicks: [lineKey('eggs', 'whole')], cook: { omelette: { ingredients: [0], steps: [1] } } };
+    const state = { ...freshState(), plan: plan([0, 'breakfast', 'omelette']), shopTicks: { [lineKey('eggs', 'whole')]: { qty: 3, plusALittle: false } }, cook: { omelette: { ingredients: [0], steps: [1] } } };
     expect(loadState(saveState(state), RECIPES)).toEqual(state);
   });
 
@@ -203,17 +246,23 @@ describe('saved state', () => {
     const raw = JSON.stringify({
       version: STATE_VERSION,
       plan: [{ breakfast: 'gone', lunch: 'salmon-salad', dinner: 'omelette' }],
-      shopTicks: [lineKey('salmon fillet', 'whole'), lineKey('eggs', 'whole'), 7],
+      shopTicks: {
+        [lineKey('salmon fillet', 'whole')]: { qty: 1, plusALittle: false },
+        [lineKey('eggs', 'whole')]: { qty: 3, plusALittle: false },
+        [lineKey('baby spinach', 'g')]: { qty: 10, plusALittle: false },
+        junk: 7,
+      },
       cook: { gone: { steps: [0] }, omelette: { ingredients: [0, 99, -1, 'x'], steps: [] } },
     });
     const s = loadState(raw, RECIPES);
     expect(s.plan[0]).toEqual({ breakfast: null, lunch: 'salmon-salad', dinner: null, dessert: null, extra: null });
     expect(s.plan).toHaveLength(7);
-    expect(s.shopTicks).toEqual([lineKey('salmon fillet', 'whole')]);
+    // Eggs left the list with the omelette; spinach now needs more than was ticked.
+    expect(s.shopTicks).toEqual({ [lineKey('salmon fillet', 'whole')]: { qty: 1, plusALittle: false } });
     expect(s.cook).toEqual({ omelette: { ingredients: [0], steps: [] } });
   });
 
-  it.each([null, '', 'not json', '[]', '{"plan": "x"}', JSON.stringify({ version: 0, plan: [] }), 'null'])(
+  it.each([null, '', 'not json', '[]', '{"plan": "x"}', JSON.stringify({ version: 0, plan: [] }), JSON.stringify({ version: 1, plan: [], shopTicks: [] }), 'null'])(
     'starts fresh from %j without throwing',
     (raw) => {
       expect(loadState(raw, RECIPES)).toEqual(freshState());

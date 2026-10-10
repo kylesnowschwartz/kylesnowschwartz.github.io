@@ -201,31 +201,30 @@ const COUNTED_UNITS: Partial<Record<Unit, [string, string]>> = {
   slices: ['slice', 'slices'],
 };
 
-function trim(n: number): string {
-  return String(Number(n.toFixed(1)));
-}
+// Rounding always goes up so the list never asks for less than the recipes need.
+const ceilTo = (n: number, step: number) => Math.ceil(n / step - 1e-9) * step;
 
 function roundMass(n: number): number {
-  const step = n < 20 ? 1 : n < 100 ? 5 : 10;
-  return Math.max(step, Math.round(n / step) * step);
+  return ceilTo(n, n < 20 ? 1 : n < 100 ? 5 : 10);
 }
 
 function spoon(n: number): string {
-  const halves = Math.max(1, Math.round(n * 2));
+  const halves = Math.max(1, Math.ceil(n * 2 - 1e-9));
   const whole = Math.floor(halves / 2);
   const half = halves % 2 === 1 ? '½' : '';
   return whole === 0 ? half : `${whole}${half}`;
 }
 
-/** Shopper-friendly amount: whole items round up, weights to a sensible step. */
+/** Shopper-friendly amount: counts round up to whole items, weights up to a sensible step. */
 export function formatQty(qty: number | null, unit: Unit | null): string {
   if (qty === null || unit === null) return '';
   switch (unit) {
     case 'g':
     case 'ml': {
-      const big = unit === 'g' ? 'kg' : 'L';
-      if (qty >= 1000) return `${trim(qty / 1000)} ${big}`;
-      return `${roundMass(qty)} ${unit}`;
+      const rounded = roundMass(qty);
+      if (rounded < 1000) return `${rounded} ${unit}`;
+      const big = ceilTo(qty / 1000, 0.1);
+      return `${Number(big.toFixed(1))} ${unit === 'g' ? 'kg' : 'L'}`;
     }
     case 'tbsp':
     case 'tsp':
@@ -246,11 +245,46 @@ export function lineAmount(line: Pick<ShoppingLine, 'qty' | 'unit' | 'plusALittl
   return amt && line.plusALittle ? `${amt} + a little more` : amt;
 }
 
+/** What a line asked for when it was ticked. */
+export interface Tick {
+  qty: number | null;
+  plusALittle: boolean;
+}
+/** Ticked shopping lines, by line key. */
+export type ShopTicks = Record<string, Tick>;
+
+export function tickLine(ticks: ShopTicks, line: ShoppingLine): ShopTicks {
+  return { ...ticks, [line.key]: { qty: line.qty, plusALittle: line.plusALittle } };
+}
+
+export function untickLine(ticks: ShopTicks, key: string): ShopTicks {
+  const rest = { ...ticks };
+  delete rest[key];
+  return rest;
+}
+
+/**
+ * The ticks that still hold for this list. A tick lapses when its line leaves
+ * the list or now asks for more than it did when ticked, so the extra amount
+ * shows up as still to buy.
+ */
+export function currentTicks(groups: ShoppingGroup[], ticks: ShopTicks): ShopTicks {
+  const out: ShopTicks = {};
+  for (const line of groups.flatMap((g) => g.lines)) {
+    const t = ticks[line.key];
+    if (!t) continue;
+    const moreNeeded = line.qty !== null && (t.qty === null || line.qty > t.qty + 1e-9);
+    if (moreNeeded || (line.plusALittle && !t.plusALittle)) continue;
+    out[line.key] = t;
+  }
+  return out;
+}
+
 /** Plain-text list for sharing; ticked lines are left off. */
-export function shoppingListText(groups: ShoppingGroup[], ticked: ReadonlySet<string>): string {
+export function shoppingListText(groups: ShoppingGroup[], ticks: ShopTicks): string {
   const out: string[] = ['Shopping list'];
   for (const g of groups) {
-    const left = g.lines.filter((l) => !ticked.has(l.key));
+    const left = g.lines.filter((l) => !(l.key in ticks));
     if (left.length === 0) continue;
     out.push('', g.label);
     for (const l of left) {
@@ -307,7 +341,7 @@ export function fillWeek(plan: Plan, recipes: Recipe[], seed: number): Plan {
 // ---------------------------------------------------------------- storage
 
 export const STORAGE_KEY = 'weekly-menu';
-export const STATE_VERSION = 1;
+export const STATE_VERSION = 2;
 
 export interface CookTicks {
   ingredients: number[];
@@ -317,14 +351,14 @@ export interface CookTicks {
 export interface MenuState {
   version: typeof STATE_VERSION;
   plan: Plan;
-  /** Shopping line keys already in the basket. */
-  shopTicks: string[];
+  /** Shopping lines already in the basket. */
+  shopTicks: ShopTicks;
   /** Per recipe id, which ingredient and step indexes are ticked. */
   cook: Record<string, CookTicks>;
 }
 
 export function freshState(): MenuState {
-  return { version: STATE_VERSION, plan: emptyPlan(), shopTicks: [], cook: {} };
+  return { version: STATE_VERSION, plan: emptyPlan(), shopTicks: {}, cook: {} };
 }
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
@@ -362,10 +396,15 @@ export function loadState(raw: string | null, recipes: Recipe[]): MenuState {
     return day;
   });
 
-  const listKeys = new Set(shoppingList(plan, recipes).flatMap((g) => g.lines.map((l) => l.key)));
-  const shopTicks = Array.isArray(data.shopTicks)
-    ? [...new Set(data.shopTicks.filter((k): k is string => typeof k === 'string' && listKeys.has(k)))]
-    : [];
+  const savedTicks: ShopTicks = {};
+  if (isObject(data.shopTicks)) {
+    for (const [key, t] of Object.entries(data.shopTicks)) {
+      if (isObject(t) && (t.qty === null || typeof t.qty === 'number') && typeof t.plusALittle === 'boolean') {
+        savedTicks[key] = { qty: t.qty, plusALittle: t.plusALittle };
+      }
+    }
+  }
+  const shopTicks = currentTicks(shoppingList(plan, recipes), savedTicks);
 
   const cook: Record<string, CookTicks> = {};
   if (isObject(data.cook)) {
