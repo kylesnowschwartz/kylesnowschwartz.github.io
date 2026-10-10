@@ -411,7 +411,7 @@
       },
       {
         "text": "300g nitrate-free bacon, chopped",
-        "item": "bacon",
+        "item": "nitrate-free bacon",
         "qty": 300,
         "unit": "g",
         "aisle": "meat-fish",
@@ -458,7 +458,7 @@
       "Bake 20–22 min until set.",
       "Serve 2–3 per person, warmed."
     ],
-    "tip": "Makes 24. Keeps 4–5 days in the fridge and freezes well. For lunch, serve 2–3 with a leafy salad, cucumber, olives and pumpkin seeds dressed with olive oil, lemon and salt."
+    "tip": "Makes 24. Keeps 4–5 days in the fridge and freezes well. For lunch, serve 2–3 with a leafy salad, cucumber, olives and pumpkin seeds dressed with olive oil, lemon and salt. Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
   },
   {
     "id": "almond-crust-quiche",
@@ -527,8 +527,8 @@
         "staple": false
       },
       {
-        "text": "150g streaky bacon (or ham)",
-        "item": "bacon",
+        "text": "150g nitrate-free streaky bacon",
+        "item": "nitrate-free bacon",
         "qty": 150,
         "unit": "g",
         "aisle": "meat-fish",
@@ -575,7 +575,7 @@
       "Whisk the eggs, cream, cheese, salt and pepper, then fold in the cooked fillings.",
       "Pour into the crust and bake 30–35 min until just set."
     ],
-    "tip": "Cuts into 6 slices; a good savoury breakfast or a top-up when a day runs light."
+    "tip": "Cuts into 6 slices; a good savoury breakfast or a top-up when a day runs light. Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
   },
   {
     "id": "tuna-avocado-lettuce-boats",
@@ -742,8 +742,8 @@
     "serves": 1,
     "ingredients": [
       {
-        "text": "3–4 slices prosciutto (from the deli counter)",
-        "item": "prosciutto",
+        "text": "3–4 slices nitrate-free prosciutto (Parma ham is cured with salt only)",
+        "item": "nitrate-free prosciutto",
         "qty": 4,
         "unit": "slices",
         "aisle": "meat-fish",
@@ -994,8 +994,8 @@
         "staple": false
       },
       {
-        "text": "2 rashers nitrate-free or middle bacon (~60g), chopped",
-        "item": "bacon",
+        "text": "2 rashers nitrate-free bacon (~60g), chopped",
+        "item": "nitrate-free bacon",
         "qty": 60,
         "unit": "g",
         "aisle": "meat-fish",
@@ -1031,7 +1031,8 @@
       "Pour the beaten eggs over.",
       "As it sets, scatter the cheese and spinach on.",
       "Fold and slide out."
-    ]
+    ],
+    "tip": "Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
   },
   {
     "id": "steak-mushrooms-rocket",
@@ -2226,8 +2227,8 @@
     "serves": 1,
     "ingredients": [
       {
-        "text": "2 rashers bacon (~50g)",
-        "item": "bacon",
+        "text": "2 rashers nitrate-free bacon (~50g)",
+        "item": "nitrate-free bacon",
         "qty": 50,
         "unit": "g",
         "aisle": "meat-fish",
@@ -2288,7 +2289,7 @@
       "Plate the rocket, avocado and tomatoes.",
       "Add the bacon, then finish with lemon, olive oil and pepper."
     ],
-    "tip": "Add a slice of seed loaf toast for about 2g more net."
+    "tip": "Add a slice of low-carb seed toast for about 2g more net. Check the bacon label: bacon cured with celery powder or celery extract still contains nitrates, even when it says \"no added nitrates\"."
   },
   {
     "id": "mozzarella-tomato-rocket-plate",
