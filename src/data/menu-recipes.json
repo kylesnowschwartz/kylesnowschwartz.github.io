@@ -1970,5 +1970,905 @@
       "Shake the whey and liquid together in a bottle."
     ],
     "tip": "About 25g protein per scoop."
+  },
+  {
+    "id": "seed-toast-avocado-kimchi",
+    "name": "Seed toast with smashed avocado & kimchi",
+    "meal": "breakfast",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 7,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 slices low-carb seed bread, toasted",
+        "item": "low-carb seed bread",
+        "qty": 2,
+        "unit": "slices",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "½ avocado (~75g flesh)",
+        "item": "avocados",
+        "qty": 0.5,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "30g kimchi, roughly chopped",
+        "item": "kimchi",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Toast the seed loaf slices.",
+      "Mash the avocado with a squeeze of lemon, salt and pepper.",
+      "Spread the avocado on the toast.",
+      "Top with the kimchi and a drizzle of olive oil."
+    ],
+    "tip": "Store-bought seed breads vary a lot. Check the carbohydrate per slice on the label (NZ labels already leave out fibre, so that figure is the net carbs) and pick one under 2 g a slice to keep this breakfast at the carbs shown. The seed loaf recipe in Extras is a homemade option. Add a soft-boiled egg on the side if you want it more filling; it adds well under 1g net."
+  },
+  {
+    "id": "garlic-mushrooms-asparagus-seed-toast",
+    "name": "Garlic mushrooms & asparagus on seed toast",
+    "meal": "breakfast",
+    "tags": [
+      "Quick",
+      "One pan"
+    ],
+    "netCarbsG": 8,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 slice low-carb seed bread, toasted",
+        "item": "low-carb seed bread",
+        "qty": 1,
+        "unit": "slices",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "100g mushrooms, sliced",
+        "item": "mushrooms",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "3 asparagus spears (~60g), woody ends snapped off",
+        "item": "asparagus",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic, sliced",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "15g parmesan, shaved or grated",
+        "item": "parmesan",
+        "qty": 15,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Pinch of dried thyme",
+        "item": "dried thyme",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Melt the butter in a frying pan over a medium-high heat.",
+      "Fry the mushrooms and asparagus for about 5 min until golden.",
+      "Add the garlic and thyme for the last minute, then season.",
+      "Toast the seed loaf slice.",
+      "Pile the mushrooms and asparagus on the toast and finish with the parmesan."
+    ],
+    "tip": "Store-bought seed breads vary a lot. Check the carbohydrate per slice on the label (NZ labels already leave out fibre, so that figure is the net carbs) and pick one under 2 g a slice to keep this breakfast at the carbs shown. The seed loaf recipe in Extras is a homemade option. No asparagus? Use a handful of baby spinach, wilted in the pan at the end."
+  },
+  {
+    "id": "warm-flax-coconut-porridge",
+    "name": "Warm flax & coconut porridge",
+    "meal": "breakfast",
+    "tags": [
+      "Quick"
+    ],
+    "netCarbsG": 7,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 tbsp ground flaxseed (~20g)",
+        "item": "ground flaxseed",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "15g desiccated unsweetened coconut",
+        "item": "desiccated coconut",
+        "qty": 15,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "15g almond flour",
+        "item": "almond flour",
+        "qty": 15,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "40ml cream",
+        "item": "cream",
+        "qty": 40,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "40g full-fat unsweetened Greek yoghurt, to top",
+        "item": "greek yoghurt",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Pinch of cinnamon",
+        "item": "cinnamon",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pinch of salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Stir the flaxseed, coconut, almond flour, cinnamon and salt into 120 ml water in a small pan.",
+      "Simmer, stirring, for 2–3 min until it thickens.",
+      "Take it off the heat and stir in the cream.",
+      "Spoon into a bowl and top with the yoghurt."
+    ],
+    "tip": "It keeps thickening as it sits; loosen with a splash more water or cream."
+  },
+  {
+    "id": "bacon-avocado-tomato-plate",
+    "name": "Bacon, avocado & tomato plate",
+    "meal": "breakfast",
+    "tags": [
+      "Quick",
+      "One pan"
+    ],
+    "netCarbsG": 4,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 rashers bacon (~50g)",
+        "item": "bacon",
+        "qty": 50,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "½ avocado (~75g flesh), sliced",
+        "item": "avocados",
+        "qty": 0.5,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Small handful cherry tomatoes (~60g), halved",
+        "item": "cherry tomatoes",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Handful rocket (~20g)",
+        "item": "rocket",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Fry the bacon in a dry pan until crisp, then lift it out.",
+      "Put the tomatoes in the bacon fat, cut side down, for 2 min until they soften.",
+      "Plate the rocket, avocado and tomatoes.",
+      "Add the bacon, then finish with lemon, olive oil and pepper."
+    ],
+    "tip": "Add a slice of seed loaf toast for about 2g more net."
+  },
+  {
+    "id": "mozzarella-tomato-rocket-plate",
+    "name": "Fresh mozzarella, tomato & rocket plate",
+    "meal": "lunch",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 5,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 ball fresh mozzarella or buffalo mozzarella (~100g), torn",
+        "item": "fresh mozzarella",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Small handful cherry tomatoes (~60g), halved",
+        "item": "cherry tomatoes",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Handful rocket (~20g)",
+        "item": "rocket",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "A few basil leaves",
+        "item": "basil",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Good drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Flaky salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Scatter the rocket on a plate.",
+      "Add the torn mozzarella and halved tomatoes.",
+      "Tear the basil over.",
+      "Finish with plenty of olive oil, flaky salt and pepper."
+    ],
+    "tip": "Take the mozzarella out of the fridge 20 min before; it tastes better at room temperature."
+  },
+  {
+    "id": "pork-kimchi-lettuce-cups",
+    "name": "Pork & kimchi lettuce cups",
+    "meal": "lunch",
+    "tags": [
+      "Quick",
+      "One pan"
+    ],
+    "netCarbsG": 5,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "150g pork mince",
+        "item": "pork mince",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "40g kimchi, chopped",
+        "item": "kimchi",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 spring onion, sliced",
+        "item": "spring onions",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "4–5 large lettuce leaves (cos or iceberg)",
+        "item": "lettuce",
+        "qty": 80,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Few slices cucumber, cut into sticks (~40g)",
+        "item": "cucumber",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Splash of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Fry the pork mince in a little oil over a high heat, breaking it up, for 5–6 min until browned.",
+      "Stir in the kimchi for 1 min and season with salt.",
+      "Take off the heat and stir through most of the spring onion.",
+      "Spoon into the lettuce leaves, add cucumber sticks and the rest of the spring onion, and eat like tacos."
+    ],
+    "tip": "Keep a spoonful of the kimchi back and add it cold on top for extra crunch."
+  },
+  {
+    "id": "garlic-prawns-courgette-ribbons",
+    "name": "Garlic butter prawns with courgette ribbons",
+    "meal": "dinner",
+    "tags": [
+      "One pan",
+      "Fresh"
+    ],
+    "netCarbsG": 7,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "150g raw prawns, peeled",
+        "item": "raw prawns",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "1 medium courgette (~150g), peeled into ribbons",
+        "item": "courgettes",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 large clove garlic, sliced",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Small handful parsley, chopped",
+        "item": "parsley",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Pinch of chilli flakes",
+        "item": "chilli flakes",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Peel the courgette into long ribbons with a vegetable peeler.",
+      "Melt the butter in a frying pan over a medium-high heat and add the garlic and chilli for 30 sec.",
+      "Add the prawns and cook 1–2 min a side until pink all through; lift them out.",
+      "Toss the courgette ribbons in the garlic butter for 1–2 min until just soft.",
+      "Return the prawns, add lemon, parsley and salt, and serve."
+    ],
+    "tip": "Cook this early in the week; fresh prawns won't keep. Frozen raw prawns work too; thaw them in the fridge first."
+  },
+  {
+    "id": "pork-scotch-steak-creamed-spinach",
+    "name": "Pork scotch steak with creamed spinach",
+    "meal": "dinner",
+    "tags": [
+      "One pan"
+    ],
+    "netCarbsG": 5,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 pork scotch steak (~150g)",
+        "item": "pork scotch steak",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "150g baby spinach",
+        "item": "baby spinach",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "50ml cream",
+        "item": "cream",
+        "qty": 50,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic, crushed",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Pinch of nutmeg",
+        "item": "ground nutmeg",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Take the pork out of the fridge 20 min before and season it well.",
+      "Fry it in a hot pan with the butter, 4–5 min a side until just cooked through, then rest it on a warm plate.",
+      "In the same pan, soften the garlic for 30 sec.",
+      "Add the spinach and stir until wilted.",
+      "Pour in the cream with the nutmeg and bubble for 1–2 min until it coats the spinach.",
+      "Slice the pork and serve it on the creamed spinach."
+    ],
+    "tip": "Scotch (shoulder) steak stays juicy because it's marbled; a pork loin chop works too but dries out faster. Silverbeet works in place of spinach; cook it a little longer."
+  },
+  {
+    "id": "dark-chocolate-mousse",
+    "name": "Dark chocolate mousse",
+    "meal": "dessert",
+    "tags": [
+      "Make ahead"
+    ],
+    "netCarbsG": 6,
+    "serves": 2,
+    "ingredients": [
+      {
+        "text": "40g 92% dark chocolate, chopped",
+        "item": "dark chocolate",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "150ml cream",
+        "item": "cream",
+        "qty": 150,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "½ tsp vanilla",
+        "item": "vanilla extract",
+        "qty": 0.5,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pinch of flaky salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Melt the chocolate with 3 tbsp of the cream in a bowl over a pan of barely simmering water, stirring until smooth.",
+      "Take it off the heat, stir in the vanilla and salt, and let it cool for 5 min.",
+      "Whisk the rest of the cream to soft peaks.",
+      "Fold the chocolate into the cream in two goes until no streaks remain.",
+      "Spoon into two small glasses and chill for at least 1 hour."
+    ],
+    "tip": "Makes 2; the second keeps 2 days in the fridge, covered. It's bittersweet; a few raspberries on top add about 1g net."
+  },
+  {
+    "id": "frozen-yoghurt-berry-bark",
+    "name": "Frozen yoghurt berry bark",
+    "meal": "dessert",
+    "tags": [
+      "Make ahead"
+    ],
+    "netCarbsG": 5,
+    "serves": 6,
+    "ingredients": [
+      {
+        "text": "300g full-fat unsweetened Greek yoghurt",
+        "item": "greek yoghurt",
+        "qty": 300,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "½ tsp vanilla",
+        "item": "vanilla extract",
+        "qty": 0.5,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "60g frozen berries, roughly broken",
+        "item": "frozen berries",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "fruit-frozen",
+        "staple": false
+      },
+      {
+        "text": "20g 92% dark chocolate, chopped",
+        "item": "dark chocolate",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "15g pumpkin seeds",
+        "item": "pumpkin seeds",
+        "qty": 15,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Line a small tray or container with baking paper.",
+      "Stir the vanilla into the yoghurt.",
+      "Spread the yoghurt about 1cm thick on the paper.",
+      "Scatter over the berries, chocolate and pumpkin seeds and press them in lightly.",
+      "Freeze for at least 3 hours until firm.",
+      "Break into 6 pieces and keep them in a container in the freezer."
+    ],
+    "tip": "Let a piece sit 5 min out of the freezer before eating so it softens a little."
+  },
+  {
+    "id": "seed-loaf",
+    "name": "Seed loaf",
+    "meal": "extra",
+    "tags": [
+      "More prep",
+      "Make ahead"
+    ],
+    "netCarbsG": 2,
+    "serves": 16,
+    "ingredients": [
+      {
+        "text": "5 eggs",
+        "item": "eggs",
+        "qty": 5,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "100g sunflower seeds",
+        "item": "sunflower seeds",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "100g pumpkin seeds",
+        "item": "pumpkin seeds",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "100g ground flaxseed",
+        "item": "ground flaxseed",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "60g almond flour",
+        "item": "almond flour",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "40g sesame seeds",
+        "item": "sesame seeds",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "4 tbsp olive oil (~60ml)",
+        "item": "olive oil",
+        "qty": 4,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "1 tsp salt",
+        "item": "salt",
+        "qty": 1,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Heat the oven to 160°C and line a 900g (about 22 × 11cm) loaf tin with baking paper.",
+      "Whisk the eggs, olive oil and salt in a large bowl.",
+      "Stir in all the seeds, the flaxseed and the almond flour until every seed is coated.",
+      "Leave it 10 min so the flaxseed thickens the mix.",
+      "Press it firmly into the tin and smooth the top.",
+      "Bake for about 60 min, until firm and golden.",
+      "Cool 10 min in the tin, then lift it out onto a rack.",
+      "Cool completely before cutting into 16 slices."
+    ],
+    "tip": "Keeps 5 days in the fridge. Slice before freezing and toast slices straight from frozen."
+  },
+  {
+    "id": "kimchi-devilled-eggs",
+    "name": "Kimchi devilled eggs",
+    "meal": "extra",
+    "tags": [
+      "Make ahead"
+    ],
+    "netCarbsG": 2,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 eggs",
+        "item": "eggs",
+        "qty": 2,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 tbsp mayonnaise",
+        "item": "mayonnaise",
+        "qty": 1,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "15g kimchi, finely chopped",
+        "item": "kimchi",
+        "qty": 15,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Pinch of smoked paprika",
+        "item": "smoked paprika",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Hard-boil the eggs, about 9 min from a simmering pot, then cool in cold water and peel.",
+      "Halve them and scoop the yolks into a bowl.",
+      "Mash the yolks with the mayonnaise, kimchi and a pinch of salt.",
+      "Spoon the filling back into the whites and dust with smoked paprika."
+    ],
+    "tip": "Boil a few extra eggs at the start of the week; they keep peeled in the fridge for 3–4 days."
   }
 ]
