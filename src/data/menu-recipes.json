@@ -1,0 +1,1974 @@
+[
+  {
+    "id": "overnight-chia-pudding",
+    "name": "Overnight chia pudding, almond milk",
+    "meal": "breakfast",
+    "tags": [
+      "Night before"
+    ],
+    "netCarbsG": 6,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 tbsp chia seeds (~12g)",
+        "item": "chia seeds",
+        "qty": 12,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "~100ml unsweetened almond milk",
+        "item": "almond milk",
+        "qty": 100,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Small handful frozen berries (~30g)",
+        "item": "frozen berries",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "fruit-frozen",
+        "staple": false
+      },
+      {
+        "text": "60g full-fat unsweetened Greek yoghurt",
+        "item": "greek yoghurt",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Pinch of salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Mix the chia seeds, almond milk and frozen berries in a jar the night before.",
+      "Chill overnight so the chia swells and thickens it.",
+      "In the morning, stir through the yoghurt and a pinch of salt."
+    ]
+  },
+  {
+    "id": "cottage-cheese-flax-walnut-bowl",
+    "name": "Cottage cheese, flax & walnut bowl",
+    "meal": "breakfast",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 8,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "100g full-fat cottage cheese",
+        "item": "cottage cheese",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 tbsp ground flaxseed (~15g)",
+        "item": "ground flaxseed",
+        "qty": 15,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "20g walnuts, roughly chopped",
+        "item": "walnuts",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "Small handful berries (~20g; frozen is fine)",
+        "item": "frozen berries",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "fruit-frozen",
+        "staple": false
+      },
+      {
+        "text": "Pinch of cinnamon",
+        "item": "cinnamon",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Splash of cream or unsweetened almond milk, to loosen",
+        "item": "cream",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Spoon the cottage cheese into a bowl.",
+      "Stir through the flaxseed and cinnamon.",
+      "Scatter the walnuts and berries on top.",
+      "Loosen with a splash of cream if it's too thick."
+    ]
+  },
+  {
+    "id": "soft-boiled-eggs-buttered-greens",
+    "name": "Soft-boiled eggs with buttered greens",
+    "meal": "breakfast",
+    "tags": [
+      "Quick"
+    ],
+    "netCarbsG": 2,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 eggs",
+        "item": "eggs",
+        "qty": 2,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "100g baby spinach or silverbeet",
+        "item": "baby spinach",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Soft-boil the eggs, about 6 min from a simmering pot, then peel.",
+      "Wilt the greens in butter in a small pan, about 2 min for spinach or a little longer for silverbeet.",
+      "Season and serve together."
+    ]
+  },
+  {
+    "id": "soft-boiled-eggs-avocado",
+    "name": "Soft-boiled eggs with avocado",
+    "meal": "breakfast",
+    "tags": [
+      "Quick"
+    ],
+    "netCarbsG": 3,
+    "serves": 2,
+    "ingredients": [
+      {
+        "text": "4 eggs (2 each)",
+        "item": "eggs",
+        "qty": 4,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 avocado (if in season; otherwise extra eggs and a little feta)",
+        "item": "avocados",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 tbsp pumpkin seeds",
+        "item": "pumpkin seeds",
+        "qty": 2,
+        "unit": "tbsp",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "Drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Boil the eggs for 6–7 min.",
+      "Peel and halve them over sliced avocado.",
+      "Scatter the seeds, drizzle with oil and season."
+    ]
+  },
+  {
+    "id": "scrambled-eggs-spinach-feta",
+    "name": "Scrambled eggs with spinach, feta & cherry tomatoes",
+    "meal": "breakfast",
+    "tags": [
+      "Quick"
+    ],
+    "netCarbsG": 6,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2–3 eggs",
+        "item": "eggs",
+        "qty": 3,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Handful baby spinach (~30g)",
+        "item": "baby spinach",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "30g feta",
+        "item": "feta",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Few cherry tomatoes",
+        "item": "cherry tomatoes",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Melt the butter in a pan over a medium-low heat.",
+      "Add the beaten eggs and stir gently as they start to set.",
+      "Fold in the spinach so it wilts in the residual heat.",
+      "Crumble over the feta, add the halved cherry tomatoes and season."
+    ]
+  },
+  {
+    "id": "greek-yoghurt-berry-bowl",
+    "name": "Greek yoghurt with berries, chia & walnuts",
+    "meal": "breakfast",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 11,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "150g full-fat unsweetened Greek yoghurt",
+        "item": "greek yoghurt",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Handful blueberries or raspberries (~50g)",
+        "item": "frozen berries",
+        "qty": 50,
+        "unit": "g",
+        "aisle": "fruit-frozen",
+        "staple": false
+      },
+      {
+        "text": "1 tbsp chia seeds (~12g)",
+        "item": "chia seeds",
+        "qty": 12,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "Few crushed walnuts",
+        "item": "walnuts",
+        "qty": null,
+        "unit": null,
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "Pinch of cinnamon",
+        "item": "cinnamon",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Spoon the yoghurt into a bowl.",
+      "Stir through the chia seeds and cinnamon.",
+      "Top with the berries and crushed walnuts."
+    ]
+  },
+  {
+    "id": "bacon-spinach-mini-quiches",
+    "name": "Bacon, spinach & mushroom mini-quiches",
+    "meal": "breakfast",
+    "tags": [
+      "Make ahead"
+    ],
+    "netCarbsG": 3,
+    "serves": 12,
+    "ingredients": [
+      {
+        "text": "16 eggs",
+        "item": "eggs",
+        "qty": 16,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "200ml cream",
+        "item": "cream",
+        "qty": 200,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "200g cheddar, grated (grate your own; pre-grated runs higher carb)",
+        "item": "cheddar",
+        "qty": 200,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "300g nitrate-free bacon, chopped",
+        "item": "bacon",
+        "qty": 300,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "160g baby spinach",
+        "item": "baby spinach",
+        "qty": 160,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "160g mushrooms, sliced",
+        "item": "mushrooms",
+        "qty": 160,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Heat the oven to 180°C.",
+      "Fry the bacon and mushrooms, then wilt the spinach in the same pan.",
+      "Whisk the eggs, cream, cheese, salt and pepper.",
+      "Stir in the fillings and divide between two 12-cup silicone trays (24 cups).",
+      "Bake 20–22 min until set.",
+      "Serve 2–3 per person, warmed."
+    ],
+    "tip": "Makes 24. Keeps 4–5 days in the fridge and freezes well. For lunch, serve 2–3 with a leafy salad, cucumber, olives and pumpkin seeds dressed with olive oil, lemon and salt."
+  },
+  {
+    "id": "almond-crust-quiche",
+    "name": "Almond-crust bacon & spinach quiche",
+    "meal": "breakfast",
+    "tags": [
+      "Make ahead"
+    ],
+    "netCarbsG": 6,
+    "serves": 6,
+    "ingredients": [
+      {
+        "text": "200g almond flour",
+        "item": "almond flour",
+        "qty": 200,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "60g cold butter",
+        "item": "butter",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "1 egg (crust)",
+        "item": "eggs",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "½ tsp salt",
+        "item": "salt",
+        "qty": 0.5,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "6 eggs (filling)",
+        "item": "eggs",
+        "qty": 6,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "200ml cream",
+        "item": "cream",
+        "qty": 200,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "150g grated cheddar",
+        "item": "cheddar",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "150g streaky bacon (or ham)",
+        "item": "bacon",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "100g baby spinach",
+        "item": "baby spinach",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "120g mushrooms",
+        "item": "mushrooms",
+        "qty": 120,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "3 spring onions",
+        "item": "spring onions",
+        "qty": 3,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Heat the oven to 180°C.",
+      "Rub the almond flour, cold butter, egg and salt together into a crust.",
+      "Press it into a fluted flan pan and blind-bake 10 min.",
+      "Soften the bacon, mushrooms, spring onions and spinach in one pan.",
+      "Whisk the eggs, cream, cheese, salt and pepper, then fold in the cooked fillings.",
+      "Pour into the crust and bake 30–35 min until just set."
+    ],
+    "tip": "Cuts into 6 slices; a good savoury breakfast or a top-up when a day runs light."
+  },
+  {
+    "id": "tuna-avocado-lettuce-boats",
+    "name": "Tuna & avocado lettuce boats",
+    "meal": "lunch",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 4,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 tin tuna (~120g), drained",
+        "item": "tinned tuna",
+        "qty": 1,
+        "unit": "tin",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "1/2 avocado, diced",
+        "item": "avocados",
+        "qty": 0.5,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Few slices cucumber, diced",
+        "item": "cucumber",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "4–5 large lettuce leaves (iceberg or cos)",
+        "item": "lettuce",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Mix the tuna, avocado and cucumber.",
+      "Dress with a squeeze of lemon, a drizzle of olive oil, salt and pepper.",
+      "Spoon into the lettuce leaves and eat like tacos."
+    ]
+  },
+  {
+    "id": "egg-salad-plate",
+    "name": "Egg salad plate",
+    "meal": "lunch",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 2,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "3 eggs, hard-boiled",
+        "item": "eggs",
+        "qty": 3,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 tbsp mayonnaise",
+        "item": "mayonnaise",
+        "qty": 1,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Few slices cucumber, finely diced",
+        "item": "cucumber",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "A few olives",
+        "item": "olives",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "1 tsp Dijon mustard",
+        "item": "dijon mustard",
+        "qty": 1,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Peel and chop the hard-boiled eggs.",
+      "Mix with the mayonnaise, cucumber and mustard.",
+      "Season and serve with the olives alongside."
+    ]
+  },
+  {
+    "id": "deli-plate-prosciutto-cheese-olives",
+    "name": "Deli plate: prosciutto, cheese & olives",
+    "meal": "lunch",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 4,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "3–4 slices prosciutto (from the deli counter)",
+        "item": "prosciutto",
+        "qty": 4,
+        "unit": "slices",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "A few cubes or slices of cheese",
+        "item": "cheddar",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "A few olives",
+        "item": "olives",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "Small handful cherry tomatoes (~50g), halved",
+        "item": "cherry tomatoes",
+        "qty": 50,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Few slices cucumber",
+        "item": "cucumber",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Arrange everything on a plate.",
+      "Drizzle the tomatoes and cucumber with olive oil and crack pepper over."
+    ],
+    "tip": "Keeps well, so this is a good late-week lunch."
+  },
+  {
+    "id": "smoked-salmon-cream-cheese-plate",
+    "name": "Smoked salmon, cream cheese & cucumber plate",
+    "meal": "lunch",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 4,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "80–100g smoked salmon",
+        "item": "smoked salmon",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "40g cream cheese",
+        "item": "cream cheese",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1/3 cucumber, sliced into rounds or batons",
+        "item": "cucumber",
+        "qty": 0.33,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "A few capers or olives (optional)",
+        "item": "capers",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Cracked pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Dill, if you have it",
+        "item": "dill",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Lay the smoked salmon out with a dollop of cream cheese and the cucumber alongside.",
+      "Squeeze lemon over, crack pepper and scatter the capers.",
+      "Roll the salmon around the cream cheese and cucumber, or build little stacks."
+    ],
+    "tip": "Smoked salmon keeps well, so this is a good late-week lunch."
+  },
+  {
+    "id": "chicken-avocado-salad-bowl",
+    "name": "Chicken & avocado salad bowl",
+    "meal": "lunch",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 5,
+    "serves": 2,
+    "ingredients": [
+      {
+        "text": "~250–300g cooked chicken",
+        "item": "cooked chicken",
+        "qty": 300,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "1 avocado",
+        "item": "avocados",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "4 handfuls leafy greens (~120g)",
+        "item": "mixed salad leaves",
+        "qty": 120,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Cucumber (or celery or radish)",
+        "item": "cucumber",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 tbsp pumpkin seeds",
+        "item": "pumpkin seeds",
+        "qty": 2,
+        "unit": "tbsp",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "Drizzle of olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Pile the greens, cucumber, avocado and chicken into two bowls.",
+      "Dress with olive oil, lemon and salt.",
+      "Scatter the seeds over."
+    ]
+  },
+  {
+    "id": "bacon-cheese-omelette",
+    "name": "Bacon & cheese omelette",
+    "meal": "lunch",
+    "tags": [
+      "One pan"
+    ],
+    "netCarbsG": 3,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "3 eggs",
+        "item": "eggs",
+        "qty": 3,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "40g grated cheese",
+        "item": "cheddar",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "2 rashers nitrate-free or middle bacon (~60g), chopped",
+        "item": "bacon",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "Handful baby spinach (~30g)",
+        "item": "baby spinach",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Fry the chopped bacon in the pan first.",
+      "Pour the beaten eggs over.",
+      "As it sets, scatter the cheese and spinach on.",
+      "Fold and slide out."
+    ]
+  },
+  {
+    "id": "steak-mushrooms-rocket",
+    "name": "Steak with sauteed mushrooms & rocket",
+    "meal": "dinner",
+    "tags": [
+      "One pan"
+    ],
+    "netCarbsG": 5,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 sirloin or ribeye steak (~200g)",
+        "item": "beef steak",
+        "qty": 200,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "100g mushrooms, sliced",
+        "item": "mushrooms",
+        "qty": 100,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic, sliced",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Handful rocket (~30g)",
+        "item": "rocket",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Season the steak well.",
+      "Sear in a hot pan with a little oil, about 3–4 min a side for medium-rare, then rest it.",
+      "In the same pan, add butter, the mushrooms and garlic and cook until golden, about 5 min.",
+      "Pile the rocket on the plate and sit the sliced steak and mushrooms on top so the rocket wilts a little."
+    ],
+    "tip": "Beef keeps a few days in the fridge if you don't get to it straight away."
+  },
+  {
+    "id": "chicken-thigh-broccoli-traybake",
+    "name": "Chicken thigh traybake with broccoli & lemon",
+    "meal": "dinner",
+    "tags": [
+      "Tray bake"
+    ],
+    "netCarbsG": 6,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 chicken thighs, skin-on",
+        "item": "chicken thighs",
+        "qty": 2,
+        "unit": "whole",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "150g broccoli (or cauliflower), in florets",
+        "item": "broccoli",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Thyme or oregano",
+        "item": "dried thyme",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Olive oil",
+        "item": "olive oil",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Squeeze of lemon to finish",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Heat the oven to 200°C.",
+      "Toss the broccoli, garlic and herbs in oil on a tray.",
+      "Sit the chicken thighs on top and season the skin.",
+      "Roast about 30 min until the skin is crisp and the broccoli edges catch.",
+      "Finish with a squeeze of lemon."
+    ],
+    "tip": "Swap the broccoli for sliced fennel and a few olives for a change. Chicken holds to the end of the week, or freezes if you won't get to it."
+  },
+  {
+    "id": "lamb-chops-braised-cabbage",
+    "name": "Lamb chops with braised cabbage & mustard cream",
+    "meal": "dinner",
+    "tags": [
+      "One pan"
+    ],
+    "netCarbsG": 6,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "2 lamb loin chops (~180g total)",
+        "item": "lamb loin chops",
+        "qty": 180,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "1/4 head cabbage (~150g), shredded",
+        "item": "cabbage",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic, sliced",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 tbsp cream (~30ml)",
+        "item": "cream",
+        "qty": 30,
+        "unit": "ml",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 tsp Dijon mustard",
+        "item": "dijon mustard",
+        "qty": 1,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Sear the lamb chops in butter, about 3–4 min a side for medium-rare, then rest.",
+      "In the same pan, soften the garlic.",
+      "Add the cabbage with a splash of water and cook until just tender, 6–8 min.",
+      "Stir through the cream and mustard and season.",
+      "Sit the lamb on top to serve."
+    ]
+  },
+  {
+    "id": "lamb-chops-roast-veg",
+    "name": "Lamb chops with roast cauliflower & courgette",
+    "meal": "dinner",
+    "tags": [
+      "Tray + pan"
+    ],
+    "netCarbsG": 5,
+    "serves": 2,
+    "ingredients": [
+      {
+        "text": "6–8 lamb loin chops or cutlets (3–4 each)",
+        "item": "lamb loin chops",
+        "qty": 720,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "½ small cauliflower, florets (~300g)",
+        "item": "cauliflower",
+        "qty": 300,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 courgette, sliced",
+        "item": "courgettes",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 cloves garlic",
+        "item": "garlic cloves",
+        "qty": 2,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Sprig of rosemary",
+        "item": "rosemary",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 tbsp olive oil",
+        "item": "olive oil",
+        "qty": 2,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "20g butter",
+        "item": "butter",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Squeeze of lemon, to finish",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Heat the oven to 200°C.",
+      "Toss the cauliflower and courgette in oil, garlic and rosemary on a tray and roast 15 min.",
+      "Meanwhile, sear the chops in a hot pan with butter, about 2–3 min a side for pink.",
+      "Rest the chops and serve over the roast veg with lemon squeezed over."
+    ],
+    "tip": "Or roast the chops on the tray for the veg's last 12–15 min."
+  },
+  {
+    "id": "baked-white-fish-garlic-greens",
+    "name": "Baked white fish with garlic-butter greens",
+    "meal": "dinner",
+    "tags": [
+      "One pan"
+    ],
+    "netCarbsG": 4,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 white fish fillet (tarakihi, hoki or similar, ~150g)",
+        "item": "white fish fillets",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "150g silverbeet, shredded",
+        "item": "silverbeet",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic, sliced",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Bake the fish about 10 min at 200°C, or pan-fry 3–4 min a side, until just cooked through.",
+      "Meanwhile, wilt the garlic and silverbeet in butter.",
+      "Squeeze lemon over both to serve."
+    ],
+    "tip": "No silverbeet? Use baby spinach and add it at the end; it wilts in under a minute."
+  },
+  {
+    "id": "beef-mince-stir-fry",
+    "name": "One-pan beef mince stir-fry",
+    "meal": "dinner",
+    "tags": [
+      "One pan"
+    ],
+    "netCarbsG": 7,
+    "serves": 2,
+    "ingredients": [
+      {
+        "text": "~350g beef mince",
+        "item": "beef mince",
+        "qty": 350,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "1 courgette, diced",
+        "item": "courgettes",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "80g mushrooms, sliced",
+        "item": "mushrooms",
+        "qty": 80,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "½ capsicum, sliced",
+        "item": "capsicum",
+        "qty": 0.5,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 cloves garlic, grated",
+        "item": "garlic cloves",
+        "qty": 2,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Thumb of ginger, grated",
+        "item": "fresh ginger",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 tbsp tamari or coconut aminos",
+        "item": "tamari",
+        "qty": 1,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "1 tbsp oil",
+        "item": "olive oil",
+        "qty": 1,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "A sprinkle of seeds, to finish",
+        "item": "pumpkin seeds",
+        "qty": null,
+        "unit": null,
+        "aisle": "nuts-seeds",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Brown the mince in a hot pan, then push it aside.",
+      "Fry the garlic and ginger for 30 sec.",
+      "Add the courgette, mushroom and capsicum and stir-fry until tender.",
+      "Combine everything, splash in the tamari and season.",
+      "Scatter the seeds over to serve."
+    ],
+    "tip": "Drop the capsicum for about 3g less net carbs per serve."
+  },
+  {
+    "id": "pan-seared-salmon-lemon-butter",
+    "name": "Pan-seared salmon, lemon butter & greens",
+    "meal": "dinner",
+    "tags": [
+      "Fresh"
+    ],
+    "netCarbsG": 4,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 salmon fillet (~150g)",
+        "item": "salmon fillets",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "150g greens: broccolini, silverbeet or baby spinach",
+        "item": "baby spinach",
+        "qty": 150,
+        "unit": "g",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic, sliced",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Good knob of butter",
+        "item": "butter",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "Squeeze of lemon",
+        "item": "lemons",
+        "qty": null,
+        "unit": null,
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      }
+    ],
+    "method": [
+      "Sear the salmon skin-side down in a little butter, about 4 min.",
+      "Flip for about 2 min more until just cooked, then lift out and rest.",
+      "In the same pan, melt more butter with the garlic.",
+      "Wilt the greens (a splash of water helps broccolini) and squeeze in lemon.",
+      "Spoon the lemon butter over the salmon."
+    ],
+    "tip": "Cook this early in the week; fresh fish won't keep."
+  },
+  {
+    "id": "sheet-pan-salmon-fennel",
+    "name": "Sheet-pan salmon with fennel & courgette",
+    "meal": "dinner",
+    "tags": [
+      "Tray bake"
+    ],
+    "netCarbsG": 4,
+    "serves": 2,
+    "ingredients": [
+      {
+        "text": "2 salmon fillets (~150g each)",
+        "item": "salmon fillets",
+        "qty": 300,
+        "unit": "g",
+        "aisle": "meat-fish",
+        "staple": false
+      },
+      {
+        "text": "1 fennel bulb, sliced",
+        "item": "fennel bulb",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 courgette, sliced",
+        "item": "courgettes",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "2 tbsp olive oil",
+        "item": "olive oil",
+        "qty": 2,
+        "unit": "tbsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "30g butter",
+        "item": "butter",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "1 lemon",
+        "item": "lemons",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "1 clove garlic",
+        "item": "garlic cloves",
+        "qty": 1,
+        "unit": "whole",
+        "aisle": "veg",
+        "staple": false
+      },
+      {
+        "text": "Salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Pepper",
+        "item": "black pepper",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Scatter of seeds, to finish",
+        "item": "pumpkin seeds",
+        "qty": null,
+        "unit": null,
+        "aisle": "nuts-seeds",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Heat the oven to 200°C.",
+      "Toss the fennel and courgette in oil on a lined tray and roast 10 min.",
+      "Lay the salmon on top, dot with butter, season and add lemon slices.",
+      "Roast another 12–15 min until the salmon just flakes.",
+      "Squeeze lemon over and scatter seeds to serve."
+    ],
+    "tip": "Fennel stands in for asparagus in winter; use asparagus when it's in season."
+  },
+  {
+    "id": "berries-mascarpone-dark-chocolate",
+    "name": "Berries, mascarpone (or cream) & dark chocolate",
+    "meal": "dessert",
+    "tags": [
+      "Quick"
+    ],
+    "netCarbsG": 6,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "Small handful frozen berries (~50g), defrosted",
+        "item": "frozen berries",
+        "qty": 50,
+        "unit": "g",
+        "aisle": "fruit-frozen",
+        "staple": false
+      },
+      {
+        "text": "2 tbsp mascarpone (~30g), or 2 tbsp cream shaken until thick",
+        "item": "mascarpone",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "1 square 92% dark chocolate (~10g), grated",
+        "item": "dark chocolate",
+        "qty": 10,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Spoon the mascarpone (or shaken cream) over the defrosted berries.",
+      "Grate the dark chocolate on top."
+    ],
+    "tip": "A drop of vanilla and a few crushed macadamias work in place of the chocolate."
+  },
+  {
+    "id": "walnut-dark-chocolate-bites",
+    "name": "Walnut & dark chocolate bites",
+    "meal": "dessert",
+    "tags": [
+      "Easy"
+    ],
+    "netCarbsG": 3,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "20g walnuts",
+        "item": "walnuts",
+        "qty": 20,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "1 square 90% dark chocolate (~10g)",
+        "item": "dark chocolate",
+        "qty": 10,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Plate the walnuts with a square of dark chocolate."
+    ],
+    "tip": "A small handful of macadamias works just as well as the walnuts."
+  },
+  {
+    "id": "fudgy-tahini-sesame-slice",
+    "name": "Fudgy tahini-sesame slice",
+    "meal": "extra",
+    "tags": [
+      "More prep",
+      "Make ahead"
+    ],
+    "netCarbsG": 2,
+    "serves": 10,
+    "ingredients": [
+      {
+        "text": "250g hulled tahini (stir well first; the oil separates)",
+        "item": "tahini",
+        "qty": 250,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "50g butter, melted (brown it for deeper flavour if you like)",
+        "item": "butter",
+        "qty": 50,
+        "unit": "g",
+        "aisle": "fridge",
+        "staple": true
+      },
+      {
+        "text": "60g granulated erythritol, to taste",
+        "item": "erythritol",
+        "qty": 60,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "2 eggs",
+        "item": "eggs",
+        "qty": 2,
+        "unit": "whole",
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "80g almond flour",
+        "item": "almond flour",
+        "qty": 80,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "50g desiccated unsweetened coconut",
+        "item": "desiccated coconut",
+        "qty": 50,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "30g sesame seeds, lightly toasted (half folded in, half for the top)",
+        "item": "sesame seeds",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "nuts-seeds",
+        "staple": false
+      },
+      {
+        "text": "1½ tsp vanilla",
+        "item": "vanilla extract",
+        "qty": 1.5,
+        "unit": "tsp",
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "A good pinch of flaky salt",
+        "item": "salt",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": true
+      },
+      {
+        "text": "Optional top: 40g 90% dark chocolate, melted",
+        "item": "dark chocolate",
+        "qty": 40,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Heat the oven to 165°C and line a small, deep 18cm tin or a loaf tin.",
+      "Beat the tahini, melted butter, erythritol, eggs and vanilla until smooth and glossy.",
+      "Fold in the almond flour, coconut, salt and half the sesame to a thick, fudgy paste.",
+      "Press into the tin so the bar stays tall, smooth the top and scatter the rest of the sesame.",
+      "Bake 14–18 min, pulling it while the centre is still soft; underbaked is fudgy.",
+      "Cool, then chill 1–2 hours to set and cut it cold.",
+      "If using chocolate, spread the melted chocolate over the cooled slice and chill again."
+    ],
+    "tip": "Makes about 10 thick bars; keep them in the fridge. Hulled tahini keeps a bar near 2g net (1.5g without the chocolate); unhulled tahini can push it to about 5g, so check the label."
+  },
+  {
+    "id": "cheese-olives-macadamias",
+    "name": "Cheese, olives & macadamias",
+    "meal": "extra",
+    "tags": [
+      "No cook"
+    ],
+    "netCarbsG": 1,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "A few cubes of cheese",
+        "item": "cheddar",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": false
+      },
+      {
+        "text": "A few olives",
+        "item": "olives",
+        "qty": null,
+        "unit": null,
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "A small handful of macadamias",
+        "item": "macadamias",
+        "qty": null,
+        "unit": null,
+        "aisle": "nuts-seeds",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Plate and eat."
+    ]
+  },
+  {
+    "id": "whey-protein-shake",
+    "name": "Whey protein shake",
+    "meal": "extra",
+    "tags": [
+      "Quick"
+    ],
+    "netCarbsG": 1,
+    "serves": 1,
+    "ingredients": [
+      {
+        "text": "1 scoop vanilla whey isolate (~30g)",
+        "item": "vanilla whey isolate",
+        "qty": 30,
+        "unit": "g",
+        "aisle": "pantry",
+        "staple": false
+      },
+      {
+        "text": "Water or unsweetened almond milk",
+        "item": "almond milk",
+        "qty": null,
+        "unit": null,
+        "aisle": "fridge",
+        "staple": false
+      }
+    ],
+    "method": [
+      "Shake the whey and liquid together in a bottle."
+    ],
+    "tip": "About 25g protein per scoop."
+  }
+]

@@ -33,4 +33,37 @@ const books = defineCollection({
     }),
 });
 
-export const collections = { books };
+/**
+ * Weekly Menu recipes. Enums mirror the types in `src/lib/menu.ts`, so a
+ * misspelled aisle or unit fails the build instead of dropping off the
+ * shopping list.
+ */
+const menuIngredient = z
+  .object({
+    text: z.string().min(1),
+    item: z.string().min(1),
+    qty: z.number().positive().nullable(),
+    unit: z.enum(['g', 'ml', 'whole', 'tbsp', 'tsp', 'slices', 'tin']).nullable(),
+    aisle: z.enum(['fridge', 'meat-fish', 'veg', 'fruit-frozen', 'nuts-seeds', 'pantry']),
+    staple: z.boolean(),
+  })
+  .refine((i) => (i.qty === null) === (i.unit === null), {
+    message: 'qty and unit must both be set, or both null for a vague amount',
+  });
+
+const menuRecipes = defineCollection({
+  loader: file('src/data/menu-recipes.json'),
+  schema: z.object({
+    id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'id must be kebab-case'),
+    name: z.string().min(1),
+    meal: z.enum(['breakfast', 'lunch', 'dinner', 'dessert', 'extra']),
+    tags: z.array(z.string()),
+    netCarbsG: z.number().nonnegative(),
+    serves: z.number().int().positive(),
+    ingredients: z.array(menuIngredient).min(1),
+    method: z.array(z.string().min(1)).min(1),
+    tip: z.string().optional(),
+  }),
+});
+
+export const collections = { books, menuRecipes };
