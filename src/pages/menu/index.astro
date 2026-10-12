@@ -602,7 +602,13 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
         recipeListEl.replaceChildren(el('p', { class: 'card empty' }, 'No recipes yet.'));
         return;
       }
-      const shown = recipeScope.value === 'all' ? recipes : plannedRecipes(state.plan, recipes);
+      const showAll = recipeScope.value === 'all';
+      const shown = showAll ? recipes : plannedRecipes(state.plan, recipes);
+      // In this week's view every dish is planned, so only a repeat is worth noting.
+      const note = (id: string): string => {
+        const count = usage.get(id) ?? 0;
+        return showAll || count > 1 ? plannedNote(count) : '';
+      };
       if (shown.length === 0) {
         recipeListEl.replaceChildren(
           el(
@@ -634,7 +640,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
                       { type: 'button', class: 'card recipe-card', 'data-open': r.id },
                       el('span', { class: 'pick-name' }, r.name),
                       tagChips(r),
-                      plannedNote(usage.get(r.id) ?? 0) && el('span', { class: 'pick-note' }, plannedNote(usage.get(r.id) ?? 0)),
+                      note(r.id) && el('span', { class: 'pick-note' }, note(r.id)),
                     ),
                   ),
                 ),
