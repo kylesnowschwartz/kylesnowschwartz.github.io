@@ -159,6 +159,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       shoppingList,
       shoppingListText,
       tickLine,
+      tickedLast,
       untickLine,
       currentTicks,
       usageCounts,
@@ -489,7 +490,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       shopList.replaceChildren(
         ...groups.map((g) => {
           const isOn = (key: string) => key in state.shopTicks;
-          const lines = [...g.lines.filter((l) => !isOn(l.key)), ...g.lines.filter((l) => isOn(l.key))];
+          const lines = tickedLast(g.lines, state.shopTicks);
           return el(
             'section',
             { class: g.id === 'staples' ? 'aisle staples' : 'aisle', 'aria-labelledby': `aisle-${g.id}` },

@@ -287,16 +287,19 @@ export function currentTicks(groups: ShoppingGroup[], ticks: ShopTicks): ShopTic
   return out;
 }
 
-/** Plain-text list for sharing; ticked lines are left off. */
+/** A group's lines with the ticked ones moved after the rest, keeping order otherwise. */
+export function tickedLast(lines: ShoppingLine[], ticks: ShopTicks): ShoppingLine[] {
+  return [...lines.filter((l) => !(l.key in ticks)), ...lines.filter((l) => l.key in ticks)];
+}
+
+/** Markdown checklist for sharing, ticked lines checked and listed last in their group. */
 export function shoppingListText(groups: ShoppingGroup[], ticks: ShopTicks): string {
-  const out: string[] = ['Shopping list'];
+  const out: string[] = ['# Shopping list'];
   for (const g of groups) {
-    const left = g.lines.filter((l) => !(l.key in ticks));
-    if (left.length === 0) continue;
-    out.push('', g.label);
-    for (const l of left) {
+    out.push('', `## ${g.label}`);
+    for (const l of tickedLast(g.lines, ticks)) {
       const amt = lineAmount(l);
-      out.push(`- ${l.item}${amt ? `, ${amt}` : ''}`);
+      out.push(`- [${l.key in ticks ? 'x' : ' '}] ${l.item}${amt ? `, ${amt}` : ''}`);
     }
   }
   return out.join('\n');

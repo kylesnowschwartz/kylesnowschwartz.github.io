@@ -130,13 +130,29 @@ describe('shopping list', () => {
     expect(shoppingList(plan([0, 'dinner', 'gone']), RECIPES)).toEqual([]);
   });
 
-  it('shares unticked lines as plain text', () => {
-    const groups = shoppingList(plan([0, 'breakfast', 'omelette']), RECIPES);
-    const eggs = groups.flatMap((g) => g.lines).find((l) => l.item === 'eggs')!;
-    const text = shoppingListText(groups, tickLine({}, eggs));
-    expect(text).toContain('Vegetables\n- baby spinach, 40 g');
-    expect(text).toContain('Check you have\n- butter\n- salt');
-    expect(text).not.toContain('eggs');
+  it('shares a Markdown checklist with ticked lines checked and last in their group', () => {
+    const groups = shoppingList(plan([0, 'breakfast', 'omelette'], [0, 'lunch', 'salmon-salad']), RECIPES);
+    const lines = groups.flatMap((g) => g.lines);
+    const ticks = ['eggs', 'butter'].reduce((t, item) => tickLine(t, lines.find((l) => l.item === item)!), {});
+    expect(shoppingListText(groups, ticks)).toBe(
+      [
+        '# Shopping list',
+        '',
+        '## Vegetables',
+        '- [ ] baby spinach, 120 g',
+        '',
+        '## Meat & fish',
+        '- [ ] salmon fillet, 1',
+        '',
+        '## Fridge',
+        '- [x] eggs, 3',
+        '',
+        '## Check you have',
+        '- [ ] olive oil, 1 tbsp',
+        '- [ ] salt',
+        '- [x] butter',
+      ].join('\n'),
+    );
   });
 });
 
