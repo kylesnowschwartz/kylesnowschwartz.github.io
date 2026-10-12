@@ -22,6 +22,9 @@ import {
   type Ingredient,
   type Plan,
 } from './menu';
+import recipeData from '../data/menu-recipes.json';
+
+const REAL_RECIPES = recipeData as Recipe[];
 
 const ing = (item: string, qty: number | null, unit: Ingredient['unit'], aisle: Ingredient['aisle'], staple = false): Ingredient => ({
   text: `${qty ?? ''} ${unit ?? ''} ${item}`.trim(),
@@ -130,6 +133,17 @@ describe('shopping list', () => {
     expect(shoppingList(plan([0, 'dinner', 'gone']), RECIPES)).toEqual([]);
   });
 
+  it('lists an item used by two recipes once, summed, with both dishes', () => {
+    const p = plan([0, 'dinner', 'lamb-chops-roast-veg'], [1, 'dinner', 'garlic-prawns-courgette-ribbons']);
+    const courgettes = shoppingList(p, REAL_RECIPES)
+      .flatMap((g) => g.lines)
+      .filter((l) => l.item === 'courgettes');
+    expect(courgettes).toHaveLength(1);
+    expect(courgettes[0].key).toBe(lineKey('courgettes', 'whole'));
+    expect(courgettes[0].qty).toBe(2);
+    expect(courgettes[0].dishes).toEqual(['Lamb chops with roast cauliflower & courgette', 'Garlic butter prawns with courgette ribbons']);
+  });
+
   it('shares a Markdown checklist with ticked lines checked and last in their group', () => {
     const groups = shoppingList(plan([0, 'breakfast', 'omelette'], [0, 'lunch', 'salmon-salad']), RECIPES);
     const lines = groups.flatMap((g) => g.lines);
@@ -153,6 +167,21 @@ describe('shopping list', () => {
         '- [x] butter',
       ].join('\n'),
     );
+  });
+});
+
+describe('recipe data', () => {
+  // The shopping list adds up amounts per item, so one item in two units would sum grams with counts.
+  it('measures each item in a single unit across all recipes', () => {
+    const units = new Map<string, Set<string>>();
+    for (const r of REAL_RECIPES) {
+      for (const i of r.ingredients) {
+        if (i.unit === null) continue;
+        units.set(i.item, (units.get(i.item) ?? new Set()).add(i.unit));
+      }
+    }
+    const mixed = [...units].filter(([, u]) => u.size > 1).map(([item, u]) => `${item}: ${[...u].join(', ')}`);
+    expect(mixed, 'items measured in more than one unit').toEqual([]);
   });
 });
 

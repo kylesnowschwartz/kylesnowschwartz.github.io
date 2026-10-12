@@ -138,18 +138,29 @@ export function lineKey(item: string, unit: Unit | null): string {
 }
 
 /**
- * The week's combined list. A recipe used in N slots needs ceil(N / serves)
- * batches, so a six-piece traybake planned on three days is bought once.
- * Lines merge on item + unit; a vague-amount line ("knob of butter") folds
- * into a measured line for the same item when one exists, so each product
- * appears once where possible.
+ * The week's combined list, one line per item. A recipe used in N slots needs
+ * ceil(N / serves) batches, so a six-piece traybake planned on three days is
+ * bought once. The recipe data measures each item in a single unit (a test
+ * over the data holds it to that), so measured amounts add up directly. A
+ * vague-amount line ("knob of butter") folds into the item's measured line
+ * when one exists, marked as needing a little more.
  */
 export function shoppingList(plan: Plan, recipes: Recipe[]): ShoppingGroup[] {
   const map = byId(recipes);
-  const lines = new Map<string, ShoppingLine>();
+  const lines = new Map<string, ShoppingLine>(); // by item
   const vague: { ing: Ingredient; dish: string }[] = [];
 
-  const addDish = (line: ShoppingLine, dish: string) => {
+  const lineFor = (ing: Ingredient, unit: Unit | null): ShoppingLine => {
+    let line = lines.get(ing.item);
+    if (!line) {
+      line = { key: lineKey(ing.item, unit), item: ing.item, qty: unit === null ? null : 0, unit, aisle: ing.aisle, staple: true, plusALittle: false, dishes: [] };
+      lines.set(ing.item, line);
+    }
+    return line;
+  };
+  const addUse = (line: ShoppingLine, ing: Ingredient, dish: string) => {
+    // Anything one dish needs bought makes the whole line a buy, not a check.
+    line.staple = line.staple && ing.staple;
     if (!line.dishes.includes(dish)) line.dishes.push(dish);
   };
 
@@ -162,38 +173,20 @@ export function shoppingList(plan: Plan, recipes: Recipe[]): ShoppingGroup[] {
         vague.push({ ing, dish: r.name });
         continue;
       }
-      const key = lineKey(ing.item, ing.unit);
-      let line = lines.get(key);
-      if (!line) {
-        line = { key, item: ing.item, qty: 0, unit: ing.unit, aisle: ing.aisle, staple: true, plusALittle: false, dishes: [] };
-        lines.set(key, line);
-      }
+      const line = lineFor(ing, ing.unit);
       line.qty = (line.qty ?? 0) + ing.qty * batches;
-      // Anything one dish needs bought makes the whole line a buy, not a check.
-      line.staple = line.staple && ing.staple;
-      addDish(line, r.name);
+      addUse(line, ing, r.name);
     }
   }
 
+  // Vague amounts go last so every measured line they could fold into exists.
   for (const { ing, dish } of vague) {
-    const measured = [...lines.values()].find((l) => l.item === ing.item && l.qty !== null);
-    if (measured) {
-      measured.plusALittle = true;
-      measured.staple = measured.staple && ing.staple;
-      addDish(measured, dish);
-      continue;
-    }
-    const key = lineKey(ing.item, null);
-    let line = lines.get(key);
-    if (!line) {
-      line = { key, item: ing.item, qty: null, unit: null, aisle: ing.aisle, staple: true, plusALittle: false, dishes: [] };
-      lines.set(key, line);
-    }
-    line.staple = line.staple && ing.staple;
-    addDish(line, dish);
+    const line = lineFor(ing, null);
+    if (line.qty !== null) line.plusALittle = true;
+    addUse(line, ing, dish);
   }
 
-  const sorted = [...lines.values()].sort((a, b) => a.item.localeCompare(b.item) || a.key.localeCompare(b.key));
+  const sorted = [...lines.values()].sort((a, b) => a.item.localeCompare(b.item));
   const groups: ShoppingGroup[] = AISLE_ORDER.map((aisle) => ({
     id: aisle,
     label: AISLE_LABELS[aisle],

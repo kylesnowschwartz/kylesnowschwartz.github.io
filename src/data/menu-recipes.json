@@ -208,8 +208,8 @@
       {
         "text": "2 tbsp pumpkin seeds",
         "item": "pumpkin seeds",
-        "qty": 2,
-        "unit": "tbsp",
+        "qty": 18,
+        "unit": "g",
         "aisle": "nuts-seeds",
         "staple": false
       },
@@ -923,8 +923,8 @@
       {
         "text": "2 tbsp pumpkin seeds",
         "item": "pumpkin seeds",
-        "qty": 2,
-        "unit": "tbsp",
+        "qty": 18,
+        "unit": "g",
         "aisle": "nuts-seeds",
         "staple": false
       },
@@ -2411,8 +2411,8 @@
       {
         "text": "Few slices cucumber, cut into sticks (~40g)",
         "item": "cucumber",
-        "qty": 40,
-        "unit": "g",
+        "qty": 0.15,
+        "unit": "whole",
         "aisle": "veg",
         "staple": false
       },
@@ -2463,8 +2463,8 @@
       {
         "text": "1 medium courgette (~150g), peeled into ribbons",
         "item": "courgettes",
-        "qty": 150,
-        "unit": "g",
+        "qty": 1,
+        "unit": "whole",
         "aisle": "veg",
         "staple": false
       },
