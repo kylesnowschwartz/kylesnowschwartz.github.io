@@ -10,6 +10,7 @@ import {
   untickLine,
   currentTicks,
   weekNetCarbs,
+  plannedRecipes,
   fillDay,
   emptyMainSlots,
   loadState,
@@ -196,6 +197,18 @@ describe('shopping ticks', () => {
   it('unticks a single line', () => {
     const t = ticked(omeletteOnly, 'eggs', 'whole');
     expect(untickLine(t, lineKey('eggs', 'whole'))).toEqual({});
+  });
+});
+
+describe('planned recipes', () => {
+  it('lists each planned recipe once, in recipe order', () => {
+    const p = plan([0, 'dessert', 'choc-mousse'], [0, 'breakfast', 'omelette'], [3, 'breakfast', 'omelette']);
+    expect(plannedRecipes(p, RECIPES).map((r) => r.id)).toEqual(['omelette', 'choc-mousse']);
+  });
+
+  it('is empty for an empty plan or ids missing from the recipe data', () => {
+    expect(plannedRecipes(emptyPlan(), RECIPES)).toEqual([]);
+    expect(plannedRecipes(plan([0, 'dinner', 'gone']), RECIPES)).toEqual([]);
   });
 });
 

@@ -90,6 +90,12 @@ export function usageCounts(plan: Plan): Map<string, number> {
   return counts;
 }
 
+/** The recipes on this week's plan, each once, in recipe-data order. */
+export function plannedRecipes(plan: Plan, recipes: Recipe[]): Recipe[] {
+  const counts = usageCounts(plan);
+  return recipes.filter((r) => counts.has(r.id));
+}
+
 export function dayNetCarbs(day: DayPlan, recipes: Map<string, Recipe>): number {
   let total = 0;
   for (const meal of SLOTS) {

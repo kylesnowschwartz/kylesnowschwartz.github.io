@@ -77,6 +77,15 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
           <h2>Recipes</h2>
           <p class="soft">Open one to cook from it. The screen stays on while it's open.</p>
         </div>
+        <label class="scope">
+          <span class="scope-label">Show</span>
+          <span class="select">
+            <select id="recipe-scope" autocomplete="off">
+              <option value="week" selected>This week</option>
+              <option value="all">All recipes</option>
+            </select>
+          </span>
+        </label>
         <div id="recipe-list"></div>
       </section>
     </main>
@@ -144,6 +153,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       fillDay,
       lineAmount,
       loadState,
+      plannedRecipes,
       saveState,
       setSlot,
       shoppingList,
@@ -581,6 +591,9 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     // ------------------------------------------------------------ recipes
 
     const recipeListEl = $('recipe-list');
+    const recipeScope = $<HTMLSelectElement>('recipe-scope');
+    // Each visit opens on this week's dishes; the choice is not saved.
+    recipeScope.value = 'week';
 
     function renderRecipes() {
       const usage = usageCounts(state.plan);
@@ -588,8 +601,20 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
         recipeListEl.replaceChildren(el('p', { class: 'card empty' }, 'No recipes yet.'));
         return;
       }
+      const shown = recipeScope.value === 'all' ? recipes : plannedRecipes(state.plan, recipes);
+      if (shown.length === 0) {
+        recipeListEl.replaceChildren(
+          el(
+            'div',
+            { class: 'card empty' },
+            el('p', {}, 'Nothing is planned this week yet.'),
+            el('button', { type: 'button', class: 'btn primary', 'data-show-all': true }, 'See all recipes'),
+          ),
+        );
+        return;
+      }
       recipeListEl.replaceChildren(
-        ...SLOTS.filter((m) => recipes.some((r) => r.meal === m)).map((meal) =>
+        ...SLOTS.filter((m) => shown.some((r) => r.meal === m)).map((meal) =>
           el(
             'section',
             { class: 'meal-group', 'aria-labelledby': `meal-${meal}` },
@@ -597,7 +622,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
             el(
               'ul',
               { class: 'recipe-cards' },
-              ...recipes
+              ...shown
                 .filter((r) => r.meal === meal)
                 .map((r) =>
                   el(
@@ -619,9 +644,16 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     }
 
     recipeListEl.addEventListener('click', (e) => {
-      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-open]');
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
       if (btn?.dataset.open) openRecipe(btn.dataset.open);
+      else if (btn?.hasAttribute('data-show-all')) {
+        recipeScope.value = 'all';
+        renderRecipes();
+        // The button is gone with the empty state, so focus goes to the choice it made.
+        recipeScope.focus();
+      }
     });
+    recipeScope.addEventListener('change', renderRecipes);
 
     // ------------------------------------------------------------ cooking view
 
@@ -1223,6 +1255,47 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
     }
 
     /* Recipes */
+    .scope {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .scope-label {
+      font-weight: 600;
+      color: var(--soft);
+    }
+    .select {
+      position: relative;
+      flex: 1 1 auto;
+      max-width: 320px;
+    }
+    /* Drawn like a quiet button; the native list still opens on tap. */
+    .select select {
+      appearance: none;
+      width: 100%;
+      min-height: var(--tap);
+      padding: 10px 44px 10px 16px;
+      border: 2px solid var(--line);
+      border-radius: var(--btn-radius);
+      background: var(--card);
+      color: var(--teal-dark);
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .select select:hover {
+      border-color: var(--teal);
+    }
+    .select::after {
+      content: '▾';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--teal-dark);
+      pointer-events: none;
+    }
     .meal-group {
       margin-bottom: 24px;
     }
@@ -1416,6 +1489,7 @@ const recipesJson = JSON.stringify(recipes).replace(/</g, '\\u003c');
       .slot-dish,
       .pick,
       .recipe-card,
+      .select select,
       .shop-row {
         transition: background-color 0.15s, border-color 0.15s, opacity 0.2s;
       }
