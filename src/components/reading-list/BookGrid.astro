@@ -3,8 +3,11 @@
  * BookGrid — every book rendered as a card at build time.
  *
  * Cards carry data-idx so the client filter script can show/hide them against
- * the model. Tag chips carry data-group/data-val so clicking one toggles that
+ * the model. Tag buttons carry data-group/data-val so clicking one toggles that
  * filter. Nothing here is client-rendered: the full library is in the HTML.
+ * Each card stands on its genre's ornament band (see ornaments.ts), read from
+ * the --orn custom property set on the card: the band is the card's ground
+ * line, so a card opens on its title and the bands of a row align as a shelf.
  */
 import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
 ---
@@ -13,20 +16,23 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
   <div class="results-bar">
     <div class="view-toggle" role="group" aria-label="View">
       <button type="button" class="viewbtn on" data-view="cards" aria-pressed="true" aria-label="Card view">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" />
-          <rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="7" height="7" /><rect x="13.5" y="3.5" width="7" height="7" />
+          <rect x="3.5" y="13.5" width="7" height="7" /><rect x="13.5" y="13.5" width="7" height="7" />
         </svg>
       </button>
       <button type="button" class="viewbtn" data-view="list" aria-pressed="false" aria-label="List view">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" />
-          <line x1="3.5" y1="6" x2="3.51" y2="6" /><line x1="3.5" y1="12" x2="3.51" y2="12" /><line x1="3.5" y1="18" x2="3.51" y2="18" />
+          <rect x="3" y="5" width="2" height="2" fill="currentColor" stroke="none" />
+          <rect x="3" y="11" width="2" height="2" fill="currentColor" stroke="none" />
+          <rect x="3" y="17" width="2" height="2" fill="currentColor" stroke="none" />
         </svg>
       </button>
     </div>
     <div class="sortwrap">
       <label class="sortlabel" for="rl-sort">Sort</label>
+      <span class="selectwrap">
       <select class="sort" id="rl-sort">
         <option value="curated">Curated</option>
         <option value="title">Title · A–Z</option>
@@ -34,17 +40,18 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
         <option value="year-desc">Year · newest first</option>
         <option value="year-asc">Year · oldest first</option>
       </select>
+      </span>
     </div>
   </div>
   <div class="grid" id="rl-grid">
     {BOOKS.map((bk, i) => (
-      <article class="card" data-idx={i} data-g={bk.g} style={`--c: var(--rl-${bk.g.toLowerCase()})`}>
+      <article class="card" data-idx={i} data-g={bk.g} style={`--orn: var(--orn-${bk.g.toLowerCase()})`}>
         <h3>{bk.t}</h3>
         <div class="author">{bk.a}</div>
         {bk.year && <span class="card-year">{bk.year}</span>}
         <p class="why">{bk.why}</p>
         <div class="tags">
-          <button type="button" aria-pressed="false" class="tag genre" data-group="g" data-val={bk.g} style={`--c: var(--rl-${bk.g.toLowerCase()})`}>
+          <button type="button" aria-pressed="false" class="tag genre" data-group="g" data-val={bk.g}>
             {GENRES[bk.g as GenreKey]}
           </button>
           {bk.s.map((x) => (
@@ -66,132 +73,217 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
     align-items: center;
     justify-content: space-between;
     gap: var(--s1);
-    margin-bottom: var(--s2);
+    margin-bottom: var(--s3);
   }
-  .sortwrap { display: flex; align-items: baseline; gap: var(--s1); }
+  .sortwrap { display: flex; align-items: center; gap: var(--s1); }
 
-  .view-toggle { display: inline-flex; gap: 4px; }
+  /* --- quiet control language: no frames at rest; ink, not clay, marks the
+     current choice so the ornament bands keep the accent to themselves --- */
+  .viewbtn,
+  .sort,
+  .tag {
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    color: var(--rl-ink-2);
+    cursor: pointer;
+    transition:
+      color var(--rl-dur) var(--rl-ease),
+      border-color var(--rl-dur) var(--rl-ease),
+      background-color var(--rl-dur) var(--rl-ease);
+  }
+
+  .view-toggle { display: inline-flex; gap: 2px; }
   .viewbtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 28px;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    border-radius: 8px;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition: border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    width: 32px;
+    height: 32px;
+    opacity: 0.7;
   }
-  .viewbtn:hover { border-color: var(--color-text-muted); color: var(--color-text); }
-  .viewbtn.on { border-color: var(--color-accent); color: var(--color-accent); }
-  .viewbtn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
-  .viewbtn svg { width: 15px; height: 15px; }
+  .viewbtn:hover { color: var(--rl-ink); opacity: 1; }
+  .viewbtn:active { color: var(--rl-clay-2); }
+  .viewbtn.on { color: var(--rl-ink); background: var(--rl-paper-2); opacity: 1; }
+  .viewbtn svg { width: 16px; height: 16px; }
 
   .sortlabel {
-    font-family: var(--font-mono);
+    font-family: var(--rl-display);
     font-size: 0.7rem;
-    letter-spacing: 0.06em;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--rl-ink-2);
+  }
+  .selectwrap { position: relative; display: inline-block; }
+  /* hand-drawn caret: two hairlines meeting at a point */
+  .selectwrap::after {
+    content: '';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid var(--rl-ink-2);
+    border-bottom: 1px solid var(--rl-ink-2);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
   }
   .sort {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--color-text);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    padding: 5px 11px;
-    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: var(--rl-body);
+    font-size: 0.98rem;
+    line-height: 1.2;
+    color: var(--rl-ink);
+    background: var(--rl-paper);
+    height: 32px;
+    padding: 0 22px 0 2px;
+    border-bottom: 1px solid var(--rl-rule);
+    white-space: nowrap;
   }
-  .sort:hover { border-color: var(--color-text-muted); }
-  .sort:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+  .sort option { background: var(--rl-paper-2); color: var(--rl-ink); }
+  .sort:hover { border-bottom-color: var(--rl-ink-2); }
+  .sort:active { border-bottom-color: var(--rl-clay-2); }
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
-    gap: var(--s2);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 255px), 1fr));
+    gap: var(--s3);
   }
+  /* A card is a tone, not a frame: the ornament band is its only line. */
   .card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-left: 4px solid var(--c);
-    border-radius: 12px;
-    padding: var(--s2) var(--s2) var(--s2);
+    min-width: 0;
+    background: var(--rl-paper-2);
+    border-radius: 0;
+    padding: var(--s3) var(--s3) 0;
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: var(--s1);
+  }
+  /* the reserved band: genre ornament in clay under the figure. It is the
+     card's bottom edge and runs wall to wall, so every card in a row stands
+     on one ground line. */
+  .card::before {
+    content: '';
+    display: block;
+    flex: none;
+    order: 1;
+    height: 14px;
+    margin: var(--s2) calc(-1 * var(--s3)) 0;
+    background-color: var(--rl-clay);
+    -webkit-mask: var(--orn) round no-repeat left center / auto 14px;
+    mask: var(--orn) round no-repeat left center / auto 14px;
   }
   .card[hidden] { display: none; }
   .card h3 {
-    font-family: var(--font-sans);
+    font-family: var(--rl-body);
     font-weight: 600;
-    font-size: 1.05rem;
-    line-height: 1.25;
+    font-size: 1.22rem;
+    line-height: 1.2;
     margin: 0;
-    letter-spacing: -0.01em;
+    color: var(--rl-ink);
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
-  .card .author { font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-text-muted); }
-  .card .why { font-size: 0.84rem; color: var(--color-text-muted); line-height: 1.5; margin: 0; }
+  .card .author {
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--rl-ink-2);
+    margin-top: -4px;
+    overflow-wrap: anywhere;
+  }
+  .card .why {
+    font-size: 1rem;
+    color: var(--rl-ink);
+    line-height: 1.55;
+    margin: var(--s0) 0 var(--s1);
+  }
   /* Year is carried in the DOM for every book but only surfaces in list view. */
   .card-year { display: none; }
 
-  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+  /* Tags read as a catalogue line of small text, dot-separated; each is still
+     a button. The genre tag needs no accent: the band below already names it. */
+  /* Every tag carries a leading dot 11px to its left; the row is shifted left
+     by one gap and clipped 12px in, so the dot of whichever tag starts a line
+     is cut off and only dots between tags show. */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin-top: auto;
+    margin-left: -18px;
+    padding: var(--s0) 0 4px;
+    clip-path: inset(0 0 0 12px);
+  }
   .tag {
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    cursor: pointer;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg);
-    color: var(--color-text-muted);
-    border-radius: 999px;
-    padding: 2px 8px;
-    transition: border-color var(--dur-micro) var(--ease-out);
+    position: relative;
+    margin-left: 18px;
+    font-family: var(--rl-body);
+    font-size: 0.86rem;
+    line-height: 1.25;
+    padding: 2px 0;
+    text-align: left;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
   }
-  .tag:hover { border-color: var(--color-text-muted); }
-  .tag.genre { color: #fff; border-color: transparent; background: var(--c); }
-  .tag.match {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 1px;
-    border-color: var(--color-accent);
-    font-weight: 500;
+  .tag::before {
+    content: '\00B7';
+    /* empty alt text keeps the dot out of the button's accessible name */
+    content: '\00B7' / '';
+    position: absolute;
+    left: -11px;
+    color: var(--rl-ink-2);
+    opacity: 0.5;
+    pointer-events: none;
   }
+  .tag:hover { color: var(--rl-ink); text-decoration-color: var(--rl-ink-2); }
+  .tag:active { color: var(--rl-clay-2); }
+  .tag.match { color: var(--rl-clay-2); text-decoration-color: var(--rl-clay-2); }
+  .tag.match:hover { color: var(--rl-ink); }
 
   /* === CONDENSED LIST VIEW ===
      Same .card nodes, restyled into compact rows — so the filter/sort script
-     (which targets .card by data-idx) keeps working with no changes. Rows
-     share a single bordered container; the why-blurb and tag chips collapse,
-     leaving title · author · year, with the genre still encoded by the left bar. */
+     (which targets .card by data-idx) keeps working with no changes. Rows are
+     divided by one hairline each, with no outer frame; the why-blurb and tags
+     collapse, leaving ornament · title · author · year, with a short length of
+     the genre's ornament band leading each row. */
   .grid.list {
     display: flex;
     flex-direction: column;
     gap: 0;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    overflow: hidden;
   }
   .grid.list .card {
     flex-direction: row;
     align-items: baseline;
     gap: var(--s2);
-    border: none;
-    border-left: 4px solid var(--c);
-    border-bottom: 1px solid var(--color-border);
-    border-radius: 0;
-    padding: 8px var(--s2);
+    background: transparent;
+    border-bottom: 1px solid var(--rl-paper-2);
+    padding: 9px 0;
   }
   .grid.list .card:last-child { border-bottom: none; }
-  .grid.list .card h3 { font-size: 0.92rem; }
+  .grid.list .card::before {
+    order: 0;
+    width: 26px;
+    margin: 0;
+    align-self: center;
+  }
+  .grid.list .card h3 { font-size: 1.05rem; }
+  .grid.list .card .author { margin-top: 0; font-size: 0.95rem; }
   .grid.list .card .why,
   .grid.list .card .tags { display: none; }
   .grid.list .card-year {
     display: inline;
     margin-left: auto;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-text-muted);
+    font-family: var(--rl-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--rl-ink-2);
+    white-space: nowrap;
   }
 
   @media (max-width: 520px) {
@@ -200,9 +292,15 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
 
   .empty {
     text-align: center;
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.84rem;
+    color: var(--rl-ink-2);
+    font-style: italic;
+    font-size: 1.05rem;
     padding: var(--s6) 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .viewbtn,
+    .sort,
+    .tag { transition: none; }
   }
 </style>

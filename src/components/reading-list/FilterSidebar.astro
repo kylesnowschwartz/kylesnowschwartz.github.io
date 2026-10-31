@@ -4,6 +4,8 @@
  *
  * Renders static markup at build time (every pill, with data-group/data-val
  * hooks); the page's client script attaches listeners and toggles state.
+ * Genre pills lead with a short length of that genre's ornament band, the
+ * same pattern that runs along the foot of its cards.
  */
 import { GROUPS, GENRES, facetCounts, facetValues, type GenreKey } from '../../data/reading-list';
 
@@ -33,7 +35,7 @@ const counts = {
           {facetValues(grp).map((val) => {
             const isGenre = grp.key === 'g';
             const label = isGenre ? GENRES[val as GenreKey] : val;
-            const cvar = isGenre ? `--c: var(--rl-${val.toLowerCase()})` : '';
+            const cvar = isGenre ? `--orn: var(--orn-${val.toLowerCase()})` : '';
             return (
               <button
                 type="button"
@@ -43,7 +45,7 @@ const counts = {
                 data-val={val}
                 style={cvar}
               >
-                {isGenre && <span class="swatch" />}
+                {isGenre && <span class="swatch" aria-hidden="true" />}
                 {label}
                 <span class="n">{counts[grp.key].get(val)}</span>
               </button>
@@ -56,6 +58,7 @@ const counts = {
 </aside>
 
 <style>
+  /* No rules or frames in the index: groups are set apart by space alone. */
   .sidebar {
     position: sticky;
     top: var(--s2);
@@ -63,143 +66,195 @@ const counts = {
     max-height: calc(100dvh - var(--s3));
     overflow-y: auto;
     padding-right: var(--s1);
-    border-right: 1px solid var(--color-border);
+    /* The scroll box clips on both axes; this 6px gutter holds the pill frames
+       that hang left of the text edge (.pills margin-left: -6px). */
+    padding-left: 6px;
+    margin-left: -6px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rl-rule) transparent;
   }
   .sidebar::-webkit-scrollbar { width: 8px; }
-  .sidebar::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 999px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--rl-rule); border-radius: 0; }
 
   .toolbar {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--s1);
-    padding-bottom: var(--s2);
-    margin-bottom: var(--s2);
-    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--s4);
   }
-  .count { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-muted); }
-  .count :global(b) { color: var(--color-text); font-size: 1rem; }
+  .count {
+    font-family: var(--rl-display);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rl-ink-2);
+  }
+  .count :global(b) {
+    font-weight: 500;
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+    color: var(--rl-ink);
+    margin-right: 2px;
+  }
+
+  /* --- shared control language: square; a frame only while hovered; clay
+     fill only when selected --- */
+  .seg button,
+  .btn-clear,
+  .pill {
+    border-radius: 0;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      color var(--rl-dur) var(--rl-ease),
+      border-color var(--rl-dur) var(--rl-ease),
+      background-color var(--rl-dur) var(--rl-ease);
+  }
 
   .seg {
     display: flex;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    overflow: hidden;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-family: var(--rl-display);
+    font-size: 0.72rem;
+    font-weight: 500;
+    border: 1px solid var(--rl-rule);
   }
   /* the [hidden] attribute must beat `display: flex` above, or the toggle
      never actually hides when ANY/ALL agree */
   .seg[hidden],
   .modehint[hidden] { display: none; }
   .seg button {
-    flex: 1;
-    border: 0;
-    background: var(--color-surface);
-    color: var(--color-text-muted);
+    font: inherit;
+    color: var(--rl-ink-2);
     padding: var(--s0) var(--s2);
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.12em;
+    border: 0;
   }
-  .seg button.on { background: var(--color-text); color: var(--color-bg); }
+  .seg button:hover { color: var(--rl-ink); }
+  .seg button:active { color: var(--rl-clay-2); }
+  .seg button.on { background: var(--rl-clay); color: var(--rl-paper); }
+  .seg button.on:hover { background: var(--rl-clay-2); }
   .mc {
     display: inline-block;
-    margin-left: 5px;
-    font-size: 0.65rem;
-    background: var(--color-bg);
-    color: var(--color-text-muted);
-    border-radius: 999px;
-    padding: 0 6px;
+    margin-left: 6px;
+    padding-left: 6px;
+    border-left: 1px solid currentColor;
     min-width: 16px;
+    letter-spacing: 0.04em;
   }
-  .seg button.on .mc { background: rgba(255, 255, 255, 0.22); color: var(--color-bg); }
 
   .modehint {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--rl-ink-2);
     min-height: 14px;
   }
-  .modehint.active { color: var(--color-accent); }
 
   .btn-clear {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-accent);
-    background: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    padding: var(--s0) var(--s2);
-    cursor: pointer;
-    display: none;
+    font-family: var(--rl-display);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    color: var(--rl-clay-2);
+    padding: var(--s0) 0;
+    display: none;
   }
   .btn-clear.on { display: block; }
-  .btn-clear:hover { border-color: var(--color-accent); }
+  .btn-clear:hover { color: var(--rl-ink); }
+  .btn-clear:active { color: var(--rl-clay); }
 
-  .fgroup { margin-bottom: var(--s3); }
+  .fgroup { padding-bottom: var(--s4); }
   .fglabel {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
+    font-family: var(--rl-display);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--rl-ink);
     margin-bottom: var(--s1);
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
-    gap: var(--s1);
+    column-gap: var(--s1);
   }
-  .fglabel .tip { text-transform: none; letter-spacing: 0; color: var(--color-text-muted); font-size: 0.62rem; }
+  .fglabel .tip {
+    font-family: var(--rl-body);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.92rem;
+    color: var(--rl-ink-2);
+  }
 
-  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  /* Pills sit as a run of words; the 1px transparent border keeps the hit
+     area and lets hover draw a frame without shifting the line. */
+  .pills { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-left: -6px; }
   .pill {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    cursor: pointer;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
-    border-radius: 999px;
-    padding: 4px 10px;
+    font-family: var(--rl-body);
+    font-size: 0.95rem;
+    line-height: 1.25;
+    color: var(--rl-ink);
+    padding: 3px 6px 4px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: border-color var(--dur-micro) var(--ease-out), background var(--dur-micro) var(--ease-out);
+    max-width: 100%;
     user-select: none;
   }
-  /* [hidden] must beat `display: inline-flex` above (and `display: block`
-     below), or a narrowed-out pill/group still paints — same lesson as .seg */
+  .pill.generic { color: var(--rl-ink-2); }
+  /* [hidden] must beat `display: inline-flex` above, or a narrowed-out
+     pill/group still paints — same lesson as .seg */
   .pill[hidden],
   .fgroup[hidden] { display: none; }
-  .pill:hover { border-color: var(--color-text-muted); }
+  .pill:hover { border-color: var(--rl-rule); color: var(--rl-ink); }
+  .pill:active { background: var(--rl-paper-2); }
   .pill .n {
-    font-size: 0.6rem;
-    color: var(--color-text-muted);
-    background: var(--color-bg);
-    border-radius: 999px;
-    padding: 1px 6px;
-    min-width: 18px;
-    text-align: center;
+    font-family: var(--rl-display);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--rl-ink-2);
+    opacity: 0.75;
+    min-width: 14px;
+    text-align: left;
   }
-  .pill .swatch { width: 8px; height: 8px; border-radius: 999px; background: var(--c); }
+  /* a short length of the genre's ornament band: the legend for the cards */
+  .pill .swatch {
+    flex: none;
+    width: 26px;
+    height: 14px;
+    background-color: var(--rl-clay);
+    -webkit-mask: var(--orn) round no-repeat left center / auto 14px;
+    mask: var(--orn) round no-repeat left center / auto 14px;
+  }
 
-  /* active genre pill: filled with its categorical hue */
-  .pill.genre.on { background: var(--c); border-color: transparent; color: #fff; }
-  .pill.genre.on .swatch { background: rgba(255, 255, 255, 0.85); }
-  .pill.genre.on .n { background: rgba(255, 255, 255, 0.22); color: #fff; }
-  /* active sub/blend pill: near-black fill keeps neon red reserved for emphasis */
-  .pill.generic.on { background: var(--color-text); border-color: transparent; color: var(--color-bg); }
-  .pill.generic.on .n { background: rgba(255, 255, 255, 0.18); color: var(--color-bg); }
+  /* selected: a terracotta figure reserved out of the black */
+  .pill.on { background: var(--rl-clay); border-color: var(--rl-clay); color: var(--rl-paper); }
+  .pill.on:hover { background: var(--rl-clay-2); border-color: var(--rl-clay-2); }
+  .pill.on .n { color: var(--rl-paper); opacity: 1; }
+  .pill.on .swatch { background-color: var(--rl-paper); }
 
   @media (max-width: 900px) {
     .sidebar {
       position: static;
       max-height: none;
       overflow: visible;
-      border-right: 0;
-      border-bottom: 1px solid var(--color-border);
-      padding-bottom: var(--s3);
+      padding-right: 0;
+      padding-left: 0;
+      margin-left: 0;
     }
+    .toolbar { margin-bottom: var(--s3); }
+    .fgroup { padding-bottom: var(--s3); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seg button,
+    .btn-clear,
+    .pill { transition: none; }
   }
 </style>

@@ -2,21 +2,27 @@
 /**
  * Reading List — "The House" (a Piranesi callback): everything Kyle's read.
  *
- * Standalone route (like marmiteroids / bumper-lanes): own <head> + fonts, but
- * imports global.css so it inherits the site's tokens, texture, and type. Three
- * layers: data (src/data/reading-list.ts), model (src/lib/reading-list.ts),
- * view (the two components below).
+ * Standalone route (like marmiteroids / bumper-lanes): own <head> + fonts. It
+ * imports global.css for the reset, spacing scale and easing tokens, then
+ * dresses itself as a museum catalogue of red-figure pottery: terracotta and
+ * bone on black glaze, Cinzel capitals over EB Garamond, square hairline
+ * controls, a duotone Piranesi etching and an engraved wave band behind the
+ * header, and a genre ornament band at the top of every card. Three layers:
+ * data (src/data/reading-list.ts), model (src/lib/reading-list.ts), view (the
+ * components below).
  */
 import '../../styles/global.css';
 import { BOOKS } from '../../data/reading-list';
 import FilterSidebar from '../../components/reading-list/FilterSidebar.astro';
 import BookGrid from '../../components/reading-list/BookGrid.astro';
+import WaveBand from '../../components/reading-list/WaveBand.astro';
+import { ornamentVars } from '../../components/reading-list/ornaments';
 
 const total = BOOKS.length;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="rl-root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,22 +31,28 @@ const total = BOOKS.length;
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
     rel="stylesheet"
   />
 </head>
 
-<body>
-  <div class="rl-page">
+<body class="rl-body">
+  <div class="rl-page" style={ornamentVars}>
     <header class="rl-head">
-      <a class="back" href="/">&larr; kyle snow schwartz</a>
-      <div class="eyebrow">The House · {total} books read</div>
+      <img
+        class="plate"
+        src="/reading-list/carceri-plate.webp"
+        alt=""
+        aria-hidden="true"
+        width="900"
+        height="828"
+        decoding="async"
+        fetchpriority="low"
+      />
       <h1>The House</h1>
-      <p class="sub">
-        Everything I've read so that I can remember — don't judge me. There's some real books in there too.
-      </p>
-      <div class="hint">Pills in one group widen the list; pills across groups narrow it. Click a card's tag to toggle it.</div>
     </header>
+
+    <div class="tide"><WaveBand /></div>
 
     <div class="layout">
       <FilterSidebar />
@@ -48,7 +60,8 @@ const total = BOOKS.length;
     </div>
 
     <footer class="rl-foot">
-      editorial classification — one reader's map, not gospel. argue with it.
+      <div class="meander" aria-hidden="true"></div>
+      <p>editorial classification — one reader's map, not gospel. argue with it.</p>
     </footer>
   </div>
 
@@ -241,73 +254,163 @@ const total = BOOKS.length;
   </script>
 
   <style>
-    /* Categorical genre palette — 5 hues are required to encode 5 genres
-       (a documented exception to the 3-5 rule). Anchored by the site's neon
-       red and kept cream-friendly; vars inherit into the child components. */
+    /* Hallmark · genre: editorial · macrostructure: Catalogue · theme: custom (vibe: "red-figure vase, Piranesi etching, museum catalogue") · paper oklch(17% 0.012 45) · accent oklch(64% 0.14 45) terracotta · Cinzel + EB Garamond · enrichment: Tier B (duotone public-domain etching + hand-built SVG ornament) · nav: N9 · footer: Ft2 · merge: A card bands + B sidebar/cards */
+
+    /* Red-figure palette: terracotta figures and bone slip on black glaze.
+       Declared on the root of this route only, so body, page and both child
+       components read the same names. */
+    :global(html.rl-root) {
+      --rl-paper: oklch(17% 0.012 45);
+      --rl-paper-2: oklch(20.5% 0.014 45);
+      --rl-ink: oklch(90% 0.022 75);
+      --rl-ink-2: oklch(72% 0.03 60);
+      --rl-clay: oklch(64% 0.14 45);
+      --rl-clay-2: oklch(74% 0.12 55);
+      --rl-rule: oklch(36% 0.035 45);
+      --rl-display: 'Cinzel', 'Trajan Pro', serif;
+      --rl-body: 'EB Garamond', 'Garamond', Georgia, serif;
+      --rl-ease: var(--ease-out);
+      --rl-dur: 140ms;
+      background: var(--rl-paper);
+      color-scheme: dark;
+      overflow-x: clip;
+    }
+    :global(body.rl-body) {
+      background: var(--rl-paper);
+      color: var(--rl-ink);
+      font-family: var(--rl-body);
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      overflow-x: clip;
+    }
+    /* The site's paper-grain and diagonal-weave layers are tuned for a cream
+       ground and only muddy the glaze, so this route switches them off. */
+    :global(body.rl-body)::before,
+    :global(body.rl-body)::after {
+      content: none;
+    }
+    :global(html.rl-root ::selection) {
+      background: var(--rl-clay);
+      color: var(--rl-paper);
+    }
+    :global(html.rl-root :focus-visible) {
+      outline: 2px solid var(--rl-clay-2);
+      outline-offset: 2px;
+      transition: none;
+    }
+
     .rl-page {
-      --rl-sff: #ff204e;
-      --rl-thriller: #1f6fa8;
-      --rl-horror: #8a2233;
-      --rl-literary: #5f7a3c;
-      --rl-nonfiction: #b07d2b;
       max-width: var(--container-max);
       margin: 0 auto;
-      padding: var(--s5) var(--s3) var(--s6);
+      padding: var(--s4) var(--s3) var(--s5);
       position: relative;
       z-index: 1;
     }
 
-    .rl-head { margin-bottom: var(--s4); }
-    .back {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--color-text-muted);
-      text-decoration: none;
-      letter-spacing: 0.04em;
+    /* --- header: the title over one decorative plate; nothing in it is
+       interactive --- */
+    .rl-head {
+      position: relative;
+      min-height: 15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: var(--s3);
+      isolation: isolate;
     }
-    .back:hover { color: var(--color-accent); }
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-top: var(--s3);
+    .plate {
+      position: absolute;
+      top: calc(-1 * var(--s4));
+      /* runs to the viewport's right edge; html/body clip the overrun */
+      right: calc((100% - 100vw) / 2);
+      width: min(62%, 820px);
+      height: calc(100% + var(--s4));
+      object-fit: cover;
+      object-position: 60% 30%;
+      opacity: 0.3;
+      pointer-events: none;
+      user-select: none;
+      z-index: -1;
+      -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, black 62%),
+        linear-gradient(to top, transparent 0%, black 45%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to right, transparent 0%, black 62%),
+        linear-gradient(to top, transparent 0%, black 45%);
+      mask-composite: intersect;
     }
     .rl-head h1 {
-      font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: clamp(2rem, 5vw, 3rem);
-      letter-spacing: -0.02em;
-      margin: var(--s0) 0 var(--s1);
+      position: relative;
+      font-family: var(--rl-display);
+      font-weight: 500;
+      font-style: normal;
+      font-size: clamp(2.6rem, 8vw, 5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--rl-clay);
+      margin: 0;
     }
-    .rl-head .sub { color: var(--color-text-muted); max-width: 60ch; margin: 0; }
-    .hint {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--color-text-muted);
-      margin-top: var(--s2);
-    }
-    .hint::before { content: '›'; color: var(--color-accent); margin-right: 6px; }
 
+    .tide {
+      margin: 0 calc(-1 * var(--s3)) var(--s4);
+      pointer-events: none;
+    }
+
+    /* No column rule: the gutter alone separates the index from the plates. */
     .layout {
       display: grid;
-      grid-template-columns: 290px minmax(0, 1fr);
-      gap: var(--s4);
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: var(--s5);
       align-items: start;
     }
 
-    .rl-foot {
-      margin-top: var(--s5);
-      padding-top: var(--s3);
-      border-top: 1px solid var(--color-border);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--color-text-muted);
+    /* --- footer: meander rule over a quiet colophon line --- */
+    .rl-foot { margin-top: var(--s5); }
+    .meander {
+      height: 14px;
+      background-color: var(--rl-clay);
+      -webkit-mask: var(--orn-meander) round no-repeat left center / auto 14px;
+      mask: var(--orn-meander) round no-repeat left center / auto 14px;
+      opacity: 0.8;
+    }
+    .rl-foot p {
+      margin: var(--s2) 0 0;
+      font-family: var(--rl-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rl-ink-2);
+      text-align: left;
     }
 
     @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; gap: var(--s3); }
+      .layout { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
+    }
+
+    /* Narrow screens: the plate becomes a short banner above the title, so no
+       text ever sits on the etched lines and nothing overruns the viewport. */
+    @media (max-width: 700px) {
+      .rl-page { padding: var(--s3) var(--s2) var(--s5); }
+      .rl-head { min-height: 0; }
+      .plate {
+        position: relative;
+        display: block;
+        top: auto;
+        right: auto;
+        width: calc(100% + 2 * var(--s2));
+        max-width: none;
+        height: 170px;
+        margin: var(--s1) calc(-1 * var(--s2)) calc(-1 * var(--s4));
+        opacity: 0.32;
+        -webkit-mask-image:
+          linear-gradient(to right, transparent 0%, black 40%),
+          linear-gradient(to top, transparent 0%, black 70%);
+        mask-image:
+          linear-gradient(to right, transparent 0%, black 40%),
+          linear-gradient(to top, transparent 0%, black 70%);
+      }
+      .tide { margin: 0 calc(-1 * var(--s2)) var(--s3); }
     }
   </style>
 </body>
