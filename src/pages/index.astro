@@ -5,7 +5,6 @@ import Header from '../components/Header.astro';
 import OnSiteShelf from '../components/OnSiteShelf.astro';
 import ProjectsPanel from '../components/ProjectsPanel.astro';
 import AboutPanel from '../components/AboutPanel.astro';
-import SkillsSection from '../components/SkillsSection.astro';
 import Footer from '../components/Footer.astro';
 
 // External code (GitHub) — the full-width marquee band. Reading order =
@@ -36,38 +35,6 @@ const onSite = [
   { name: 'cv', href: '/cv/', kind: 'paper' as const },
   { name: 'reading-list', href: '/reading-list/', kind: 'spines' as const, desc: 'filterable map of books read' },
   { name: 'worst-commish-ever', href: '/worst-commish-ever/', kind: 'trophy' as const, desc: '25 years of fantasy-football crimes' },
-];
-
-// Every pill opens the readout overlay, so each one must have a real
-// story or opinion behind it — no tool roll calls, no résumé filler.
-const skills = [
-  {
-    title: 'Languages & Frameworks & Infra',
-    items: ['Language-agnostic (hand-code in Ruby)', 'Platform Polyglot', 'CLI Tooling'],
-  },
-  {
-    title: 'AI & Automation',
-    items: ['Context Engineering', 'Harness Engineering', 'Multi-Agent Orchestration', 'Agent & Tool Design', 'AI Enablement'],
-  },
-  {
-    title: 'Ways of Working',
-    items: ['Technical Leadership', 'Remote-First', 'TDD', 'DevX'],
-  },
-];
-
-const values = [
-  {
-    title: 'Communication',
-    items: ['Written Clarity', 'Direct Feedback', 'Async-First'],
-  },
-  {
-    title: 'Craft',
-    items: ['Simplicity', 'Autonomy'],
-  },
-  {
-    title: 'People',
-    items: ['Humanism', 'Mentoring', 'Learning in Public'],
-  },
 ];
 
 const socialLinks = [
@@ -138,8 +105,6 @@ const socialLinks = [
 
       <ProjectsPanel repos={repos} class="g-projects" />
 
-      <SkillsSection header="What I know" categories={skills} variant="skills" class="g-know" />
-      <SkillsSection header="What I believe" categories={values} variant="values" class="g-believe" />
     </main>
   </div>
 
@@ -249,7 +214,6 @@ const socialLinks = [
      shares alignment lines; folds land on Fibonacci ratios (≈ φ):
        line 6  → shelf : content = 5 : 8
        line 11 → what : where    = 5 : 3
-       line 9  → know : believe  = 8 : 5
      Projects runs full-width (1 / 14) as the marquee band, echoing the
      wordmark's horizontal energy.
      No negative-margin nudges. The only break is the header wordmark. */
@@ -279,8 +243,6 @@ const socialLinks = [
   .page-grid > :global(.g-what)    { grid-column: 6 / 11; grid-row: 2 / 3; }
   .page-grid > :global(.g-where)   { grid-column: 11 / 14; grid-row: 2 / 3; }
   .page-grid > :global(.g-projects) { grid-column: 1 / 14; grid-row: 3 / 4; }
-  .page-grid > :global(.g-know)    { grid-column: 1 / 9;  grid-row: 4 / 5; }
-  .page-grid > :global(.g-believe) { grid-column: 9 / 14; grid-row: 4 / 5; }
 
   /* Page-load orchestration: one staggered entrance in grid reading order
      (left→right, top→bottom), then stillness. Total stagger stays under
@@ -297,8 +259,6 @@ const socialLinks = [
   .page-grid > :global(.g-what)     { --i: 2; }
   .page-grid > :global(.g-where)    { --i: 3; }
   .page-grid > :global(.g-projects) { --i: 4; }
-  .page-grid > :global(.g-know)     { --i: 5; }
-  .page-grid > :global(.g-believe)  { --i: 6; }
 
   @keyframes grid-reveal {
     to { opacity: 1; transform: none; }
@@ -398,9 +358,7 @@ const socialLinks = [
     .page-grid > :global(.g-who),
     .page-grid > :global(.g-what),
     .page-grid > :global(.g-where),
-    .page-grid > :global(.g-projects),
-    .page-grid > :global(.g-know),
-    .page-grid > :global(.g-believe) {
+    .page-grid > :global(.g-projects) {
       grid-column: 1 / -1;
       grid-row: auto;
     }
