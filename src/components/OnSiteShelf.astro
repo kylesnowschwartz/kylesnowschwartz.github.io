@@ -1,13 +1,17 @@
 ---
 // The "shelf" of on-site destinations. Each is an object that leaks the world
-// it leads to: a spinning 3D jar (marmiteroids), fan-out book spines
-// (reading-list), and a deliberately-1996 trophy (worst-commish-ever).
-// The jar's WebGL init lives in index.astro (it needs the page's three.js
-// importmap), so this component owns markup + style only.
+// it leads to: a spinning 3D jar (marmiteroids), a dot-matrix printer feeding
+// out a CV (cv), a bookshelf with a book sliding out (reading-list), and a
+// deliberately-1996 trophy (worst-commish-ever). The jar's WebGL init lives in
+// index.astro (it needs the page's three.js importmap); the printer and
+// bookshelf are static SVG components with CSS-only hover motion.
+import PrinterFigure from './onsite/PrinterFigure.astro';
+import BookshelfFigure from './onsite/BookshelfFigure.astro';
+
 interface OnSiteItem {
   name: string;
   href: string;
-  kind: 'jar' | 'spines' | 'trophy' | 'paper';
+  kind: 'jar' | 'bookshelf' | 'trophy' | 'printer';
   desc?: string;
 }
 
@@ -25,23 +29,10 @@ const { items } = Astro.props;
       <li class:list={['onsite-item', `kind-${item.kind}`]}>
         <a href={item.href} class:list={['onsite-link', `link-${item.kind}`]}>
           {item.kind === 'jar' && (
-            <canvas id="marmite-jar" width="150" height="150"></canvas>
+            <canvas id="marmite-jar" width="180" height="180"></canvas>
           )}
-          {item.kind === 'spines' && (
-            <span class="spines" aria-hidden="true">
-              <i style="--c:#ff204e; --h:90%; --r:-18deg"></i>
-              <i style="--c:#1f6fa8; --h:70%; --r:-9deg"></i>
-              <i style="--c:#8a2233; --h:100%; --r:0deg"></i>
-              <i style="--c:#5f7a3c; --h:80%; --r:9deg"></i>
-              <i style="--c:#b07d2b; --h:92%; --r:18deg"></i>
-            </span>
-          )}
-          {item.kind === 'paper' && (
-            <span class="paper" aria-hidden="true">
-              <span class="paper-rule"></span>
-              <i></i><i></i><i></i><i style="--w:60%"></i>
-            </span>
-          )}
+          {item.kind === 'printer' && <PrinterFigure />}
+          {item.kind === 'bookshelf' && <BookshelfFigure />}
           {item.kind === 'trophy' && (
             <span class="trophy" aria-hidden="true">
               <span class="trophy-cup">🏆</span>
@@ -136,79 +127,11 @@ const { items } = Astro.props;
     border-bottom-color: var(--color-accent);
   }
 
-  /* reading-list — five book spines (genre-colored) that fan out on hover,
-     like pulling books off a shelf. Decorative; the label carries the name. */
-  .link-spines {
+  /* cv (printer) and reading-list (bookshelf) — 150px figures, centred above
+     their labels like the jar; motion lives in the figure components. */
+  .link-printer,
+  .link-bookshelf {
     text-align: center;
-  }
-
-  .spines {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 3px;
-    height: 56px;
-    margin-bottom: 0.5rem;
-  }
-
-  .spines i {
-    display: block;
-    width: 9px;
-    height: var(--h, 80%);
-    background: var(--c);
-    border: 1px solid rgba(60, 40, 20, 0.35);
-    transform-origin: bottom center;
-    transition: transform var(--dur-short) var(--ease-out);
-  }
-
-  .link-spines:hover .spines i {
-    transform: rotate(var(--r)) translateY(-3px);
-  }
-
-  /* cv — a tilted A4 sheet with the CV's green header rule and faint text
-     lines; straightens on hover, like picking the page up off the desk. */
-  .link-paper {
-    text-align: center;
-  }
-
-  .paper {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 42px;
-    height: 56px;
-    margin: 0 auto 0.5rem;
-    padding: 7px 6px;
-    background: #fdfdfc;
-    border: 1px solid rgba(60, 60, 60, 0.45);
-    transform: rotate(-4deg);
-    transition: transform var(--dur-short) var(--ease-out);
-  }
-
-  .paper-rule {
-    display: block;
-    height: 3px;
-    background: #1d6a45;
-  }
-
-  .paper i {
-    display: block;
-    width: var(--w, 100%);
-    height: 2px;
-    background: rgba(60, 60, 60, 0.35);
-  }
-
-  .link-paper:hover .paper {
-    transform: rotate(0deg) translateY(-2px);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .paper {
-      transition: none;
-    }
-    .link-paper:hover .paper {
-      transform: none;
-    }
   }
 
   /* worst-commish-ever — a deliberately 1996 GeoCities artifact: navy tiled
@@ -270,14 +193,8 @@ const { items } = Astro.props;
     50% { opacity: 0; }
   }
 
-  /* Respect reduced-motion: hold the spines still (no fan), stop the blink. */
+  /* Respect reduced-motion: stop the blink. */
   @media (prefers-reduced-motion: reduce) {
-    .spines i {
-      transition: none;
-    }
-    .link-spines:hover .spines i {
-      transform: none;
-    }
     .blink-badge {
       animation: none;
     }

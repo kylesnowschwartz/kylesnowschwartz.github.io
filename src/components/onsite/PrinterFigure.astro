@@ -1,0 +1,57 @@
+---
+// Dot-matrix printer icon for the cv link: one fixed isometric view exported
+// as static SVG from a figure made with Colorfigures by April Zhu
+// (https://april-zhu.com/colorfigures), which builds on ISO-GLOW by April Zhu
+// and iso-figure by Tolga Cohce. All three are MIT licensed.
+// Hovering or focusing the surrounding .onsite-link slides the CV sheet up out
+// of the paper slot along its own plane (the SVG clips it at the slot line) and
+// blinks the ON LINE lamp. CSS only; the translate is the sheet's screen-space
+// travel in the SVG's user units.
+import svg from './printer.svg?raw';
+---
+
+<span class="figure" set:html={svg} />
+
+<style>
+  .figure {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 0.4rem;
+  }
+
+  .figure :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .figure :global(.pr-sheet) {
+    transition: transform var(--dur-long) var(--ease-out);
+  }
+
+  :global(.onsite-link:is(:hover, :focus-visible)) .figure :global(.pr-sheet) {
+    transform: translate(-6.77px, -48.22px);
+  }
+
+  :global(.onsite-link:is(:hover, :focus-visible)) .figure :global(.pr-lamp) {
+    animation: pr-lamp-blink 320ms steps(1, end) infinite;
+  }
+
+  @keyframes pr-lamp-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .figure :global(.pr-sheet) {
+      transition: none;
+    }
+
+    :global(.onsite-link:is(:hover, :focus-visible)) .figure :global(.pr-lamp) {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+// Bookshelf icon for the reading-list link: one fixed isometric view exported
+// as static SVG from a figure made with Colorfigures by April Zhu
+// (https://april-zhu.com/colorfigures), which builds on ISO-GLOW by April Zhu
+// and iso-figure by Tolga Cohce. All three are MIT licensed.
+// Hovering or focusing the surrounding .onsite-link slides the blue book out
+// toward the viewer. The book is drawn twice, both copies in .bk-pull: once in
+// the sorted drawing (behind its neighbour) and once on top, clipped to the part
+// in front of the shelf, so one fixed paint order is right at rest and pulled.
+// CSS only; the translate is the book's screen-space travel in user units.
+import svg from './bookshelf.svg?raw';
+---
+
+<span class="figure" set:html={svg} />
+
+<style>
+  .figure {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 0.4rem;
+  }
+
+  .figure :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .figure :global(.bk-pull) {
+    transition: transform var(--dur-long) var(--ease-out);
+  }
+
+  :global(.onsite-link:is(:hover, :focus-visible)) .figure :global(.bk-pull) {
+    transform: translate(13.86px, 8px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .figure :global(.bk-pull) {
+      transition: none;
+    }
+  }
+</style>
