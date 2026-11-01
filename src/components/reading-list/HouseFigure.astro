@@ -1,0 +1,45 @@
+---
+/**
+ * HouseFigure — the reading list's small objects: an oil lamp, lit or unlit,
+ * and a library card catalogue. Each is one fixed isometric view exported as
+ * static SVG from a figure made with Colorfigures by April Zhu
+ * (https://april-zhu.com/colorfigures), which builds on ISO-GLOW by April Zhu
+ * and iso-figure by Tolga Cohce. All three are MIT licensed.
+ *
+ * Pure decoration: hidden from assistive tech and ignores the pointer. The
+ * figure fills the width of its container; the caller sizes and places it.
+ * The unlit lamp's ids carry the cf-lu- prefix so both lamps can sit on one
+ * page without sharing an id.
+ */
+import lampLit from './lamp-lit.svg?raw';
+import lampUnlit from './lamp-unlit.svg?raw';
+import catalogue from './catalogue-closed.svg?raw';
+
+const SVGS = {
+  'lamp-lit': lampLit,
+  'lamp-unlit': lampUnlit,
+  catalogue,
+};
+
+interface Props {
+  name: keyof typeof SVGS;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="house-figure" aria-hidden="true" set:html={SVGS[name]} />
+
+<style>
+  .house-figure {
+    display: block;
+    width: 100%;
+    pointer-events: none;
+  }
+  .house-figure :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+</style>

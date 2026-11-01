@@ -16,6 +16,7 @@ import { BOOKS } from '../../data/reading-list';
 import FilterSidebar from '../../components/reading-list/FilterSidebar.astro';
 import BookGrid from '../../components/reading-list/BookGrid.astro';
 import WaveBand from '../../components/reading-list/WaveBand.astro';
+import HouseFigure from '../../components/reading-list/HouseFigure.astro';
 import { ornamentVars } from '../../components/reading-list/ornaments';
 
 const total = BOOKS.length;
@@ -52,7 +53,18 @@ const total = BOOKS.length;
       <h1>The House</h1>
     </header>
 
-    <div class="tide"><WaveBand /></div>
+    <div class="tide">
+      <WaveBand />
+      <button
+        type="button"
+        class="figure-open tide-lamp"
+        aria-label="Open the oil lamp"
+        data-figure-src="/figures/lamp.html"
+        data-figure-title="Oil lamp"
+      >
+        <HouseFigure name="lamp-lit" />
+      </button>
+    </div>
 
     <div class="layout">
       <FilterSidebar />
@@ -61,9 +73,21 @@ const total = BOOKS.length;
 
     <footer class="rl-foot">
       <div class="meander" aria-hidden="true"></div>
+      <span class="foot-catalogue"><HouseFigure name="catalogue" /></span>
       <p>editorial classification — one reader's map, not gospel. argue with it.</p>
     </footer>
   </div>
+
+  <dialog class="figure-dialog" id="rl-figure-dialog" aria-labelledby="rl-figure-title">
+    <div class="figure-dialog-frame">
+      <div class="figure-dialog-bar">
+        <h2 class="figure-dialog-title" id="rl-figure-title"></h2>
+        <form method="dialog"><button class="figure-dialog-close" type="submit">Close</button></form>
+      </div>
+      <iframe class="figure-dialog-view" title=""></iframe>
+    </div>
+  </dialog>
+
 
   <script>
     import { BOOKS, GROUPS } from '../../data/reading-list';
@@ -251,6 +275,41 @@ const total = BOOKS.length;
     if (savedView === 'list') setView('list');
 
     render();
+
+    // --- live figure: the header lamp opens the interactive oil lamp in a
+    //     modal dialog. The iframe loads only while the dialog is open; closing
+    //     unloads it and returns focus to the button that opened it. Escape
+    //     closes natively; the figure page is same-origin, so Escape pressed
+    //     inside it closes the dialog as well. A click on the backdrop (the
+    //     dialog element itself, outside its frame) closes too. ---
+    const figDialog = document.getElementById('rl-figure-dialog') as HTMLDialogElement;
+    const figFrame = figDialog.querySelector('iframe') as HTMLIFrameElement;
+    const figTitle = document.getElementById('rl-figure-title') as HTMLElement;
+    let figOpener: HTMLElement | null = null;
+    for (const btn of document.querySelectorAll<HTMLElement>('.figure-open')) {
+      btn.addEventListener('click', () => {
+        figOpener = btn;
+        const title = btn.dataset.figureTitle ?? '';
+        figTitle.textContent = title;
+        figFrame.title = `${title} — drag to turn`;
+        figFrame.src = btn.dataset.figureSrc ?? '';
+        figDialog.showModal();
+      });
+    }
+    figFrame.addEventListener('load', () => {
+      figFrame.contentWindow?.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') figDialog.close();
+      });
+    });
+    figDialog.addEventListener('click', (e) => {
+      if (e.target === figDialog) figDialog.close();
+    });
+    figDialog.addEventListener('close', () => {
+      figFrame.removeAttribute('src');
+      figOpener?.focus();
+      figOpener = null;
+    });
+
   </script>
 
   <style>
@@ -353,8 +412,19 @@ const total = BOOKS.length;
     }
 
     .tide {
+      position: relative;
       margin: 0 calc(-1 * var(--s3)) var(--s4);
       pointer-events: none;
+    }
+    /* A lit lamp standing on the crests at the right end of the band, set in
+       from the page edge by the page gutter; its foot rests on the top row of
+       waves. Below 700px the title takes the full width and the lamp goes. */
+    .tide-lamp {
+      position: absolute;
+      pointer-events: auto;
+      right: var(--s4);
+      bottom: 28px;
+      width: 100px;
     }
 
     /* No column rule: the gutter alone separates the index from the plates. */
@@ -365,9 +435,113 @@ const total = BOOKS.length;
       align-items: start;
     }
 
-    /* --- footer: meander rule over a quiet colophon line --- */
-    .rl-foot { margin-top: var(--s5); }
+    /* --- footer: meander rule over a quiet colophon line; the rule runs
+       into a closed card catalogue standing at its right end --- */
+    .rl-foot {
+      margin-top: var(--s5);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+    }
+    .foot-catalogue {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
+      width: 84px;
+      /* the cabinet's left plinth corner lands on the rule's midline */
+      margin: 0 0 -11px -12px;
+    }
+    /* The lamp is a button that opens its live figure: no chrome, a slight
+       lift and brighten on hover, the page's clay focus ring from the root
+       :focus-visible rule. */
+    .figure-open {
+      display: block;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      cursor: pointer;
+      transition: transform var(--rl-dur) var(--rl-ease), filter var(--rl-dur) var(--rl-ease);
+    }
+    .figure-open:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+    }
+    .figure-open:active { transform: translateY(0); }
+
+    /* position: fixed restates the modal default, which the site-wide
+       `body > *` stacking rule in global.css would otherwise override. */
+    .figure-dialog {
+      position: fixed;
+      inset: 0;
+      width: min(720px, 92vw);
+      height: min(600px, 85vh);
+      max-width: none;
+      max-height: none;
+      margin: auto;
+      padding: 0;
+      border: 1px solid var(--rl-rule);
+      border-radius: 0;
+      background: var(--rl-paper);
+      color: var(--rl-ink);
+    }
+    .figure-dialog::backdrop {
+      background: oklch(10% 0.01 45 / 0.72);
+    }
+    .figure-dialog-frame {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .figure-dialog-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s2);
+      padding: var(--s1) var(--s2);
+      border-bottom: 1px solid var(--rl-rule);
+    }
+    .figure-dialog-title {
+      margin: 0;
+      font-family: var(--rl-display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rl-ink-2);
+    }
+    .figure-dialog-close {
+      padding: var(--s0) 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      cursor: pointer;
+      font-family: var(--rl-display);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rl-clay-2);
+      transition: color var(--rl-dur) var(--rl-ease);
+    }
+    .figure-dialog-close:hover { color: var(--rl-ink); }
+    .figure-dialog-view {
+      display: block;
+      flex: 1;
+      width: 100%;
+      min-height: 0;
+      border: 0;
+      background: var(--rl-paper);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .figure-open { transition: none; }
+      .figure-open:hover { transform: none; }
+    }
+
     .meander {
+      grid-column: 1;
+      grid-row: 1;
       height: 14px;
       background-color: var(--rl-clay);
       -webkit-mask: var(--orn-meander) round no-repeat left center / auto 14px;
@@ -375,6 +549,8 @@ const total = BOOKS.length;
       opacity: 0.8;
     }
     .rl-foot p {
+      grid-column: 1;
+      grid-row: 2;
       margin: var(--s2) 0 0;
       font-family: var(--rl-display);
       font-size: 0.72rem;
@@ -411,6 +587,7 @@ const total = BOOKS.length;
           linear-gradient(to top, transparent 0%, black 70%);
       }
       .tide { margin: 0 calc(-1 * var(--s2)) var(--s3); }
+      .tide-lamp { display: none; }
     }
   </style>
 </body>

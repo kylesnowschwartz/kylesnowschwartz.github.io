@@ -1,12 +1,12 @@
 ---
 // The "shelf" of on-site destinations. Each is an object that leaks the world
 // it leads to: a spinning 3D jar (marmiteroids), a dot-matrix printer feeding
-// out a CV (cv), a bookshelf with a book sliding out (reading-list), and a
+// out a CV (cv), a card catalogue that opens a drawer (reading-list), and a
 // deliberately-1996 trophy (worst-commish-ever). The jar's WebGL init lives in
 // index.astro (it needs the page's three.js importmap); the printer and
-// bookshelf are static SVG components with CSS-only hover motion.
+// catalogue are static SVG components with CSS-only hover motion.
 import PrinterFigure from './onsite/PrinterFigure.astro';
-import BookshelfFigure from './onsite/BookshelfFigure.astro';
+import CatalogueFigure from './onsite/CatalogueFigure.astro';
 
 interface OnSiteItem {
   name: string;
@@ -32,7 +32,7 @@ const { items } = Astro.props;
             <canvas id="marmite-jar" width="180" height="180"></canvas>
           )}
           {item.kind === 'printer' && <PrinterFigure />}
-          {item.kind === 'bookshelf' && <BookshelfFigure />}
+          {item.kind === 'bookshelf' && <CatalogueFigure />}
           {item.kind === 'trophy' && (
             <span class="trophy" aria-hidden="true">
               <span class="trophy-cup">🏆</span>
@@ -127,7 +127,7 @@ const { items } = Astro.props;
     border-bottom-color: var(--color-accent);
   }
 
-  /* cv (printer) and reading-list (bookshelf) — 150px figures, centred above
+  /* cv (printer) and reading-list (catalogue) — 150px figures, centred above
      their labels like the jar; motion lives in the figure components. */
   .link-printer,
   .link-bookshelf {

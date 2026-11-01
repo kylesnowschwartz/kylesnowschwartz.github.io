@@ -10,6 +10,7 @@
  * line, so a card opens on its title and the bands of a row align as a shelf.
  */
 import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
+import HouseFigure from './HouseFigure.astro';
 ---
 
 <main class="results">
@@ -64,7 +65,10 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
       </article>
     ))}
   </div>
-  <div class="empty" id="rl-empty" hidden>No books remain. Loosen a filter — or switch a row back to ANY.</div>
+  <div class="empty" id="rl-empty" hidden>
+    <span class="empty-lamp"><HouseFigure name="lamp-unlit" /></span>
+    No books remain. Loosen a filter — or switch a row back to ANY.
+  </div>
 </main>
 
 <style>
@@ -296,6 +300,12 @@ import { BOOKS, GENRES, type GenreKey } from '../../data/reading-list';
     font-style: italic;
     font-size: 1.05rem;
     padding: var(--s6) 0;
+  }
+  /* an unlit lamp over the empty shelf, centred on the line below it */
+  .empty-lamp {
+    display: block;
+    width: 104px;
+    margin: 0 auto var(--s3);
   }
 
   @media (prefers-reduced-motion: reduce) {

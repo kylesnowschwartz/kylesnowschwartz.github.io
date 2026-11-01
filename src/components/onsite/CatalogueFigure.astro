@@ -1,0 +1,63 @@
+---
+// Library card catalogue icon for the reading-list link: two fixed isometric
+// views exported as static SVG from a figure made with Colorfigures by April
+// Zhu (https://april-zhu.com/colorfigures), which builds on ISO-GLOW by April
+// Zhu and iso-figure by Tolga Cohce. All three are MIT licensed.
+// Both views come from one camera, so each SVG gets the union viewBox and the
+// two stack pixel for pixel. Hovering or focusing the surrounding .onsite-link
+// crossfades from the closed cabinet to the open one (drawer out, card
+// lifted). CSS only. The open view's ids carry the cf-co- prefix so the two
+// inlined copies never share an id.
+import closedSvg from './catalogue-closed.svg?raw';
+import openSvg from './catalogue-open.svg?raw';
+
+const unionViewBox = 'viewBox="45.2 12.3 231.6 179.7"';
+const closed = closedSvg.replace(/viewBox="[^"]*"/, unionViewBox);
+const open = openSvg.replace(/viewBox="[^"]*"/, unionViewBox);
+---
+
+<span class="figure" aria-hidden="true">
+  <span class="view closed" set:html={closed} />
+  <span class="view open" set:html={open} />
+</span>
+
+<style>
+  .figure {
+    position: relative;
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 0.4rem;
+  }
+
+  .view {
+    position: absolute;
+    inset: 0;
+    transition: opacity var(--dur-short) var(--ease-out);
+  }
+
+  .view :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .open {
+    opacity: 0;
+  }
+
+  :global(.onsite-link:is(:hover, :focus-visible)) .open {
+    opacity: 1;
+  }
+
+  :global(.onsite-link:is(:hover, :focus-visible)) .closed {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .view {
+      transition: none;
+    }
+  }
+</style>
